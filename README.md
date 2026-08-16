@@ -1,7 +1,7 @@
 # Zoe Life — Site Concept
 
 A cinematic, scroll-driven concept build for **zoelifehub.com**, prepared by Cozy Digital
-for the Tuesday walkthrough with Pastors Kemi & Tayo.
+for the Tuesday walkthrough with Pastors Tayo & Kemi Akinyemi.
 
 Warm and inviting, not girly — espresso, cream and gold, with a spinning 3D cross as the
 centerpiece. Built to grow: courses, academic and career funnels are structured in but
@@ -60,5 +60,5 @@ Static HTML/CSS/JS. All dependencies vendored — no CDNs, no external requests:
   Google Workspace once `contact@` exists.
 - **Consult booking** — CTA points at the contact form; swap in Calendly/Squarespace
   scheduling when ready.
-- **Photos** — monogram avatars stand in for real portraits of Kemi & Tayo.
+- **Photos** — monogram avatars stand in for real portraits of Pastors Tayo & Kemi Akinyemi.
 - **Zoe Family Life socials** — placeholder chips.
