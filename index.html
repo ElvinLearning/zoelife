@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zoe Life — Life, in all its fullness</title>
+  <meta name="description" content="Zoe Life is one warm home for faith, family and purpose — from Pastors Kemi &amp; Tayo. The book arrives end of August. Courses, mentorship and more are on the way.">
+  <meta property="og:title" content="Zoe Life — Life, in all its fullness">
+  <meta property="og:description" content="One warm home for faith, family and purpose. The book is almost here.">
+  <meta name="theme-color" content="#17120E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317120E'/%3E%3Cpath d='M14 5h4v7h7v4h-7v11h-4V16H7v-4h7z' fill='%23C9A227'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.replace('no-js','js');</script>
+</head>
+<body>
+
+  <!-- ambient layers -->
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+
+  <!-- preloader -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader-panel"></div>
+    <div class="loader-inner">
+      <svg class="loader-cross" viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
+      <div class="loader-word">ZOE&nbsp;LIFE</div>
+      <div class="loader-count"><span id="loadCount">0</span></div>
+    </div>
+  </div>
+
+  <!-- fixed WebGL stage -->
+  <canvas id="gl" aria-hidden="true"></canvas>
+
+  <!-- nav -->
+  <header class="nav" id="nav">
+    <a class="nav-brand" href="#top" aria-label="Zoe Life — home">
+      <svg viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
+      <span>ZOE&nbsp;LIFE</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#book">The Book</a>
+      <a href="#family">Family Life</a>
+      <a href="#coming">What’s Coming</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-pill" href="#consult" data-magnet>Book a consult</a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- mobile menu -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu-links" aria-label="Menu">
+      <a href="#about"><em>01</em>About</a>
+      <a href="#book"><em>02</em>The Book</a>
+      <a href="#family"><em>03</em>Family Life</a>
+      <a href="#coming"><em>04</em>What’s Coming</a>
+      <a href="#contact"><em>05</em>Contact</a>
+    </nav>
+    <a class="btn btn-gold" href="#consult">Book a 20-minute consult</a>
+  </div>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero see-through" id="hero">
+      <div class="hero-inner">
+        <p class="hero-eyebrow reveal">zoē&nbsp;·&nbsp;ζωή&nbsp;·&nbsp;<span>the God-kind of life</span></p>
+        <h1 class="hero-title" data-split>Life, in all <i>its fullness.</i></h1>
+        <p class="hero-sub reveal">One warm home for faith, family and purpose — from Pastors
+          Kemi&nbsp;&amp;&nbsp;Tayo. The book is almost here. The table is already set.</p>
+        <div class="hero-cta reveal">
+          <a class="btn btn-gold" href="#book" data-magnet>Get the book</a>
+          <a class="btn btn-ghost" href="#consult" data-magnet>Book a 20-min consult</a>
+        </div>
+      </div>
+      <div class="hero-scroll reveal" aria-hidden="true">
+        <span class="hero-scroll-line"></span>
+        <span>scroll</span>
+      </div>
+    </section>
+
+    <!-- ============ MARQUEE ============ -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <div class="marquee-group">
+          <span>Abundant life</span><i>✦</i><span>Faith</span><i>✦</i><span>Family</span><i>✦</i>
+          <span>Purpose</span><i>✦</i><span>ζωή</span><i>✦</i><span>John 10 : 10</span><i>✦</i>
+        </div>
+        <div class="marquee-group">
+          <span>Abundant life</span><i>✦</i><span>Faith</span><i>✦</i><span>Family</span><i>✦</i>
+          <span>Purpose</span><i>✦</i><span>ζωή</span><i>✦</i><span>John 10 : 10</span><i>✦</i>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="about section-cream" id="about">
+      <div class="wrap">
+        <p class="eyebrow reveal">About us — the actual people</p>
+        <h2 class="title-xl" data-split>Hi. We’re <i>Kemi&nbsp;&amp;&nbsp;Tayo.</i></h2>
+        <p class="lead reveal">Two pastors, one family, and a stubborn conviction that the abundant
+          life Jesus talked about isn’t a theory. It’s Tuesday-night dinner. It’s marriages that tell
+          the truth. It’s kids who feel seen, and work that actually means something.</p>
+
+        <div class="people">
+          <article class="person card-tilt reveal">
+            <div class="person-photo person-photo--k"><span>K</span></div>
+            <h3>Pastor Kemi</h3>
+            <p class="person-role">Writer · Teacher · The one with the book</p>
+            <p>Kemi has spent two decades helping people trade survival mode for the zoē kind of
+              living — and finally wrote it all down. She’ll feed you before you leave. It’s not optional.</p>
+          </article>
+          <article class="person card-tilt reveal">
+            <div class="person-photo person-photo--t"><span>T</span></div>
+            <h3>Pastor Tayo</h3>
+            <p class="person-role">Shepherd · Builder · Resident question-asker</p>
+            <p>Tayo is the steady one — the pastor dads text when nobody else gets it. He builds
+              slowly, prays loudly, and believes a strong family is the best sermon there is.</p>
+          </article>
+        </div>
+
+        <div class="pillars">
+          <div class="pillar reveal"><em>01</em><h3>Faith that breathes</h3><p>No performance, no jargon. A walk with God that fits real life.</p></div>
+          <div class="pillar reveal"><em>02</em><h3>Families that talk</h3><p>Marriage and parenting with the volume of honesty turned up.</p></div>
+          <div class="pillar reveal"><em>03</em><h3>Futures that open</h3><p>Study, work and calling — pointed somewhere worth going.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BOOK ============ -->
+    <section class="book-section section-ink" id="book">
+      <div class="wrap book-grid">
+        <div class="book-copy">
+          <p class="eyebrow eyebrow-gold reveal">The book — landing end of August</p>
+          <h2 class="title-xl" data-split>The first word of a <i>bigger story.</i></h2>
+          <p class="lead reveal">Everything Zoe Life is becoming starts here — a book about leaving
+            survival mode and living the life Jesus actually offered. Read it first. The rest will
+            make sense.</p>
+          <p class="stores-label reveal">Buy it wherever you like to shop</p>
+          <div class="stores reveal">
+            <a class="store" href="#" data-soon>Amazon<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
+            <a class="store" href="#" data-soon>Etsy<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
+            <a class="store" href="#" data-soon>Gumroad<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
+            <a class="store" href="#" data-soon>Selar<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
+          </div>
+          <p class="tiny reveal">Signed paperbacks ship from the site at launch — printed and mailed
+            for us, not from our living room.</p>
+        </div>
+
+        <div class="book-stage" aria-hidden="true">
+          <div class="book-float">
+            <div class="book" id="book3d">
+              <div class="book-face book-front">
+                <div class="book-front-inner">
+                  <span class="book-orn">✦</span>
+                  <span class="book-kicker">the god-kind of life</span>
+                  <span class="book-title">Z&thinsp;O&thinsp;E</span>
+                  <svg class="book-cross" viewBox="0 0 24 32"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
+                  <span class="book-author">Pastor Kemi</span>
+                </div>
+              </div>
+              <div class="book-face book-back"></div>
+              <div class="book-face book-spine"><span>ZOE — Pastor Kemi</span></div>
+              <div class="book-face book-pages"></div>
+              <div class="book-face book-top"></div>
+              <div class="book-face book-bottom"></div>
+            </div>
+          </div>
+          <div class="book-shadow"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VERSE (canvas shows through) ============ -->
+    <section class="verse see-through" id="verse">
+      <div class="wrap">
+        <blockquote>
+          <p class="verse-text" data-split><i>“I have come that they may have life, and have it to the full.”</i></p>
+          <cite class="reveal">John 10 : 10</cite>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============ FAMILY LIFE ============ -->
+    <section class="family section-cream" id="family">
+      <div class="wrap">
+        <p class="eyebrow eyebrow-sage reveal">Zoe Family Life</p>
+        <h2 class="title-xl" data-split>Same house. <i>Its own heartbeat.</i></h2>
+        <div class="family-grid">
+          <p class="lead reveal">Zoe Family Life is where the family conversation keeps its own
+            following — marriage, parenting, and the beautiful chaos in between. It lives under the
+            Zoe Life roof with a voice all its own, and it isn’t going anywhere.</p>
+          <div class="family-card reveal">
+            <h3>Follow the family side</h3>
+            <p>Honest, funny, occasionally chaotic. Dads welcome — spoken to, not talked past.</p>
+            <div class="family-socials">
+              <a href="#" data-soon>Instagram</a>
+              <a href="#" data-soon>YouTube</a>
+              <a href="#" data-soon>TikTok</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COMING RAIL ============ -->
+    <section class="rail section-ink" id="coming">
+      <div class="rail-head wrap">
+        <p class="eyebrow eyebrow-gold reveal">Built to grow</p>
+        <h2 class="title-xl" data-split>Structured now. <i>Switched on soon.</i></h2>
+        <p class="rail-hint reveal" aria-hidden="true">keep scrolling ⟶</p>
+      </div>
+      <div class="rail-track" id="railTrack">
+        <article class="rail-card">
+          <em>01</em>
+          <span class="badge badge-live">In the works</span>
+          <h3>Courses</h3>
+          <p>Recorded classes on living the zoē life — filmed with care, released when they’re ready, not a minute before.</p>
+        </article>
+        <article class="rail-card">
+          <em>02</em>
+          <span class="badge">On the roadmap</span>
+          <h3>Academic</h3>
+          <p>Mentorship for students who want more than grades — study habits, direction, and a bigger why.</p>
+        </article>
+        <article class="rail-card">
+          <em>03</em>
+          <span class="badge">On the roadmap</span>
+          <h3>Career</h3>
+          <p>Purpose-first career pathways: discovering what your hands were made for and doing it well.</p>
+        </article>
+        <article class="rail-card">
+          <em>04</em>
+          <span class="badge badge-live">Growing now</span>
+          <h3>Community</h3>
+          <p>The table gets longer. Gatherings, conversations, and a place where nobody eats alone.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ CONSULT ============ -->
+    <section class="consult section-cream" id="consult">
+      <div class="wrap">
+        <h2 class="title-huge" data-split>Twenty minutes. <i>Zero pressure.</i></h2>
+        <p class="lead reveal">Bring the question you’ve been carrying. We’ll bring coffee and a
+          listening ear. Twenty minutes, on the house.</p>
+        <div class="reveal">
+          <a class="btn btn-ink btn-big" href="#contact" data-magnet>Book a consultation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="contact section-ink" id="contact">
+      <div class="wrap contact-grid">
+        <div>
+          <p class="eyebrow eyebrow-gold reveal">Say hello</p>
+          <h2 class="title-xl" data-split>Talk <i>to us.</i></h2>
+          <p class="lead reveal">No public inboxes, no spam-bait — this form comes straight to us,
+            and a real person answers. Usually the chatty one.</p>
+        </div>
+        <form class="form reveal" id="contactForm" novalidate>
+          <label>Your name
+            <input type="text" name="name" autocomplete="name" required placeholder="First and last">
+          </label>
+          <label>Email
+            <input type="email" name="email" autocomplete="email" required placeholder="you@example.com">
+          </label>
+          <label>I’m reaching out about
+            <select name="topic">
+              <option>The book</option>
+              <option>A 20-minute consultation</option>
+              <option>Prayer or encouragement</option>
+              <option>Something else</option>
+            </select>
+          </label>
+          <label>Your message
+            <textarea name="message" rows="4" required placeholder="What’s on your heart?"></textarea>
+          </label>
+          <button class="btn btn-gold btn-big" type="submit">Send it</button>
+          <p class="form-done" id="formDone" hidden>Got it. Thank you — we’ll be in touch soon. ✦</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <a class="footer-brand" href="#top" aria-label="Back to top">
+          <svg viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
+          <span>ZOE&nbsp;LIFE</span>
+        </a>
+        <nav class="footer-cols" aria-label="Footer">
+          <div>
+            <h4>Explore</h4>
+            <a href="#about">About</a>
+            <a href="#book">The Book</a>
+            <a href="#family">Family Life</a>
+            <a href="#coming">What’s Coming</a>
+          </div>
+          <div>
+            <h4>The book</h4>
+            <a href="#" data-soon>Amazon</a>
+            <a href="#" data-soon>Etsy</a>
+            <a href="#" data-soon>Gumroad</a>
+            <a href="#" data-soon>Selar</a>
+          </div>
+          <div>
+            <h4>Family</h4>
+            <a href="#" data-soon>Instagram</a>
+            <a href="#" data-soon>YouTube</a>
+            <a href="#" data-soon>TikTok</a>
+          </div>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Zoe Life · Zoe Family Life — one home, two heartbeats.</p>
+        <p>Site concept by Cozy Digital</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script src="vendor/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/scene.js"></script>
+</body>
+</html>
