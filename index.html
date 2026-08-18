@@ -3,338 +3,223 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Zoe Life — Life, in all its fullness</title>
-  <meta name="description" content="Zoe Life equips individuals, couples, families, churches and organizations with biblical truth, practical wisdom and Christ-centered resources — from Pastors Tayo &amp; Kemi Akinyemi.">
-  <meta property="og:title" content="Zoe Life — Life, in all its fullness">
-  <meta property="og:description" content="Helping people thrive in every season of life. The book is almost here.">
-  <meta name="theme-color" content="#17120E">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2317120E'/%3E%3Cpath d='M14 5h4v7h7v4h-7v11h-4V16H7v-4h7z' fill='%23C9A227'/%3E%3C/svg%3E">
+  <title>Zoe Life | Helping People Thrive in Every Season</title>
+  <meta name="description" content="Zoe Life equips individuals, couples, families, churches and organizations with biblical truth, practical wisdom and Christ-centered resources.">
+  <meta property="og:title" content="Zoe Life | Helping People Thrive in Every Season">
+  <meta property="og:description" content="Biblical truth, practical wisdom and genuine care for every season of life.">
+  <meta name="theme-color" content="#17120e">
+  <link rel="icon" href="assets/zoe-life-logo.png">
   <link rel="stylesheet" href="css/style.css">
-  <script>document.documentElement.classList.replace('no-js','js');</script>
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
 </head>
 <body>
-
-  <!-- ambient layers -->
+  <a class="skip-link" href="#main">Skip to content</a>
   <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
   <div class="grain" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
 
-  <!-- preloader -->
   <div class="loader" id="loader" aria-hidden="true">
     <div class="loader-panel"></div>
     <div class="loader-inner">
       <svg class="loader-cross" viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
-      <div class="loader-word">ZOE&nbsp;LIFE</div>
-      <div class="loader-count"><span id="loadCount">0</span></div>
+      <span class="loader-word">ZOE LIFE</span>
+      <span class="loader-count" id="loadCount">0</span>
     </div>
   </div>
 
-  <!-- fixed WebGL stage -->
   <canvas id="gl" aria-hidden="true"></canvas>
 
-  <!-- nav -->
   <header class="nav" id="nav">
-    <a class="nav-brand" href="#top" aria-label="Zoe Life — home">
+    <a class="nav-brand" href="#top" aria-label="Zoe Life home">
       <svg viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
-      <span>ZOE&nbsp;LIFE</span>
+      <span>ZOE LIFE</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="#seasons">Seasons</a>
+      <a href="#pathways">Pathways</a>
       <a href="#about">About</a>
-      <a href="#book">The Book</a>
-      <a href="#family">Family Life</a>
-      <a href="#coming">What’s Coming</a>
+      <a href="#resources">Resources</a>
       <a href="#contact">Contact</a>
     </nav>
     <div class="nav-cta">
-      <a class="btn btn-pill" href="#consult" data-magnet>Book a consult</a>
-      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
-        <span></span><span></span>
-      </button>
+      <a class="btn btn-small" href="#contact">Start a conversation</a>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
     </div>
   </header>
 
-  <!-- mobile menu -->
   <div class="menu" id="menu" aria-hidden="true">
-    <nav class="menu-links" aria-label="Menu">
-      <a href="#about"><em>01</em>About</a>
-      <a href="#book"><em>02</em>The Book</a>
-      <a href="#family"><em>03</em>Family Life</a>
-      <a href="#coming"><em>04</em>What’s Coming</a>
-      <a href="#contact"><em>05</em>Contact</a>
+    <nav class="menu-links" aria-label="Mobile navigation">
+      <a href="#seasons">Seasons</a>
+      <a href="#pathways">Pathways</a>
+      <a href="#about">About</a>
+      <a href="#resources">Resources</a>
+      <a href="#contact">Contact</a>
     </nav>
-    <a class="btn btn-gold" href="#consult">Book a 20-minute consult</a>
+    <a class="btn btn-gold" href="#contact">Start a conversation</a>
   </div>
 
-  <main id="top">
-
-    <!-- ============ HERO ============ -->
-    <section class="hero see-through" id="hero">
+  <main id="main">
+    <section class="hero see-through" id="top" aria-labelledby="hero-title">
       <div class="hero-inner">
-        <p class="hero-eyebrow reveal">zoē&nbsp;·&nbsp;ζωή&nbsp;·&nbsp;<span>the God-kind of life</span></p>
-        <h1 class="hero-title" data-split>Life, in all <i>its fullness.</i></h1>
-        <p class="hero-sub reveal">Biblical truth, practical wisdom and Christ-centered resources
-          for every season of life — from Pastors Tayo&nbsp;&amp;&nbsp;Kemi&nbsp;Akinyemi.
-          The book is almost here. The table is already set.</p>
-        <div class="hero-cta reveal">
-          <a class="btn btn-gold" href="#book" data-magnet>Get the book</a>
-          <a class="btn btn-ghost" href="#consult" data-magnet>Book a 20-min consult</a>
+        <p class="hero-eyebrow">zoe <span>life in its fullness</span></p>
+        <h1 class="hero-title" id="hero-title">Life, in all <i>its fullness.</i></h1>
+        <p class="hero-sub">Biblical truth, practical wisdom and Christ-centered resources for every season of life.</p>
+        <div class="hero-actions">
+          <a class="btn btn-gold" href="#seasons">Explore your season</a>
+          <a class="btn btn-ghost" href="#about">Meet the founders</a>
         </div>
-      </div>
-      <div class="hero-scroll reveal" aria-hidden="true">
-        <span class="hero-scroll-line"></span>
-        <span>scroll</span>
       </div>
     </section>
 
-    <!-- ============ MARQUEE ============ -->
     <div class="marquee" aria-hidden="true">
       <div class="marquee-track">
-        <div class="marquee-group">
-          <span>Helping people thrive</span><i>✦</i><span>Biblical truth</span><i>✦</i><span>Practical wisdom</span><i>✦</i>
-          <span>Genuine care</span><i>✦</i><span>ζωή</span><i>✦</i><span>John 10 : 10</span><i>✦</i>
-        </div>
-        <div class="marquee-group">
-          <span>Helping people thrive</span><i>✦</i><span>Biblical truth</span><i>✦</i><span>Practical wisdom</span><i>✦</i>
-          <span>Genuine care</span><i>✦</i><span>ζωή</span><i>✦</i><span>John 10 : 10</span><i>✦</i>
-        </div>
+        <div class="marquee-group"><span>Helping people thrive</span><i>+</i><span>Biblical truth</span><i>+</i><span>Practical wisdom</span><i>+</i><span>Genuine care</span><i>+</i><span>John 10:10</span><i>+</i></div>
+        <div class="marquee-group"><span>Helping people thrive</span><i>+</i><span>Biblical truth</span><i>+</i><span>Practical wisdom</span><i>+</i><span>Genuine care</span><i>+</i><span>John 10:10</span><i>+</i></div>
       </div>
     </div>
 
-    <!-- ============ ABOUT ============ -->
-    <section class="about section-cream" id="about">
-      <div class="wrap">
-        <p class="eyebrow reveal">Who we are — helping people thrive</p>
-        <h2 class="title-xl" data-split>Hi. We’re <i>Tayo&nbsp;&amp;&nbsp;Kemi.</i></h2>
-        <p class="lead reveal">Founders of Zoe Life and pastors of Life Springs Church, we equip
-          individuals, couples, families, churches and organizations with biblical truth, practical
-          wisdom and Christ-centered resources — because God desires every person to experience the
-          abundant life made possible through Jesus Christ.</p>
-
-        <div class="people">
-          <article class="person card-tilt reveal">
-            <div class="person-photo person-photo--t"><span>T</span></div>
-            <h3>Pastor Tayo Akinyemi</h3>
-            <p class="person-role">Pastor · Leader · Mentor</p>
-            <p>Tayo brings ministry experience and professional leadership to everything Zoe Life
-              does — teaching, mentoring and walking alongside people as they navigate leadership,
-              stewardship, careers and family through the lens of Scripture.</p>
-          </article>
-          <article class="person card-tilt reveal">
-            <div class="person-photo person-photo--k"><span>K</span></div>
-            <h3>Pastor Kemi Akinyemi</h3>
-            <p class="person-role">Pastor · Teacher · Author of the book</p>
-            <p>Kemi is passionate about helping people grow in their relationship with God and
-              apply His Word to everyday life — through coaching, speaking, devotionals, and now
-              the book that opens Zoe Life’s next chapter.</p>
-          </article>
+    <section class="seasons section-cream" id="seasons" aria-labelledby="seasons-title">
+      <div class="wrap seasons-layout">
+        <div class="seasons-intro">
+          <p class="eyebrow">A place to begin</p>
+          <h2 class="title-xl" id="seasons-title">What season are you in?</h2>
+          <p class="lead">Choose the word that feels closest today. This is a reflection tool, not an assessment.</p>
+          <div class="season-list" role="tablist" aria-label="Seasons of life">
+            <button class="season-option" type="button" role="tab" aria-selected="true" aria-controls="season-panel" data-season="building"><span>Building</span><small>Foundations and first decisions</small></button>
+            <button class="season-option" type="button" role="tab" aria-selected="false" aria-controls="season-panel" data-season="waiting"><span>Waiting</span><small>Patience and preparation</small></button>
+            <button class="season-option" type="button" role="tab" aria-selected="false" aria-controls="season-panel" data-season="growing"><span>Growing</span><small>Practice and steady change</small></button>
+            <button class="season-option" type="button" role="tab" aria-selected="false" aria-controls="season-panel" data-season="healing"><span>Healing</span><small>Care and a gentler pace</small></button>
+            <button class="season-option" type="button" role="tab" aria-selected="false" aria-controls="season-panel" data-season="leading"><span>Leading</span><small>Responsibility and influence</small></button>
+          </div>
         </div>
-
-        <div class="pillars">
-          <div class="pillar reveal"><em>01</em><h3>Biblical truth</h3><p>God’s Word is our final authority — timeless wisdom and direction for every area of life.</p></div>
-          <div class="pillar reveal"><em>02</em><h3>Practical wisdom</h3><p>Truth is meant to be lived. Coaching, teaching, books and workshops that turn Scripture into everyday decisions.</p></div>
-          <div class="pillar reveal"><em>03</em><h3>Genuine care</h3><p>People matter to God, and they matter to us. We serve with compassion, humility, patience and grace.</p></div>
+        <div class="season-panel" id="season-panel" role="tabpanel" data-letter="B">
+          <div class="season-photo-wrap"><img id="season-photo" src="assets/current-site/about-guidance.jpg" alt="Adults gathered around an open Bible" width="1600" height="1066"></div>
+          <div class="season-content" data-letter="B">
+            <p class="season-kicker" id="season-kicker">Foundations and first decisions</p>
+            <h3 id="season-name">Building</h3>
+            <p id="season-copy">Something new is taking shape: a marriage, a family rhythm, a degree, a role or a clearer life direction. This season calls for foundations you can return to.</p>
+            <div class="season-start"><span>Possible starting point</span><strong id="season-path">Relationships and Family or Academic and Career</strong></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- ============ BOOK ============ -->
-    <section class="book-section section-ink" id="book">
-      <div class="wrap book-grid">
-        <div class="book-copy">
-          <p class="eyebrow eyebrow-gold reveal">The book — landing end of August</p>
-          <h2 class="title-xl" data-split>The first word of a <i>bigger story.</i></h2>
-          <p class="lead reveal">Everything Zoe Life is becoming starts here — a book about leaving
-            survival mode and living the life Jesus actually offered. Read it first. The rest will
-            make sense.</p>
-          <p class="stores-label reveal">Buy it wherever you like to shop</p>
-          <div class="stores reveal">
-            <a class="store" href="#" data-soon>Amazon<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
-            <a class="store" href="#" data-soon>Etsy<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
-            <a class="store" href="#" data-soon>Gumroad<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
-            <a class="store" href="#" data-soon>Selar<svg viewBox="0 0 16 16"><path d="M4 12 12 4M6 4h6v6"/></svg></a>
-          </div>
-          <p class="tiny reveal">Signed paperbacks ship from the site at launch — printed and mailed
-            for us, not from our living room.</p>
+    <section class="pathways section-ink" id="pathways" aria-labelledby="pathways-title">
+      <div class="wrap">
+        <h2 class="title-xl" id="pathways-title">Three ways into the conversation.</h2>
+        <p class="lead pathways-lead">Zoe Life serves people through biblical coaching, teaching, speaking, books, courses, workshops and church partnerships.</p>
+        <div class="pathway-index">
+          <article class="pathway-row"><span class="pathway-number">01</span><div><h3>Relationships and Family</h3><p>Marriage, premarital preparation, parenting, family life, communication and healthy relationships.</p></div><img src="assets/current-site/coaching-zoe-life.jpg" alt="Two women in a coaching conversation" width="1600" height="1067"></article>
+          <article class="pathway-row"><span class="pathway-number">02</span><div><h3>Academic and Career</h3><p>Education, career decisions, professional development, leadership, purpose and stewardship.</p></div><img src="assets/current-site/services-professional.jpg" alt="People in a professional conversation" width="1600" height="1067"></article>
+          <article class="pathway-row"><span class="pathway-number">03</span><div><h3>Faith and Life Resources</h3><p>Spiritual growth, Christian living, discipleship, books, courses, speaking and practical biblical teaching.</p></div><img src="assets/current-site/about-guidance.jpg" alt="A group studying the Bible together" width="1600" height="1066"></article>
         </div>
 
-        <div class="book-stage" aria-hidden="true">
-          <div class="book-float">
-            <div class="book" id="book3d">
-              <div class="book-face book-front">
-                <div class="book-front-inner">
-                  <span class="book-orn">✦</span>
-                  <span class="book-kicker">the god-kind of life</span>
-                  <span class="book-title">Z&thinsp;O&thinsp;E</span>
-                  <svg class="book-cross" viewBox="0 0 24 32"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
-                  <span class="book-author">Kemi Akinyemi</span>
-                </div>
-              </div>
-              <div class="book-face book-back"></div>
-              <div class="book-face book-spine"><span>ZOE — Kemi Akinyemi</span></div>
-              <div class="book-face book-pages"></div>
-              <div class="book-face book-top"></div>
-              <div class="book-face book-bottom"></div>
+        <form class="pathfinder" id="pathfinder" aria-labelledby="pathfinder-title">
+          <div class="pathfinder-copy">
+            <h3 id="pathfinder-title">Find a useful place to begin.</h3>
+            <p>Pair your season with the area that needs attention. The result points to a proposed pathway.</p>
+          </div>
+          <fieldset>
+            <legend>Your season</legend>
+            <div class="choice-row">
+              <label><input type="radio" name="path-season" value="building" checked><span>Building</span></label>
+              <label><input type="radio" name="path-season" value="waiting"><span>Waiting</span></label>
+              <label><input type="radio" name="path-season" value="growing"><span>Growing</span></label>
+              <label><input type="radio" name="path-season" value="healing"><span>Healing</span></label>
+              <label><input type="radio" name="path-season" value="leading"><span>Leading</span></label>
             </div>
-          </div>
-          <div class="book-shadow"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ VERSE (canvas shows through) ============ -->
-    <section class="verse see-through" id="verse">
-      <div class="wrap">
-        <blockquote>
-          <p class="verse-text" data-split><i>“I have come that they may have life, and have it to the full.”</i></p>
-          <cite class="reveal">John 10 : 10</cite>
-        </blockquote>
-      </div>
-    </section>
-
-    <!-- ============ FAMILY LIFE ============ -->
-    <section class="family section-cream" id="family">
-      <div class="wrap">
-        <p class="eyebrow eyebrow-sage reveal">Zoe Family Life</p>
-        <h2 class="title-xl" data-split>Same house. <i>Its own heartbeat.</i></h2>
-        <div class="family-grid">
-          <p class="lead reveal">Zoe Family Life is where the family conversation keeps its own
-            following — marriage, parenting, and the beautiful chaos in between. It lives under the
-            Zoe Life roof with a voice all its own, and it isn’t going anywhere.</p>
-          <div class="family-card reveal">
-            <h3>Follow the family side</h3>
-            <p>Honest, funny, occasionally chaotic. Dads welcome — spoken to, not talked past.</p>
-            <div class="family-socials">
-              <a href="#" data-soon>Facebook</a>
-              <a href="#" data-soon>Instagram</a>
-              <a href="#" data-soon>Twitter</a>
+          </fieldset>
+          <fieldset>
+            <legend>Your focus</legend>
+            <div class="choice-row">
+              <label><input type="radio" name="path-focus" value="spiritual"><span>Spiritual</span></label>
+              <label><input type="radio" name="path-focus" value="relational" checked><span>Relational</span></label>
+              <label><input type="radio" name="path-focus" value="personal"><span>Personal</span></label>
+              <label><input type="radio" name="path-focus" value="professional"><span>Professional</span></label>
             </div>
+          </fieldset>
+          <div class="path-result" role="status" aria-live="polite">
+            <small>A possible starting point</small>
+            <h4 id="path-result-title">Relationships and Family</h4>
+            <p id="path-result-copy">In a building season, relational questions often begin with shared foundations, honest conversation and the habits that shape a home.</p>
+            <span>This guide does not diagnose a need or promise an outcome.</span>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ COMING RAIL ============ -->
-    <section class="rail section-ink" id="coming">
-      <div class="rail-head wrap">
-        <p class="eyebrow eyebrow-gold reveal">Built to grow</p>
-        <h2 class="title-xl" data-split>Structured now. <i>Switched on soon.</i></h2>
-        <p class="rail-hint reveal" aria-hidden="true">keep scrolling ⟶</p>
-      </div>
-      <div class="rail-track" id="railTrack">
-        <article class="rail-card">
-          <em>01</em>
-          <span class="badge badge-live">In the works</span>
-          <h3>Courses</h3>
-          <p>Recorded classes on living the zoē life — filmed with care, released when they’re ready, not a minute before.</p>
-        </article>
-        <article class="rail-card">
-          <em>02</em>
-          <span class="badge">On the roadmap</span>
-          <h3>Academic</h3>
-          <p>Mentorship for students who want more than grades — study habits, direction, and a bigger why.</p>
-        </article>
-        <article class="rail-card">
-          <em>03</em>
-          <span class="badge">On the roadmap</span>
-          <h3>Career</h3>
-          <p>Purpose-first career pathways: discovering what your hands were made for and doing it well.</p>
-        </article>
-        <article class="rail-card">
-          <em>04</em>
-          <span class="badge badge-live">Growing now</span>
-          <h3>Community</h3>
-          <p>The table gets longer. Gatherings, conversations, and a place where nobody eats alone.</p>
-        </article>
-      </div>
-    </section>
-
-    <!-- ============ CONSULT ============ -->
-    <section class="consult section-cream" id="consult">
-      <div class="wrap">
-        <h2 class="title-huge" data-split>Twenty minutes. <i>Zero pressure.</i></h2>
-        <p class="lead reveal">Bring the question you’ve been carrying. We’ll bring coffee and a
-          listening ear. Twenty minutes, on the house.</p>
-        <div class="reveal">
-          <a class="btn btn-ink btn-big" href="#contact" data-magnet>Book a consultation</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ CONTACT ============ -->
-    <section class="contact section-ink" id="contact">
-      <div class="wrap contact-grid">
-        <div>
-          <p class="eyebrow eyebrow-gold reveal">Say hello</p>
-          <h2 class="title-xl" data-split>Talk <i>to us.</i></h2>
-          <p class="lead reveal">No public inboxes, no spam-bait — this form comes straight to us,
-            and a real person answers. Usually the chatty one.</p>
-        </div>
-        <form class="form reveal" id="contactForm" novalidate>
-          <label>Your name
-            <input type="text" name="name" autocomplete="name" required placeholder="First and last">
-          </label>
-          <label>Email
-            <input type="email" name="email" autocomplete="email" required placeholder="you@example.com">
-          </label>
-          <label>I’m reaching out about
-            <select name="topic">
-              <option>The book</option>
-              <option>A 20-minute consultation</option>
-              <option>Coaching, teaching or speaking</option>
-              <option>Prayer or encouragement</option>
-              <option>Something else</option>
-            </select>
-          </label>
-          <label>Your message
-            <textarea name="message" rows="4" required placeholder="What’s on your heart?"></textarea>
-          </label>
-          <button class="btn btn-gold btn-big" type="submit">Send it</button>
-          <p class="form-done" id="formDone" hidden>Got it. Thank you — we’ll be in touch soon. ✦</p>
         </form>
       </div>
     </section>
 
+    <section class="about section-cream" id="about" aria-labelledby="about-title">
+      <div class="wrap about-layout">
+        <figure class="founder-figure">
+          <img src="assets/current-site/founders-current-site.jpg" alt="Pastors Tayo and Kemi Akinyemi smiling together" width="930" height="920">
+          <figcaption>Current public Zoe Life founders photograph. Final production image to be confirmed.</figcaption>
+        </figure>
+        <div class="about-copy">
+          <h2 class="title-xl" id="about-title">Tayo and Kemi Akinyemi</h2>
+          <p class="lead">The current Zoe Life site identifies Tayo and Kemi as its founders and as pastors of Life Springs Church.</p>
+          <p>They bring ministry experience, professional leadership, teaching, mentoring and coaching to relationships, family life, education, careers, stewardship and personal growth.</p>
+          <dl class="founder-notes"><div><dt>They serve</dt><dd>Individuals, couples, families, churches, schools, ministries and organizations.</dd></div><div><dt>They bring</dt><dd>Biblical teaching, thoughtful questions, practical guidance and genuine care.</dd></div><div><dt>Their focus</dt><dd>Helping people understand Scripture and live it in everyday life.</dd></div></dl>
+        </div>
+      </div>
+      <div class="wrap principles" aria-label="Zoe Life approach">
+        <article><span>01</span><h3>Biblical Truth</h3><p>Scripture provides wisdom and direction for faith, relationships, work and daily life.</p></article>
+        <article><span>02</span><h3>Practical Wisdom</h3><p>Ideas become useful when people can apply them to real choices, habits and conversations.</p></article>
+        <article><span>03</span><h3>Genuine Care</h3><p>Each person and family brings a different story. The approach begins with respect and grace.</p></article>
+      </div>
+    </section>
+
+    <section class="verse see-through" id="verse" aria-label="John 10:10">
+      <blockquote class="wrap"><p>"I have come that they may have life, and have it to the full."</p><cite>John 10:10</cite></blockquote>
+    </section>
+
+    <section class="resources section-ink" id="resources" aria-labelledby="resources-title">
+      <div class="wrap resources-layout">
+        <div class="resource-copy">
+          <p class="eyebrow eyebrow-gold">Featured resources</p>
+          <h2 class="title-xl" id="resources-title">Keep the conversation going.</h2>
+          <p class="lead">These are the two titles already shown publicly by Zoe Life. Select one to bring it forward.</p>
+          <div class="book-selector" role="tablist" aria-label="Featured books">
+            <button type="button" role="tab" aria-selected="true" data-book="gratitude">A 7-Day Gratitude Devotional <span>by Kemi Akinyemi</span></button>
+            <button type="button" role="tab" aria-selected="false" data-book="questions">Questions Every Christian Couple Should Discuss Before Marriage <span>by Tayo and Kemi Akinyemi</span></button>
+          </div>
+          <p class="resource-note">Prices, release dates, purchase links and availability are not shown because they have not been confirmed for this concept.</p>
+        </div>
+        <div class="book-stage" id="book-stage" data-active="gratitude" aria-live="polite">
+          <img class="book-cover gratitude" src="assets/founder-tayo.jpg" alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi" width="576" height="1024">
+          <img class="book-cover questions" src="assets/founder-kemi.jpg" alt="Cover of Questions Every Christian Couple Should Discuss Before Marriage by Tayo and Kemi Akinyemi" width="1024" height="1536">
+        </div>
+      </div>
+    </section>
+
+    <section class="contact section-cream" id="contact" aria-labelledby="contact-title">
+      <div class="wrap contact-layout">
+        <div class="contact-intro">
+          <h2 class="title-xl" id="contact-title">Start with a real conversation.</h2>
+          <p class="lead">Share the season you are in and the area you want to think through.</p>
+          <img src="assets/current-site/contact-zoe-life-hub.png" alt="Zoe Life contact graphic featuring Pastors Tayo and Kemi Akinyemi" width="2240" height="1260">
+          <p class="contact-note">A free 20-minute consultation was discussed but has not been confirmed, so it is not offered here.</p>
+        </div>
+        <form class="form" id="contactForm" novalidate>
+          <p class="form-notice">This is a mock interaction for review. Nothing is sent, stored or emailed.</p>
+          <label for="contact-name">Name</label><input id="contact-name" type="text" name="name" autocomplete="name" required>
+          <label for="contact-email">Email</label><input id="contact-email" type="email" name="email" autocomplete="email" required>
+          <label for="contact-topic">What would you like to talk about?</label>
+          <select id="contact-topic" name="topic"><option>Relationships and Family</option><option>Academic and Career</option><option>Faith and Life Resources</option><option>Speaking or workshops</option><option>Something else</option></select>
+          <label for="contact-message">Message</label><textarea id="contact-message" name="message" rows="5" required></textarea>
+          <button class="btn btn-ink" type="submit">Send my note</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
   </main>
 
-  <!-- ============ FOOTER ============ -->
   <footer class="footer">
-    <div class="wrap">
-      <div class="footer-top">
-        <a class="footer-brand" href="#top" aria-label="Back to top">
-          <svg viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg>
-          <span>ZOE&nbsp;LIFE</span>
-        </a>
-        <nav class="footer-cols" aria-label="Footer">
-          <div>
-            <h4>Explore</h4>
-            <a href="#about">About</a>
-            <a href="#book">The Book</a>
-            <a href="#family">Family Life</a>
-            <a href="#coming">What’s Coming</a>
-          </div>
-          <div>
-            <h4>The book</h4>
-            <a href="#" data-soon>Amazon</a>
-            <a href="#" data-soon>Etsy</a>
-            <a href="#" data-soon>Gumroad</a>
-            <a href="#" data-soon>Selar</a>
-          </div>
-          <div>
-            <h4>Follow</h4>
-            <a href="#" data-soon>Facebook</a>
-            <a href="#" data-soon>Instagram</a>
-            <a href="#" data-soon>Twitter</a>
-          </div>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 Zoe Life · Zoe Family Life — one home, two heartbeats.</p>
-        <p><a href="#" data-soon>Statement of Faith</a> · <a href="#" data-soon>Privacy Policy</a> · Site concept by Cozy Digital</p>
-      </div>
+    <div class="wrap footer-top">
+      <a class="footer-brand" href="#top" aria-label="Back to top"><svg viewBox="0 0 24 32" aria-hidden="true"><path d="M10 0h4v9h8v4h-8v19h-4V13H2V9h8z"/></svg><span>ZOE LIFE</span></a>
+      <p>Helping People Thrive in Every Season of Life through biblical truth, practical wisdom and Christ-centered resources.</p>
+      <nav aria-label="Footer navigation"><a href="#seasons">Seasons</a><a href="#pathways">Pathways</a><a href="#about">About</a><a href="#resources">Resources</a><a href="#contact">Contact</a></nav>
     </div>
+    <div class="wrap footer-bottom"><span>Internal concept for client review. Scope and availability are not final.</span><span>Site concept by Cozy Digital</span></div>
   </footer>
-
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="vendor/gsap.min.js"></script>
   <script src="vendor/ScrollTrigger.min.js"></script>

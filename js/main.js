@@ -1,23 +1,18 @@
-/* ============================================================
-   ZOE LIFE — interactions & scroll choreography
-   gsap + ScrollTrigger + Lenis (all vendored, no CDN)
-   ============================================================ */
+/* Zoe Life interactions. GSAP, ScrollTrigger and Lenis are vendored locally. */
 (function () {
   'use strict';
 
   var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasGsap = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
-  var $ = function (s, c) { return (c || document).querySelector(s); };
-  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+  var $ = function (selector, context) { return (context || document).querySelector(selector); };
+  var $$ = function (selector, context) { return Array.prototype.slice.call((context || document).querySelectorAll(selector)); };
 
-  /* shared scroll state — read every frame by the WebGL scene (js/scene.js) */
   window.ZOE = window.ZOE || {};
   window.ZOE.reduced = reduced;
   window.ZOE.scroll = { hero: 0, verseIn: 0, verseOut: 0 };
 
   if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 
-  /* ---------- Lenis smooth scroll ---------- */
   var lenis = null;
   if (!reduced && typeof Lenis !== 'undefined' && hasGsap) {
     lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 1 });
@@ -26,264 +21,202 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  function scrollTo(target) {
-    var el = typeof target === 'string' ? $(target) : target;
-    if (!el) return;
-    if (lenis) lenis.scrollTo(el, { offset: -20, duration: 1.4 });
-    else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  function scrollToElement(target) {
+    var element = typeof target === 'string' ? $(target) : target;
+    if (!element) return;
+    if (lenis) lenis.scrollTo(element, { offset: -20, duration: 1.2 });
+    else element.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
   }
 
-  /* ---------- word splitting ---------- */
-  function splitWords(el) {
-    var process = function (node) {
-      if (node.nodeType === 3) {
-        var frag = document.createDocumentFragment();
-        node.textContent.replace(/[\n\r\t ]+/g, ' ').split(/( )/).forEach(function (part) {
-          if (!part) return;
-          if (part === ' ') { frag.appendChild(document.createTextNode(' ')); return; }
-          var w = document.createElement('span'); w.className = 'w';
-          var wi = document.createElement('span'); wi.className = 'wi';
-          wi.textContent = part;
-          w.appendChild(wi); frag.appendChild(w);
-        });
-        node.parentNode.replaceChild(frag, node);
-      } else if (node.nodeType === 1) {
-        Array.prototype.slice.call(node.childNodes).forEach(process);
-      }
-    };
-    Array.prototype.slice.call(el.childNodes).forEach(process);
-    return $$('.wi', el);
-  }
-
-  var heroWords = [];
-  $$('[data-split]').forEach(function (el) {
-    var words = splitWords(el);
-    if (el.closest('#hero')) { heroWords = heroWords.concat(words); return; }
-    if (!hasGsap || reduced) return;
-    gsap.to(words, {
-      y: 0, duration: 1.15, ease: 'power4.out', stagger: 0.045,
-      scrollTrigger: { trigger: el, start: 'top 88%', once: true }
-    });
-  });
-
-  /* ---------- reveal-on-scroll (everything except the hero) ---------- */
-  var heroReveals = $$('#hero .reveal');
-  var otherReveals = $$('.reveal').filter(function (el) { return !el.closest('#hero'); });
-  if (reduced || !('IntersectionObserver' in window)) {
-    $$('.reveal').forEach(function (el) { el.classList.add('in'); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-      });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    otherReveals.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---------- preloader & hero intro ---------- */
   var loader = $('#loader');
-  function heroIn() {
-    var gl = $('#gl');
-    if (gl) gl.classList.add('on');
-    if (hasGsap && !reduced && heroWords.length) {
-      gsap.to(heroWords, { y: 0, duration: 1.3, ease: 'power4.out', stagger: 0.06, delay: 0.1 });
+  var loadCount = $('#loadCount');
+  var loaderFinished = false;
+
+  function finishLoader() {
+    if (loaderFinished) return;
+    loaderFinished = true;
+    if (loader) loader.style.display = 'none';
+    document.documentElement.style.overflow = '';
+    var canvas = $('#gl');
+    if (canvas) canvas.classList.add('on');
+    if (hasGsap && !reduced) {
+      gsap.from('.hero-inner > *', { y: 26, opacity: 0, duration: .9, stagger: .09, ease: 'power3.out', clearProps: 'all' });
+      ScrollTrigger.refresh();
     }
-    heroReveals.forEach(function (el, i) {
-      el.style.transitionDelay = (0.45 + i * 0.14) + 's';
-      el.classList.add('in');
-      setTimeout(function () { el.style.transitionDelay = ''; }, 2600);
-    });
   }
+
   if (loader && hasGsap && !reduced) {
     document.documentElement.style.overflow = 'hidden';
-    var count = { n: 0 };
-    var countEl = $('#loadCount');
-    gsap.timeline({
-      onComplete: function () {
-        document.documentElement.style.overflow = '';
-        loader.style.display = 'none';
-        ScrollTrigger.refresh();
-      }
-    })
-      .to(count, {
-        n: 100, duration: 1.5, ease: 'power2.inOut',
-        onUpdate: function () { if (countEl) countEl.textContent = Math.round(count.n); }
-      })
-      .to('.loader-inner', { opacity: 0, y: -30, duration: 0.5, ease: 'power2.in' }, '-=0.1')
-      .to('.loader-panel', { yPercent: -100, duration: 0.9, ease: 'power4.inOut' }, '-=0.15')
-      .add(heroIn, '-=0.75');
+    var counter = { value: 0 };
+    gsap.timeline({ onComplete: finishLoader })
+      .to(counter, { value: 100, duration: .8, ease: 'power2.inOut', onUpdate: function () { loadCount.textContent = Math.round(counter.value); } })
+      .to('.loader-inner', { opacity: 0, y: -18, duration: .25 }, '-=.05')
+      .to('.loader-panel', { yPercent: -100, duration: .6, ease: 'power4.inOut' }, '-=.08');
+    window.setTimeout(finishLoader, 1900);
   } else {
-    if (loader) loader.style.display = 'none';
-    heroIn();
-    if (reduced) {
-      heroReveals.forEach(function (el) { el.classList.add('in'); });
-    } else if (!hasGsap) {
-      $$('[data-split] .wi').forEach(function (w) { w.style.transform = 'none'; });
+    finishLoader();
+  }
+
+  if (hasGsap) {
+    ScrollTrigger.create({ trigger: '#top', start: 'top top', end: 'bottom top', scrub: true, onUpdate: function (self) { window.ZOE.scroll.hero = self.progress; } });
+    ScrollTrigger.create({ trigger: '#verse', start: 'top bottom', end: 'center center', scrub: true, onUpdate: function (self) { window.ZOE.scroll.verseIn = self.progress; } });
+    ScrollTrigger.create({ trigger: '#verse', start: 'center center', end: 'bottom top', scrub: true, onUpdate: function (self) { window.ZOE.scroll.verseOut = self.progress; } });
+
+    var progressBar = $('#progressBar');
+    if (progressBar) ScrollTrigger.create({ start: 0, end: 'max', onUpdate: function (self) { progressBar.style.transform = 'scaleX(' + self.progress + ')'; } });
+
+    var nav = $('#nav');
+    if (nav) ScrollTrigger.create({ start: 60, end: 'max', onToggle: function (self) { nav.classList.toggle('scrolled', self.isActive); } });
+  }
+
+  $$('a[href^="#"]').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      var target = link.getAttribute('href');
+      if (!target || target.length < 2 || !$(target)) return;
+      event.preventDefault();
+      closeMenu();
+      scrollToElement(target);
+    });
+  });
+
+  var burger = $('#burger');
+  var menu = $('#menu');
+  function setMenu(open) {
+    if (!burger || !menu) return;
+    burger.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.classList.toggle('open', open);
+    menu.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('menu-open', open);
+    if (lenis) open ? lenis.stop() : lenis.start();
+    if (open) {
+      var firstLink = $('a', menu);
+      if (firstLink) firstLink.focus();
+    }
+  }
+  function closeMenu() { setMenu(false); }
+  if (burger && menu) burger.addEventListener('click', function () { setMenu(!menu.classList.contains('open')); });
+  document.addEventListener('keydown', function (event) { if (event.key === 'Escape' && menu && menu.classList.contains('open')) { closeMenu(); burger.focus(); } });
+
+  var seasons = {
+    building: {
+      name: 'Building', letter: 'B', kicker: 'Foundations and first decisions',
+      copy: 'Something new is taking shape: a marriage, a family rhythm, a degree, a role or a clearer life direction. This season calls for foundations you can return to.',
+      path: 'Relationships and Family or Academic and Career',
+      image: 'assets/current-site/about-guidance.jpg', alt: 'Adults gathered around an open Bible'
+    },
+    waiting: {
+      name: 'Waiting', letter: 'W', kicker: 'Patience and preparation',
+      copy: 'Not every season moves on your preferred timeline. Waiting can still hold reflection, preparation, honest questions and faithful next actions.',
+      path: 'Faith and Life Resources',
+      image: 'assets/current-site/coaching-zoe-life.jpg', alt: 'Two women in a coaching conversation'
+    },
+    growing: {
+      name: 'Growing', letter: 'G', kicker: 'Practice and steady change',
+      copy: 'Growth often looks ordinary while it is happening. It can take shape through better habits, stronger relationships, deeper faith and more thoughtful choices.',
+      path: 'Choose the pathway closest to your current focus',
+      image: 'assets/current-site/services-professional.jpg', alt: 'People in a professional conversation'
+    },
+    healing: {
+      name: 'Healing', letter: 'H', kicker: 'Care and a gentler pace',
+      copy: 'Some seasons call for space to reflect, rebuild trust and choose wise support. Zoe Life coaching is practical and faith-centered, and it does not replace professional mental health care.',
+      path: 'Relationships and Family or Faith and Life Resources',
+      image: 'assets/current-site/coaching-zoe-life.jpg', alt: 'Two women in a coaching conversation'
+    },
+    leading: {
+      name: 'Leading', letter: 'L', kicker: 'Responsibility and influence',
+      copy: 'Leadership reaches beyond a title. It includes how you serve, make decisions, build trust, steward resources and help other people grow.',
+      path: 'Academic and Career or Faith and Life Resources',
+      image: 'assets/current-site/services-professional.jpg', alt: 'People in a professional conversation'
+    }
+  };
+
+  var seasonPanel = $('#season-panel');
+  var seasonPhoto = $('#season-photo');
+  function selectSeason(key, syncPathfinder) {
+    var item = seasons[key];
+    if (!item || !seasonPanel) return;
+    $$('.season-option').forEach(function (button) { button.setAttribute('aria-selected', String(button.dataset.season === key)); });
+    seasonPanel.classList.add('changing');
+    window.setTimeout(function () {
+      $('#season-name').textContent = item.name;
+      $('#season-kicker').textContent = item.kicker;
+      $('#season-copy').textContent = item.copy;
+      $('#season-path').textContent = item.path;
+      seasonPanel.setAttribute('data-letter', item.letter);
+      seasonPanel.querySelector('.season-content').setAttribute('data-letter', item.letter);
+      seasonPhoto.src = item.image;
+      seasonPhoto.alt = item.alt;
+      seasonPanel.classList.remove('changing');
+    }, reduced ? 0 : 160);
+    if (syncPathfinder) {
+      var pathRadio = $('input[name="path-season"][value="' + key + '"]');
+      if (pathRadio) pathRadio.checked = true;
+      updatePathfinder();
     }
   }
 
-  /* ---------- scroll progress state for the 3D scene ---------- */
-  if (hasGsap && !reduced) {
-    ScrollTrigger.create({
-      trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true,
-      onUpdate: function (self) { window.ZOE.scroll.hero = self.progress; }
-    });
-    ScrollTrigger.create({
-      trigger: '#verse', start: 'top bottom', end: 'center center', scrub: true,
-      onUpdate: function (self) { window.ZOE.scroll.verseIn = self.progress; }
-    });
-    ScrollTrigger.create({
-      trigger: '#verse', start: 'center center', end: 'bottom top', scrub: true,
-      onUpdate: function (self) { window.ZOE.scroll.verseOut = self.progress; }
-    });
-  }
-
-  /* ---------- top progress bar ---------- */
-  var bar = $('#progressBar');
-  if (bar && hasGsap) {
-    ScrollTrigger.create({
-      start: 0, end: 'max',
-      onUpdate: function (self) { bar.style.transform = 'scaleX(' + self.progress + ')'; }
-    });
-  }
-
-  /* ---------- nav: shade + hide on scroll down ---------- */
-  var nav = $('#nav');
-  var lastY = 0;
-  function onScrollY(y) {
-    if (!nav) return;
-    nav.classList.toggle('scrolled', y > 60);
-    if (y > lastY + 6 && y > 200) nav.classList.add('hidden');
-    else if (y < lastY - 4) nav.classList.remove('hidden');
-    lastY = y;
-  }
-  if (lenis) lenis.on('scroll', function (e) { onScrollY(e.scroll); });
-  else window.addEventListener('scroll', function () { onScrollY(window.scrollY); }, { passive: true });
-
-  /* ---------- anchor links ---------- */
-  $$('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      var id = a.getAttribute('href');
-      if (id.length < 2) return;
-      var el = $(id);
-      if (!el) return;
-      ev.preventDefault();
-      closeMenu();
-      scrollTo(el);
+  $$('.season-option').forEach(function (button) {
+    button.addEventListener('click', function () { selectSeason(button.dataset.season, true); });
+    button.addEventListener('keydown', function (event) {
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp' && event.key !== 'ArrowRight' && event.key !== 'ArrowLeft') return;
+      event.preventDefault();
+      var buttons = $$('.season-option');
+      var index = buttons.indexOf(button);
+      var next = event.key === 'ArrowDown' || event.key === 'ArrowRight' ? index + 1 : index - 1;
+      buttons[(next + buttons.length) % buttons.length].focus();
     });
   });
 
-  /* ---------- mobile menu ---------- */
-  var burger = $('#burger');
-  var menu = $('#menu');
-  function closeMenu() {
-    if (!menu || !menu.classList.contains('open')) return;
-    menu.classList.remove('open');
-    burger.classList.remove('open');
-    burger.setAttribute('aria-expanded', 'false');
-    menu.setAttribute('aria-hidden', 'true');
-    if (lenis) lenis.start();
+  var pathTitles = { spiritual: 'Faith and Life Resources', relational: 'Relationships and Family', personal: 'Faith and Life Resources', professional: 'Academic and Career' };
+  var seasonPhrases = {
+    building: 'In a building season, begin with the foundations and decisions that will support what comes next.',
+    waiting: 'In a waiting season, guidance can create room for preparation, perspective and faithful action.',
+    growing: 'In a growing season, practical resources can help new insight become a steady pattern.',
+    healing: 'In a healing season, begin with care, wise boundaries and support that fits the need.',
+    leading: 'In a leading season, consider the habits, relationships and responsibilities that shape your influence.'
+  };
+  var focusPhrases = {
+    spiritual: ' This pathway centers biblical resources, spiritual growth and faith in everyday life.',
+    relational: ' This pathway centers marriage, family, parenting and healthy relationships.',
+    personal: ' This pathway centers reflection, purpose, character, resilience and practical growth.',
+    professional: ' This pathway centers education, careers, leadership, stewardship and work.'
+  };
+  function updatePathfinder() {
+    var seasonInput = $('input[name="path-season"]:checked');
+    var focusInput = $('input[name="path-focus"]:checked');
+    if (!seasonInput || !focusInput) return;
+    $('#path-result-title').textContent = pathTitles[focusInput.value];
+    $('#path-result-copy').textContent = seasonPhrases[seasonInput.value] + focusPhrases[focusInput.value];
   }
-  if (burger && menu) {
-    burger.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      burger.classList.toggle('open', open);
-      burger.setAttribute('aria-expanded', String(open));
-      menu.setAttribute('aria-hidden', String(!open));
-      if (lenis) { open ? lenis.stop() : lenis.start(); }
-    });
-  }
-
-  /* ---------- pinned horizontal rail ---------- */
-  var track = $('#railTrack');
-  if (track && hasGsap && !reduced) {
-    gsap.to(track, {
-      x: function () { return -(track.scrollWidth - window.innerWidth); },
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '#coming',
-        start: 'top top',
-        end: function () { return '+=' + (track.scrollWidth - window.innerWidth); },
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true
-      }
-    });
-  }
-
-  /* ---------- 3D book scrub ---------- */
-  var book = $('#book3d');
-  if (book && hasGsap && !reduced) {
-    gsap.fromTo(book,
-      { rotationY: -46, rotationX: 6 },
-      {
-        rotationY: 18, rotationX: 2, ease: 'none',
-        scrollTrigger: { trigger: '#book', start: 'top 85%', end: 'bottom 20%', scrub: 1.2 }
-      });
-  }
-
-  /* ---------- magnetic buttons ---------- */
-  var fine = window.matchMedia('(pointer: fine)').matches;
-  if (fine && hasGsap && !reduced) {
-    $$('[data-magnet]').forEach(function (el) {
-      var xTo = gsap.quickTo(el, 'x', { duration: 0.4, ease: 'power3' });
-      var yTo = gsap.quickTo(el, 'y', { duration: 0.4, ease: 'power3' });
-      el.addEventListener('mousemove', function (e) {
-        var r = el.getBoundingClientRect();
-        xTo((e.clientX - r.left - r.width / 2) * 0.35);
-        yTo((e.clientY - r.top - r.height / 2) * 0.45);
-      });
-      el.addEventListener('mouseleave', function () { xTo(0); yTo(0); });
-    });
-  }
-
-  /* ---------- custom cursor ---------- */
-  var cursor = $('.cursor');
-  if (fine && cursor && !reduced) {
-    var dot = $('.cursor-dot'), ring = $('.cursor-ring');
-    var mx = -100, my = -100, rx = -100, ry = -100;
-    document.addEventListener('mousemove', function (e) { mx = e.clientX; my = e.clientY; });
-    (function loop() {
-      rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
-      dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
-      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
-      requestAnimationFrame(loop);
-    })();
-    document.addEventListener('mouseover', function (e) {
-      cursor.classList.toggle('is-hover', !!e.target.closest('a, button, input, select, textarea'));
-    });
-  }
-
-  /* ---------- "coming at launch" links ---------- */
-  var toast = $('#toast');
-  var toastTimer = null;
-  $$('a[data-soon]').forEach(function (a) {
-    a.addEventListener('click', function (ev) {
-      ev.preventDefault();
-      if (!toast) return;
-      toast.textContent = 'This link goes live with the book — end of August ✦';
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(function () { toast.classList.remove('show'); }, 2600);
+  $$('input[name="path-season"], input[name="path-focus"]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      if (input.name === 'path-season') selectSeason(input.value, false);
+      updatePathfinder();
     });
   });
 
-  /* ---------- contact form (concept wiring) ---------- */
+  var bookStage = $('#book-stage');
+  $$('.book-selector button').forEach(function (button) {
+    button.addEventListener('click', function () {
+      $$('.book-selector button').forEach(function (item) { item.setAttribute('aria-selected', 'false'); });
+      button.setAttribute('aria-selected', 'true');
+      if (bookStage) bookStage.setAttribute('data-active', button.dataset.book);
+    });
+  });
+
   var form = $('#contactForm');
   if (form) {
-    form.addEventListener('submit', function (ev) {
-      ev.preventDefault();
+    form.addEventListener('submit', function (event) {
+      event.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      var btn = $('button[type="submit"]', form);
-      var done = $('#formDone');
-      if (btn) { btn.disabled = true; btn.textContent = 'Sent ✦'; }
-      if (done) done.hidden = false;
+      $('#formStatus').textContent = 'Thank you. This is a mockup, so nothing was sent or stored.';
     });
   }
 
-  /* ---------- keep triggers honest after fonts/layout settle ---------- */
   window.addEventListener('load', function () {
+    finishLoader();
     if (hasGsap) ScrollTrigger.refresh();
-  });
-})();
+  }, { once: true });
+}());
