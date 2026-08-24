@@ -308,3 +308,49 @@ No payment processing has been configured or enabled.
 - [ ] `noindex` removed from the reference build only if it is ever hosted
 - [ ] Sitemap submitted; staging/preview URLs left unindexed
 - [ ] Real-device pass on iOS and Android
+
+---
+
+## 11. How to demo before launch
+
+Two review surfaces, for two different questions.
+
+| Surface | Answers | Needs |
+| --- | --- | --- |
+| Static reference build (this repo) | Does the design, copy and structure work? | Nothing. Already reviewable. |
+| Squarespace preview | Do the forms, booking and commerce actually work? | Squarespace access + `contact@` verified |
+
+The second cannot be skipped. Forms, scheduling and commerce are
+Squarespace-native, and this repo deliberately leaves them fail-closed rather
+than simulating them. They can only be proven on the real platform.
+
+### Recommended: Not Linked pages
+
+In Squarespace 7.1 the Pages panel has a **Not Linked** section. Pages there are
+live at their URL but do not appear in navigation.
+
+1. Build the five Phase 1 pages as Not Linked (`/home-new`, `/about-new`, ...).
+2. For each: **Page Settings → SEO → hide this page from search results.**
+   Not Linked is *not* private; without this the page is guessable and indexable.
+3. Optionally set a page password under **Page Settings → Password**.
+4. Send Tayo and Kemi the direct links. They need no login and no seat.
+5. On approval, swap them into the main navigation and remove the old pages.
+
+The existing live site is untouched throughout.
+
+### Alternatives
+
+- **Site duplication.** Duplicates zoelifehub.com into a new trial site to rebuild
+  in safely. Zero risk to production, but the trial expires (14 days), so do not
+  start one until the review is actually ready to happen.
+- **Site-wide Private + password.** Works, but takes the *existing live site*
+  down for real visitors for the duration. Not worth it for a review.
+- **Editor preview.** Fine for Cozy Digital, but needs a contributor seat per
+  reviewer, so it is not the right surface for the client.
+
+### Gate
+
+Do not present a Squarespace preview as a *functional* demo until the
+section 10 checklist passes. Until `contact@zoelifehub.com` is verified, a form
+on a preview page either fails or silently goes nowhere, which is worse than the
+honest "not connected yet" state in the reference build.
