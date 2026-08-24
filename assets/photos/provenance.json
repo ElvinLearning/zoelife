@@ -1,0 +1,81 @@
+{
+  "source_site": "https://www.zoelifehub.com/",
+  "captured_for": "Phase 1 reference build (not deployed)",
+  "permission_status": "Current-site reuse requested by the Cozy Digital owner; production provenance/usage rights still require confirmation.",
+  "assets": [
+    {
+      "file": "assets/photos/small-group-study.jpg",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/533f98d2-1eae-4f0b-bcf2-91d5f686505b/steptodown.com847866.jpg?format=2500w",
+      "source_page": "https://www.zoelifehub.com/about",
+      "role": "About/services supporting image from the current site",
+      "width": 1600,
+      "height": 1066,
+      "format": "JPEG",
+      "bytes": 195494,
+      "sha256": "52d9e8c12c7670c7d0acb7d550400d7e173a0b0bcd09bcb53025ff330fff6d23",
+      "original_file": "about-guidance.jpg"
+    },
+    {
+      "file": "assets/photos/coaching-conversation.jpg",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/dcbdeb7f-053a-408b-8125-7420637a6dae/COACHING+ZOE+LIFE.jpg?format=2500w",
+      "source_page": "https://www.zoelifehub.com/services",
+      "role": "Coaching graphic from the current services page",
+      "width": 1600,
+      "height": 1066,
+      "format": "JPEG",
+      "bytes": 167674,
+      "sha256": "2441ba47450f6284fc056ce28435395514577c508f8f210bfd09b5caa97b6802",
+      "original_file": "coaching-zoe-life.jpg"
+    },
+    {
+      "file": "assets/photos/hands-reaching.jpg",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/1784914554707-UHQ94030IAKXUD66WQ64/unsplash-image-lyiKExA4zQA.jpg?format=2500w",
+      "source_page": "https://www.zoelifehub.com/services",
+      "role": "Professional/lifestyle image from the current services page",
+      "width": 2000,
+      "height": 2500,
+      "format": "JPEG",
+      "bytes": 763658,
+      "sha256": "e20359cc9101598f2facedc64234655aabb56b4fb126fda51185a528b3e04e68",
+      "original_file": "services-professional.jpg"
+    },
+    {
+      "file": "assets/photos/zoe-life-hub-graphic.png",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/84801124-6134-430f-b4e6-c0f3d8bea3ac/ZOE+LIFE+HUB.png?format=2500w",
+      "source_page": "https://www.zoelifehub.com/contact",
+      "role": "Contact-page Zoe Life graphic",
+      "width": 2240,
+      "height": 1260,
+      "format": "PNG",
+      "bytes": 2235687,
+      "sha256": "1767bbcc513f7c963d63ea0d2c37b2b340df1d1779a4786aa84c34a0ccade06f",
+      "original_file": "contact-zoe-life-hub.png"
+    },
+    {
+      "file": "assets/photos/cream-plaster-texture.jpg",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/496cdabc-cc7e-481d-a406-b8ea70224bf0/pexels-sora-noao-265549236-12998747.jpg?format=2500w",
+      "source_page": "https://www.zoelifehub.com/",
+      "role": "Current homepage background photograph",
+      "width": 2500,
+      "height": 1875,
+      "format": "JPEG",
+      "bytes": 510259,
+      "sha256": "93b96c332ef9d54f8b8dff2317b070206b0ad8362ab966ddcac77e9f6ade2023",
+      "original_file": "homepage-background.jpg"
+    },
+    {
+      "file": "assets/photos/founders-tayo-kemi.jpg",
+      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/84801124-6134-430f-b4e6-c0f3d8bea3ac/ZOE+LIFE+HUB.png?format=2500w",
+      "source_page": "https://www.zoelifehub.com/contact",
+      "role": "Founder-photo crop from the current live contact-page graphic",
+      "width": 930,
+      "height": 920,
+      "format": "JPEG",
+      "bytes": 311530,
+      "sha256": "ac669a063c5065b234004b549cbcc274dee8559e555b02702860ef8691760368",
+      "production_status": "Use in private mockup; confirm final production approval and preferred original photo.",
+      "original_file": "founders-current-site.jpg"
+    }
+  ],
+  "note": "Files renamed for clarity in the Phase 1 build; original names retained below as original_file."
+}

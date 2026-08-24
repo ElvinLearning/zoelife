@@ -1,0 +1,4 @@
+tools/.chrome-qa/
+tools/.chrome-qa-forms/
+tools/screenshots/
+node_modules/
