@@ -24,6 +24,62 @@ Google Workspace promotion or first-year offer. If it does not, tell Zoe Life th
 exact cost before purchasing. Do not activate any paid plan without written
 approval.
 
+
+---
+
+## 0a. Decision recorded, 25 August 2026
+
+**Zoe Life chose to stay on Squarespace.** This document is now the build plan,
+not one of two options.
+
+Consequences that change how we work:
+
+### Build natively, not with code blocks
+
+The Phase 1 preview page was a single **Code Block** holding hand written HTML
+and CSS. That was right for a demo and is **wrong for production**, because a
+code block cannot be edited from the Squarespace editor.
+
+One of the strongest reasons to stay on Squarespace is that Zoe Life can update
+their own content. Building the real pages as code blocks would quietly remove
+that, and every future copy tweak would come back to us. So:
+
+- Build pages from **native sections and blocks**.
+- Put the palette and type in **Design > Site styles**, not inline CSS.
+- Use **Custom CSS** only for the few details Site styles cannot express.
+- Accept slightly less pixel fidelity than the reference build. That trade is
+  the point of the decision.
+
+### Site styles are now in scope
+
+Earlier this was off limits because Site styles are global and would have
+restyled the live site mid review. Now that Squarespace is the deliverable,
+setting them is correct. Do it as part of the cutover, not piecemeal, so the
+live site does not sit half restyled for days. Values are in section 2.
+
+### The preview page is scaffolding
+
+`/phase-1-preview-home` stays as a visual target while the native pages are
+built, then **delete it before launch**. It is Not Linked and hidden from
+search, so it is harmless in the meantime.
+
+### The custom build is now a reference
+
+The static build in this repo, and the deploy workflow, stay as the design and
+content source of truth. Nothing depends on them being deployed. Decide
+separately whether to keep the GitHub Pages copy alive as an internal
+reference or switch it off.
+
+### Build order
+
+1. Fix the Appointments page (section 4 gate) so no unapproved pricing can surface.
+2. Set Site styles: palette, fonts, buttons.
+3. Build the five pages natively, Home last so the current one is untouched longest.
+4. Wire the contact form once `contact@zoelifehub.com` is verified.
+5. Configure the consultation properly: 20 minutes, Mon/Wed 6 to 8 PM Central.
+6. Mailing list, then commerce.
+7. Swap navigation, delete the preview page, launch.
+
 ---
 
 ## 1. Pages and navigation

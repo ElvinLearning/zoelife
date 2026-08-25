@@ -3,9 +3,13 @@
 A complete, responsive, accessible five-page reference implementation of the
 Zoe Life Phase 1 site, prepared by Cozy Digital.
 
-This build is **deployable**. It can serve zoelifehub.com directly if the domain
-is switched away from Squarespace, or act as the design and content reference
-for assembling the same site inside Squarespace.
+**Zoe Life chose Squarespace (25 Aug 2026).** This repo is therefore the design
+and content reference, not the shipping site. The Squarespace build plan is in
+[`docs/squarespace-setup.md`](docs/squarespace-setup.md), which now leads with
+that decision and the reasons to build natively rather than with code blocks.
+
+The build here remains fully deployable, and is kept that way so the option
+stays open. It is not the current deliverable.
 
 - Deploying it: [`DEPLOY.md`](DEPLOY.md), including the domain-switchover order
   and what is lost by leaving Squarespace.
