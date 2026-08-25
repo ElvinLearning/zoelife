@@ -27,7 +27,12 @@ createServer(async (req, res) => {
     const info = await stat(file);
     if (!info.isFile()) throw new Error("not a file");
     const body = await readFile(file);
-    res.writeHead(200, { "content-type": TYPES[extname(file)] || "application/octet-stream" });
+    res.writeHead(200, {
+      "content-type": TYPES[extname(file)] || "application/octet-stream",
+      // Lets the Squarespace editor tab fetch preview snippets from this
+      // local server while building the preview pages.
+      "access-control-allow-origin": "*",
+    });
     res.end(body);
   } catch {
     res.writeHead(404, { "content-type": "text/plain" });

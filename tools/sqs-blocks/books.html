@@ -1,0 +1,138 @@
+<div class="zl-p1">
+<style>
+.sqs-block-code,.sqs-block-content,.fe-block,.fluid-engine,.page-section,.content-wrapper,article,main{overflow:visible !important}
+/* Fluid engine puts each block in a grid cell. Span every column rather than
+   using a 100vw breakout, which assumes the block is horizontally centred. */
+.fluid-engine:has(.zl-p1){display:block !important;padding:0 !important}
+.fe-block:has(.zl-p1){grid-area:auto !important;grid-column:1 / -1 !important;width:100% !important;max-width:none !important;position:static !important}
+.fe-block:has(.zl-p1) .sqs-block,.fe-block:has(.zl-p1) .sqs-block-content{padding:0 !important;height:auto !important}
+.zl-p1{
+--cream:#FBF7F0;--cream-deep:#F4ECDF;--sand:#E5D9C3;--white:#fff;--gold:#C9A227;--gold-text:#A38119;--gold-deep:#7A600F;--sage:#6F7D5E;--sage-deep:#4C5840;--terracotta:#9C5227;--ink:#2E2A24;--ink-soft:#5A5248;
+--d:'Fraunces',Georgia,serif;--s:'Outfit','Segoe UI',system-ui,sans-serif;
+background:var(--cream);color:var(--ink);font-family:var(--s);line-height:1.65;font-size:17px;text-align:left}
+.zl-p1 *{box-sizing:border-box}
+.zl-p1 .w{width:min(100% - 3rem,68rem);margin-inline:auto}
+.zl-p1 section{padding-block:clamp(2.8rem,7vw,6rem)}
+.zl-p1 .deep{background:var(--cream-deep)}
+.zl-p1 .sage{background:var(--sage-deep);color:#F6F4EE}
+.zl-p1 .sage h2,.zl-p1 .sage h3{color:#fff}
+.zl-p1 .sage .lede,.zl-p1 .sage li,.zl-p1 .sage p,.zl-p1 .sage .meta{color:#E4DFD4}
+.zl-p1 h1,.zl-p1 h2,.zl-p1 h3{font-family:var(--d);font-weight:600;line-height:1.15;margin:0 0 .5em;color:var(--ink);text-wrap:balance}
+.zl-p1 h1{font-size:clamp(2.1rem,1.4rem + 3vw,3.6rem);letter-spacing:-.015em}
+.zl-p1 h2{font-size:clamp(1.6rem,1.2rem + 1.8vw,2.5rem);letter-spacing:-.01em}
+.zl-p1 h3{font-size:clamp(1.1rem,1rem + .5vw,1.4rem)}
+.zl-p1 h4{font-family:var(--s);font-size:1rem;font-weight:600;margin:0 0 .2rem;color:var(--ink)}
+.zl-p1 p{margin:0 0 1.05em;max-width:64ch}
+.zl-p1 ul{padding-left:1.15em;margin:0 0 1em}
+.zl-p1 li{margin-bottom:.4em}
+.zl-p1 a{color:var(--sage-deep);text-underline-offset:.18em}
+.zl-p1 .sage a{color:#EBD79A}
+.zl-p1 .eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 1rem;display:flex;align-items:center;gap:.7rem}
+.zl-p1 .eyebrow::after{content:"";flex:1;height:1px;background:var(--sand);max-width:5rem}
+.zl-p1 .sage .eyebrow{color:#D9C88A}
+.zl-p1 .sage .eyebrow::after{background:rgba(255,255,255,.28)}
+.zl-p1 .lede{font-size:clamp(1.02rem,1rem + .35vw,1.25rem);color:var(--ink-soft);line-height:1.6}
+.zl-p1 .tagline{font-family:var(--d);font-style:italic;font-size:clamp(1.1rem,1rem + .8vw,1.5rem);color:var(--terracotta);margin:0 0 1.1rem;max-width:36ch}
+.zl-p1 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--s);font-size:.98rem;font-weight:500;padding:.8rem 1.5rem;border-radius:4px;border:1.5px solid transparent;text-decoration:none;min-height:48px}
+.zl-p1 .btn-p{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
+.zl-p1 .btn-s{background:transparent;color:var(--ink);border-color:var(--sand)}
+.zl-p1 .sage .btn-s{color:#F6F4EE;border-color:rgba(255,255,255,.4)}
+.zl-p1 .btn-off{background:transparent;color:var(--ink-soft);border:1.5px dashed var(--sand);cursor:not-allowed}
+.zl-p1 .row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.5rem}
+.zl-p1 .grid{display:grid;gap:clamp(1.1rem,2.5vw,1.9rem)}
+.zl-p1 .g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr))}
+.zl-p1 .g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.zl-p1 .split{display:grid;gap:clamp(1.5rem,3.5vw,3rem);align-items:center;grid-template-columns:1fr}
+@media(min-width:52rem){.zl-p1 .split{grid-template-columns:1fr 1fr}}
+.zl-p1 .card{background:var(--white);border:1px solid var(--sand);border-radius:4px;padding:clamp(1.1rem,2.5vw,1.7rem)}
+.zl-p1 .card p{font-size:.95rem;color:var(--ink-soft)}
+.zl-p1 .num{font-family:var(--d);font-size:1.5rem;color:var(--gold-text);line-height:1;display:block;margin-bottom:.45rem}
+.zl-p1 .pathway{border-top:3px solid var(--sage)}
+.zl-p1 .planned{border-left:4px solid var(--sand);background:var(--cream-deep)}
+.zl-p1 .parent{border-left:4px solid var(--gold)}
+.zl-p1 .child{border-left:4px solid var(--sage)}
+.zl-p1 .pending{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--terracotta);background:#FBEDE2;border:1px solid #F0C9A8;border-radius:100px;padding:.2rem .6rem}
+.zl-p1 .note{border-left:3px solid var(--gold);background:var(--white);padding:.95rem 1.2rem;margin:1.4rem 0;font-size:.93rem;color:var(--ink-soft)}
+.zl-p1 .note b{color:var(--ink)}
+.zl-p1 .meta{font-size:.85rem;color:var(--ink-soft)}
+.zl-p1 figure{margin:0}
+.zl-p1 img{max-width:100%;height:auto;display:block;border-radius:4px}
+.zl-p1 .founders{aspect-ratio:1/1;object-fit:cover;object-position:52% 34%;border:1px solid var(--sand)}
+.zl-p1 .banner{background:#2E2A24;color:#F6F4EE;padding:.75rem 1.2rem;font-size:.84rem;text-align:center}
+.zl-p1 .banner b{color:#E4C86B}
+.zl-p1 .chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;margin:0;padding:0}
+.zl-p1 .chips li{margin:0}
+.zl-p1 .chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;font-weight:500;padding:.5rem .85rem;min-height:44px;border:1.5px solid var(--sand);border-radius:4px;color:var(--ink);text-decoration:none;background:var(--cream)}
+.zl-p1 .chip-off{border-style:dashed;color:var(--ink-soft);cursor:not-allowed}
+.zl-p1 .fmt{border:1px solid var(--sand);border-radius:4px;background:var(--white);padding:1rem 1.2rem;margin-bottom:.85rem}
+.zl-p1 .cover{border:1px solid var(--sand);border-radius:4px;background:var(--white);box-shadow:0 10px 26px rgba(46,42,36,.08)}
+.zl-p1 .cover-x{aspect-ratio:2/3;display:flex;flex-direction:column;gap:.6rem;align-items:center;justify-content:center;text-align:center;border:2px dashed var(--sand);border-radius:4px;background:var(--cream-deep);color:var(--ink-soft);padding:1.2rem;font-size:.88rem}
+.zl-p1 .book{display:grid;gap:clamp(1.3rem,3vw,2.5rem);grid-template-columns:1fr;align-items:start}
+@media(min-width:48rem){.zl-p1 .book{grid-template-columns:minmax(0,14rem) 1fr}}
+.zl-p1 .fld{margin-bottom:1rem}
+.zl-p1 .fld label{display:block;font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.zl-p1 .fld .box{border:1.5px solid var(--sand);border-radius:4px;background:var(--cream);min-height:46px;padding:.7rem .85rem;color:var(--ink-soft);font-size:.93rem}
+.zl-p1 .fld .box.ta{min-height:6rem}
+.zl-p1 .req{color:var(--terracotta)}
+.zl-p1 .dl{list-style:none;margin:0;padding:0}
+.zl-p1 .dl li{display:flex;flex-wrap:wrap;gap:.3rem 1rem;padding:.65rem 0;border-bottom:1px solid var(--sand);margin:0;font-size:.94rem}
+.zl-p1 .sage .dl li{border-bottom-color:rgba(255,255,255,.2)}
+.zl-p1 .dl .k{font-weight:600;min-width:10.5rem}
+</style>
+
+<div class="banner"><b>Phase 1 preview: Books and Resources.</b> Not the live site. Forms and booking are not connected, and anything Zoe Life has not supplied is marked pending.</div>
+<section><div class="w">
+  <p class="eyebrow">Books and Resources</p>
+  <h1>Resources for everyday faith.</h1>
+  <p class="lede">Two gratitude resources launch first. More books, workbooks, and guides will be added here as they are published.</p>
+  <div class="note"><b>Nothing is on sale yet.</b> Zoe Life has not yet confirmed final covers, prices, or store listings. Buying options below are shown as pending rather than as live links, so nothing on this page is misleading.</div>
+</div></section>
+
+<section class="deep"><div class="w book">
+  <div><div class="cover-x"><span class="pending">Cover supplied, not yet uploaded</span><span>The final cover for A 7-Day Gratitude Devotional exists and is in the reference build. It still needs uploading to Squarespace.</span></div></div>
+  <div>
+    <p class="eyebrow">Devotional</p>
+    <h2>A 7-Day Gratitude Devotional</h2>
+    <p class="lede">Cultivating a Heart of Thanksgiving to God. By Kemi Akinyemi.</p>
+    <p><span class="pending">Description pending</span> <span class="pending">Price pending</span></p>
+    <h3 style="margin-top:1.8rem">Choose a format</h3>
+    <div class="fmt"><h4>Read on Kindle</h4><p class="meta">Kindle edition, read on any Kindle app or device.</p><ul class="chips"><li><span class="chip chip-off">Amazon Kindle <span class="pending">Link pending</span></span></li></ul></div>
+    <div class="fmt"><h4>Digital download</h4><p class="meta">Instant download, read on any device.</p><ul class="chips"><li><span class="chip chip-off">Etsy <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Gumroad <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Selar <span class="pending">Link pending</span></span></li></ul></div>
+    <div class="fmt"><h4>Printed copy</h4><p class="meta">Paperback, shipped to you.</p><ul class="chips"><li><span class="chip chip-off">Zoe Life store <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Amazon <span class="pending">Link pending</span></span></li></ul></div>
+  </div>
+</div></section>
+
+<section><div class="w book">
+  <div><div class="cover-x"><span class="pending">Cover pending</span><span>The final cover for A 100-Day Gratitude Journal has not been supplied by Zoe Life yet.</span></div></div>
+  <div>
+    <p class="eyebrow">Journal</p>
+    <h2>A 100-Day Gratitude Journal</h2>
+    <p class="lede">A companion journal for recording gratitude over 100 days.</p>
+    <p><span class="pending">Description pending</span> <span class="pending">Price pending</span></p>
+    <h3 style="margin-top:1.8rem">Choose a format</h3>
+    <div class="fmt"><h4>Printable PDF</h4><p class="meta">Digital download, print at home or use on a tablet.</p><ul class="chips"><li><span class="chip chip-off">Etsy <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Gumroad <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Selar <span class="pending">Link pending</span></span></li></ul></div>
+    <div class="fmt"><h4>Printed copy</h4><p class="meta">Paperback journal, shipped to you.</p><ul class="chips"><li><span class="chip chip-off">Zoe Life store <span class="pending">Link pending</span></span></li><li><span class="chip chip-off">Amazon <span class="pending">Link pending</span></span></li></ul></div>
+    <p class="meta">No Kindle edition is planned for the journal.</p>
+  </div>
+</div></section>
+
+<section class="deep"><div class="w split">
+  <div>
+    <p class="eyebrow">Better together</p>
+    <h2>How the two work together.</h2>
+    <p>The devotional carries you through seven days of reflection on thanksgiving to God. The journal gives you 100 days of space to keep going, recording what you are grateful for well beyond the first week.</p>
+    <p>Start with the devotional, then continue in the journal.</p>
+    <p><span class="pending">Companion copy pending</span></p>
+  </div>
+  <div class="card">
+    <h3>Also published by Zoe Life</h3>
+    <p><b>Questions Every Christian Couple Should Discuss Before Marriage</b><br>A Biblical Conversation Guide for Couples Considering Marriage. Workbook by Tayo and Kemi Akinyemi.</p>
+    <p><span class="pending">Availability pending</span></p>
+  </div>
+</div></section>
+
+<section class="sage"><div class="w">
+  <h2>More resources are coming.</h2>
+  <p class="lede">This page is built to grow. Future books, workbooks, guides, and course materials will be added in the same format, alongside the resources above.</p>
+</div></section>
+</div>

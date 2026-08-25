@@ -1,0 +1,156 @@
+<div class="zl-p1">
+<style>
+.sqs-block-code,.sqs-block-content,.fe-block,.fluid-engine,.page-section,.content-wrapper,article,main{overflow:visible !important}
+/* Fluid engine puts each block in a grid cell. Span every column rather than
+   using a 100vw breakout, which assumes the block is horizontally centred. */
+.fluid-engine:has(.zl-p1){display:block !important;padding:0 !important}
+.fe-block:has(.zl-p1){grid-area:auto !important;grid-column:1 / -1 !important;width:100% !important;max-width:none !important;position:static !important}
+.fe-block:has(.zl-p1) .sqs-block,.fe-block:has(.zl-p1) .sqs-block-content{padding:0 !important;height:auto !important}
+.zl-p1{
+--cream:#FBF7F0;--cream-deep:#F4ECDF;--sand:#E5D9C3;--white:#fff;--gold:#C9A227;--gold-text:#A38119;--gold-deep:#7A600F;--sage:#6F7D5E;--sage-deep:#4C5840;--terracotta:#9C5227;--ink:#2E2A24;--ink-soft:#5A5248;
+--d:'Fraunces',Georgia,serif;--s:'Outfit','Segoe UI',system-ui,sans-serif;
+background:var(--cream);color:var(--ink);font-family:var(--s);line-height:1.65;font-size:17px;text-align:left}
+.zl-p1 *{box-sizing:border-box}
+.zl-p1 .w{width:min(100% - 3rem,68rem);margin-inline:auto}
+.zl-p1 section{padding-block:clamp(2.8rem,7vw,6rem)}
+.zl-p1 .deep{background:var(--cream-deep)}
+.zl-p1 .sage{background:var(--sage-deep);color:#F6F4EE}
+.zl-p1 .sage h2,.zl-p1 .sage h3{color:#fff}
+.zl-p1 .sage .lede,.zl-p1 .sage li,.zl-p1 .sage p,.zl-p1 .sage .meta{color:#E4DFD4}
+.zl-p1 h1,.zl-p1 h2,.zl-p1 h3{font-family:var(--d);font-weight:600;line-height:1.15;margin:0 0 .5em;color:var(--ink);text-wrap:balance}
+.zl-p1 h1{font-size:clamp(2.1rem,1.4rem + 3vw,3.6rem);letter-spacing:-.015em}
+.zl-p1 h2{font-size:clamp(1.6rem,1.2rem + 1.8vw,2.5rem);letter-spacing:-.01em}
+.zl-p1 h3{font-size:clamp(1.1rem,1rem + .5vw,1.4rem)}
+.zl-p1 h4{font-family:var(--s);font-size:1rem;font-weight:600;margin:0 0 .2rem;color:var(--ink)}
+.zl-p1 p{margin:0 0 1.05em;max-width:64ch}
+.zl-p1 ul{padding-left:1.15em;margin:0 0 1em}
+.zl-p1 li{margin-bottom:.4em}
+.zl-p1 a{color:var(--sage-deep);text-underline-offset:.18em}
+.zl-p1 .sage a{color:#EBD79A}
+.zl-p1 .eyebrow{font-size:.75rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-deep);margin:0 0 1rem;display:flex;align-items:center;gap:.7rem}
+.zl-p1 .eyebrow::after{content:"";flex:1;height:1px;background:var(--sand);max-width:5rem}
+.zl-p1 .sage .eyebrow{color:#D9C88A}
+.zl-p1 .sage .eyebrow::after{background:rgba(255,255,255,.28)}
+.zl-p1 .lede{font-size:clamp(1.02rem,1rem + .35vw,1.25rem);color:var(--ink-soft);line-height:1.6}
+.zl-p1 .tagline{font-family:var(--d);font-style:italic;font-size:clamp(1.1rem,1rem + .8vw,1.5rem);color:var(--terracotta);margin:0 0 1.1rem;max-width:36ch}
+.zl-p1 .btn{display:inline-flex;align-items:center;justify-content:center;font-family:var(--s);font-size:.98rem;font-weight:500;padding:.8rem 1.5rem;border-radius:4px;border:1.5px solid transparent;text-decoration:none;min-height:48px}
+.zl-p1 .btn-p{background:var(--sage-deep);color:#fff;border-color:var(--sage-deep)}
+.zl-p1 .btn-s{background:transparent;color:var(--ink);border-color:var(--sand)}
+.zl-p1 .sage .btn-s{color:#F6F4EE;border-color:rgba(255,255,255,.4)}
+.zl-p1 .btn-off{background:transparent;color:var(--ink-soft);border:1.5px dashed var(--sand);cursor:not-allowed}
+.zl-p1 .row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.5rem}
+.zl-p1 .grid{display:grid;gap:clamp(1.1rem,2.5vw,1.9rem)}
+.zl-p1 .g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr))}
+.zl-p1 .g3{grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr))}
+.zl-p1 .split{display:grid;gap:clamp(1.5rem,3.5vw,3rem);align-items:center;grid-template-columns:1fr}
+@media(min-width:52rem){.zl-p1 .split{grid-template-columns:1fr 1fr}}
+.zl-p1 .card{background:var(--white);border:1px solid var(--sand);border-radius:4px;padding:clamp(1.1rem,2.5vw,1.7rem)}
+.zl-p1 .card p{font-size:.95rem;color:var(--ink-soft)}
+.zl-p1 .num{font-family:var(--d);font-size:1.5rem;color:var(--gold-text);line-height:1;display:block;margin-bottom:.45rem}
+.zl-p1 .pathway{border-top:3px solid var(--sage)}
+.zl-p1 .planned{border-left:4px solid var(--sand);background:var(--cream-deep)}
+.zl-p1 .parent{border-left:4px solid var(--gold)}
+.zl-p1 .child{border-left:4px solid var(--sage)}
+.zl-p1 .pending{display:inline-block;font-size:.66rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--terracotta);background:#FBEDE2;border:1px solid #F0C9A8;border-radius:100px;padding:.2rem .6rem}
+.zl-p1 .note{border-left:3px solid var(--gold);background:var(--white);padding:.95rem 1.2rem;margin:1.4rem 0;font-size:.93rem;color:var(--ink-soft)}
+.zl-p1 .note b{color:var(--ink)}
+.zl-p1 .meta{font-size:.85rem;color:var(--ink-soft)}
+.zl-p1 figure{margin:0}
+.zl-p1 img{max-width:100%;height:auto;display:block;border-radius:4px}
+.zl-p1 .founders{aspect-ratio:1/1;object-fit:cover;object-position:52% 34%;border:1px solid var(--sand)}
+.zl-p1 .banner{background:#2E2A24;color:#F6F4EE;padding:.75rem 1.2rem;font-size:.84rem;text-align:center}
+.zl-p1 .banner b{color:#E4C86B}
+.zl-p1 .chips{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;margin:0;padding:0}
+.zl-p1 .chips li{margin:0}
+.zl-p1 .chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.88rem;font-weight:500;padding:.5rem .85rem;min-height:44px;border:1.5px solid var(--sand);border-radius:4px;color:var(--ink);text-decoration:none;background:var(--cream)}
+.zl-p1 .chip-off{border-style:dashed;color:var(--ink-soft);cursor:not-allowed}
+.zl-p1 .fmt{border:1px solid var(--sand);border-radius:4px;background:var(--white);padding:1rem 1.2rem;margin-bottom:.85rem}
+.zl-p1 .cover{border:1px solid var(--sand);border-radius:4px;background:var(--white);box-shadow:0 10px 26px rgba(46,42,36,.08)}
+.zl-p1 .cover-x{aspect-ratio:2/3;display:flex;flex-direction:column;gap:.6rem;align-items:center;justify-content:center;text-align:center;border:2px dashed var(--sand);border-radius:4px;background:var(--cream-deep);color:var(--ink-soft);padding:1.2rem;font-size:.88rem}
+.zl-p1 .book{display:grid;gap:clamp(1.3rem,3vw,2.5rem);grid-template-columns:1fr;align-items:start}
+@media(min-width:48rem){.zl-p1 .book{grid-template-columns:minmax(0,14rem) 1fr}}
+.zl-p1 .fld{margin-bottom:1rem}
+.zl-p1 .fld label{display:block;font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.zl-p1 .fld .box{border:1.5px solid var(--sand);border-radius:4px;background:var(--cream);min-height:46px;padding:.7rem .85rem;color:var(--ink-soft);font-size:.93rem}
+.zl-p1 .fld .box.ta{min-height:6rem}
+.zl-p1 .req{color:var(--terracotta)}
+.zl-p1 .dl{list-style:none;margin:0;padding:0}
+.zl-p1 .dl li{display:flex;flex-wrap:wrap;gap:.3rem 1rem;padding:.65rem 0;border-bottom:1px solid var(--sand);margin:0;font-size:.94rem}
+.zl-p1 .sage .dl li{border-bottom-color:rgba(255,255,255,.2)}
+.zl-p1 .dl .k{font-weight:600;min-width:10.5rem}
+</style>
+
+<div class="banner"><b>Phase 1 preview: About.</b> Not the live site. Forms and booking are not connected, and anything Zoe Life has not supplied is marked pending.</div>
+<section><div class="w">
+  <p class="eyebrow">About</p>
+  <h1>About Zoe Life</h1>
+  <p class="tagline">Helping People Thrive in Every Season of Life</p>
+  <p class="lede">Zoe Life equips individuals, couples, families, churches, and organizations with biblical truth, practical wisdom, and Christ-centered resources to help them thrive in every season of life.</p>
+</div></section>
+
+<section class="deep"><div class="w split">
+  <div>
+    <p class="eyebrow">The meaning of Zoe</p>
+    <h2>Life as God intends it.</h2>
+    <p>Zoe comes from the Greek word for life. In Scripture it often refers to the fullness of life that comes from God, not simply being alive but living well, with purpose and hope.</p>
+    <p><em>"I have come that they may have life, and that they may have it more abundantly."</em> John 10:10, NKJV</p>
+    <p>That abundant life is the heart of this organization. Zoe Life exists to help people experience it, whatever season they are in.</p>
+  </div>
+  <figure><img src="https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/1784914554707-UHQ94030IAKXUD66WQ64/unsplash-image-lyiKExA4zQA.jpg" alt="Two people reaching out to take hold of each other's hands." loading="lazy"></figure>
+</div></section>
+
+<section><div class="w grid g2">
+  <div>
+    <p class="eyebrow">Mission</p>
+    <h2>Biblical and practical.</h2>
+    <p>Zoe Life equips individuals, couples, families, churches, and organizations with biblical truth, practical wisdom, and Christ-centered resources to help them thrive in every season of life.</p>
+    <p>Zoe Life starts with what Scripture says, then works out what it means in practice, through thoughtful questions, biblically grounded guidance, and practical tools.</p>
+  </div>
+  <div>
+    <p class="eyebrow">Vision</p>
+    <h2>Lives changed by the truth of God's Word.</h2>
+    <ul>
+      <li>Individuals growing spiritually</li>
+      <li>Marriages strengthened</li>
+      <li>Families flourishing</li>
+      <li>Leaders serving with wisdom and integrity</li>
+      <li>Churches equipped for ministry</li>
+      <li>Communities positively affected</li>
+    </ul>
+  </div>
+</div></section>
+
+<section class="deep"><div class="w">
+  <p class="eyebrow">Meet the founders</p>
+  <div class="split">
+    <figure>
+      <img class="founders" src="https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/84801124-6134-430f-b4e6-c0f3d8bea3ac/ZOE+LIFE+HUB.png" alt="Pastors Tayo and Kemi Akinyemi smiling together." loading="lazy">
+      <figcaption class="meta" style="margin-top:.55rem">Pastors Tayo and Kemi Akinyemi, founders of Zoe Life.</figcaption>
+    </figure>
+    <div>
+      <h2>Tayo and Kemi Akinyemi</h2>
+      <p>Pastors Tayo and Kemi Akinyemi are the founders of Zoe Life and pastors of Life Springs Church.</p>
+      <p>They are founders, pastors, coaches, mentors, parents, and professionals. Their work brings together ministry experience, professional leadership, teaching, mentoring, coaching, and lifelong learning.</p>
+      <p>Their public focus includes relationships, family life, leadership, education, careers, stewardship, and personal growth through Scripture.</p>
+      <p><span class="pending">Biography pending</span></p>
+    </div>
+  </div>
+  <div class="note"><b>Content note for Zoe Life.</b> The wording above is drawn from the current public zoelifehub.com pages. The longer "About Zoe Life" and "Meet Tayo &amp; Kemi" copy sent by email has not been supplied to this build, so nothing has been invented to fill the gap. Send that copy and it will replace these sections.</div>
+</div></section>
+
+<section><div class="w">
+  <p class="eyebrow">What Zoe Life does</p>
+  <h2>Ways we serve.</h2>
+  <div class="grid g3" style="margin-top:2.2rem">
+    <div class="card"><h3>Coaching</h3><p>Personalized guidance rooted in God's Word, for important decisions, relationships, and changing seasons. Areas include marriage, premarital, relationships, parenting and family, academic, career, and leadership.</p></div>
+    <div class="card"><h3>Speaking and teaching</h3><p>Serving churches, conferences, ministries, schools, organizations, and community groups. Topics include marriage, parenting, family life, spiritual growth, Christian living, leadership, stewardship, purpose, and discipleship.</p></div>
+    <div class="card"><h3>Workshops</h3><p>Marriage enrichment, premarital preparation, parenting, leadership development, Christian living, communication, conflict resolution, stewardship, and personal growth.</p></div>
+  </div>
+</div></section>
+
+<section class="sage"><div class="w">
+  <p class="eyebrow">Where next</p>
+  <h2>Take a next step.</h2>
+  <p class="lede">Browse the launch resources, send a message, or ask about a complimentary 20 minute consultation.</p>
+</div></section>
+</div>
