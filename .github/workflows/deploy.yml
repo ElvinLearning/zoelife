@@ -64,7 +64,19 @@ jobs:
         with:
           path: _site
 
+  # Deploy only runs when asked for explicitly.
+  #
+  # This repo's Pages is still on the legacy branch source
+  # (claude/zoe-life-website-boiqf0), and the github-pages environment only
+  # permits that branch, so an automatic deploy from main is rejected. Changing
+  # either needs repository ADMIN.
+  #
+  # To enable Actions-based deploys:
+  #   Settings > Pages > Source: GitHub Actions
+  #   Settings > Environments > github-pages > add `main` to the branch policy
+  # Until then, pushing to the Pages source branch publishes the site directly.
   deploy:
+    if: github.event_name == 'workflow_dispatch'
     needs: build
     runs-on: ubuntu-latest
     environment:
