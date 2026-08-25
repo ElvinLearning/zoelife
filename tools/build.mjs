@@ -13,6 +13,38 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 
+/* ---------------------------------------------------------------- config -- */
+
+/**
+ * Deployment configuration.
+ *
+ * Every integration defaults to null, which makes the corresponding UI fail
+ * closed: the form refuses to submit and says so, the booking button stays
+ * disabled. Set a value here (or via env) and that feature becomes real, with
+ * success reported only when the endpoint actually accepts the request.
+ *
+ * Build for production:   node tools/build.mjs
+ * Build a staging copy:   node tools/build.mjs --staging   (adds noindex)
+ */
+const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
+
+const CONFIG = {
+  // Canonical home of the site. Used for canonical tags and the sitemap.
+  siteUrl: process.env.ZOE_SITE_URL || "https://www.zoelifehub.com",
+
+  // POST target for the Contact Us form. Must return 2xx on success.
+  // e.g. a Formspree/Basin/Web3Forms endpoint, or your own handler.
+  formEndpoint: process.env.ZOE_FORM_ENDPOINT || null,
+
+  // POST target for mailing-list signup.
+  newsletterEndpoint: process.env.ZOE_NEWSLETTER_ENDPOINT || null,
+
+  // Public booking URL for the complimentary 20 minute consultation.
+  bookingUrl: process.env.ZOE_BOOKING_URL || null,
+
+  staging: STAGING,
+};
+
 /* ------------------------------------------------------------------ data -- */
 
 const TAGLINE = "Helping People Thrive in Every Season of Life";
@@ -136,6 +168,9 @@ const socialList = (list, brand) =>
   `<ul class="social-list">${list.map((s) => socialLink(s, brand)).join("")}
             </ul>`;
 
+const canonicalFor = (page) =>
+  `${CONFIG.siteUrl.replace(/\/$/, "")}/${page === "index.html" ? "" : page.replace(/\.html$/, "")}`;
+
 const head = ({ title, description, page }) => `<!doctype html>
 <html lang="en">
 <head>
@@ -143,14 +178,24 @@ const head = ({ title, description, page }) => `<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">
-<meta name="robots" content="noindex, nofollow">
+${CONFIG.staging
+  ? '<meta name="robots" content="noindex, nofollow">'
+  : '<meta name="robots" content="index, follow">'}
+<link rel="canonical" href="${canonicalFor(page)}">
 <meta name="theme-color" content="#FBF7F0">
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Zoe Life">
+<meta property="og:url" content="${canonicalFor(page)}">
 <meta property="og:title" content="${title}">
 <meta property="og:description" content="${description}">
-<meta property="og:image" content="assets/brand/zoe-life-logo.png">
-<link rel="icon" href="assets/brand/zoe-life-logo.png">
+<meta property="og:image" content="${CONFIG.siteUrl.replace(/\/$/, "")}/assets/brand/zoe-life-logo.png">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/brand/zoe-life-logo.png">
+<link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+<script src="js/config.js"></script>
 </head>
 <body data-page="${page}">
 <a class="skip-link" href="#main">Skip to main content</a>`;
@@ -940,12 +985,16 @@ const contact = page(
             other</li>
         </ul>
         <div class="btn-row">
-          <a class="btn btn-secondary" aria-disabled="true" href="#consultation"
-             onclick="return false;">Booking opens soon</a>
+${CONFIG.bookingUrl
+  ? `          <a class="btn btn-secondary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">Book your consultation<span class="visually-hidden">, opens in a new tab</span></a>`
+  : `          <a class="btn btn-secondary" aria-disabled="true" href="#consultation"
+             onclick="return false;">Booking opens soon</a>`}
         </div>
-        <p class="format-meta">The scheduling tool is not connected yet, so
+${CONFIG.bookingUrl
+  ? ""
+  : `        <p class="format-meta">The scheduling tool is not connected yet, so
           there is no booking link to publish. Use the contact form in the meantime and Zoe Life
-          will arrange a time.</p>
+          will arrange a time.</p>`}
       </div>
     </div>
   </div>
@@ -964,8 +1013,108 @@ const PAGES = {
 };
 
 mkdirSync(ROOT, { recursive: true });
-for (const [name, html] of Object.entries(PAGES)) {
-  writeFileSync(join(ROOT, name), html, "utf8");
-  console.log(`wrote ${name.padEnd(18)} ${String(html.length).padStart(6)} bytes`);
-}
-console.log(`\n${Object.keys(PAGES).length} pages built.`);
+const wrote = (name, body) => {
+  writeFileSync(join(ROOT, name), body, "utf8");
+  console.log(`wrote ${name.padEnd(20)} ${String(body.length).padStart(6)} bytes`);
+};
+
+for (const [name, html] of Object.entries(PAGES)) wrote(name, html);
+
+/* Runtime config consumed by js/main.js. Null endpoints keep the UI fail closed. */
+wrote(
+  "js/config.js",
+  `/* Generated by tools/build.mjs. Do not edit by hand. */\n` +
+    `window.ZOE_CONFIG = ${JSON.stringify(
+      {
+        formEndpoint: CONFIG.formEndpoint,
+        newsletterEndpoint: CONFIG.newsletterEndpoint,
+        bookingUrl: CONFIG.bookingUrl,
+      },
+      null,
+      2
+    )};\n`
+);
+
+/* Favicon drawn from the logo mark: gold ring, green leaf. */
+wrote(
+  "favicon.svg",
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <rect width="32" height="32" rx="6" fill="#FBF7F0"/>
+  <circle cx="16" cy="16" r="11.5" fill="none" stroke="#C9A227" stroke-width="1.6"/>
+  <path d="M16 22c-3.2 0-5.6-2.4-5.6-5.6C10.4 12.6 13.6 9.6 16 8c2.4 1.6 5.6 4.6 5.6 8.4 0 3.2-2.4 5.6-5.6 5.6z" fill="#6F7D5E"/>
+  <path d="M16 9.5v12" stroke="#FBF7F0" stroke-width="1.1" stroke-linecap="round"/>
+</svg>\n`
+);
+
+/* Sitemap and robots. A staging build asks robots to stay out entirely, so a
+   pre-switchover copy can never compete with the live Squarespace site. */
+const base = CONFIG.siteUrl.replace(/\/$/, "");
+const today = new Date().toISOString().slice(0, 10);
+wrote(
+  "sitemap.xml",
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+    Object.keys(PAGES)
+      .map(
+        (p) =>
+          `  <url>\n    <loc>${canonicalFor(p)}</loc>\n    <lastmod>${today}</lastmod>\n` +
+          `    <priority>${p === "index.html" ? "1.0" : "0.8"}</priority>\n  </url>`
+      )
+      .join("\n") +
+    `\n</urlset>\n`
+);
+wrote(
+  "robots.txt",
+  CONFIG.staging
+    ? `# Staging build. Not the canonical site.\nUser-agent: *\nDisallow: /\n`
+    : `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`
+);
+
+/* 404 works on GitHub Pages and most static hosts. */
+wrote(
+  "404.html",
+  page(
+    {
+      page: "404.html",
+      title: "Page not found | Zoe Life",
+      description: "That page could not be found. Find Zoe Life resources, about, and contact here.",
+    },
+    `
+<section class="hero">
+  <div class="hero-texture" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">404</p>
+    <h1>That page has moved on.</h1>
+    <p class="lede">We could not find the page you were looking for. It may have been renamed,
+      or the link may be out of date.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="index.html">Back to the home page</a>
+      <a class="btn btn-secondary" href="contact.html">Contact Zoe Life</a>
+    </div>
+  </div>
+</section>
+
+<section class="band-deep">
+  <div class="wrap">
+    <h2>Try one of these.</h2>
+    <div class="grid grid-3" style="margin-top:2rem">
+      <div class="card"><h3>About</h3><p>The meaning of Zoe and the founders behind it.</p>
+        <p class="card-link"><a href="about.html">Read about Zoe Life</a></p></div>
+      <div class="card"><h3>Books and Resources</h3><p>Devotionals and journals for everyday faith.</p>
+        <p class="card-link"><a href="books.html">Browse resources</a></p></div>
+      <div class="card"><h3>Family Life</h3><p>Zoe Family Life and the wider Zoe Life programs.</p>
+        <p class="card-link"><a href="family-life.html">Visit Family Life</a></p></div>
+    </div>
+  </div>
+</section>
+`
+  )
+);
+
+console.log(
+  `\n${Object.keys(PAGES).length} pages + 404, sitemap, robots, favicon, config built.` +
+    `\nmode: ${CONFIG.staging ? "STAGING (noindex, robots disallow)" : "PRODUCTION (indexable)"}` +
+    `\nsite: ${base}` +
+    `\nform endpoint:       ${CONFIG.formEndpoint || "not set (form fails closed)"}` +
+    `\nnewsletter endpoint: ${CONFIG.newsletterEndpoint || "not set (signup fails closed)"}` +
+    `\nbooking url:         ${CONFIG.bookingUrl || "not set (button disabled)"}`
+);

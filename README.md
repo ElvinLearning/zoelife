@@ -3,26 +3,33 @@
 A complete, responsive, accessible five-page reference implementation of the
 Zoe Life Phase 1 site, prepared by Cozy Digital.
 
-**This repo is the design and content reference. It is not the production site.**
-The agreed Phase 1 deliverable is a Squarespace build at zoelifehub.com. This
-build exists so the design, copy, structure, and accessibility decisions are
-settled and reviewable before they are assembled in Squarespace. The
-configuration handoff is in [`docs/squarespace-setup.md`](docs/squarespace-setup.md).
+This build is **deployable**. It can serve zoelifehub.com directly if the domain
+is switched away from Squarespace, or act as the design and content reference
+for assembling the same site inside Squarespace.
 
-Nothing here has been deployed. Every page carries `noindex, nofollow`.
+- Deploying it: [`DEPLOY.md`](DEPLOY.md), including the domain-switchover order
+  and what is lost by leaving Squarespace.
+- Assembling it in Squarespace instead: [`docs/squarespace-setup.md`](docs/squarespace-setup.md),
+  with paste-ready blocks in [`tools/sqs-blocks/`](tools/sqs-blocks/).
+
+No DNS has been changed and no domain is pointed here.
 
 ## Run it
 
 No build step is needed to view the site; the HTML is committed.
 
 ```bash
+node tools/build.mjs          # production build (indexable)
+node tools/build.mjs --staging  # staging build (noindex + robots Disallow)
 node tools/serve.mjs 8765     # http://127.0.0.1:8765
 ```
+
+Every integration is **fail closed** until configured. See `DEPLOY.md`.
 
 ## Checks
 
 ```bash
-node tests/check-site.mjs     # 179 static checks
+node tests/check-site.mjs     # 211 static checks
 node tools/qa.mjs             # 25 page/width browser checks + screenshots
 node tools/qa-forms.mjs       # 32 interaction checks
 ```

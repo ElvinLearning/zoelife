@@ -1,0 +1,75 @@
+name: Build, test and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Build mode"
+        type: choice
+        options: [staging, production]
+        default: staging
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # Endpoints come from repository variables. Unset means the matching
+      # feature stays fail closed: the form refuses to submit and says so,
+      # rather than silently dropping a real enquiry.
+      - name: Build
+        env:
+          ZOE_SITE_URL: ${{ vars.ZOE_SITE_URL || 'https://www.zoelifehub.com' }}
+          ZOE_FORM_ENDPOINT: ${{ vars.ZOE_FORM_ENDPOINT }}
+          ZOE_NEWSLETTER_ENDPOINT: ${{ vars.ZOE_NEWSLETTER_ENDPOINT }}
+          ZOE_BOOKING_URL: ${{ vars.ZOE_BOOKING_URL }}
+          # Default to staging so a deploy made before the domain is switched
+          # cannot compete in search with the live Squarespace site.
+          ZOE_STAGING: ${{ (github.event.inputs.mode == 'production' || vars.ZOE_MODE == 'production') && '0' || '1' }}
+        run: node tools/build.mjs
+
+      - name: Static checks
+        run: node tests/check-site.mjs
+
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp -r index.html about.html books.html family-life.html contact.html \
+                404.html robots.txt sitemap.xml favicon.svg \
+                css js fonts assets _site/
+          # Pretty URLs: /about serves about.html on GitHub Pages.
+          for p in about books family-life contact; do
+            mkdir -p "_site/$p" && cp "$p.html" "_site/$p/index.html"
+          done
+          test -f CNAME && cp CNAME _site/ || echo "no CNAME, serving on the Pages domain"
+          du -sh _site
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

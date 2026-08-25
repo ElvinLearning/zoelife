@@ -86,6 +86,45 @@ for (const p of PAGES) {
 check("All page titles are unique", new Set(titles.values()).size === PAGES.length);
 check("All meta descriptions are unique", new Set(descs.values()).size === PAGES.length);
 
+/* ------------------------------------------------ deployability -------- */
+group("Deployability");
+
+const SITE = "https://www.zoelifehub.com";
+for (const p of PAGES) {
+  const doc = html[p];
+  const canon = (doc.match(/<link rel="canonical" href="([^"]+)"/) || [])[1];
+  check(`${p} has a canonical URL`, !!canon && canon.startsWith(SITE), canon);
+  check(`${p} declares og:url`, doc.includes(`<meta property="og:url"`));
+}
+const canons = PAGES.map((p) => (html[p].match(/rel="canonical" href="([^"]+)"/) || [])[1]);
+check("Canonical URLs are unique per page", new Set(canons).size === PAGES.length);
+check("Home canonical has no trailing filename", canons[0] === SITE + "/", canons[0]);
+
+for (const f of ["404.html", "robots.txt", "sitemap.xml", "favicon.svg", "js/config.js"]) {
+  check(`${f} is generated`, existsSync(join(ROOT, f)));
+}
+
+const robots = read("robots.txt");
+const sitemap = read("sitemap.xml");
+const isStaging = /noindex/.test(html["index.html"]);
+if (isStaging) {
+  check("Staging build disallows crawlers", /Disallow: \//.test(robots));
+} else {
+  check("Production build allows crawlers", /Allow: \//.test(robots));
+  check("robots.txt points at the sitemap", robots.includes(`${SITE}/sitemap.xml`));
+  check("Pages are indexable", PAGES.every((p) => /content="index, follow"/.test(html[p])));
+}
+check("Sitemap lists every page", PAGES.every((p) => sitemap.includes(canonicalOf(p))));
+check("Sitemap is well formed", /^<\?xml/.test(sitemap) && /<\/urlset>/.test(sitemap));
+
+const notFound = read("404.html");
+check("404 page links home", /href="index\.html"/.test(notFound));
+check("404 page has one h1", (notFound.match(/<h1[\s>]/g) || []).length === 1);
+
+function canonicalOf(p) {
+  return SITE + "/" + (p === "index.html" ? "" : p.replace(/\.html$/, ""));
+}
+
 /* --------------------------------------------------------------- links -- */
 group("Links");
 
@@ -174,12 +213,33 @@ check("Contact form is separate from consultation booking", /id="consultation"/.
 /* ------------------------------------------------------------- honesty -- */
 group("Honesty and safety");
 
+// Success wording may exist, but only inside renderSent, which is reachable
+// solely from a 2xx response. Assert that gate rather than banning the words.
+check("Success is only rendered from renderSent", (js.match(/renderSent\(/g) || []).length >= 1);
 check(
-  "No form reports success",
-  !/thank you|we(?:'| ha)?ve received|message sent|successfully|you are subscribed|subscribed!/i.test(js),
-  "success wording found in js/main.js"
+  "renderSent is called only inside a res.ok branch",
+  /if \(res\.ok\) \{\s*renderSent\(/.test(js),
+  "renderSent must be guarded by res.ok"
+);
+check(
+  "Submission is attempted only when an endpoint is configured",
+  /if \(!endpoint\) \{[\s\S]{0,200}renderBlocked/.test(js)
 );
 check("Blocked state is explicit", /not been delivered|not been sent|have not been subscribed/i.test(js));
+check("Failure is never dressed as success", /renderFailed[\s\S]{0,400}did not send/i.test(js));
+
+/* Config must ship fail-closed. */
+const cfg = read("js/config.js");
+check("config.js exists and defines ZOE_CONFIG", /window\.ZOE_CONFIG\s*=/.test(cfg));
+const cfgObj = JSON.parse(cfg.slice(cfg.indexOf("{"), cfg.lastIndexOf("}") + 1));
+for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
+  check(`config.${k} is present`, k in cfgObj);
+}
+check(
+  "No placeholder endpoint was invented",
+  Object.values(cfgObj).every((v) => v === null || /^https:\/\//.test(String(v))),
+  JSON.stringify(cfgObj)
+);
 
 const allHtml = PAGES.map((p) => html[p]).join("\n");
 check(
@@ -244,7 +304,11 @@ check(
   !scriptSrcs.some((s) => /three|gsap|lenis|scrolltrigger/i.test(s)),
   scriptSrcs.join(", ")
 );
-check("Only the local site script is loaded", scriptSrcs.every((s) => s === "js/main.js"), scriptSrcs.join(", "));
+check(
+  "Only local site scripts are loaded",
+  scriptSrcs.every((s) => s === "js/main.js" || s === "js/config.js"),
+  scriptSrcs.join(", ")
+);
 check("Tap targets are at least 44px", /min-height:\s*4[48]px/.test(css));
 
 // House style carried over from the previous suite: no em or en dashes in copy.

@@ -218,7 +218,7 @@ section { padding-block: var(--section-y); }
 .hero .tagline {
   font-family: var(--display); font-style: italic; font-weight: 400;
   font-size: clamp(1.2rem, 1rem + 1vw, 1.7rem);
-  color: var(--terracotta); margin: 0 0 1.25rem; max-width: 30ch;
+  color: var(--terracotta); margin: 0 0 1.25rem; max-width: 34ch; text-wrap: balance;
 }
 .hero .lede { max-width: 54ch; }
 
@@ -332,6 +332,16 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
 .status-error {
   border-left: 3px solid #8A3E17; background: #FDF4EE;
   padding: .9rem 1.15rem; font-size: .93rem; color: #6E3411; font-weight: 500;
+}
+/* Shown only after a configured endpoint returns 2xx. */
+.status-sent {
+  border-left: 3px solid var(--sage-deep); background: #F1F3ED;
+  padding: 1rem 1.25rem; font-size: .93rem; color: #33402A;
+}
+.status-sent strong { display: block; margin-bottom: .25rem; color: #26301F; }
+.status-pending {
+  border-left: 3px solid var(--sand); background: var(--cream-deep);
+  padding: .9rem 1.15rem; font-size: .93rem; color: var(--ink-soft); margin: 0;
 }
 
 /* ---------- consultation ---------- */

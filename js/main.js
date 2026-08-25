@@ -134,6 +134,12 @@
 
   /* -------------------------------------------------------- form handling -- */
 
+  var CONFIG = window.ZOE_CONFIG || {};
+
+  function endpointFor(kind) {
+    return kind === "subscribe" ? CONFIG.newsletterEndpoint : CONFIG.formEndpoint;
+  }
+
   function renderBlocked(status, kind) {
     // Honest terminal state: the submission was NOT delivered anywhere.
     var wording =
@@ -159,6 +165,71 @@
       "</strong>" +
       wording.body +
       "</div>";
+  }
+
+  function renderSent(status, kind) {
+    // Only ever called after the endpoint returned a 2xx.
+    status.innerHTML =
+      '<div class="status-sent"><strong>' +
+      (kind === "subscribe" ? "You are on the list" : "Message received") +
+      "</strong>" +
+      (kind === "subscribe"
+        ? "Thank you. You will hear from Zoe Life when there is something worth sharing. " +
+          "Every email has an unsubscribe link."
+        : "Thank you. Your message has reached the Zoe Life team, and we aim to reply within " +
+          "three business days.") +
+      "</div>";
+  }
+
+  function renderFailed(status, detail) {
+    // A real attempt that the server rejected. Never dressed up as success.
+    status.innerHTML =
+      '<div class="status-blocked"><strong>That did not send</strong>' +
+      "Something went wrong on the way, so your message was not delivered. Please try again " +
+      "in a moment." +
+      (detail ? " (" + detail + ")" : "") +
+      "</div>";
+  }
+
+  function submitTo(endpoint, form, status, kind, button) {
+    var data = new FormData(form);
+    var original = button ? button.textContent : "";
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Sending...";
+    }
+    status.innerHTML = '<p class="status-pending">Sending your message...</p>';
+
+    var done = function () {
+      if (button) {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    };
+
+    fetch(endpoint, {
+      method: "POST",
+      body: data,
+      headers: { Accept: "application/json" },
+    })
+      .then(function (res) {
+        done();
+        // Success is the server's word, not ours.
+        if (res.ok) {
+          renderSent(status, kind);
+          form.reset();
+          if (reason && reveal) {
+            reveal.hidden = true;
+            revealInput.required = false;
+          }
+        } else {
+          renderFailed(status, "error " + res.status);
+        }
+      })
+      .catch(function (err) {
+        done();
+        renderFailed(status, err && err.name === "TypeError" ? "network unavailable" : "");
+      });
   }
 
   Array.prototype.forEach.call(document.querySelectorAll("[data-form]"), function (form) {
@@ -199,8 +270,13 @@
         return;
       }
 
-      // Valid input, but there is nowhere to send it. Say so plainly.
-      if (status) renderBlocked(status, kind);
+      var endpoint = endpointFor(kind);
+      if (!endpoint) {
+        // Valid input, but there is nowhere to send it. Say so plainly.
+        if (status) renderBlocked(status, kind);
+        return;
+      }
+      submitTo(endpoint, form, status, kind, form.querySelector('button[type="submit"]'));
     });
   });
 })();
