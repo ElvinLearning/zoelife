@@ -11,15 +11,14 @@ import { spawn } from "node:child_process";
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { chromePath, chromeFlags } from "./chrome.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SHOTS = join(ROOT, "tools", "screenshots");
 const BASE = process.env.QA_BASE || "http://127.0.0.1:8765";
 const PORT = 9333;
 
-const CHROME =
-  process.env.CHROME_PATH ||
-  "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const CHROME = chromePath();
 
 const PAGES = ["index.html", "about.html", "books.html", "family-life.html", "contact.html"];
 const WIDTHS = [
@@ -169,16 +168,7 @@ mkdirSync(SHOTS, { recursive: true });
 
 const chrome = spawn(
   CHROME,
-  [
-    "--headless=new",
-    "--disable-gpu",
-    "--hide-scrollbars",
-    "--no-first-run",
-    "--no-default-browser-check",
-    `--remote-debugging-port=${PORT}`,
-    "--user-data-dir=" + join(ROOT, "tools", ".chrome-qa"),
-    "about:blank",
-  ],
+  ["--hide-scrollbars", ...chromeFlags(PORT, join(ROOT, "tools", ".chrome-qa"))],
   { stdio: "ignore" }
 );
 

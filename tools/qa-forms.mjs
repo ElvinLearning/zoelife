@@ -9,11 +9,12 @@
 import { spawn } from "node:child_process";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { chromePath, chromeFlags } from "./chrome.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = process.env.QA_BASE || "http://127.0.0.1:8765";
 const PORT = 9334;
-const CHROME = process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const CHROME = chromePath();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let msgId = 0;
@@ -40,10 +41,7 @@ const check = (name, ok, detail) => {
 };
 
 const chrome = spawn(CHROME, [
-  "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
-  `--remote-debugging-port=${PORT}`,
-  "--user-data-dir=" + join(ROOT, "tools", ".chrome-qa-forms"),
-  "about:blank",
+  ...chromeFlags(PORT, join(ROOT, "tools", ".chrome-qa-forms")),
 ], { stdio: "ignore" });
 process.on("exit", () => chrome.kill());
 

@@ -11,12 +11,13 @@ import { spawn } from "node:child_process";
 import { readFileSync, writeFileSync, statSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { chromePath, chromeFlags } from "./chrome.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const OUT = process.argv[2] || join(ROOT, "tools", "zoe-life-demo.html");
 const PORT = 9335;
 const BASE = "http://127.0.0.1:8765";
-const CHROME = process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const CHROME = chromePath();
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 const PAGES = [
@@ -56,10 +57,7 @@ function cdp(ws, method, params = {}, sessionId) {
 }
 
 const chrome = spawn(CHROME, [
-  "--headless=new", "--disable-gpu", "--no-first-run", "--no-default-browser-check",
-  `--remote-debugging-port=${PORT}`,
-  "--user-data-dir=" + join(ROOT, "tools", ".chrome-artifact"),
-  "about:blank",
+  ...chromeFlags(PORT, join(ROOT, "tools", ".chrome-artifact")),
 ], { stdio: "ignore" });
 process.on("exit", () => chrome.kill());
 
