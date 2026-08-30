@@ -11,8 +11,8 @@ cutover. GitHub Pages on upstream still publishes an older branch.
 Meeting 3 direction (launch target Wednesday 2 September 2026): banner
 wordmark, one-sentence tagline, Instagram grey / tan / peach palette, real
 photos of Pastors Tayo and Kemi Akinyemi, two Saturday book covers only, Connect
-(not Family Life as the main nav), Google Calendar consult booking, fail-closed
-forms and payments.
+(not Family Life as the main nav), Google Calendar consult booking, inbox-routed
+forms, and fail-closed payments.
 
 ## Run it
 
@@ -25,7 +25,8 @@ node tools/serve.mjs 8765       # http://127.0.0.1:8765
 Keep `--staging` on any public preview until the domain actually switches, so
 this copy cannot compete with the live Squarespace site in search.
 
-Every integration is **fail closed** until configured. See `DEPLOY.md`.
+Every integration is **fail closed** until configured and explicitly accepted by
+its provider. See `DEPLOY.md`.
 
 ## Checks
 
@@ -74,14 +75,18 @@ The build never invents client facts:
   the environment, the Books page says **purchase options coming**.
 - Printed copies, when offered, will be fulfilled by a print-on-demand partner.
   The site does not describe packing and shipping from home.
-- Consultation booking is Google Calendar appointment scheduling. If
-  `ZOE_GOOGLE_CALENDAR_BOOKING_URL` is unset, `/consult` shows a clearly labeled
-  `GOOGLE_CALENDAR_BOOKING_URL` placeholder. Complimentary 20-minute consults,
-  Mondays and Wednesdays, 6:00 to 8:00 PM Central.
-- **Forms fail closed.** No endpoint is configured, so a valid submission
-  reports that it was *not* delivered. It never fakes success.
-- No Zoe Life email address appears on the site. The contact form is intended
-  for `contact@zoelifehub.com` once an endpoint is wired.
+- Consultation booking uses the approved Google Calendar appointment schedule.
+  If `ZOE_GOOGLE_CALENDAR_BOOKING_URL` is unset, `/consult` shows a clearly
+  labeled `GOOGLE_CALENDAR_BOOKING_URL` placeholder. Complimentary 20-minute
+  consults, Mondays and Wednesdays, 6:00 to 8:00 PM Central.
+- Contact messages and mailing-list signup requests route to
+  `contact@zoelifehub.com` through FormSubmit. The browser reports success only
+  when FormSubmit returns an explicit accepted response; HTTP 2xx alone is not
+  enough. Signup requests reach the inbox for processing and do not pretend to
+  create a subscriber record in a separate email platform.
+- The Zoe Life inbox appears in the public FormSubmit endpoint configuration,
+  not as a direct email link in visible page copy.
+- Google Analytics uses GA4 property `G-R18R3LVBK9` on every generated page.
 - No Unsplash, Pexels, or generated pastor-couple stock. People photos are
   Pastors Tayo and Kemi Akinyemi from the live Zoe Life site.
 - The couple workbook (“Questions Every Christian Couple Should Discuss”) is

@@ -15,7 +15,8 @@ import { fileURLToPath } from "node:url";
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SHOTS = join(ROOT, "tools", "screenshots");
 const BASE = process.env.QA_BASE || "http://127.0.0.1:8765";
-const PORT = 9333;
+// Keep QA away from common desktop-app CDP ports (TradingView uses 9333).
+const PORT = Number(process.env.QA_CDP_PORT || 19333);
 
 const CHROME =
   process.env.CHROME_PATH ||
