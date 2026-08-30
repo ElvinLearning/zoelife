@@ -8,7 +8,7 @@
  */
 
 import { spawn } from "node:child_process";
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -19,12 +19,20 @@ const PORT = 9333;
 
 const CHROME =
   process.env.CHROME_PATH ||
-  "C:/Program Files/Google/Chrome/Application/chrome.exe";
+  [
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  ].find((p) => existsSync(p)) ||
+  "google-chrome";
 
-const PAGES = ["index.html", "about.html", "books.html", "family-life.html", "contact.html"];
+const PAGES = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
 const WIDTHS = [
   { w: 320, h: 780, label: "320-small-mobile" },
   { w: 375, h: 812, label: "375-mobile" },
+  { w: 390, h: 844, label: "390-mobile" },
   { w: 768, h: 1024, label: "768-tablet" },
   { w: 1280, h: 900, label: "1280-laptop" },
   { w: 1600, h: 1000, label: "1600-desktop" },
@@ -93,6 +101,8 @@ const PROBE = `(() => {
   const badImages = [];
   for (const img of document.images) {
     if (!img.complete || img.naturalWidth === 0) { badImages.push('broken: ' + img.getAttribute('src')); continue; }
+    const fit = getComputedStyle(img).objectFit;
+    if (fit === "cover" || fit === "contain") continue;
     const r = img.getBoundingClientRect();
     if (r.width > 2 && r.height > 2) {
       const natural = img.naturalWidth / img.naturalHeight;
@@ -255,7 +265,7 @@ for (const { w, h, label } of WIDTHS) {
     results.push({ page: p, width: w, label, ...r, problems: [...problems] });
 
     // Full page screenshot at the two widths that matter most for review.
-    if (w === 375 || w === 1280) {
+    if (w === 390 || w === 1280) {
       const shot = await cdp(ws, "Page.captureScreenshot",
         { format: "png", captureBeyondViewport: true }, sessionId);
       writeFileSync(join(SHOTS, `${p.replace(".html", "")}-${w}.png`),

@@ -12,6 +12,8 @@
 (function () {
   "use strict";
 
+  document.documentElement.classList.add("has-js");
+
   /* ---------------------------------------------------------- mobile nav -- */
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");

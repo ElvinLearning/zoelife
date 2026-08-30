@@ -1,81 +1,59 @@
 {
-  "source_site": "https://www.zoelifehub.com/",
-  "captured_for": "Phase 1 reference build (not deployed)",
-  "permission_status": "Current-site reuse requested by the Cozy Digital owner; production provenance/usage rights still require confirmation.",
-  "assets": [
-    {
-      "file": "assets/photos/small-group-study.jpg",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/533f98d2-1eae-4f0b-bcf2-91d5f686505b/steptodown.com847866.jpg?format=2500w",
-      "source_page": "https://www.zoelifehub.com/about",
-      "role": "About/services supporting image from the current site",
-      "width": 1600,
-      "height": 1066,
-      "format": "JPEG",
-      "bytes": 195494,
-      "sha256": "52d9e8c12c7670c7d0acb7d550400d7e173a0b0bcd09bcb53025ff330fff6d23",
-      "original_file": "about-guidance.jpg"
+  "policy": "Every photo on this site is a real photograph of Pastors Tayo and Kemi Akinyemi, taken from the live Zoe Life Squarespace site or provided by Cozy Digital / the client. No Unsplash, Pexels, generated pastor-couple stock, or interchangeable stock people.",
+  "brand": {
+    "zoe-life-wordmark.jpg": {
+      "use": "Header banner wordmark (gold ZOE LIFE with green leaf in the O). Tagline is not part of this file.",
+      "source": "Recreated from the client-supplied banner-style logo (gold wordmark, green leaf in O) so the header can show a banner rather than only the circular mark. Circular mark remains favicon / footer only."
     },
-    {
-      "file": "assets/photos/coaching-conversation.jpg",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/dcbdeb7f-053a-408b-8125-7420637a6dae/COACHING+ZOE+LIFE.jpg?format=2500w",
-      "source_page": "https://www.zoelifehub.com/services",
-      "role": "Coaching graphic from the current services page",
-      "width": 1600,
-      "height": 1066,
-      "format": "JPEG",
-      "bytes": 167674,
-      "sha256": "2441ba47450f6284fc056ce28435395514577c508f8f210bfd09b5caa97b6802",
-      "original_file": "coaching-zoe-life.jpg"
-    },
-    {
-      "file": "assets/photos/hands-reaching.jpg",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/1784914554707-UHQ94030IAKXUD66WQ64/unsplash-image-lyiKExA4zQA.jpg?format=2500w",
-      "source_page": "https://www.zoelifehub.com/services",
-      "role": "Professional/lifestyle image from the current services page",
-      "width": 2000,
-      "height": 2500,
-      "format": "JPEG",
-      "bytes": 763658,
-      "sha256": "e20359cc9101598f2facedc64234655aabb56b4fb126fda51185a528b3e04e68",
-      "original_file": "services-professional.jpg"
-    },
-    {
-      "file": "assets/photos/zoe-life-hub-graphic.png",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/84801124-6134-430f-b4e6-c0f3d8bea3ac/ZOE+LIFE+HUB.png?format=2500w",
-      "source_page": "https://www.zoelifehub.com/contact",
-      "role": "Contact-page Zoe Life graphic",
-      "width": 2240,
-      "height": 1260,
-      "format": "PNG",
-      "bytes": 2235687,
-      "sha256": "1767bbcc513f7c963d63ea0d2c37b2b340df1d1779a4786aa84c34a0ccade06f",
-      "original_file": "contact-zoe-life-hub.png"
-    },
-    {
-      "file": "assets/photos/cream-plaster-texture.jpg",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/496cdabc-cc7e-481d-a406-b8ea70224bf0/pexels-sora-noao-265549236-12998747.jpg?format=2500w",
-      "source_page": "https://www.zoelifehub.com/",
-      "role": "Current homepage background photograph",
-      "width": 2500,
-      "height": 1875,
-      "format": "JPEG",
-      "bytes": 510259,
-      "sha256": "93b96c332ef9d54f8b8dff2317b070206b0ad8362ab966ddcac77e9f6ade2023",
-      "original_file": "homepage-background.jpg"
-    },
-    {
-      "file": "assets/photos/founders-tayo-kemi.jpg",
-      "source_url": "https://images.squarespace-cdn.com/content/v1/6a245c8408b375738ac73ffa/84801124-6134-430f-b4e6-c0f3d8bea3ac/ZOE+LIFE+HUB.png?format=2500w",
-      "source_page": "https://www.zoelifehub.com/contact",
-      "role": "Founder-photo crop from the current live contact-page graphic",
-      "width": 930,
-      "height": 920,
-      "format": "JPEG",
-      "bytes": 311530,
-      "sha256": "ac669a063c5065b234004b549cbcc274dee8559e555b02702860ef8691760368",
-      "production_status": "Use in private mockup; confirm final production approval and preferred original photo.",
-      "original_file": "founders-current-site.jpg"
+    "zoe-life-mark.png": {
+      "use": "Favicon, apple-touch-icon, and footer mark.",
+      "source": "Live Squarespace CDN, circular mark used on zoelifehub.com."
     }
-  ],
-  "note": "Files renamed for clarity in the Phase 1 build; original names retained below as original_file."
+  },
+  "books": {
+    "gratitude-devotional-cover.jpg": {
+      "title": "A 7-Day Gratitude Devotional",
+      "source": "Live Squarespace CDN Saturday cover (devotional-front.jpeg)."
+    },
+    "gratitude-journal-cover.jpg": {
+      "title": "A 100-Day Gratitude Journal",
+      "source": "Recreated to match the Saturday cover supplied for this update (open journal, eucalyptus, dawn landscape, forest-green serif title). Replaces the missing journal cover from the previous custom site."
+    }
+  },
+  "photos": {
+    "tayo-kemi-full.jpg": {
+      "alt": "Pastors Tayo and Kemi Akinyemi standing together outdoors, smiling.",
+      "source": "Live Squarespace CDN (tayo-kemi-full.jpeg)."
+    },
+    "tayo-kemi-about.jpg": {
+      "alt": "Pastors Tayo and Kemi Akinyemi seated together outdoors.",
+      "source": "Live Squarespace CDN (tayo-kemi-about.jpeg)."
+    },
+    "tayo-kemi-park.jpg": {
+      "alt": "Pastors Tayo and Kemi Akinyemi walking together outdoors.",
+      "source": "Live Squarespace CDN (tayo-kemi-park.jpeg)."
+    },
+    "tayo-kemi-stage.jpg": {
+      "alt": "Pastors Tayo and Kemi Akinyemi on a ministry stage.",
+      "source": "Live Squarespace CDN (tayo-kemi-stage.jpg)."
+    },
+    "kemi-white.jpg": {
+      "alt": "Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait.",
+      "source": "Live Squarespace CDN (kemi-white.jpg)."
+    },
+    "kemi-headshot.jpg": {
+      "alt": "Pastor Kemi Akinyemi, smiling.",
+      "source": "Live Squarespace CDN (kemi-headshot.jpg)."
+    },
+    "tayo-headshot.jpg": {
+      "alt": "Pastor Tayo Akinyemi, smiling.",
+      "source": "Live Squarespace CDN (tayo-headshot.jpeg)."
+    }
+  },
+  "removed": [
+    "hands-reaching.jpg (Unsplash)",
+    "questions-before-marriage-workbook-cover.jpg (couple workbook, not a Saturday resource)",
+    "stock-coaching.jpg / stock-group.jpg (stock people)",
+    "zoe-life-graphic.png (unused oversized graphic)"
+  ]
 }
