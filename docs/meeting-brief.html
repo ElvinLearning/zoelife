@@ -1,0 +1,365 @@
+<title>Zoe Life Decision Brief</title>
+<style>
+  :root{
+    --bg:#FBF7F0; --surface:#FFFFFF; --raised:#F4ECDF; --line:#E5D9C3;
+    --ink:#2E2A24; --soft:#5A5248; --faint:#7C7367;
+    --gold:#7A600F; --sage:#4C5840; --clay:#9C5227;
+    --a-tint:#EFF2EA; --b-tint:#FBEDE2;
+    --shadow:0 1px 2px rgba(46,42,36,.06), 0 8px 24px rgba(46,42,36,.05);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1C1A17; --surface:#252118; --raised:#2E2A24; --line:#3D372E;
+      --ink:#F2EDE3; --soft:#C6BEB0; --faint:#9C9284;
+      --gold:#D9BB5C; --sage:#A8BC90; --clay:#E0A277;
+      --a-tint:#2A3024; --b-tint:#33261C;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1C1A17; --surface:#252118; --raised:#2E2A24; --line:#3D372E;
+    --ink:#F2EDE3; --soft:#C6BEB0; --faint:#9C9284;
+    --gold:#D9BB5C; --sage:#A8BC90; --clay:#E0A277;
+    --a-tint:#2A3024; --b-tint:#33261C;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:var(--sans); font-size:16.5px; line-height:1.62;
+    -webkit-text-size-adjust:100%;
+  }
+  .wrap{width:min(100% - 2.5rem, 60rem); margin-inline:auto; padding-block:clamp(2rem,5vw,4rem)}
+  h1,h2,h3{font-family:var(--serif); font-weight:600; line-height:1.18; text-wrap:balance; margin:0}
+  h1{font-size:clamp(2rem,1.4rem+2.4vw,3rem); letter-spacing:-.02em}
+  h2{font-size:clamp(1.35rem,1.1rem+1vw,1.85rem); letter-spacing:-.01em; margin:0 0 .6rem}
+  h3{font-size:1.08rem; margin:0 0 .35rem}
+  p{margin:0 0 .9rem; max-width:68ch}
+  ul,ol{margin:0 0 .9rem; padding-left:1.2rem}
+  li{margin-bottom:.35rem}
+  strong{font-weight:600}
+  a{color:var(--sage)}
+
+  .eyebrow{
+    font-size:.72rem; font-weight:700; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--gold); margin:0 0 .7rem
+  }
+  .lede{font-size:1.12rem; color:var(--soft); max-width:60ch}
+  header.top{border-bottom:1px solid var(--line); padding-bottom:1.6rem; margin-bottom:2.4rem}
+  .meta{display:flex; flex-wrap:wrap; gap:.5rem 1.4rem; margin-top:1rem; font-size:.87rem; color:var(--faint)}
+  .meta b{color:var(--soft); font-weight:600}
+
+  section{margin-bottom:3rem; scroll-margin-top:1rem}
+  .num{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:1.7rem; height:1.7rem; border-radius:50%;
+    background:var(--raised); border:1px solid var(--line);
+    font-family:var(--sans); font-size:.8rem; font-weight:700; color:var(--gold);
+    margin-right:.6rem; flex:none
+  }
+  .h-row{display:flex; align-items:center; margin-bottom:.9rem}
+  .h-row h2{margin:0}
+
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:1.25rem 1.4rem; box-shadow:var(--shadow)}
+  .grid{display:grid; gap:1rem}
+  @media(min-width:44rem){.two{grid-template-columns:1fr 1fr}}
+
+  .opt{border-radius:8px; border:1px solid var(--line); overflow:hidden; box-shadow:var(--shadow)}
+  .opt-head{padding:1rem 1.3rem; border-bottom:1px solid var(--line)}
+  .opt-a .opt-head{background:var(--a-tint)}
+  .opt-b .opt-head{background:var(--b-tint)}
+  .opt-head h3{font-family:var(--serif); font-size:1.2rem; margin:0}
+  .opt-head .tag{font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--faint)}
+  .opt-body{padding:1.1rem 1.3rem; background:var(--surface)}
+  .opt-body ul{padding-left:1.1rem; margin-bottom:.8rem}
+  .opt-body .lbl{font-size:.76rem; font-weight:700; letter-spacing:.09em; text-transform:uppercase; color:var(--faint); margin:.9rem 0 .3rem}
+  .opt-body .lbl:first-child{margin-top:0}
+
+  .tbl-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:8px; background:var(--surface)}
+  table{border-collapse:collapse; width:100%; min-width:34rem; font-size:.93rem}
+  th,td{text-align:left; padding:.7rem .9rem; border-bottom:1px solid var(--line); vertical-align:top}
+  th{font-size:.76rem; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--faint); background:var(--raised)}
+  tr:last-child td{border-bottom:0}
+  td.y{color:var(--sage); font-weight:600}
+  td.n{color:var(--clay); font-weight:600}
+
+  .say{border-left:3px solid var(--sage); background:var(--surface); border-radius:0 6px 6px 0;
+       padding:1rem 1.2rem; margin:0 0 1rem}
+  .say p:last-child{margin-bottom:0}
+  .say .who{font-size:.74rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase; color:var(--faint); margin-bottom:.45rem}
+  .say q{font-style:italic; quotes:none}
+
+  .flag{border-left:3px solid var(--clay); background:var(--b-tint); border-radius:0 6px 6px 0; padding:1rem 1.2rem; margin:0 0 1rem}
+  .flag p:last-child{margin-bottom:0}
+
+  .rec{border:2px solid var(--sage); border-radius:8px; padding:1.3rem 1.5rem; background:var(--surface)}
+  .rec h2{color:var(--sage)}
+
+  .chk{list-style:none; padding:0}
+  .chk li{display:flex; gap:.65rem; align-items:flex-start; margin-bottom:.5rem}
+  .chk li::before{content:"☐"; color:var(--faint); flex:none; font-size:1.05rem; line-height:1.5}
+
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.87em;
+       background:var(--raised); padding:.1rem .35rem; border-radius:3px; color:var(--gold)}
+  .link-row{display:flex; flex-wrap:wrap; gap:.5rem; margin-top:.7rem}
+  .link-row a{
+    display:inline-block; font-size:.87rem; font-weight:600; text-decoration:none;
+    padding:.5rem .85rem; border:1px solid var(--line); border-radius:6px;
+    background:var(--raised); color:var(--ink)
+  }
+  .link-row a:hover{border-color:var(--sage); color:var(--sage)}
+  footer{border-top:1px solid var(--line); margin-top:3rem; padding-top:1.2rem; font-size:.85rem; color:var(--faint)}
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <p class="eyebrow">Cozy Digital &middot; internal prep</p>
+  <h1>Zoe Life Decision Brief</h1>
+  <p class="lede">For the meeting with Pastors Tayo and Kemi. What to show, the two
+    paths in front of them, and what we need back to launch.</p>
+  <div class="meta">
+    <span><b>Meeting</b> Tue 25 Aug, 6:00 PM Central</span>
+    <span><b>Original launch target</b> 31 Aug</span>
+    <span><b>Agreement</b> $400 one-time, no monthly retainer</span>
+  </div>
+</header>
+
+<section>
+  <div class="h-row"><span class="num">1</span><h2>What to show, in this order</h2></div>
+  <div class="grid two">
+    <div class="card">
+      <h3>The full design</h3>
+      <p style="color:var(--soft);font-size:.95rem">All five pages, clean, no old
+        Squarespace chrome around it. Best for showing the actual direction.</p>
+      <div class="link-row">
+        <a href="https://elvinlearning.github.io/zoelife/" target="_blank" rel="noopener noreferrer">Open the full build</a>
+      </div>
+    </div>
+    <div class="card">
+      <h3>The same design inside Squarespace</h3>
+      <p style="color:var(--soft);font-size:.95rem">Their real site, their real header
+        and footer, with the new Home page inside it. Proves the design is not
+        locked to leaving Squarespace.</p>
+      <div class="link-row">
+        <a href="https://www.zoelifehub.com/phase-1-preview-home" target="_blank" rel="noopener noreferrer">Open the Squarespace preview</a>
+      </div>
+    </div>
+  </div>
+  <p style="margin-top:1rem;font-size:.93rem;color:var(--soft)">Both are hidden from
+    search and absent from their navigation. Nothing on the live site changed.</p>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">2</span><h2>The honest framing</h2></div>
+  <p>The temptation is to present this as <em>pretty custom site</em> versus
+    <em>functional Squarespace</em>. That framing is wrong, and the preview page
+    proves it: the approved design can live inside Squarespace.</p>
+  <p>So the real question is narrower and easier to answer:</p>
+  <div class="say">
+    <p><q>Do you want to keep the tools Squarespace gives you, or take on replacing
+      them in exchange for lower running costs and full control?</q></p>
+  </div>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">3</span><h2>The two options</h2></div>
+  <div class="grid two">
+
+    <div class="opt opt-a">
+      <div class="opt-head">
+        <span class="tag">Option A</span>
+        <h3>Stay on Squarespace</h3>
+      </div>
+      <div class="opt-body">
+        <p class="lbl">What they keep</p>
+        <ul>
+          <li>Store and checkout for direct sales</li>
+          <li>Acuity scheduling, already connected</li>
+          <li>Form storage and notifications</li>
+          <li>Email Campaigns and the subscriber list</li>
+          <li>The member Login area</li>
+          <li>Editing their own content, no developer</li>
+        </ul>
+        <p class="lbl">What it costs them</p>
+        <ul>
+          <li>The Squarespace subscription continues</li>
+          <li>Some design detail is harder to hold exactly</li>
+          <li>Conditional form fields are not supported natively</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="opt opt-b">
+      <div class="opt-head">
+        <span class="tag">Option B</span>
+        <h3>Move to the custom build</h3>
+      </div>
+      <div class="opt-body">
+        <p class="lbl">What they gain</p>
+        <ul>
+          <li>Hosting cost drops to zero</li>
+          <li>The design exactly as approved</li>
+          <li>Noticeably faster pages</li>
+          <li>Accessibility verified by automated checks</li>
+          <li>No platform lock-in</li>
+        </ul>
+        <p class="lbl">What they give up</p>
+        <ul>
+          <li>Store and checkout, needs replacing</li>
+          <li>Scheduling, needs replacing</li>
+          <li>Form handling, needs replacing</li>
+          <li>Email Campaigns, needs replacing</li>
+          <li>Editing without a developer</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">4</span><h2>Side by side</h2></div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>&nbsp;</th><th>Stay on Squarespace</th><th>Custom build</th></tr></thead>
+      <tbody>
+        <tr><td><b>Matches the signed agreement</b></td><td class="y">Yes, this is what was quoted</td><td class="n">No, different deliverable</td></tr>
+        <tr><td><b>Uses what they already paid for</b></td><td class="y">Yes, renews Jul 2027</td><td class="n">No, that spend goes unused</td></tr>
+        <tr><td><b>Store and checkout</b></td><td class="y">Included</td><td class="n">Must be replaced</td></tr>
+        <tr><td><b>Consultation booking</b></td><td class="y">Acuity already connected</td><td class="n">Must be replaced</td></tr>
+        <tr><td><b>Contact form</b></td><td class="y">Built in</td><td class="n">External handler needed</td></tr>
+        <tr><td><b>Mailing list</b></td><td class="y">Email Campaigns</td><td class="n">External provider needed</td></tr>
+        <tr><td><b>They can edit it themselves</b></td><td class="y">Yes</td><td class="n">No, needs a developer</td></tr>
+        <tr><td><b>Hosting cost</b></td><td class="n">Subscription continues</td><td class="y">Free</td></tr>
+        <tr><td><b>Design fidelity</b></td><td>High, via the preview approach</td><td class="y">Exact</td></tr>
+        <tr><td><b>Time to launch</b></td><td class="y">Fastest</td><td class="n">Adds migration work</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="rec">
+    <p class="eyebrow" style="color:var(--sage)">Recommendation</p>
+    <h2>Stay on Squarespace for Phase 1</h2>
+    <p>Not because the custom build is worse. Because leaving Squarespace means
+      quietly signing up to rebuild four systems that currently work, none of which
+      are in the $400 scope, six days before the intended launch.</p>
+    <p style="margin-bottom:0">The custom build already did its job. It settled the
+      design, proved the content structure, and it stays available if they outgrow
+      Squarespace later. Nothing about recommending A wastes it.</p>
+  </div>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">5</span><h2>How to say it</h2></div>
+
+  <div class="say">
+    <p class="who">Opening</p>
+    <p><q>We built the whole thing two ways so you could see it properly rather than
+      imagine it. Let me show you the design first, then where it lives.</q></p>
+  </div>
+
+  <div class="say">
+    <p class="who">If they love the custom build and want to switch</p>
+    <p><q>It is genuinely the nicer site, and I am glad you like it. Before we
+      commit though: your store, your booking system, your contact form and your
+      mailing list all live in Squarespace today. Moving means rebuilding all four.
+      That is real work and it is outside what we agreed, so I would rather we do it
+      deliberately than discover it after the domain moves.</q></p>
+  </div>
+
+  <div class="say">
+    <p class="who">If they ask why not just use the free hosting</p>
+    <p><q>Hosting is the cheap part. The subscription is buying you the store,
+      scheduling, forms and campaigns. And you are paid up to July next year, so the
+      saving this year is smaller than it looks.</q></p>
+  </div>
+
+  <div class="say">
+    <p class="who">If they worry the Squarespace version will look worse</p>
+    <p><q>That is exactly why I built the preview page. Same design, running on your
+      real site, inside your real header and footer. You are not choosing between
+      good design and working tools.</q></p>
+  </div>
+
+  <div class="say">
+    <p class="who">Closing</p>
+    <p><q>My recommendation is we finish on Squarespace, get you launched, and keep
+      the custom build on the shelf. If you outgrow the platform in a year, it is
+      already built and waiting.</q></p>
+  </div>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">6</span><h2>Raise these, do not wait to be asked</h2></div>
+
+  <div class="flag">
+    <p><b>The Appointments page has prices nobody approved.</b> Acuity is connected
+      and currently shows <em>Free Consultation, 30 minutes</em> plus
+      <em>Basic Service $99</em> and <em>Advanced Service $199</em>. Those look like
+      Acuity's sample entries. The agreed consultation is <b>20</b> minutes, and paid
+      coaching is not in Phase 1. The page is disabled, so it is one toggle away from
+      showing clients pricing that was never agreed. Needs correcting before launch.</p>
+  </div>
+
+  <div class="flag">
+    <p><b>Paid coaching is still an open scope decision.</b> Six appointment types,
+      one-coach versus two-coach rates, 50% deposits, balance collection, refund
+      rules, Stripe and PayPal, per-session Zoom links. That is materially larger
+      than the "20 minute consultation setup" in the $400 agreement. It needs its own
+      quote, and it should not be promised in this meeting.</p>
+  </div>
+
+  <div class="flag">
+    <p><b>The 31 August target is at risk, and not because of us.</b> The blockers
+      below are all things only Zoe Life can supply. Worth agreeing a realistic date
+      in the room.</p>
+  </div>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">7</span><h2>What we need from them</h2></div>
+  <p>Everything below is currently marked <code>pending</code> on the site rather than
+    guessed at. Nothing has been invented to fill a gap.</p>
+  <ul class="chk">
+    <li><b>About Zoe Life</b> and <b>Meet Tayo &amp; Kemi</b> long-form copy</li>
+    <li>Product descriptions for the devotional and the journal</li>
+    <li>The companion-resource copy explaining how the two work together</li>
+    <li><b>The 100-Day Gratitude Journal cover</b>, which we have never received</li>
+    <li>Final prices for both products</li>
+    <li>Live Amazon, Etsy, Gumroad and Selar links, once listings exist</li>
+    <li>Confirmation that <code>contact@zoelifehub.com</code> is receiving mail</li>
+    <li>Approval to use the founders photo in production</li>
+    <li>A decision on paid coaching: Phase 1, or quote separately</li>
+  </ul>
+  <p style="font-size:.93rem;color:var(--soft)">The devotional cover we do have. The
+    second cover in hand is <em>Questions Every Christian Couple Should Discuss
+    Before Marriage</em>, which is a different title, not the journal.</p>
+</section>
+
+<section>
+  <div class="h-row"><span class="num">8</span><h2>Questions worth asking them</h2></div>
+  <ol>
+    <li>Are you selling books directly from the site, or only through Amazon, Etsy,
+      Gumroad and Selar? <span style="color:var(--soft)">If only marketplaces, the
+      store matters far less and Option B gets easier.</span></li>
+    <li>Who updates the site after launch, you or us?
+      <span style="color:var(--soft)">This decides A vs B almost on its own.</span></li>
+    <li>Is the Login area on the current site being used, or is it left over from the
+      template?</li>
+    <li>Are you comfortable moving the launch past 31 August if the copy and covers
+      land late?</li>
+  </ol>
+</section>
+
+<footer>
+  Prepared for the 25 August meeting. Both demo links are private to search engines
+  and unlinked from the live navigation. The live zoelifehub.com site is unchanged.
+</footer>
+
+</div>

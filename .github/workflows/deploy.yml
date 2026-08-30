@@ -38,7 +38,12 @@ jobs:
           ZOE_SITE_URL: ${{ vars.ZOE_SITE_URL || 'https://www.zoelifehub.com' }}
           ZOE_FORM_ENDPOINT: ${{ vars.ZOE_FORM_ENDPOINT }}
           ZOE_NEWSLETTER_ENDPOINT: ${{ vars.ZOE_NEWSLETTER_ENDPOINT }}
+          ZOE_GOOGLE_CALENDAR_BOOKING_URL: ${{ vars.ZOE_GOOGLE_CALENDAR_BOOKING_URL }}
           ZOE_BOOKING_URL: ${{ vars.ZOE_BOOKING_URL }}
+          ZOE_STRIPE_DEVOTIONAL_URL: ${{ vars.ZOE_STRIPE_DEVOTIONAL_URL }}
+          ZOE_PAYPAL_DEVOTIONAL_URL: ${{ vars.ZOE_PAYPAL_DEVOTIONAL_URL }}
+          ZOE_STRIPE_JOURNAL_URL: ${{ vars.ZOE_STRIPE_JOURNAL_URL }}
+          ZOE_PAYPAL_JOURNAL_URL: ${{ vars.ZOE_PAYPAL_JOURNAL_URL }}
           # Default to staging so a deploy made before the domain is switched
           # cannot compete in search with the live Squarespace site.
           ZOE_STAGING: ${{ (github.event.inputs.mode == 'production' || vars.ZOE_MODE == 'production') && '0' || '1' }}
@@ -50,11 +55,12 @@ jobs:
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -r index.html about.html books.html family-life.html contact.html \
+          cp -r index.html about.html books.html connect.html contact.html consult.html \
+                family-life.html appointments.html \
                 404.html robots.txt sitemap.xml favicon.svg \
                 css js fonts assets _site/
           # Pretty URLs: /about serves about.html on GitHub Pages.
-          for p in about books family-life contact; do
+          for p in about books connect contact consult family-life appointments; do
             mkdir -p "_site/$p" && cp "$p.html" "_site/$p/index.html"
           done
           test -f CNAME && cp CNAME _site/ || echo "no CNAME, serving on the Pages domain"
