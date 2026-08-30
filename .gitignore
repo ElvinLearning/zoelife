@@ -5,3 +5,7 @@ node_modules/
 tools/zoe-life-demo.html
 tools/.chrome-verify/
 tools/.chrome-artifact/
+assets/_raw/*.jpg
+assets/_raw/*.jpeg
+assets/_raw/*.png
+assets/_raw/*.webp

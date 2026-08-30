@@ -2,5 +2,15 @@
 window.ZOE_CONFIG = {
   "formEndpoint": null,
   "newsletterEndpoint": null,
-  "bookingUrl": null
+  "bookingUrl": null,
+  "payments": {
+    "devotional": {
+      "stripe": null,
+      "paypal": null
+    },
+    "journal": {
+      "stripe": null,
+      "paypal": null
+    }
+  }
 };
