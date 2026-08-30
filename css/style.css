@@ -152,7 +152,8 @@ section { padding-block: var(--section-y); }
   padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: .95rem; color: var(--ink-soft);
 }
 .note p:last-child { margin-bottom: 0; }
-.note strong { color: var(--ink); }
+.card-link { margin: .35rem 0 0; }
+.card-link a { font-weight: 500; }
 
 /* ---------- header ---------- */
 .site-header {
@@ -161,8 +162,8 @@ section { padding-block: var(--section-y); }
   border-bottom: 1px solid var(--grey-deep);
 }
 .header-inner { display: flex; align-items: center; gap: 1rem; padding-block: .55rem; position: relative; }
-.brand { display: flex; align-items: center; text-decoration: none; color: var(--ink); margin-right: auto; }
-.brand-wordmark { width: min(198px, 42vw); height: auto; }
+.brand { display: flex; align-items: center; text-decoration: none; color: var(--ink); margin-right: auto; min-height: 44px; padding-block: .2rem; }
+.brand-wordmark { width: min(198px, 52vw); height: auto; }
 .nav-toggle {
   display: none; align-items: center; gap: .5rem;
   background: transparent; border: 1.5px solid var(--grey-deep); border-radius: var(--radius);
