@@ -40,8 +40,9 @@ const CTA_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
 const CONSENT =
-  "I agree to receive emails and other communications, including marketing, from Zoe Life. " +
-  "We will not share your information with third parties. You can unsubscribe at any time.";
+  "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
+  "a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. " +
+  "Zoe Life will use it for updates, and I can unsubscribe at any time.";
 
 const DEVOTIONAL_BLURB =
   "Seven days to slow down and turn your attention toward God. A 7-Day Gratitude Devotional " +
@@ -163,6 +164,15 @@ ${CONFIG.staging
 <link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R18R3LVBK9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R18R3LVBK9');
+</script>
 <script src="js/config.js"></script>
 </head>
 <body data-page="${page}">
@@ -207,6 +217,10 @@ const subscribeForm = (idPrefix, intro) => `
             <span>${CONSENT}</span>
           </label>
           <p class="error" id="${idPrefix}-consent-error" role="alert"></p>
+        </div>
+        <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
+          <label for="${idPrefix}-honey">Leave this field empty</label>
+          <input type="text" id="${idPrefix}-honey" name="_honey" tabindex="-1" autocomplete="off">
         </div>
         <button class="btn btn-primary" type="submit">Subscribe</button>
         <div class="form-status" data-status role="status" aria-live="polite"></div>
@@ -727,8 +741,8 @@ const contact = page(
             </div>
 
             <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
-              <label for="c-website">Leave this field empty</label>
-              <input type="text" id="c-website" name="website" tabindex="-1" autocomplete="off">
+              <label for="c-honey">Leave this field empty</label>
+              <input type="text" id="c-honey" name="_honey" tabindex="-1" autocomplete="off">
             </div>
 
             <button class="btn btn-primary" type="submit">Send message</button>
@@ -748,7 +762,7 @@ const contact = page(
           <p class="card-link"><a href="${CTA_HREF}">Go to the consultation page</a></p>
         </div>
         <div class="note">
-          <p><strong>Privacy.</strong> Messages go to the Zoe Life team privately. Zoe Life does not publish its email addresses on this site.</p>
+          <p><strong>Message delivery.</strong> Messages are sent through FormSubmit for delivery to the Zoe Life team.</p>
         </div>
       </aside>
     </div>

@@ -3,7 +3,7 @@
  *   node tests/check-site.mjs
  *
  * Regression checks for the things most likely to go wrong on a client build:
- * broken links, missing labels, invented facts, exposed private addresses,
+ * broken links, missing labels, invented facts, misleading privacy claims,
  * leftover stock, and forms that lie about succeeding.
  */
 
@@ -34,6 +34,7 @@ function group(title) {
 
 const read = (f) => readFileSync(join(ROOT, f), "utf8");
 const html = Object.fromEntries([...PAGES, ...REDIRECTS].map((p) => [p, read(p)]));
+const allHtmlPages = { ...html, "404.html": read("404.html") };
 const js = read("js/main.js");
 const css = read("css/style.css");
 
@@ -240,7 +241,7 @@ for (const opt of [
   check(`Contact reason option present: ${opt}`, contact.includes(`>${opt}<`) || contact.includes(`value="${opt}"`));
 }
 check("Contact form has a conditional Other field", /data-reveal="Other"/.test(contact));
-check("Contact form has a honeypot", /name="website"/.test(contact));
+check("Contact form has a provider-recognized honeypot", /name="_honey"/.test(contact));
 check("Contact form includes first, last, email, phone, message",
   ["c-first", "c-last", "c-email", "c-phone", "c-message"].every((id) => contact.includes(`id="${id}"`)));
 check("Contact form is separate from consultation booking",
@@ -253,10 +254,17 @@ group("Honesty and safety");
 
 check("Success is only rendered from renderSent", (js.match(/renderSent\(/g) || []).length >= 1);
 check(
-  "renderSent is called only inside a res.ok branch",
-  /if \(res\.ok\) \{\s*renderSent\(/.test(js),
-  "renderSent must be guarded by res.ok"
+  "renderSent requires an accepted provider response",
+  /providerAccepted\(payload\)[\s\S]{0,200}renderSent\(/.test(js),
+  "HTTP 2xx alone must not be treated as delivery"
 );
+check(
+  "Provider responses are parsed before success",
+  /res[\s\S]{0,80}\.json\(\)[\s\S]{0,500}providerAccepted\(payload\)/.test(js) &&
+    /function providerAccepted\(payload\)[\s\S]{0,180}payload\.success/.test(js)
+);
+check("Contact messages set a reply-to address", /data\.set\("_replyto"/.test(js));
+check("Contact and subscribe messages identify their form type", /data\.set\("form_type"/.test(js));
 check(
   "Submission is attempted only when an endpoint is configured",
   /if \(!endpoint\) \{[\s\S]{0,200}renderBlocked/.test(js)
@@ -270,6 +278,11 @@ const cfgObj = JSON.parse(cfg.slice(cfg.indexOf("{"), cfg.lastIndexOf("}") + 1))
 for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
   check(`config.${k} is present`, k in cfgObj);
 }
+const FORM_ENDPOINT = "https://formsubmit.co/ajax/contact@zoelifehub.com";
+const BOOKING_URL = "https://calendar.app.google/Uj9v44HE72kJrKz8A";
+check("Contact form targets the Zoe Life inbox", cfgObj.formEndpoint === FORM_ENDPOINT);
+check("Mailing list targets the Zoe Life inbox", cfgObj.newsletterEndpoint === FORM_ENDPOINT);
+check("Consult uses the approved Google Calendar link", cfgObj.bookingUrl === BOOKING_URL);
 check("config.payments is present", cfgObj.payments && typeof cfgObj.payments === "object");
 check(
   "No placeholder endpoint was invented",
@@ -278,10 +291,12 @@ check(
 );
 
 check(
-  "No Zoe Life email address is exposed",
-  !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(publishedHtml),
+  "No direct Zoe Life email address appears in visible page copy",
+  !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(visibleText(publishedHtml)),
   (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
+check("Contact copy names FormSubmit delivery", /Messages are sent through FormSubmit for delivery to the Zoe Life team\./.test(contact));
+check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
 check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.test(visibleText(publishedHtml)));
@@ -353,8 +368,15 @@ check("Zoe Family Life X absence is stated", /No X account for Zoe Family Life/.
 
 check("Subscribe intro copy is present",
   publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
-check("Subscribe consent copy is present",
-  publishedHtml.includes("I agree to receive emails and other communications, including marketing, from Zoe Life."));
+const subscribeForms = [...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].map((m) => m[0]);
+check("Subscribe consent names FormSubmit as a service provider",
+  subscribeForms.length > 0 && subscribeForms.every((form) => /FormSubmit, a service provider/.test(form)));
+check("Subscribe consent explains FormSubmit retention",
+  subscribeForms.every((form) => /retained by FormSubmit for up to 30 days/.test(form)));
+check("Subscribe consent explains Zoe Life's use and unsubscribe choice",
+  subscribeForms.every((form) => /Zoe Life will use it for updates, and I can unsubscribe at any time\./.test(form)));
+check("Subscribe consent makes no absolute third-party-sharing claim",
+  subscribeForms.every((form) => !/will not share (?:your|my) information with third parties/i.test(form)));
 
 /* ------------------------------------------------------------ styling -- */
 group("Visual direction");
@@ -369,14 +391,25 @@ check("Type pairing is Fraunces and Outfit", /font-family: Fraunces/.test(css) &
 check("No Inter or Roboto as the only sans", !/--sans:\s*Inter|--sans:\s*Roboto/.test(css));
 
 const scriptSrcs = [...publishedHtml.matchAll(/<script[^>]*src="([^"]+)"/g)].map((m) => m[1]);
+const GTAG_SRC = "https://www.googletagmanager.com/gtag/js?id=G-R18R3LVBK9";
+for (const [pageName, doc] of Object.entries(allHtmlPages)) {
+  check(
+    `${pageName} loads the approved Google tag once`,
+    (doc.match(new RegExp(GTAG_SRC.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "g")) || []).length === 1
+  );
+  check(
+    `${pageName} configures the approved GA4 property once`,
+    (doc.match(/gtag\('config', 'G-R18R3LVBK9'\);/g) || []).length === 1
+  );
+}
 check(
   "No WebGL or heavy animation libraries loaded",
   !scriptSrcs.some((s) => /three|gsap|lenis|scrolltrigger/i.test(s)),
   scriptSrcs.join(", ")
 );
 check(
-  "Only local site scripts are loaded",
-  scriptSrcs.every((s) => s === "js/main.js" || s === "js/config.js"),
+  "Only local site scripts and the approved Google tag are loaded",
+  scriptSrcs.every((s) => s === "js/main.js" || s === "js/config.js" || s === GTAG_SRC),
   scriptSrcs.join(", ")
 );
 check("Tap targets are at least 44px", /min-height:\s*4[48]px/.test(css));

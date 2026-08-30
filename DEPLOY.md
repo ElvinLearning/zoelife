@@ -37,8 +37,8 @@ variables (Settings > Secrets and variables > Actions > Variables):
 | Variable | Effect when set | When unset |
 | --- | --- | --- |
 | `ZOE_SITE_URL` | Canonical URLs and sitemap | `https://www.zoelifehub.com` |
-| `ZOE_FORM_ENDPOINT` | Contact form POSTs here; success only on 2xx | Form refuses to send, says so |
-| `ZOE_NEWSLETTER_ENDPOINT` | Signup POSTs here; success only on 2xx | Signup refuses, says so |
+| `ZOE_FORM_ENDPOINT` | Contact form POSTs here; success requires an accepted provider response | Form refuses to send, says so |
+| `ZOE_NEWSLETTER_ENDPOINT` | Signup POSTs here; success requires an accepted provider response | Signup refuses, says so |
 | `ZOE_GOOGLE_CALENDAR_BOOKING_URL` | Consult page links to Google Calendar appointment scheduling | Shows a labeled `GOOGLE_CALENDAR_BOOKING_URL` placeholder |
 | `ZOE_BOOKING_URL` | Fallback for the consult link if the Google Calendar variable is empty | Same placeholder |
 | `ZOE_STRIPE_DEVOTIONAL_URL` | Stripe button for the 7-Day Devotional | Purchase options coming |
@@ -47,17 +47,27 @@ variables (Settings > Secrets and variables > Actions > Variables):
 | `ZOE_PAYPAL_JOURNAL_URL` | PayPal button for the 100-Day Journal | Purchase options coming |
 | `ZOE_MODE` | `production` makes the workflow build indexable | staging |
 
-The form posts `multipart/form-data` with `Accept: application/json`, which
-suits Formspree, Basin, Web3Forms, Formsubmit, or any handler of your own.
+The form posts `multipart/form-data` with `Accept: application/json`. The UI
+expects a JSON payload with `success: true` or `success: "true"`; a bare 2xx is
+not treated as delivery.
 Field names are `firstName`, `lastName`, `email`, `phone`, `reason`,
-`reasonOther`, `message`, plus a `website` honeypot that should be ignored.
+`reasonOther`, `message`, plus `_replyto`, `_subject`, `form_type`, and a
+provider-recognized `_honey` honeypot.
+
+The configured provider is FormSubmit at
+`https://formsubmit.co/ajax/contact@zoelifehub.com` for both contact messages and
+mailing-list signup requests. FormSubmit requires a one-time activation click in
+the `contact@zoelifehub.com` inbox before it will accept messages. Its published
+documentation says it retains submissions for 30 days before deletion. A signup
+request is emailed to Zoe Life for processing; this setup does not claim to add
+the address to a separate email-marketing database.
 
 Do not invent prices or storefront URLs. Stripe and PayPal buttons appear only
 when those environment URLs are real `https` links.
 
-> Do not point the form anywhere until `contact@zoelifehub.com` is verified as
-> receiving mail, and send a real test submission before launch. A form that
-> silently drops enquiries is worse than one that admits it is not connected.
+> After activation, send a synthetic end-to-end test through each form and
+> confirm both messages arrived in `contact@zoelifehub.com` before launch. A form
+> that silently drops enquiries is worse than one that admits it is not connected.
 
 Consultation booking is **Google Calendar appointment scheduling** on the Zoe
 Life Workspace calendar (20-minute consults, Monday and Wednesday 6:00 to 8:00
