@@ -315,7 +315,8 @@ check("Books page has both Saturday titles",
 
 const consult = html["consult.html"];
 if (!cfgObj.bookingUrl) {
-  check("Consult shows GOOGLE_CALENDAR_BOOKING_URL placeholder", /GOOGLE_CALENDAR_BOOKING_URL/.test(consult));
+  check("Consult does not show an internal booking placeholder", !/GOOGLE_CALENDAR_BOOKING_URL/.test(consult));
+  check("Unconfigured consult still offers Send a message", /contact\.html#message/.test(consult));
 } else {
   check("Consult booking uses a live https URL", consult.includes(cfgObj.bookingUrl));
 }
@@ -332,12 +333,14 @@ check("Tagline appears on Home as a sentence", html["index.html"].includes(TAGLI
 check("Tagline appears on About", html["about.html"].includes(TAGLINE));
 check("Tagline is not inside the logo alt", !/alt="[^"]*Thrive[^"]*"/.test(publishedHtml));
 const indexHeader = headerOf(html["index.html"]);
-check("Header uses the banner wordmark", /class="brand-wordmark"[^>]*src="assets\/brand\/zoe-life-wordmark\.jpg"/.test(html["index.html"]));
+check("Header uses the transparent banner wordmark", /class="brand-wordmark"[^>]*src="assets\/brand\/zoe-life-wordmark\.png"/.test(html["index.html"]));
 check("Header does not use the circular mark as the logo", !indexHeader.includes("zoe-life-mark.png"));
-check("Footer uses the circular mark", footerOf(html["index.html"]).includes("assets/brand/zoe-life-mark.png"));
+check("Header does not use the boxed jpg wordmark", !indexHeader.includes("zoe-life-wordmark.jpg"));
+check("Footer uses the banner wordmark", footerOf(html["index.html"]).includes("assets/brand/zoe-life-wordmark.png"));
 
 check("Header has no cart", !/\(0\)|\bCart\b|\bLogin\b|\bAccount\b/i.test(indexHeader));
-check("Primary CTA is the 20-minute consultation", /Schedule a complimentary 20-minute consultation/.test(indexHeader));
+check("Primary header CTA is Send a message", /Send a message/.test(indexHeader) && /contact\.html#message/.test(indexHeader));
+check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
 
 const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
 for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Contact"]) {
@@ -345,10 +348,12 @@ for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Conta
 }
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
-check("Home shows Pastors Tayo and Kemi", /tayo-kemi-full\.jpg/.test(html["index.html"]));
+check("Home shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(html["index.html"]));
+check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
 check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
-check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-full\.jpg/.test(consult));
-check("Contact shows Pastor Kemi", /kemi-white\.jpg/.test(contact));
+check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Contact shows the couple, not Kemi only", /tayo-kemi-park\.jpg/.test(contact) && !/kemi-white\.jpg/.test(contact));
+check("Home does not use a Kemi-only photo", !/kemi-white\.jpg|kemi-headshot\.jpg/.test(html["index.html"]));
 
 const ZOE_LIFE = ["facebook.com/zoelifehub", "instagram.com/zoelifehub", "tiktok.com/@zoelifehub1", "youtube.com/@zoelifehub1", "x.com/zoelifehub"];
 const ZFL = ["facebook.com/zoefamilylife10", "instagram.com/zoefamilylife", "tiktok.com/@zoefamilylife", "youtube.com/@zoefamilylife"];
@@ -362,9 +367,14 @@ for (const p of PAGES) {
 
 const connectMain = mainOf(html["connect.html"]);
 check("Connect introduces Zoe Life before Zoe Family Life",
-  connectMain.indexOf("The main accounts") < connectMain.indexOf("Zoe Family Life") && connectMain.indexOf("The main accounts") >= 0);
+  connectMain.indexOf("Find us online") < connectMain.indexOf("Zoe Family Life") && connectMain.indexOf("Find us online") >= 0);
 for (const s of ZFL) check(`Connect page links ${s}`, html["connect.html"].includes(s));
-check("Zoe Family Life X absence is stated", /No X account for Zoe Family Life/.test(html["connect.html"]));
+check("Connect uses a filled icon+label layout, not a split with empty column",
+  /connect-find/.test(connectMain) && !/split-copy-photo/.test(connectMain));
+check("Connect uses Visit labels, not a handle dump", /Visit Facebook/.test(connectMain) && !/The main accounts/.test(connectMain));
+check("Stay in Touch is more prominent than the mailing disclaimer",
+  /footer-h-lead/.test(footerOf(html["index.html"])));
+check("Connect does not lecture about footer links", !/also linked in the footer|Start here if you are new/.test(connectMain));
 
 check("Subscribe intro copy is present",
   publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
@@ -377,6 +387,27 @@ check("Subscribe consent explains Zoe Life's use and unsubscribe choice",
   subscribeForms.every((form) => /Zoe Life will use it for updates, and I can unsubscribe at any time\./.test(form)));
 check("Subscribe consent makes no absolute third-party-sharing claim",
   subscribeForms.every((form) => !/will not share (?:your|my) information with third parties/i.test(form)));
+check("Consent is demoted with the consent-note class", /consent-note/.test(publishedHtml));
+check("Stay in Touch is the mailing list title", /Stay in Touch/.test(footerOf(html["index.html"])));
+
+const homeMain = mainOf(html["index.html"]);
+const aboutMain = mainOf(html["about.html"]);
+check("No leftover builder note: Home is a starting place", !/Home is a starting place/.test(publishedHtml));
+check("No leftover builder note: form goes to inbox", !/form goes to the Zoe Life inbox|The form goes to the Zoe Life inbox/i.test(publishedHtml));
+check("No leftover morning-only book copy", !/ordinary mornings|naming what God has done|long after the first week/.test(publishedHtml));
+check("Home does not lead with a Greek-word lecture", !/Zoe is the Greek word for life/.test(homeMain));
+check("Home founder line does not mention Life Springs", !/Life Springs/.test(homeMain));
+check("Home consult is not in the hero", !/hero-home[\s\S]{0,1200}consult\.html/.test(html["index.html"]));
+check("Home leads with Send a message", /contact\.html#message/.test(homeMain));
+check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
+check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
+check("About founder line is Pastor Kemi and Pastor Tai", /founded by Pastor Kemi and Pastor Tai/.test(aboutMain));
+check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(booksDoc));
+check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
+check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
+check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
+check("Contact reply copy is spoken English", /Please expect a reply within three business days/.test(contact));
+check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */
 group("Visual direction");

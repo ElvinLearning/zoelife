@@ -177,7 +177,7 @@
       (kind === "subscribe"
         ? "Thank you. Your signup request has reached the Zoe Life team. You will hear " +
           "from Zoe Life when there is something worth sharing."
-        : "Thank you. Your message has reached the Zoe Life team, and we aim to reply within " +
+        : "Thank you. Your message has reached the Zoe Life team. Please expect a reply within " +
           "three business days.") +
       "</div>";
   }
