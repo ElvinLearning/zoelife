@@ -36,7 +36,7 @@
 <header class="site-header">
   <div class="wrap-wide header-inner">
     <a class="brand" href="index.html">
-      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.jpg" alt="Zoe Life" width="198" height="60">
+      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span aria-hidden="true">&#9776;</span> Menu
@@ -48,10 +48,10 @@
         <li><a href="books.html">Books &amp; Resources</a></li>
         <li><a href="connect.html">Connect</a></li>
         <li><a href="contact.html">Contact</a></li>
-        <li class="nav-cta"><a href="consult.html">Schedule a complimentary 20-minute consultation</a></li>
+        <li class="nav-cta"><a href="contact.html#message">Send a message</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary header-cta" href="consult.html">Schedule a complimentary 20-minute consultation</a>
+    <a class="btn btn-primary header-cta" href="contact.html#message">Send a message</a>
   </div>
 </header>
 <main id="main">
@@ -69,12 +69,27 @@
 </main>
 <footer class="site-footer">
   <div class="wrap-wide">
+    <div class="footer-top">
+      <img class="footer-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <p class="footer-tagline">Helping people thrive in every season of life.</p>
+    </div>
     <div class="footer-grid">
 
-      <div class="footer-brand">
-        <img src="assets/brand/zoe-life-mark.png" alt="" width="56" height="56">
-        <p class="footer-tagline">Helping people thrive in every season of life.</p>
-        <h2 class="footer-h" style="margin-top:1.75rem">Follow Zoe Life</h2>
+      <nav class="footer-nav" aria-label="Footer">
+        <h2 class="footer-h">Explore</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="books.html">Books &amp; Resources</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#message">Send a message</a></li>
+          <li><a href="consult.html">Complimentary consultation</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-social">
+        <h2 class="footer-h">Social</h2>
         <ul class="social-list">
               <li><a class="social-link" href="https://www.facebook.com/zoelifehub" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 9h2.5V6H14c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v7h3v-7H16l.5-3h-3V9.5C13.5 9.2 13.7 9 14 9z"/></svg><span>Facebook</span>
@@ -99,20 +114,8 @@
             </ul>
       </div>
 
-      <nav class="footer-nav" aria-label="Footer">
-        <h2 class="footer-h">Explore</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="books.html">Books &amp; Resources</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="consult.html">Complimentary consultation</a></li>
-        </ul>
-      </nav>
-
-      <div>
-        <h2 class="footer-h">Stay in touch</h2>
+      <div class="footer-subscribe">
+        <h2 class="footer-h footer-h-lead">Stay in Touch</h2>
 
       <form class="subscribe-form" data-form="subscribe" novalidate>
         <p class="hint">Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.</p>
@@ -126,7 +129,7 @@
           <label class="consent" for="footer-consent">
             <input type="checkbox" id="footer-consent" name="consent" required
                    aria-describedby="footer-consent-error">
-            <span>I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. Zoe Life will use it for updates, and I can unsubscribe at any time.</span>
+            <span class="consent-note">I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. Zoe Life will use it for updates, and I can unsubscribe at any time.</span>
           </label>
           <p class="error" id="footer-consent-error" role="alert"></p>
         </div>
@@ -142,7 +145,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Pastors Tayo and Kemi Akinyemi.</p>
+      <p>Founded by Pastor Kemi and Pastor Tai.</p>
     </div>
   </div>
 </footer>
