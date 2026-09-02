@@ -12,6 +12,8 @@
 (function () {
   "use strict";
 
+  document.documentElement.classList.add("has-js");
+
   /* ---------------------------------------------------------- mobile nav -- */
   var toggle = document.querySelector(".nav-toggle");
   var nav = document.getElementById("site-nav");
@@ -176,7 +178,7 @@
       (kind === "subscribe"
         ? "Thank you. You will hear from Zoe Life when there is something worth sharing. " +
           "Every email has an unsubscribe link."
-        : "Thank you. Your message has reached the Zoe Life team, and we aim to reply within " +
+        : "Thank you. Your message has reached the Zoe Life team. Please expect a reply within " +
           "three business days.") +
       "</div>";
   }

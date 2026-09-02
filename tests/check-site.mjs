@@ -2,20 +2,18 @@
  * Zoe Life Phase 1 site checks. No dependencies.
  *   node tests/check-site.mjs
  *
- * Replaces the previous tests/check_site.py: this machine has no Python
- * interpreter, so the Python suite could not actually be run.
- *
- * These are regression checks for the things most likely to go wrong on a
- * client build: broken links, missing labels, invented facts, exposed private
- * addresses, and forms that lie about succeeding.
+ * Regression checks for the things most likely to go wrong on a client build:
+ * broken links, missing labels, invented facts, exposed private addresses,
+ * leftover stock, and forms that lie about succeeding.
  */
 
-import { readFileSync, existsSync, readdirSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "about.html", "books.html", "family-life.html", "contact.html"];
+const PAGES = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+const REDIRECTS = ["family-life.html", "appointments.html"];
 
 let pass = 0;
 const failures = [];
@@ -35,11 +33,10 @@ function group(title) {
 }
 
 const read = (f) => readFileSync(join(ROOT, f), "utf8");
-const html = Object.fromEntries(PAGES.map((p) => [p, read(p)]));
+const html = Object.fromEntries([...PAGES, ...REDIRECTS].map((p) => [p, read(p)]));
 const js = read("js/main.js");
 const css = read("css/style.css");
 
-/* Strip tags, scripts, styles and comments to approximate visible copy. */
 function visibleText(doc) {
   return doc
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
@@ -48,6 +45,32 @@ function visibleText(doc) {
     .replace(/<[^>]+>/g, " ")
     .replace(/&[a-z]+;/gi, " ")
     .replace(/\s+/g, " ");
+}
+
+function headerOf(doc) {
+  const start = doc.indexOf('<header class="site-header">');
+  const end = doc.indexOf("<main id=\"main\">");
+  return start >= 0 && end > start ? doc.slice(start, end) : "";
+}
+
+function footerOf(doc) {
+  const start = doc.indexOf('<footer class="site-footer">');
+  return start >= 0 ? doc.slice(start) : "";
+}
+
+function mainOf(doc) {
+  const start = doc.indexOf('<main id="main">');
+  const end = doc.indexOf("</main>");
+  return start >= 0 && end > start ? doc.slice(start, end) : "";
+}
+
+function flattenValues(obj) {
+  const out = [];
+  for (const v of Object.values(obj)) {
+    if (v && typeof v === "object") out.push(...flattenValues(v));
+    else out.push(v);
+  }
+  return out;
 }
 
 /* ----------------------------------------------------------- structure -- */
@@ -74,7 +97,6 @@ for (const p of PAGES) {
   check(`${p} has header and footer landmarks`, /<header class="site-header">/.test(doc) && /<footer class="site-footer">/.test(doc));
   check(`${p} declares lang`, /<html lang="en">/.test(doc));
 
-  // Heading order must not skip a level.
   const levels = [...doc.matchAll(/<h([1-4])[\s>]/g)].map((m) => Number(m[1]));
   let skipped = null;
   for (let i = 1; i < levels.length; i++) {
@@ -115,6 +137,7 @@ if (isStaging) {
   check("Pages are indexable", PAGES.every((p) => /content="index, follow"/.test(html[p])));
 }
 check("Sitemap lists every page", PAGES.every((p) => sitemap.includes(canonicalOf(p))));
+check("Sitemap omits moved-url stubs", !sitemap.includes("/family-life") && !sitemap.includes("/appointments"));
 check("Sitemap is well formed", /^<\?xml/.test(sitemap) && /<\/urlset>/.test(sitemap));
 
 const notFound = read("404.html");
@@ -125,28 +148,31 @@ function canonicalOf(p) {
   return SITE + "/" + (p === "index.html" ? "" : p.replace(/\.html$/, ""));
 }
 
+for (const p of REDIRECTS) {
+  check(`${p} exists as a moved-url page`, existsSync(join(ROOT, p)));
+  check(`${p} has one h1`, (html[p].match(/<h1[\s>]/g) || []).length === 1);
+}
+check("family-life.html points to Connect", /href="connect\.html"/.test(html["family-life.html"]));
+check("appointments.html points to Consult", /href="consult\.html"/.test(html["appointments.html"]));
+
 /* --------------------------------------------------------------- links -- */
 group("Links");
 
-for (const p of PAGES) {
+for (const p of [...PAGES, ...REDIRECTS]) {
   const doc = html[p];
 
-  // Internal hrefs must point at files that exist.
   const internal = [...doc.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
   const broken = internal.filter((h) => !existsSync(join(ROOT, h.split("#")[0])));
   check(`${p} internal links all resolve`, broken.length === 0, broken.join(", "));
 
-  // In-page anchors must have a matching id.
   const anchors = [...doc.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
   const missingAnchor = anchors.filter((a) => !doc.includes(`id="${a}"`));
   check(`${p} in-page anchors all have targets`, missingAnchor.length === 0, missingAnchor.join(", "));
 
-  // Every external link opens safely.
   const ext = [...doc.matchAll(/<a[^>]*href="https?:[^"]*"[^>]*>/g)].map((m) => m[0]);
   const unsafe = ext.filter((a) => !/rel="noopener noreferrer"/.test(a));
   check(`${p} external links use rel=noopener noreferrer`, unsafe.length === 0, `${unsafe.length} missing`);
 
-  // No invented or placeholder destinations.
   const fake = (doc.match(/example\.(com|org)|lorem|TODO|FIXME|href="#"/gi) || []);
   check(`${p} has no placeholder or fake URLs`, fake.length === 0, fake.join(", "));
 }
@@ -161,16 +187,25 @@ for (const p of PAGES) {
 
   const noDims = imgs.filter((i) => !/width=/.test(i) || !/height=/.test(i));
   check(`${p} images declare width and height`, noDims.length === 0, `${noDims.length} missing`);
+
+  const named = imgs.filter((i) => /tayo|kemi|akinyemi/i.test(i));
+  for (const img of named) {
+    const alt = (img.match(/\salt="([^"]*)"/) || [])[1] || "";
+    check(`Named photo alt includes Tayo or Kemi: ${alt.slice(0, 60)}`, /Tayo|Kemi/i.test(alt), alt);
+  }
 }
 
-// Referenced asset files must exist on disk.
 const allAssets = new Set();
-for (const p of PAGES) {
+for (const p of [...PAGES, ...REDIRECTS]) {
   for (const m of html[p].matchAll(/(?:src|href)="(assets\/[^"]+)"/g)) allAssets.add(m[1]);
 }
 for (const m of css.matchAll(/url\(\.\.\/(assets\/[^)]+)\)/g)) allAssets.add(m[1]);
 const missingAssets = [...allAssets].filter((a) => !existsSync(join(ROOT, a)));
 check("All referenced assets exist", missingAssets.length === 0, missingAssets.join(", "));
+
+const publishedHtml = PAGES.map((p) => html[p]).join("\n");
+check("No Unsplash or Pexels assets", !/unsplash|pexels/i.test(publishedHtml + css));
+check("No leftover stock filenames", !/hands-reaching|coaching-conversation|small-group-study|cream-plaster/i.test(publishedHtml));
 
 /* --------------------------------------------------------------- forms -- */
 group("Forms");
@@ -178,17 +213,15 @@ group("Forms");
 for (const p of PAGES) {
   const doc = html[p];
   const controls = [...doc.matchAll(/<(input|select|textarea)[^>]*>/g)].map((m) => m[0]);
-  const real = controls.filter((c) => !/type="checkbox"/.test(c) || true);
 
-  const noId = real.filter((c) => !/\sid="/.test(c));
+  const noId = controls.filter((c) => !/\sid="/.test(c));
   check(`${p} every form control has an id`, noId.length === 0, `${noId.length} missing`);
 
-  const ids = real.map((c) => (c.match(/\sid="([^"]+)"/) || [])[1]).filter(Boolean);
+  const ids = controls.map((c) => (c.match(/\sid="([^"]+)"/) || [])[1]).filter(Boolean);
   const unlabelled = ids.filter((id) => !doc.includes(`for="${id}"`));
   check(`${p} every form control has a label`, unlabelled.length === 0, unlabelled.join(", "));
 
-  // Required fields must be wired to an error container for inline messages.
-  const required = real.filter((c) => /\srequired/.test(c));
+  const required = controls.filter((c) => /\srequired/.test(c));
   const noDescribe = required.filter((c) => !/aria-describedby="/.test(c));
   check(`${p} required fields have aria-describedby`, noDescribe.length === 0, `${noDescribe.length} missing`);
 }
@@ -208,13 +241,16 @@ for (const opt of [
 }
 check("Contact form has a conditional Other field", /data-reveal="Other"/.test(contact));
 check("Contact form has a honeypot", /name="website"/.test(contact));
-check("Contact form is separate from consultation booking", /id="consultation"/.test(contact) && /data-form="contact"/.test(contact));
+check("Contact form includes first, last, email, phone, message",
+  ["c-first", "c-last", "c-email", "c-phone", "c-message"].every((id) => contact.includes(`id="${id}"`)));
+check("Contact form is separate from consultation booking",
+  /data-form="contact"/.test(contact) && existsSync(join(ROOT, "consult.html")));
+check("Subscribe forms are email-only",
+  ![...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].some((m) => /type="tel"|name="phone"/.test(m[0])));
 
 /* ------------------------------------------------------------- honesty -- */
 group("Honesty and safety");
 
-// Success wording may exist, but only inside renderSent, which is reachable
-// solely from a 2xx response. Assert that gate rather than banning the words.
 check("Success is only rendered from renderSent", (js.match(/renderSent\(/g) || []).length >= 1);
 check(
   "renderSent is called only inside a res.ok branch",
@@ -228,77 +264,142 @@ check(
 check("Blocked state is explicit", /not been delivered|not been sent|have not been subscribed/i.test(js));
 check("Failure is never dressed as success", /renderFailed[\s\S]{0,400}did not send/i.test(js));
 
-/* Config must ship fail-closed. */
 const cfg = read("js/config.js");
 check("config.js exists and defines ZOE_CONFIG", /window\.ZOE_CONFIG\s*=/.test(cfg));
 const cfgObj = JSON.parse(cfg.slice(cfg.indexOf("{"), cfg.lastIndexOf("}") + 1));
 for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
   check(`config.${k} is present`, k in cfgObj);
 }
+check("config.payments is present", cfgObj.payments && typeof cfgObj.payments === "object");
 check(
   "No placeholder endpoint was invented",
-  Object.values(cfgObj).every((v) => v === null || /^https:\/\//.test(String(v))),
+  flattenValues(cfgObj).every((v) => v === null || /^https:\/\//.test(String(v))),
   JSON.stringify(cfgObj)
 );
 
-const allHtml = PAGES.map((p) => html[p]).join("\n");
 check(
   "No Zoe Life email address is exposed",
-  !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(allHtml),
-  (allHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
+  !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(publishedHtml),
+  (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
-check("No mailto links", !/mailto:/i.test(allHtml));
-check(
-  "No private backend addresses",
-  !/@yahoo\.com|@gmail\.com/i.test(allHtml)
-);
-check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.test(visibleText(allHtml)));
+check("No mailto links", !/mailto:/i.test(publishedHtml));
+check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
+check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.test(visibleText(publishedHtml)));
+check("KingsWord is not listed as a client", !/kingsword/i.test(publishedHtml));
 
-// Store links must be pending, not invented.
 const booksDoc = html["books.html"];
 check("No invented storefront URLs", !/amazon\.com|etsy\.com|gumroad\.com|selar\.co/i.test(booksDoc));
-check("Store options are marked pending", (booksDoc.match(/Link pending/g) || []).length >= 8);
-check("Missing journal cover is marked pending", /Cover pending/.test(booksDoc));
-check("Devotional cover is the real supplied file", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
-check("Booking link is disabled while unconfigured", /aria-disabled="true"[^>]*>Booking opens soon|Booking opens soon/.test(contact));
+check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
+check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
+check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
+check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
+check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe/.test(booksDoc));
+check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
+check("Books page has both Saturday titles",
+  /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));
+
+const consult = html["consult.html"];
+if (!cfgObj.bookingUrl) {
+  check("Consult does not show an internal booking placeholder", !/GOOGLE_CALENDAR_BOOKING_URL/.test(consult));
+  check("Unconfigured consult still offers Send a message", /contact\.html#message/.test(consult));
+} else {
+  check("Consult booking uses a live https URL", consult.includes(cfgObj.bookingUrl));
+}
+check(
+  "No leftover Acuity sales copy",
+  !/Ready for a Breakthrough|secure your slot|direct transformation/i.test(publishedHtml)
+);
 
 /* --------------------------------------------------------------- brand -- */
 group("Brand structure");
 
-const TAGLINE = "Helping People Thrive in Every Season of Life";
-check("Tagline appears on Home", html["index.html"].includes(TAGLINE));
-check("Tagline appears under the About Zoe Life heading", /About Zoe Life<\/h1>\s*<p class="tagline">Helping People Thrive/.test(html["about.html"]));
-check("Tagline is not inside the logo file name or alt", !/alt="[^"]*Thrive[^"]*"/.test(allHtml));
+const TAGLINE = "Helping people thrive in every season of life.";
+check("Tagline appears on Home as a sentence", html["index.html"].includes(TAGLINE));
+check("Tagline appears on About", html["about.html"].includes(TAGLINE));
+check("Tagline is not inside the logo alt", !/alt="[^"]*Thrive[^"]*"/.test(publishedHtml));
+const indexHeader = headerOf(html["index.html"]);
+check("Header uses the transparent banner wordmark", /class="brand-wordmark"[^>]*src="assets\/brand\/zoe-life-wordmark\.png"/.test(html["index.html"]));
+check("Header does not use the circular mark as the logo", !indexHeader.includes("zoe-life-mark.png"));
+check("Header does not use the boxed jpg wordmark", !indexHeader.includes("zoe-life-wordmark.jpg"));
+check("Footer uses the banner wordmark", footerOf(html["index.html"]).includes("assets/brand/zoe-life-wordmark.png"));
+
+check("Header has no cart", !/\(0\)|\bCart\b|\bLogin\b|\bAccount\b/i.test(indexHeader));
+check("Primary header CTA is Send a message", /Send a message/.test(indexHeader) && /contact\.html#message/.test(indexHeader));
+check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
+
+const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
+for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Contact"]) {
+  check(`Main nav includes ${label}`, navBlock.includes(`>${label}<`));
+}
+check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
+
+check("Home shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(html["index.html"]));
+check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
+check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
+check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Contact shows the couple, not Kemi only", /tayo-kemi-park\.jpg/.test(contact) && !/kemi-white\.jpg/.test(contact));
+check("Home does not use a Kemi-only photo", !/kemi-white\.jpg|kemi-headshot\.jpg/.test(html["index.html"]));
 
 const ZOE_LIFE = ["facebook.com/zoelifehub", "instagram.com/zoelifehub", "tiktok.com/@zoelifehub1", "youtube.com/@zoelifehub1", "x.com/zoelifehub"];
 const ZFL = ["facebook.com/zoefamilylife10", "instagram.com/zoefamilylife", "tiktok.com/@zoefamilylife", "youtube.com/@zoefamilylife"];
 
 for (const p of PAGES) {
-  const footer = html[p].slice(html[p].indexOf('<footer class="site-footer">'));
+  const footer = footerOf(html[p]);
   for (const s of ZOE_LIFE) check(`${p} footer links Zoe Life ${s.split("/")[0]}`, footer.includes(s));
   const zflInFooter = ZFL.filter((s) => footer.includes(s));
   check(`${p} footer does NOT use Zoe Family Life accounts`, zflInFooter.length === 0, zflInFooter.join(", "));
 }
 
-const fam = html["family-life.html"];
-// Compare within <main> only: the <title> and meta description legitimately
-// mention Zoe Family Life before the body content starts.
-const famMain = fam.slice(fam.indexOf('<main id="main">'), fam.indexOf("</main>"));
-check("Zoe Life appears before Zoe Family Life", famMain.indexOf(">Zoe Life<") < famMain.indexOf("Zoe Family Life"));
-for (const s of ZFL) check(`Family Life page links ${s}`, fam.includes(s));
-check("Zoe Family Life X absence is stated", /No X account for Zoe Family Life/.test(fam));
-check("Future programs are marked planned", (fam.match(/is-planned/g) || []).length >= 2);
+const connectMain = mainOf(html["connect.html"]);
+check("Connect introduces Zoe Life before Zoe Family Life",
+  connectMain.indexOf("Find us online") < connectMain.indexOf("Zoe Family Life") && connectMain.indexOf("Find us online") >= 0);
+for (const s of ZFL) check(`Connect page links ${s}`, html["connect.html"].includes(s));
+check("Connect uses a filled icon+label layout, not a split with empty column",
+  /connect-find/.test(connectMain) && !/split-copy-photo/.test(connectMain));
+check("Connect uses Visit labels, not a handle dump", /Visit Facebook/.test(connectMain) && !/The main accounts/.test(connectMain));
+check("Stay in Touch is more prominent than the mailing disclaimer",
+  /footer-h-lead/.test(footerOf(html["index.html"])));
+check("Connect does not lecture about footer links", !/also linked in the footer|Start here if you are new/.test(connectMain));
+
+check("Subscribe intro copy is present",
+  publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
+check("Subscribe consent copy is present",
+  publishedHtml.includes("I agree to receive emails and other communications, including marketing, from Zoe Life."));
+check("Consent is demoted with the consent-note class", /consent-note/.test(publishedHtml));
+check("Stay in Touch is the mailing list title", /Stay in Touch/.test(footerOf(html["index.html"])));
+
+const homeMain = mainOf(html["index.html"]);
+const aboutMain = mainOf(html["about.html"]);
+check("No leftover builder note: Home is a starting place", !/Home is a starting place/.test(publishedHtml));
+check("No leftover builder note: form goes to inbox", !/form goes to the Zoe Life inbox|The form goes to the Zoe Life inbox/i.test(publishedHtml));
+check("No leftover morning-only book copy", !/ordinary mornings|naming what God has done|long after the first week/.test(publishedHtml));
+check("Home does not lead with a Greek-word lecture", !/Zoe is the Greek word for life/.test(homeMain));
+check("Home founder line does not mention Life Springs", !/Life Springs/.test(homeMain));
+check("Home consult is not in the hero", !/hero-home[\s\S]{0,1200}consult\.html/.test(html["index.html"]));
+check("Home leads with Send a message", /contact\.html#message/.test(homeMain));
+check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
+check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
+check("About founder line is Pastor Kemi and Pastor Tai", /founded by Pastor Kemi and Pastor Tai/.test(aboutMain));
+check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(booksDoc));
+check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
+check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
+check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
+check("Contact reply copy is spoken English", /Please expect a reply within three business days/.test(contact));
+check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */
 group("Visual direction");
 
 check("No dark page theme", !/--ink:\s*#(?:0|1|2)[0-9a-f]{5}\b/i.test(css) || /--cream:\s*#F/i.test(css));
-check("Background is a light cream", /--cream:\s*#FBF7F0/i.test(css));
-check("theme-color is light", PAGES.every((p) => /<meta name="theme-color" content="#FBF7F0">/.test(html[p])));
+check("Background is a light cream", /--cream:\s*#F7F4EE/i.test(css) && /--paper:\s*#F7F4EE/i.test(css));
+check("Palette includes grey, tan, and peach", /--grey:\s*#E6E1DA/i.test(css) && /--tan:\s*#E4D3B8/i.test(css) && /--peach:\s*#F3D5B8/i.test(css));
+check("theme-color is Instagram grey", PAGES.every((p) => /<meta name="theme-color" content="#E6E1DA">/.test(html[p])));
 check("Reduced motion is respected", /prefers-reduced-motion:\s*reduce/.test(css));
 check("Focus is visible", /:focus-visible/.test(css) && /outline:\s*3px/.test(css));
-// Match loaded scripts, not prose. "three pathways" is legitimate copy.
-const scriptSrcs = [...allHtml.matchAll(/<script[^>]*src="([^"]+)"/g)].map((m) => m[1]);
+check("Type pairing is Fraunces and Outfit", /font-family: Fraunces/.test(css) && /font-family: Outfit/.test(css));
+check("No Inter or Roboto as the only sans", !/--sans:\s*Inter|--sans:\s*Roboto/.test(css));
+
+const scriptSrcs = [...publishedHtml.matchAll(/<script[^>]*src="([^"]+)"/g)].map((m) => m[1]);
 check(
   "No WebGL or heavy animation libraries loaded",
   !scriptSrcs.some((s) => /three|gsap|lenis|scrolltrigger/i.test(s)),
@@ -311,7 +412,6 @@ check(
 );
 check("Tap targets are at least 44px", /min-height:\s*4[48]px/.test(css));
 
-// House style carried over from the previous suite: no em or en dashes in copy.
 for (const p of PAGES) {
   const text = visibleText(html[p]);
   const dashes = text.match(/[—–]/g) || [];
@@ -335,8 +435,6 @@ function ratio(a, b) {
   return (x + 0.05) / (y + 0.05);
 }
 
-/* Read the real token values out of the stylesheet so this check can never
-   drift from the CSS it is meant to be testing. */
 const token = (name) => {
   const m = css.match(new RegExp(`--${name}:\\s*(#[0-9A-Fa-f]{6})`));
   if (!m) throw new Error(`token --${name} not found in css/style.css`);
@@ -346,6 +444,10 @@ const token = (name) => {
 const T = {
   cream: token("cream"),
   creamDeep: token("cream-deep"),
+  grey: token("grey"),
+  tan: token("tan"),
+  peach: token("peach"),
+  sun: token("sun"),
   white: token("white"),
   goldDeep: token("gold-deep"),
   sageDeep: token("sage-deep"),
@@ -357,15 +459,28 @@ const T = {
 const PAIRS = [
   ["body text on cream", T.ink, T.cream, 4.5],
   ["body text on cream-deep", T.ink, T.creamDeep, 4.5],
+  ["body text on grey", T.ink, T.grey, 4.5],
+  ["body text on tan", T.ink, T.tan, 4.5],
+  ["body text on peach", T.ink, T.peach, 4.5],
+  ["body text on sun", T.ink, T.sun, 4.5],
   ["muted text on cream", T.inkSoft, T.cream, 4.5],
   ["muted text on cream-deep", T.inkSoft, T.creamDeep, 4.5],
+  ["muted text on grey", T.inkSoft, T.grey, 4.5],
+  ["muted text on tan", T.inkSoft, T.tan, 4.5],
+  ["muted text on peach", T.inkSoft, T.peach, 4.5],
+  ["muted text on sun", T.inkSoft, T.sun, 4.5],
   ["muted text on white", T.inkSoft, T.white, 4.5],
   ["link sage-deep on cream", T.sageDeep, T.cream, 4.5],
   ["link sage-deep on white", T.sageDeep, T.white, 4.5],
   ["eyebrow gold-deep on cream", T.goldDeep, T.cream, 4.5],
   ["eyebrow gold-deep on cream-deep", T.goldDeep, T.creamDeep, 4.5],
+  ["eyebrow gold-deep on grey", T.goldDeep, T.grey, 4.5],
+  ["eyebrow gold-deep on tan", T.goldDeep, T.tan, 4.5],
+  ["eyebrow gold-deep on peach", T.goldDeep, T.peach, 4.5],
+  ["eyebrow gold-deep on sun", T.goldDeep, T.sun, 4.5],
   ["eyebrow gold-deep on white", T.goldDeep, T.white, 4.5],
   ["tagline terracotta on cream", T.terracotta, T.cream, 4.5],
+  ["tagline terracotta on cream-deep", T.terracotta, T.creamDeep, 4.5],
   ["pending badge text on peach tint", T.terracotta, "#FBEDE2", 4.5],
   ["error text on cream", "#8A3E17", T.cream, 4.5],
   ["white text on sage-deep band", "#F6F4EE", T.sageDeep, 4.5],

@@ -7,13 +7,23 @@
  */
 
 import { spawn } from "node:child_process";
+import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = process.env.QA_BASE || "http://127.0.0.1:8765";
 const PORT = 9334;
-const CHROME = process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
+const CHROME =
+  process.env.CHROME_PATH ||
+  [
+    "/usr/bin/google-chrome-stable",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium-browser",
+    "/usr/bin/chromium",
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+  ].find((p) => existsSync(p)) ||
+  "google-chrome";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 let msgId = 0;
