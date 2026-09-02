@@ -299,7 +299,7 @@ const home = page(
   <div class="hero-split">
     <div class="hero-copy">
       <p class="eyebrow">Zoe Life</p>
-      <h1 class="tagline-heading">Helping people thrive<br>in every season of life.</h1>
+      <h1 class="tagline-heading"><span>Helping people thrive</span> <span>in every season of life.</span></h1>
       <p class="lede">${MISSION}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
@@ -309,7 +309,7 @@ const home = page(
     <figure class="hero-photo">
       <img src="assets/photos/tayo-kemi-hero.jpg"
            alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
-           width="1360" height="1060">
+           width="1240" height="960">
     </figure>
   </div>
 </section>
@@ -353,7 +353,7 @@ const home = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="892" height="1292" loading="lazy">
+             width="888" height="1292" loading="lazy">
       </div>
       <div>
         <h3 class="book-title">A 7-Day Gratitude Devotional</h3>
@@ -563,7 +563,7 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="892" height="1292">
+             width="888" height="1292">
       </div>
       <div>
         <p class="eyebrow">Devotional</p>
@@ -826,7 +826,7 @@ const consult = page(
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
              alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
-             width="1360" height="1060">
+             width="1240" height="960">
       </figure>
     </div>
   </div>

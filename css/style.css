@@ -221,16 +221,19 @@ section { padding-block: var(--section-y); }
 }
 .hero-copy {
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(1.35rem, 3.2vw, 2.6rem) var(--gutter);
-  max-width: 44rem;
+  padding: clamp(1.25rem, 2.8vw, 2.25rem) clamp(1.15rem, 3vw, 2.35rem);
+  max-width: none;
 }
 .hero-copy h1,
 .tagline-heading {
   margin-bottom: .4em;
   text-wrap: unset;
   max-width: none;
-  line-height: 1.12;
+  line-height: 1.14;
+  font-size: clamp(1.75rem, 1.15rem + 1.55vw, 2.55rem);
+  font-weight: 700;
 }
+.tagline-heading span { display: block; }
 .hero-photo {
   margin: 0;
   background: var(--tan);
@@ -238,12 +241,12 @@ section { padding-block: var(--section-y); }
 }
 .hero-photo img {
   width: 100%; height: 100%;
-  object-fit: cover; object-position: 48% 22%;
+  object-fit: cover; object-position: 50% 38%;
   min-height: 16rem;
 }
 @media (min-width: 56rem) {
   .hero-split {
-    grid-template-columns: minmax(28rem, 1.55fr) minmax(14rem, .58fr);
+    grid-template-columns: minmax(28rem, 1.7fr) minmax(13rem, .5fr);
     min-height: 0;
   }
   .hero-photo { align-self: stretch; }
@@ -252,6 +255,7 @@ section { padding-block: var(--section-y); }
 .hero-home + section { padding-top: clamp(2rem, 4.5vw, 3.5rem); }
 .page-hero { padding-block: clamp(2.15rem, 4.8vw, 3.6rem); background: var(--grey); }
 .page-hero .wrap { max-width: 46rem; }
+.page-hero h1 { font-size: clamp(1.85rem, 1.2rem + 1.45vw, 2.55rem); }
 
 .pull-quote {
   font-family: var(--display); font-style: italic; font-weight: 400;
@@ -373,18 +377,28 @@ figcaption { font-size: .85rem; color: var(--ink-soft); margin-top: .65rem; }
 }
 .social-list.social-visit {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: .7rem;
   margin-top: 1.25rem;
+}
+@media (min-width: 40rem) {
+  .social-list.social-visit {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 56rem) {
+  .connect-find .social-list.social-visit {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+  .family-panel .social-list.social-visit {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 .social-visit .social-link {
   width: 100%;
   justify-content: flex-start;
   background: var(--white);
   border-width: 1.5px;
-}
-.family-panel .social-visit {
-  grid-template-columns: repeat(auto-fill, minmax(11.25rem, 1fr));
 }
 
 /* ---------- forms ---------- */
