@@ -1,45 +1,42 @@
-# Zoe Life — Phase 1 reference build
+# Zoe Life — Phase 1 custom site
 
-A complete, responsive, accessible five-page reference implementation of the
-Zoe Life Phase 1 site, prepared by Cozy Digital.
+A complete, responsive, accessible static site for Zoe Life, prepared by Cozy
+Digital. Site voice is Zoe Life.
 
-This build is **deployable**. It can serve zoelifehub.com directly if the domain
-is switched away from Squarespace, or act as the design and content reference
-for assembling the same site inside Squarespace.
+This is the shipping Phase 1 custom site (native HTML + `tools/build.mjs`).
+It is not a Squarespace restyle. Live Squarespace at
+[zoelifehub.com](https://www.zoelifehub.com) remains the public domain until
+cutover. GitHub Pages on upstream still publishes an older branch.
 
-- Deploying it: [`DEPLOY.md`](DEPLOY.md), including the domain-switchover order
-  and what is lost by leaving Squarespace.
-- Assembling it in Squarespace instead: [`docs/squarespace-setup.md`](docs/squarespace-setup.md),
-  with paste-ready blocks in [`tools/sqs-blocks/`](tools/sqs-blocks/).
-
-No DNS has been changed and no domain is pointed here.
+Meeting 3 direction (launch target Wednesday 2 September 2026): banner
+wordmark, one-sentence tagline, Instagram grey / tan / peach palette, real
+photos of Pastors Tayo and Kemi Akinyemi, two Saturday book covers only, Connect
+(not Family Life as the main nav), Google Calendar consult booking, fail-closed
+forms and payments.
 
 ## Run it
 
-No build step is needed to view the site; the HTML is committed.
-
 ```bash
-node tools/build.mjs          # production build (indexable)
+node tools/build.mjs            # production build (indexable)
 node tools/build.mjs --staging  # staging build (noindex + robots Disallow)
-node tools/serve.mjs 8765     # http://127.0.0.1:8765
+node tools/serve.mjs 8765       # http://127.0.0.1:8765
 ```
+
+Keep `--staging` on any public preview until the domain actually switches, so
+this copy cannot compete with the live Squarespace site in search.
 
 Every integration is **fail closed** until configured. See `DEPLOY.md`.
 
 ## Checks
 
 ```bash
-node tests/check-site.mjs     # 211 static checks
-node tools/qa.mjs             # 25 page/width browser checks + screenshots
-node tools/qa-forms.mjs       # 32 interaction checks
+node tests/check-site.mjs     # static honesty, SEO, contrast, and structure
+node tools/qa.mjs             # page/width browser checks, including 390px
+node tools/qa-forms.mjs       # interaction checks, including fail-closed submit
 ```
 
 `tools/qa.mjs` and `tools/qa-forms.mjs` need the server running and drive real
-Chrome over the DevTools Protocol. No npm dependencies at any point.
-
-> The previous `tests/check_site.py` was removed: this machine has no Python
-> interpreter, so it could never actually be run. The Node suite covers the same
-> ground and more.
+Chrome over the DevTools Protocol. No npm dependencies.
 
 ## Pages
 
@@ -48,65 +45,66 @@ Chrome over the DevTools Protocol. No npm dependencies at any point.
 | Home | `index.html` |
 | About | `about.html` |
 | Books & Resources | `books.html` |
-| Family Life / Socials | `family-life.html` |
+| Connect | `connect.html` |
 | Contact | `contact.html` |
+| Complimentary consultation | `consult.html` |
 
-Pages are generated from shared chrome by `node tools/build.mjs`, so the header,
-footer, and social links cannot drift apart. The output is plain static HTML and
-is committed, so hosting still needs no build step.
+`family-life.html` and `appointments.html` are short “this page has a new home”
+stubs that point at Connect and Consult.
+
+Pages are generated from shared chrome by `node tools/build.mjs`. The output is
+plain static HTML and is committed, so hosting still needs no build step.
 
 ## Design
 
-Warm and light, per the approved 21 Aug brand direction: cream and warm neutrals,
-sage green, warm gold, soft tan, with restrained terracotta and peach. Fraunces
-and Outfit, self-hosted.
+Warm, light, welcoming, professional. Instagram grey, tan, and a little pastel
+yellow / peach, with sage and gold from the wordmark. Fraunces (display) and
+Outfit (humanist sans), self-hosted. Photo-led layouts rather than generic card
+grids.
 
-This replaces the earlier dark espresso concept, which contradicted the client's
-written direction ("avoid black or dark themes"). The WebGL cross, GSAP, Lenis,
-film grain, and custom cursor were removed with it; the concept branches
-`claude/zoe-life-website-boiqf0` and `cozy/enhance-current-site-content` still
-carry them.
-
-Every colour pair is contrast-checked in `tests/check-site.mjs`, and `tools/qa.mjs`
-independently measures the contrast of every rendered text element in the browser.
+Header uses the gold **ZOE LIFE** banner wordmark (green leaf in the O). The
+circular mark is favicon and footer only. Tagline is a separate sentence:
+*Helping people thrive in every season of life.*
 
 ## Honesty rules
 
-The build never invents client facts. Unverified data is either absent or
-visibly marked pending:
+The build never invents client facts:
 
-- No prices, and no invented store URLs. Store options render as disabled chips.
-- The 100-Day Gratitude Journal cover is missing and shows a "Cover pending" placeholder.
-- Supplied "About Zoe Life" and "Meet Tayo & Kemi" copy was never provided to this
-  build; those sections use verified public copy and say so.
-- **Forms fail closed.** No endpoint is configured, so a valid submission reports
-  that it was *not* delivered. It never fakes success. This is asserted by tests.
-- No Zoe Life email address appears anywhere on the site.
-
-Full list: `docs/squarespace-setup.md` section 8.
-
-## Content sources
-
-- `docs/current-site-content.md` — copy captured from the live zoelifehub.com
-- `assets/photos/provenance.json` — image source URLs, dimensions, checksums
+- No prices, and no invented store URLs. If Stripe / PayPal links are not in
+  the environment, the Books page says **purchase options coming**.
+- Printed copies, when offered, will be fulfilled by a print-on-demand partner.
+  The site does not describe packing and shipping from home.
+- Consultation booking is Google Calendar appointment scheduling. If
+  `ZOE_GOOGLE_CALENDAR_BOOKING_URL` is unset, `/consult` shows a clearly labeled
+  `GOOGLE_CALENDAR_BOOKING_URL` placeholder. Complimentary 20-minute consults,
+  Mondays and Wednesdays, 6:00 to 8:00 PM Central.
+- **Forms fail closed.** No endpoint is configured, so a valid submission
+  reports that it was *not* delivered. It never fakes success.
+- No Zoe Life email address appears on the site. The contact form is intended
+  for `contact@zoelifehub.com` once an endpoint is wired.
+- No Unsplash, Pexels, or generated pastor-couple stock. People photos are
+  Pastors Tayo and Kemi Akinyemi from the live Zoe Life site.
+- The couple workbook (“Questions Every Christian Couple Should Discuss”) is
+  not on this site.
 
 ## Assets
 
-Two files on the previous branch were misnamed: `founder-tayo.jpg` and
-`founder-kemi.jpg` were not founder photos, they were book covers, and were being
-rendered as covers with mismatched filenames. They are now:
+```
+assets/brand/zoe-life-wordmark.jpg          header banner wordmark
+assets/brand/zoe-life-mark.png              circular mark (favicon / footer)
+assets/books/gratitude-devotional-cover.jpg 7-Day Gratitude Devotional (Saturday)
+assets/books/gratitude-journal-cover.jpg    100-Day Gratitude Journal (Saturday)
+assets/photos/*.jpg                         Tayo and Kemi photographs
+assets/photos/provenance.json               source notes for every image
+```
 
-```
-assets/brand/zoe-life-logo.png                             the real logo
-assets/books/gratitude-devotional-cover.jpg                7-Day Gratitude Devotional
-assets/books/questions-before-marriage-workbook-cover.jpg  Questions Before Marriage workbook
-assets/photos/founders-tayo-kemi.jpg                       the actual founders photo
-assets/photos/*.jpg                                        supporting photography
-```
+The 7-Day cover and people photographs come from the live Squarespace CDN. The
+header wordmark and 100-Day journal cover were rebuilt from the Saturday files
+supplied for this update so the header is a banner (not only the circular mark)
+and the journal is no longer a “cover pending” box.
 
 ## Out of scope
 
-The advanced paid-coaching system (six appointment types, deposits, balance
-collection, refunds, Stripe/PayPal, per-appointment Zoom) is **not** built and is
-not stubbed into anything public. It needs a written scope decision first. See
-`docs/squarespace-setup.md` section 9.
+Client AI self-edit tool, courses / training videos, paid coaching rates, and
+marketplace URLs are not built. Print-on-demand partner onboarding is a
+separate intro.
