@@ -309,7 +309,7 @@ const home = page(
     <figure class="hero-photo">
       <img src="assets/photos/tayo-kemi-hero.jpg"
            alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
-           width="1280" height="1280">
+           width="1360" height="1060">
     </figure>
   </div>
 </section>
@@ -329,7 +329,7 @@ const home = page(
       <div>
         <p class="eyebrow">Pastor Tai and Pastor Kemi</p>
         <h2>Zoe Life was founded by Pastor Kemi and Pastor Tai.</h2>
-        <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical, and practical, in the same breath.</p>
+        <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical and practical, in the same breath.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="about.html">Meet Tayo and Kemi</a>
         </div>
@@ -407,9 +407,9 @@ ${subscribeForm("home", false)}
 const about = page(
   {
     page: "about.html",
-    title: "About Zoe Life | Mission, founders, and statement of faith",
+    title: "About Zoe Life | Pastor Kemi and Pastor Tai",
     description:
-      "The meaning of Zoe, the mission and values of Zoe Life, and an introduction to founders Pastors Tayo and Kemi Akinyemi.",
+      "Zoe Life was founded by Pastor Kemi and Pastor Tai. A place to start a conversation, pick up a resource, and keep going.",
   },
   `
 <section class="page-hero">
@@ -629,7 +629,7 @@ const connect = page(
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Connect</p>
-    <h1>Stay close to the conversation.</h1>
+    <h1>Come find us.</h1>
     <p class="lede">Send us a message to connect, or follow along on the channels you already use.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
@@ -659,7 +659,7 @@ const connect = page(
     <article class="family-panel" id="zoe-family-life">
       <p class="eyebrow">A Zoe Life program</p>
       <h2>Zoe Family Life</h2>
-      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow that conversation here.</p>
+      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow along here.</p>
       ${socialVisit(FAMILY_SOCIALS, "Zoe Family Life")}
     </article>
   </div>
@@ -686,7 +686,7 @@ const contact = page(
     page: "contact.html",
     title: "Contact Zoe Life | Send a message",
     description:
-      "Send Zoe Life a message about coaching, speaking, workshops, resources, or partnership, or schedule a complimentary 20-minute consultation.",
+      "Send us a message to connect. Ask about books, speaking, workshops, or anything else on your mind.",
   },
   `
 <section class="page-hero">
@@ -826,7 +826,7 @@ const consult = page(
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
              alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
-             width="1280" height="1280">
+             width="1360" height="1060">
       </figure>
     </div>
   </div>
