@@ -255,7 +255,7 @@ ${NAV.map(([href, label]) => `          <li><a href="${href}">${label}</a></li>`
       </div>
 
       <div class="footer-subscribe">
-        <h2 class="footer-h">Stay in Touch</h2>
+        <h2 class="footer-h footer-h-lead">Stay in Touch</h2>
 ${subscribeForm("footer", true)}
       </div>
 
@@ -337,7 +337,7 @@ const home = page(
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-about.jpg"
              alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
-             width="1232" height="1269" loading="lazy">
+             width="1000" height="1250" loading="lazy">
       </figure>
     </div>
   </div>
@@ -353,7 +353,7 @@ const home = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="884" height="1292" loading="lazy">
+             width="892" height="1292" loading="lazy">
       </div>
       <div>
         <h3 class="book-title">A 7-Day Gratitude Devotional</h3>
@@ -366,7 +366,7 @@ const home = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
-             width="892" height="1350" loading="lazy">
+             width="900" height="1350" loading="lazy">
       </div>
       <div>
         <h3 class="book-title">A 100-Day Gratitude Journal</h3>
@@ -435,7 +435,7 @@ const about = page(
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-about.jpg"
              alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
-             width="1232" height="1269">
+             width="1000" height="1250">
         <figcaption>Pastor Tai and Pastor Kemi, founders of Zoe Life.</figcaption>
       </figure>
     </div>
@@ -563,7 +563,7 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="884" height="1292">
+             width="892" height="1292">
       </div>
       <div>
         <p class="eyebrow">Devotional</p>
@@ -582,7 +582,7 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
-             width="892" height="1350">
+             width="900" height="1350">
       </div>
       <div>
         <p class="eyebrow">Journal</p>
@@ -639,13 +639,13 @@ const connect = page(
 
 <section>
   <div class="wrap">
-    <div class="split split-copy-photo">
+    <div class="connect-find">
       <div>
         <p class="eyebrow">Zoe Life</p>
         <h2>Find us online.</h2>
         ${socialVisit(ZOE_LIFE_SOCIALS, "Zoe Life")}
       </div>
-      <figure class="portrait portrait-couple">
+      <figure class="portrait portrait-connect">
         <img src="assets/photos/tayo-kemi-park.jpg"
              alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
              width="1400" height="1866" loading="lazy">

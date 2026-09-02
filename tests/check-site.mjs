@@ -354,7 +354,11 @@ const connectMain = mainOf(html["connect.html"]);
 check("Connect introduces Zoe Life before Zoe Family Life",
   connectMain.indexOf("Find us online") < connectMain.indexOf("Zoe Family Life") && connectMain.indexOf("Find us online") >= 0);
 for (const s of ZFL) check(`Connect page links ${s}`, html["connect.html"].includes(s));
+check("Connect uses a filled icon+label layout, not a split with empty column",
+  /connect-find/.test(connectMain) && !/split-copy-photo/.test(connectMain));
 check("Connect uses Visit labels, not a handle dump", /Visit Facebook/.test(connectMain) && !/The main accounts/.test(connectMain));
+check("Stay in Touch is more prominent than the mailing disclaimer",
+  /footer-h-lead/.test(footerOf(html["index.html"])));
 check("Connect does not lecture about footer links", !/also linked in the footer|Start here if you are new/.test(connectMain));
 
 check("Subscribe intro copy is present",
