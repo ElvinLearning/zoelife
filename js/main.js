@@ -4,10 +4,9 @@
  * and navigates; the nav is open by default and forms fall back to native
  * browser validation.
  *
- * Forms FAIL CLOSED. No submission endpoint is configured yet, so a valid form
- * never reports success. It reports that the integration is not connected. Do
- * not replace that with a success message until a real endpoint exists and its
- * response is actually checked.
+ * Forms fail closed whenever an endpoint is absent or rejects a submission.
+ * A 2xx response is not enough: the provider payload must explicitly confirm
+ * acceptance before the UI reports that a message reached Zoe Life.
  */
 (function () {
   "use strict";
@@ -128,7 +127,7 @@
       form.querySelectorAll("input, select, textarea"),
       function (f) {
         // Skip the honeypot and anything inside a hidden conditional block.
-        if (f.name === "website") return false;
+        if (f.name === "_honey") return false;
         return f.offsetParent !== null || f.type === "checkbox";
       }
     );
@@ -170,14 +169,14 @@
   }
 
   function renderSent(status, kind) {
-    // Only ever called after the endpoint returned a 2xx.
+    // Only ever called after the provider explicitly accepted the submission.
     status.innerHTML =
       '<div class="status-sent"><strong>' +
-      (kind === "subscribe" ? "You are on the list" : "Message received") +
+      (kind === "subscribe" ? "Signup received" : "Message received") +
       "</strong>" +
       (kind === "subscribe"
-        ? "Thank you. You will hear from Zoe Life when there is something worth sharing. " +
-          "Every email has an unsubscribe link."
+        ? "Thank you. Your signup request has reached the Zoe Life team. You will hear " +
+          "from Zoe Life when there is something worth sharing."
         : "Thank you. Your message has reached the Zoe Life team. Please expect a reply within " +
           "three business days.") +
       "</div>";
@@ -193,8 +192,19 @@
       "</div>";
   }
 
+  function providerAccepted(payload) {
+    return Boolean(payload && (payload.success === true || payload.success === "true"));
+  }
+
   function submitTo(endpoint, form, status, kind, button) {
     var data = new FormData(form);
+    var replyTo = form.querySelector('input[name="email"]');
+    data.set("form_type", kind === "subscribe" ? "Mailing list signup" : "Contact message");
+    data.set(
+      "_subject",
+      kind === "subscribe" ? "New Zoe Life mailing list signup" : "New Zoe Life website message"
+    );
+    if (replyTo && replyTo.value) data.set("_replyto", replyTo.value.trim());
     var original = button ? button.textContent : "";
     if (button) {
       button.disabled = true;
@@ -215,18 +225,25 @@
       headers: { Accept: "application/json" },
     })
       .then(function (res) {
-        done();
-        // Success is the server's word, not ours.
-        if (res.ok) {
-          renderSent(status, kind);
-          form.reset();
-          if (reason && reveal) {
-            reveal.hidden = true;
-            revealInput.required = false;
-          }
-        } else {
-          renderFailed(status, "error " + res.status);
-        }
+        return res
+          .json()
+          .catch(function () {
+            return null;
+          })
+          .then(function (payload) {
+            done();
+            // Success is the provider's explicit word, not the HTTP status alone.
+            if (res.ok && providerAccepted(payload)) {
+              renderSent(status, kind);
+              form.reset();
+              if (reason && reveal) {
+                reveal.hidden = true;
+                revealInput.required = false;
+              }
+            } else {
+              renderFailed(status, "error " + res.status);
+            }
+          });
       })
       .catch(function (err) {
         done();
@@ -252,7 +269,7 @@
       e.preventDefault();
 
       // Honeypot: silently stop bots without adding friction for people.
-      var honey = form.querySelector('input[name="website"]');
+      var honey = form.querySelector('input[name="_honey"]');
       if (honey && honey.value) return;
 
       var fields = fieldsOf(form);

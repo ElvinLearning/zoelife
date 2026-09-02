@@ -357,7 +357,7 @@ ${banner("Contact")}
   <div>
     <div class="card"><h3>Prefer to talk?</h3><p>Book a complimentary 20 minute consultation instead. It is a separate booking, not this form.</p></div>
     <div class="card" style="margin-top:1.1rem"><h3>Follow Zoe Life</h3>${chips(ZL)}</div>
-    <div class="note"><b>Privacy.</b> Messages go to the Zoe Life team privately. Zoe Life does not publish its email addresses on this site.</div>
+    <div class="note"><b>Message delivery.</b> Messages are sent through FormSubmit for delivery to the Zoe Life team.</div>
   </div>
 </div></section>
 

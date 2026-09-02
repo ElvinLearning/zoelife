@@ -1,9 +1,10 @@
 /**
  * Interaction QA: form validation, conditional fields, keyboard access, and the
- * fail-closed submit path. Run the server first, then:  node tools/qa-forms.mjs
+ * fail-closed provider-rejection path. Run the server first, then:
+ * node tools/qa-forms.mjs
  *
- * The critical assertion is that a fully valid form does NOT report success,
- * because nothing is wired up to receive it yet.
+ * Network calls are mocked before any page script runs. The critical assertion
+ * is that an HTTP 200 with `success: "false"` does NOT report delivery.
  */
 
 import { spawn } from "node:child_process";
@@ -13,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BASE = process.env.QA_BASE || "http://127.0.0.1:8765";
-const PORT = 9334;
+const PORT = Number(process.env.QA_CDP_PORT || 19334);
 const CHROME =
   process.env.CHROME_PATH ||
   [
@@ -70,6 +71,12 @@ const { targetId } = await cdp(ws, "Target.createTarget", { url: "about:blank" }
 const { sessionId } = await cdp(ws, "Target.attachToTarget", { targetId, flatten: true });
 await cdp(ws, "Page.enable", {}, sessionId);
 await cdp(ws, "Runtime.enable", {}, sessionId);
+await cdp(ws, "Page.addScriptToEvaluateOnNewDocument", {
+  source: `window.fetch = async () => new Response(
+    JSON.stringify({ success: "false", message: "QA provider rejection" }),
+    { status: 200, headers: { "Content-Type": "application/json" } }
+  );`,
+}, sessionId);
 
 const evalJs = async (expression) => {
   const { result, exceptionDetails } = await cdp(ws, "Runtime.evaluate",
@@ -161,8 +168,8 @@ check("Other field hides again when deselected", r.revertHidden === true);
 check("Other field stops being required when hidden", r.revertRequired === false);
 
 /* ------------------------------------------------ valid submit is honest -- */
-console.log("\nContact form: fully valid submit must NOT claim success");
-r = await evalJs(`(() => {
+console.log("\nContact form: provider rejection must NOT claim success");
+r = await evalJs(`(async () => {
   const form = document.querySelector('[data-form="contact"]');
   const set = (id, v) => { const el = document.getElementById(id); el.value = v; el.dispatchEvent(new Event('input', {bubbles:true})); };
   set('c-first','Ada'); set('c-last','Nwosu'); set('c-email','ada@example.org');
@@ -171,6 +178,7 @@ r = await evalJs(`(() => {
   sel.value = 'Coaching'; sel.dispatchEvent(new Event('change', {bubbles:true}));
   set('c-message','I would like to ask about premarital coaching for us.');
   form.querySelector('button[type=submit]').click();
+  await new Promise(resolve => setTimeout(resolve, 50));
   const status = form.querySelector('[data-status]');
   return {
     text: status.textContent.trim(),
@@ -183,24 +191,25 @@ check("valid submit passes validation", r.remainingErrors === 0, `${r.remainingE
 check("valid submit does NOT claim the message was sent",
   !/thank you|we have received|message sent|successfully/i.test(r.text), r.text);
 check("valid submit states the message was NOT delivered",
-  /not been delivered|not sent|not connected/i.test(r.text), r.text);
+  /not been delivered|not delivered|not sent|not connected/i.test(r.text), r.text);
 check("status region is announced to screen readers", r.live === "polite");
 
 /* ----------------------------------------------------- subscribe is honest -- */
-console.log("\nMailing list: valid submit must NOT claim subscription");
-r = await evalJs(`(() => {
+console.log("\nMailing list: provider rejection must NOT claim subscription");
+r = await evalJs(`(async () => {
   const form = document.querySelector('.site-footer [data-form="subscribe"]');
   const email = form.querySelector('input[type=email]');
   const consent = form.querySelector('input[type=checkbox]');
   email.value = 'ada@example.org'; email.dispatchEvent(new Event('input',{bubbles:true}));
   consent.checked = true;
   form.querySelector('button[type=submit]').click();
+  await new Promise(resolve => setTimeout(resolve, 50));
   return { text: form.querySelector('[data-status]').textContent.trim() };
 })()`);
 check("subscribe does NOT claim the person was subscribed",
   !/you are subscribed|thank you|welcome aboard|success/i.test(r.text), r.text);
 check("subscribe states they were NOT subscribed",
-  /not been subscribed|not connected/i.test(r.text), r.text);
+  /not been subscribed|not delivered|not connected/i.test(r.text), r.text);
 
 /* -------------------------------------------------------------- keyboard -- */
 console.log("\nKeyboard and navigation");

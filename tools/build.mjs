@@ -42,8 +42,9 @@ const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
 const CONSENT =
-  "I agree to receive emails and other communications, including marketing, from Zoe Life. " +
-  "We will not share your information with third parties. You can unsubscribe at any time.";
+  "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
+  "a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. " +
+  "Zoe Life will use it for updates, and I can unsubscribe at any time.";
 
 const BOOKS_INTRO =
   "At Zoe Life, we create faith-centered, practical resources to encourage growth, " +
@@ -147,9 +148,8 @@ const bookingBlock = () =>
   CONFIG.bookingUrl
     ? `<div class="btn-row">
           <a class="btn btn-primary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
-          <a class="btn btn-secondary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
         </div>
-        <p class="format-meta">Booking uses Google Calendar appointment scheduling.</p>`
+        <p class="format-meta">Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.</p>`
     : `<div class="booking-placeholder">
           <p>Complimentary 20-minute consultations will open here for Mondays and Wednesdays, 6:00 to 8:00 PM Central. Until booking is live, send us a message and we will arrange a time.</p>
           <div class="btn-row">
@@ -181,6 +181,15 @@ ${CONFIG.staging
 <link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R18R3LVBK9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-R18R3LVBK9');
+</script>
 <script src="js/config.js"></script>
 </head>
 <body data-page="${page}">
@@ -225,6 +234,10 @@ const subscribeForm = (idPrefix, intro) => `
             <span class="consent-note">${CONSENT}</span>
           </label>
           <p class="error" id="${idPrefix}-consent-error" role="alert"></p>
+        </div>
+        <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
+          <label for="${idPrefix}-honey">Leave this field empty</label>
+          <input type="text" id="${idPrefix}-honey" name="_honey" tabindex="-1" autocomplete="off">
         </div>
         <button class="btn btn-primary" type="submit">Subscribe</button>
         <div class="form-status" data-status role="status" aria-live="polite"></div>
@@ -762,12 +775,15 @@ const contact = page(
             </div>
 
             <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
-              <label for="c-website">Leave this field empty</label>
-              <input type="text" id="c-website" name="website" tabindex="-1" autocomplete="off">
+              <label for="c-honey">Leave this field empty</label>
+              <input type="text" id="c-honey" name="_honey" tabindex="-1" autocomplete="off">
             </div>
 
             <button class="btn btn-primary" type="submit">Send message</button>
             <p class="reply-note">Please expect a reply within three business days.</p>
+            <div class="note">
+              <p><strong>Message delivery.</strong> Messages are sent through FormSubmit for delivery to the Zoe Life team.</p>
+            </div>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
         </div>
