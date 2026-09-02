@@ -35,24 +35,42 @@ const MISSION =
   "Zoe Life equips individuals, couples, families, churches, and organizations with " +
   "biblical truth, practical wisdom, and Christ-centered resources to help them thrive " +
   "in every season of life.";
-const CTA = "Schedule a complimentary 20-minute consultation";
-const CTA_HREF = "consult.html";
+const MESSAGE_CTA = "Send a message";
+const MESSAGE_HREF = "contact.html#message";
+const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
+const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
 const CONSENT =
   "I agree to receive emails and other communications, including marketing, from Zoe Life. " +
   "We will not share your information with third parties. You can unsubscribe at any time.";
 
-const DEVOTIONAL_BLURB =
-  "Seven days to slow down and turn your attention toward God. A 7-Day Gratitude Devotional " +
-  "by Kemi Akinyemi is a warm, Scripture-rooted companion for cultivating a heart of " +
-  "thanksgiving, one day at a time. Read it in the morning, share it with a small group, " +
-  "or use it to open a week of family prayer. Biblical, practical, and made for real life.";
+const BOOKS_INTRO =
+  "At Zoe Life, we create faith-centered, practical resources to encourage growth, " +
+  "strengthen your walk with God, and provide support for the different areas and seasons of life. " +
+  "Explore our current books and resources below, with more to come.";
 
-const JOURNAL_BLURB =
-  "Gratitude grows when it is practiced. A 100-Day Gratitude Journal by Kemi Akinyemi gives " +
-  "you lined space to keep naming what God has done, long after the first week. Start with " +
-  "the 7-Day Devotional, then continue here as you cultivate a lifestyle of thanksgiving to God.";
+const DEVOTIONAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
+const JOURNAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
+
+const DEVOTIONAL_BLURB = [
+  "Gratitude is more than an occasional response to God's blessings. It is a way of life rooted in recognizing who God is, remembering His goodness, and responding to Him with thanksgiving.",
+  "The 7-Day Gratitude Devotional invites you to explore the biblical foundation of gratitude through seven days of Scripture, reflection, prayer, and practical application. Each day provides an opportunity to pause, reflect on God's faithfulness, and intentionally cultivate a heart of thanksgiving.",
+  "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this devotional is designed to help you grow in gratitude and make thanksgiving an intentional part of your walk with God.",
+];
+
+const JOURNAL_BLURB = [
+  "Gratitude grows when we intentionally pause to recognize and remember God's goodness.",
+  "A 100-Day Gratitude Journal provides a dedicated space to pause, remember God's goodness, record the ways He has been faithful, and respond to Him with heartfelt thanksgiving.",
+  "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this journal encourages you to develop a consistent practice of gratitude. Over the course of 100 days, your entries can become more than individual reflections. Together, they create a meaningful record of blessings, answered prayers, reflections, and reminders of God's faithfulness along the way.",
+];
+
+const COLLECTION_COPY = [
+  "The 7-Day Gratitude Devotional and A 100-Day Gratitude Journal were created to complement one another while also being valuable as individual resources. Begin with the 7-Day Gratitude Devotional, then continue with the journal. You can begin with either resource or use them together.",
+];
+
+const COMING_SOON =
+  "We are continuing to develop faith-centered, practical resources. Check back for new books, workbooks, guides, and other resources from Zoe Life.";
 
 const ZOE_LIFE_SOCIALS = [
   ["facebook", "Facebook", "https://www.facebook.com/zoelifehub", "@zoelifehub"],
@@ -128,14 +146,14 @@ const payButtons = (book) => {
 const bookingBlock = () =>
   CONFIG.bookingUrl
     ? `<div class="btn-row">
-          <a class="btn btn-primary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">${CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
+          <a class="btn btn-primary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
+          <a class="btn btn-secondary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
         </div>
-        <p class="format-meta">Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.</p>`
+        <p class="format-meta">Booking uses Google Calendar appointment scheduling.</p>`
     : `<div class="booking-placeholder">
-          <code>GOOGLE_CALENDAR_BOOKING_URL</code>
-          <p>Google Calendar appointment scheduling is not connected yet. Complimentary 20-minute consultations will open here for Mondays and Wednesdays, 6:00 to 8:00 PM Central. Until the calendar link is published, use the contact form and Zoe Life will arrange a time.</p>
+          <p>Complimentary 20-minute consultations will open here for Mondays and Wednesdays, 6:00 to 8:00 PM Central. Until booking is live, send us a message and we will arrange a time.</p>
           <div class="btn-row">
-            <a class="btn btn-secondary" href="contact.html">Send a message instead</a>
+            <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
           </div>
         </div>`;
 
@@ -172,7 +190,7 @@ const header = (current) => `
 <header class="site-header">
   <div class="wrap-wide header-inner">
     <a class="brand" href="index.html">
-      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.jpg" alt="Zoe Life" width="198" height="60">
+      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span aria-hidden="true">&#9776;</span> Menu
@@ -183,10 +201,10 @@ ${NAV.map(
   ([href, label]) =>
     `        <li><a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a></li>`
 ).join("\n")}
-        <li class="nav-cta"><a href="${CTA_HREF}">${CTA}</a></li>
+        <li class="nav-cta"><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary header-cta" href="${CTA_HREF}">${CTA}</a>
+    <a class="btn btn-primary header-cta" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
   </div>
 </header>
 <main id="main">`;
@@ -204,7 +222,7 @@ const subscribeForm = (idPrefix, intro) => `
           <label class="consent" for="${idPrefix}-consent">
             <input type="checkbox" id="${idPrefix}-consent" name="consent" required
                    aria-describedby="${idPrefix}-consent-error">
-            <span>${CONSENT}</span>
+            <span class="consent-note">${CONSENT}</span>
           </label>
           <p class="error" id="${idPrefix}-consent-error" role="alert"></p>
         </div>
@@ -216,32 +234,35 @@ const footer = () => `
 </main>
 <footer class="site-footer">
   <div class="wrap-wide">
+    <div class="footer-top">
+      <img class="footer-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <p class="footer-tagline">${TAGLINE}</p>
+    </div>
     <div class="footer-grid">
-
-      <div class="footer-brand">
-        <img src="assets/brand/zoe-life-mark.png" alt="" width="56" height="56">
-        <p class="footer-tagline">${TAGLINE}</p>
-        <h2 class="footer-h" style="margin-top:1.75rem">Follow Zoe Life</h2>
-        ${socialList(ZOE_LIFE_SOCIALS, "Zoe Life")}
-      </div>
 
       <nav class="footer-nav" aria-label="Footer">
         <h2 class="footer-h">Explore</h2>
         <ul>
 ${NAV.map(([href, label]) => `          <li><a href="${href}">${label}</a></li>`).join("\n")}
-          <li><a href="${CTA_HREF}">Complimentary consultation</a></li>
+          <li><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
+          <li><a href="${CONSULT_HREF}">Complimentary consultation</a></li>
         </ul>
       </nav>
 
-      <div>
-        <h2 class="footer-h">Stay in touch</h2>
+      <div class="footer-social">
+        <h2 class="footer-h">Social</h2>
+        ${socialList(ZOE_LIFE_SOCIALS, "Zoe Life")}
+      </div>
+
+      <div class="footer-subscribe">
+        <h2 class="footer-h">Stay in Touch</h2>
 ${subscribeForm("footer", true)}
       </div>
 
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Pastors Tayo and Kemi Akinyemi.</p>
+      <p>Founded by Pastor Kemi and Pastor Tai.</p>
     </div>
   </div>
 </footer>
@@ -252,18 +273,17 @@ ${subscribeForm("footer", true)}
 
 const page = (meta, body) => head(meta) + header(meta.page) + body + footer();
 
-const socialBoard = (list, brand) =>
-  `<div class="social-board">
-${list
-  .map(
-    ([, label, href, handle]) => `      <div class="social-item">
-        <h3>${label}</h3>
-        <p>${handle}</p>
-        <a href="${href}" target="_blank" rel="noopener noreferrer">Visit ${label}<span class="visually-hidden">, ${brand}, opens in a new tab</span></a>
-      </div>`
-  )
-  .join("\n")}
-    </div>`;
+const socialVisit = (list, brand) =>
+  `<ul class="social-list social-visit">${list
+    .map(
+      ([key, label, href]) => `
+              <li><a class="social-link" href="${href}" target="_blank" rel="noopener noreferrer">
+                ${icon(key)}<span>Visit ${label}</span>
+                <span class="visually-hidden">, ${brand}, opens in a new tab</span>
+              </a></li>`
+    )
+    .join("")}
+            </ul>`;
 
 /* ------------------------------------------------------------------ pages -- */
 
@@ -279,46 +299,45 @@ const home = page(
   <div class="hero-split">
     <div class="hero-copy">
       <p class="eyebrow">Zoe Life</p>
-      <h1>${TAGLINE}</h1>
+      <h1 class="tagline-heading">Helping people thrive<br>in every season of life.</h1>
       <p class="lede">${MISSION}</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="${CTA_HREF}">${CTA}</a>
-        <a class="btn btn-secondary" href="books.html">Explore books and resources</a>
+        <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+        <a class="btn btn-primary" href="books.html">Explore books and resources</a>
       </div>
     </div>
     <figure class="hero-photo">
-      <img src="assets/photos/tayo-kemi-full.jpg"
-           alt="Pastors Tayo and Kemi Akinyemi standing together outdoors, smiling."
-           width="1600" height="2134">
+      <img src="assets/photos/tayo-kemi-hero.jpg"
+           alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
+           width="1280" height="1280">
     </figure>
-  </div>
-</section>
-
-<section class="band-sun">
-  <div class="wrap">
-    <p class="pull-quote">I have come that they may have life, and that they may have it more abundantly.</p>
-    <p class="pull-cite">John 10:10, NKJV</p>
-    <p>Zoe is the Greek word for life. In Scripture it often points to the fullness of life that comes from God. That promise sits at the centre of everything Zoe Life does.</p>
-    <p><a href="about.html">Read the story of Zoe Life</a></p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
+    <p class="eyebrow">A word from us</p>
+      <h2>You don't have to do life by yourself.</h2>
+    <p>We care about people. This is a place to start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope in an ordinary season. The message stays the same. You don't have to do life alone.</p>
+    <p><a href="about.html">Read more about Zoe Life</a></p>
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="wrap">
     <div class="split split-copy-photo">
       <div>
-        <p class="eyebrow">Pastors Tayo and Kemi Akinyemi</p>
-        <h2>Teachers, coaches, and encouragers.</h2>
-        <p>Zoe Life was founded by Pastors Tayo and Kemi Akinyemi, pastors of Life Springs Church. Their work is biblical and practical: Scripture first, then what it means for real decisions, real relationships, and real seasons.</p>
-        <p>Home is a starting place. The longer story, values, and statement of faith live on the About page.</p>
+        <p class="eyebrow">Pastor Tai and Pastor Kemi</p>
+        <h2>Zoe Life was founded by Pastor Kemi and Pastor Tai.</h2>
+        <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical, and practical, in the same breath.</p>
         <div class="btn-row">
-          <a class="btn btn-secondary" href="about.html">Meet Tayo and Kemi</a>
+          <a class="btn btn-primary" href="about.html">Meet Tayo and Kemi</a>
         </div>
       </div>
-      <figure class="portrait portrait-tall">
-        <img src="assets/photos/kemi-white.jpg"
-             alt="Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait."
-             width="1200" height="1800" loading="lazy">
+      <figure class="portrait portrait-couple">
+        <img src="assets/photos/tayo-kemi-about.jpg"
+             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
+             width="1232" height="1269" loading="lazy">
       </figure>
     </div>
   </div>
@@ -327,18 +346,18 @@ const home = page(
 <section class="band-grey" id="resources">
   <div class="wrap">
     <p class="eyebrow">Books and resources</p>
-    <h2>Two gratitude companions.</h2>
-    <p class="lede">Start with seven days. Keep going for a hundred.</p>
+    <h2>Resources to help you thrive.</h2>
+    <p class="lede">Start with 7 days. Keep going for 100. More to come.</p>
 
     <div class="book-tease" style="margin-top:2.4rem">
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="900" height="1292" loading="lazy">
+             width="884" height="1292" loading="lazy">
       </div>
       <div>
-        <h3>A 7-Day Gratitude Devotional</h3>
-        <p>Seven days of Scripture-rooted thanksgiving, written for ordinary mornings. By Kemi Akinyemi.</p>
+        <h3 class="book-title">A 7-Day Gratitude Devotional</h3>
+        <p>Seven days of Scripture, reflection, prayer, and practical application. By Kemi Akinyemi.</p>
         <p class="card-link"><a href="books.html#devotional">See the book</a></p>
       </div>
     </div>
@@ -347,35 +366,38 @@ const home = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
-             width="900" height="1350" loading="lazy">
+             width="892" height="1350" loading="lazy">
       </div>
       <div>
-        <h3>A 100-Day Gratitude Journal</h3>
-        <p>Lined space for a hundred days of naming what God has done. By Kemi Akinyemi.</p>
+        <h3 class="book-title">A 100-Day Gratitude Journal</h3>
+        <p>A dedicated space to pause, remember God's goodness, and keep a record of His faithfulness. By Kemi Akinyemi.</p>
         <p class="card-link"><a href="books.html#journal">See the journal</a></p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="band-peach">
+<section class="band-peach" id="connect">
   <div class="wrap">
     <p class="eyebrow">A next step</p>
     <h2>Start with a conversation.</h2>
-    <p class="lede">A complimentary 20-minute consultation is a simple way to talk through where you are and whether Zoe Life can help. Mondays and Wednesdays, 6:00 to 8:00 PM Central.</p>
+    <p class="lede">Send us a message to connect. We would love to hear from you.</p>
     <div class="btn-row">
-      <a class="btn btn-primary" href="${CTA_HREF}">${CTA}</a>
-      <a class="btn btn-secondary" href="contact.html">Send a message instead</a>
+      <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
     </div>
     <hr>
     <div class="split">
       <div>
-        <h3>Join the mailing list</h3>
+        <h3>Stay in Touch</h3>
         <p>${SUBSCRIBE_INTRO}</p>
       </div>
       <div class="form-card">
 ${subscribeForm("home", false)}
       </div>
+    </div>
+    <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation. Mondays and Wednesdays, 6:00 to 8:00 PM Central.</p>
+    <div class="btn-row">
+      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
     </div>
   </div>
 </section>
@@ -402,17 +424,19 @@ const about = page(
   <div class="wrap">
     <div class="split split-wide-left">
       <div>
-        <p>Zoe Life was founded by Tayo and Kemi Akinyemi out of a shared passion for helping people grow and thrive through the many stages and experiences of life. The name Zoe comes from the Greek word used in the Bible to describe the life of God, the abundant life that Jesus came to give. That understanding is at the heart of Zoe Life.</p>
-        <p>We believe biblical truth is not limited to one area of our lives. It provides wisdom and a foundation for how we approach our relationships, families, education, careers, personal and spiritual growth, and the opportunities and challenges we encounter along the way.</p>
-        <p>Every season of life presents opportunities to grow, learn, make purposeful decisions, develop the gifts God has placed within us, and become better equipped for what lies ahead. At times those seasons also bring questions, transitions, setbacks, and challenges that are easier to navigate with wisdom, encouragement, and practical support.</p>
-        <p>Through coaching, books and resources, speaking, and workshops, Zoe Life seeks to encourage and equip individuals, couples, families, youth, students, and professionals with biblical principles, practical guidance, and tools they can apply to everyday life.</p>
-        <p>Our approach is both faith-centered and practical. We draw from Scripture as well as decades of experience in marriage and family life, pastoral ministry, professional careers, education, mentoring, teaching, and coaching. We recognize that every person's journey is different, and our desire is to meet people where they are while helping them move forward with wisdom, intentionality, faith, and purpose.</p>
+        <p>Zoe Life was founded by Pastor Kemi and Pastor Tai.</p>
+        <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is the heart of this work, said in ordinary language: helping people thrive in every season of life.</p>
+        <p>You don't have to do life by yourself. We care about people, and we want this to be a place where you can start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope.</p>
+        <p>We believe biblical truth is not boxed into one corner of life. It gives wisdom for relationships, family, school, work, and the questions that show up on ordinary days.</p>
+        <p>Every season has room to grow. Some seasons also bring questions, transitions, and hard days that are easier to walk through with encouragement and practical support.</p>
+        <p>Through books and resources, speaking, workshops, and personal conversations, Zoe Life seeks to encourage individuals, couples, families, students, and professionals with biblical principles and tools they can use in everyday life.</p>
+        <p>We start with Scripture, then talk about what it means for the life you are actually living. Every person's journey is different. Our desire is to meet people where they are and help them move forward with wisdom, faith, and purpose.</p>
       </div>
-      <figure class="portrait portrait-tall">
+      <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-about.jpg"
-             alt="Pastors Tayo and Kemi Akinyemi seated together outdoors."
-             width="1400" height="1866">
-        <figcaption>Pastors Tayo and Kemi Akinyemi, founders of Zoe Life.</figcaption>
+             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
+             width="1232" height="1269">
+        <figcaption>Pastor Tai and Pastor Kemi, founders of Zoe Life.</figcaption>
       </figure>
     </div>
   </div>
@@ -423,14 +447,14 @@ const about = page(
     <div class="grid grid-2">
       <div>
         <p class="eyebrow">Mission</p>
-        <h2>Biblical and practical.</h2>
+        <h2>What we are here for.</h2>
         <p>${MISSION}</p>
-        <p>Whether through coaching, teaching, speaking, publishing, or developing resources, our desire is to encourage spiritual growth, strengthen relationships, and equip people to faithfully live out God's purposes.</p>
+        <p>We start with what Scripture says, then talk it through in spoken English for real decisions, real relationships, and real seasons.</p>
       </div>
       <div>
         <p class="eyebrow">Vision</p>
         <h2>Lives changed by the truth of God's Word.</h2>
-        <p>We desire to see individuals growing in spiritual maturity, marriages strengthened, families flourishing, leaders serving with wisdom and integrity, churches equipped for ministry, and communities positively affected by people who faithfully live according to God's design.</p>
+        <p>We want to see people growing, marriages strengthened, families flourishing, leaders serving with wisdom, churches equipped, and communities blessed by people who live what they believe.</p>
       </div>
     </div>
   </div>
@@ -456,8 +480,16 @@ const about = page(
 <section class="band-grey" id="meet">
   <div class="wrap">
     <p class="eyebrow">Meet Tayo and Kemi</p>
-    <h2>Pastors Tayo and Kemi Akinyemi</h2>
-    <div class="headshot-pair" style="margin:1.75rem 0 2rem">
+    <h2>Pastor Tai and I.</h2>
+    <figure class="portrait portrait-couple" style="margin:1.75rem 0 2rem;max-width:34rem">
+      <img src="assets/photos/tayo-kemi-park.jpg"
+           alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+           width="1400" height="1866" loading="lazy">
+      <figcaption>Pastor Tai and Pastor Kemi Akinyemi.</figcaption>
+    </figure>
+    <p>Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
+    <p>They also serve as pastors at Life Springs Church. Through Zoe Life they bring together their faith, their work, years of teaching and mentoring, and lessons learned through marriage, parenting, and everyday life.</p>
+    <div class="headshot-pair" style="margin:2rem 0 0">
       <figure class="portrait">
         <img src="assets/photos/tayo-headshot.jpg"
              alt="Portrait of Pastor Tayo Akinyemi of Zoe Life."
@@ -465,21 +497,12 @@ const about = page(
         <figcaption>Pastor Tayo Akinyemi</figcaption>
       </figure>
       <figure class="portrait">
-        <img src="assets/photos/kemi-white.jpg"
-             alt="Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait."
+        <img src="assets/photos/kemi-headshot.jpg"
+             alt="Portrait of Pastor Kemi Akinyemi of Zoe Life."
              width="1200" height="1800" loading="lazy">
         <figcaption>Pastor Kemi Akinyemi</figcaption>
       </figure>
     </div>
-    <p>Tayo and Kemi Akinyemi are the co-founders of Zoe Life. They are husband and wife, parents, pastors, coaches, mentors, and professionals who share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
-    <p>Together they serve in pastoral leadership at Life Springs Church in Illinois and have spent many years coaching, teaching, mentoring, and supporting individuals, couples, families, youth, students, and professionals as they navigate relationships, marriage, family life, education, careers, personal and spiritual growth, and major life decisions.</p>
-    <p>Through Zoe Life they bring together their faith, professional and educational experience, years of ministry and coaching, and lessons learned through marriage, parenting, and everyday life.</p>
-    <figure class="portrait portrait-stage" style="margin-top:2rem;max-width:36rem">
-      <img src="assets/photos/tayo-kemi-stage.jpg"
-           alt="Pastors Tayo and Kemi Akinyemi speaking together on stage."
-           width="1200" height="1600" loading="lazy">
-      <figcaption>Teaching and speaking, side by side.</figcaption>
-    </figure>
   </div>
 </section>
 
@@ -508,10 +531,10 @@ const about = page(
   <div class="wrap">
     <p class="eyebrow">Where next</p>
     <h2>We would be glad to connect.</h2>
-    <p>Whether you are looking for practical resources, interested in coaching, considering Tayo and Kemi for a speaking engagement or workshop, or simply want to learn more, we would love to hear from you.</p>
+    <p>Send us a message if you are looking for resources, considering Tayo and Kemi for a speaking engagement or workshop, or simply want to say hello.</p>
     <div class="btn-row">
-      <a class="btn btn-primary" href="${CTA_HREF}">${CTA}</a>
-      <a class="btn btn-secondary" href="contact.html">Send a message</a>
+      <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
     </div>
   </div>
 </section>
@@ -529,8 +552,8 @@ const books = page(
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Books and Resources</p>
-    <h1>Resources for everyday faith.</h1>
-    <p class="lede">Two gratitude companions, written to be used in ordinary days. More books will be added here as they are published.</p>
+    <h1>Resources to help you thrive.</h1>
+    <p class="lede">${BOOKS_INTRO}</p>
   </div>
 </section>
 
@@ -540,13 +563,13 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
-             width="900" height="1292">
+             width="884" height="1292">
       </div>
       <div>
         <p class="eyebrow">Devotional</p>
-        <h2>A 7-Day Gratitude Devotional</h2>
-        <p class="lede">Cultivating a Heart of Thanksgiving to God. By Kemi Akinyemi.</p>
-        <p>${DEVOTIONAL_BLURB}</p>
+        <h2 class="book-title">A 7-Day Gratitude Devotional</h2>
+        <p class="lede">${DEVOTIONAL_SUB}. By Kemi Akinyemi.</p>
+        ${DEVOTIONAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("devotional")}
       </div>
     </div>
@@ -559,28 +582,37 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
-             width="900" height="1350">
+             width="892" height="1350">
       </div>
       <div>
         <p class="eyebrow">Journal</p>
-        <h2>A 100-Day Gratitude Journal</h2>
-        <p class="lede">Cultivating a Lifestyle of Thanksgiving to God. By Kemi Akinyemi.</p>
-        <p>${JOURNAL_BLURB}</p>
+        <h2 class="book-title">A 100-Day Gratitude Journal</h2>
+        <p class="lede">${JOURNAL_SUB}. By Kemi Akinyemi.</p>
+        ${JOURNAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("journal")}
       </div>
     </div>
   </div>
 </section>
 
+<section class="band-tan" id="collection">
+  <div class="wrap">
+    <p class="eyebrow">Gratitude Collection</p>
+    <h2>A Gratitude package, made to work together.</h2>
+    <p>Start with 7 days. Keep going for 100.</p>
+    ${COLLECTION_COPY.map((p) => `<p>${p}</p>`).join("\n    ")}
+    <p>If you are buying for a group, a church, or a workshop, send a message and we can talk through a group order once purchase options are live.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="${MESSAGE_HREF}">Ask about group orders</a>
+    </div>
+  </div>
+</section>
+
 <section>
   <div class="wrap">
-    <p class="eyebrow">Better together</p>
-    <h2>How the two work together.</h2>
-    <p>The devotional carries you through seven days of reflection on thanksgiving to God. The journal gives you 100 days of space to keep going, recording what you are grateful for well beyond the first week. Start with the devotional, then continue in the journal.</p>
-    <p>If you are buying for a group, a church, or a workshop, send a message and Zoe Life can talk through a bulk order once purchase options are live.</p>
-    <div class="btn-row">
-      <a class="btn btn-secondary" href="contact.html">Ask about group orders</a>
-    </div>
+    <p class="eyebrow">More to come</p>
+    <h2>More books and resources coming soon.</h2>
+    <p>${COMING_SOON}</p>
   </div>
 </section>
 `
@@ -598,7 +630,10 @@ const connect = page(
   <div class="wrap">
     <p class="eyebrow">Connect</p>
     <h1>Stay close to the conversation.</h1>
-    <p class="lede">Follow Zoe Life for encouragement, practical guidance, books and resources, coaching, speaking, and workshops designed to help you thrive in every season of life.</p>
+    <p class="lede">Send us a message to connect, or follow along on the channels you already use.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+    </div>
   </div>
 </section>
 
@@ -607,13 +642,12 @@ const connect = page(
     <div class="split split-copy-photo">
       <div>
         <p class="eyebrow">Zoe Life</p>
-        <h2>The main accounts</h2>
-        <p>These are the Zoe Life socials, also linked in the footer of every page. Start here if you are new.</p>
-        ${socialBoard(ZOE_LIFE_SOCIALS, "Zoe Life")}
+        <h2>Find us online.</h2>
+        ${socialVisit(ZOE_LIFE_SOCIALS, "Zoe Life")}
       </div>
-      <figure class="portrait portrait-tall">
+      <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-park.jpg"
-             alt="Pastors Tayo and Kemi Akinyemi sitting together outdoors, smiling."
+             alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
              width="1400" height="1866" loading="lazy">
       </figure>
     </div>
@@ -625,21 +659,22 @@ const connect = page(
     <article class="family-panel" id="zoe-family-life">
       <p class="eyebrow">A Zoe Life program</p>
       <h2>Zoe Family Life</h2>
-      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Through Zoe Family Life we share faith-centered encouragement, conversations, and practical guidance to help individuals, couples, and families build stronger relationships.</p>
-      <p>It carries its own social accounts so families can follow that conversation directly, while Zoe Life remains the parent brand.</p>
-      ${socialBoard(FAMILY_SOCIALS, "Zoe Family Life")}
-      <p class="format-meta" style="margin-top:1.25rem">No X account for Zoe Family Life at this time.</p>
+      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow that conversation here.</p>
+      ${socialVisit(FAMILY_SOCIALS, "Zoe Family Life")}
     </article>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-    <h2>Prefer a conversation?</h2>
-    <p>If you would rather talk than follow along online, start with a complimentary 20-minute consultation.</p>
+    <h2>Stay in Touch</h2>
+    <p>${SUBSCRIBE_INTRO}</p>
+    <div class="form-card" style="max-width:32rem;margin-top:1.25rem">
+${subscribeForm("connect", false)}
+    </div>
+    <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation.</p>
     <div class="btn-row">
-      <a class="btn btn-primary" href="${CTA_HREF}">${CTA}</a>
-      <a class="btn btn-secondary" href="contact.html">Send a message</a>
+      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
     </div>
   </div>
 </section>
@@ -657,17 +692,17 @@ const contact = page(
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Contact</p>
-    <h1>We would love to hear from you.</h1>
-    <p class="lede">Send a message, or schedule a complimentary 20-minute consultation. They are two separate things, so pick whichever fits.</p>
+    <h1>Send us a message to connect.</h1>
+    <p class="lede">Start with a conversation. We would love to hear from you.</p>
   </div>
 </section>
 
-<section>
+<section id="message">
   <div class="wrap">
     <div class="split split-wide-left" style="align-items:start">
       <div>
         <h2>Send a message</h2>
-        <p>The form goes to the Zoe Life inbox. Zoe Life aims to reply within three business days.</p>
+        <p>Tell us a little about how we can help, and we will get back to you.</p>
 
         <div class="form-card" style="margin-top:1.5rem">
           <form data-form="contact" novalidate>
@@ -732,24 +767,25 @@ const contact = page(
             </div>
 
             <button class="btn btn-primary" type="submit">Send message</button>
+            <p class="reply-note">Please expect a reply within three business days.</p>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
 
       <aside>
-        <figure class="portrait portrait-tall">
-          <img src="assets/photos/kemi-white.jpg"
-               alt="Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait."
-               width="1200" height="1800" loading="lazy">
+        <figure class="portrait portrait-couple">
+          <img src="assets/photos/tayo-kemi-park.jpg"
+               alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+               width="1400" height="1866" loading="lazy">
         </figure>
-        <div class="note" style="margin-top:1.25rem">
-          <p><strong>Prefer to talk?</strong> ${CTA} instead. It is a separate booking, not this form.</p>
-          <p class="card-link"><a href="${CTA_HREF}">Go to the consultation page</a></p>
+        <div class="form-card" style="margin-top:1.25rem">
+          <h3>Stay in Touch</h3>
+          <p>${SUBSCRIBE_INTRO}</p>
+${subscribeForm("contact", false)}
         </div>
-        <div class="note">
-          <p><strong>Privacy.</strong> Messages go to the Zoe Life team privately. Zoe Life does not publish its email addresses on this site.</p>
-        </div>
+        <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.</p>
+        <p class="card-link"><a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a></p>
       </aside>
     </div>
   </div>
@@ -783,15 +819,14 @@ const consult = page(
           <li><span class="k">Cost</span> <span class="v">Free, no deposit</span></li>
           <li><span class="k">When</span> <span class="v">Mondays and Wednesdays, 6:00 to 8:00 PM Central</span></li>
           <li><span class="k">Where</span> <span class="v">Video call, details sent on confirmation</span></li>
-          <li><span class="k">Booking</span> <span class="v">Google Calendar appointment scheduling</span></li>
         </ul>
-        <p style="margin-top:1.5rem">This is not a paid coaching session and not a sales pitch. It is a first conversation.</p>
+        <p style="margin-top:1.5rem">This is a first conversation, not a paid session.</p>
         ${bookingBlock()}
       </div>
-      <figure class="portrait portrait-tall">
-        <img src="assets/photos/tayo-kemi-full.jpg"
-             alt="Pastors Tayo and Kemi Akinyemi standing together outdoors, smiling."
-             width="1600" height="2134">
+      <figure class="portrait portrait-couple">
+        <img src="assets/photos/tayo-kemi-hero.jpg"
+             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
+             width="1280" height="1280">
       </figure>
     </div>
   </div>

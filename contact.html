@@ -27,7 +27,7 @@
 <header class="site-header">
   <div class="wrap-wide header-inner">
     <a class="brand" href="index.html">
-      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.jpg" alt="Zoe Life" width="198" height="60">
+      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span aria-hidden="true">&#9776;</span> Menu
@@ -39,27 +39,27 @@
         <li><a href="books.html">Books &amp; Resources</a></li>
         <li><a href="connect.html">Connect</a></li>
         <li><a href="contact.html" aria-current="page">Contact</a></li>
-        <li class="nav-cta"><a href="consult.html">Schedule a complimentary 20-minute consultation</a></li>
+        <li class="nav-cta"><a href="contact.html#message">Send a message</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary header-cta" href="consult.html">Schedule a complimentary 20-minute consultation</a>
+    <a class="btn btn-primary header-cta" href="contact.html#message">Send a message</a>
   </div>
 </header>
 <main id="main">
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Contact</p>
-    <h1>We would love to hear from you.</h1>
-    <p class="lede">Send a message, or schedule a complimentary 20-minute consultation. They are two separate things, so pick whichever fits.</p>
+    <h1>Send us a message to connect.</h1>
+    <p class="lede">Start with a conversation. We would love to hear from you.</p>
   </div>
 </section>
 
-<section>
+<section id="message">
   <div class="wrap">
     <div class="split split-wide-left" style="align-items:start">
       <div>
         <h2>Send a message</h2>
-        <p>The form goes to the Zoe Life inbox. Zoe Life aims to reply within three business days.</p>
+        <p>Tell us a little about how we can help, and we will get back to you.</p>
 
         <div class="form-card" style="margin-top:1.5rem">
           <form data-form="contact" novalidate>
@@ -124,24 +124,44 @@
             </div>
 
             <button class="btn btn-primary" type="submit">Send message</button>
+            <p class="reply-note">Please expect a reply within three business days.</p>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
         </div>
       </div>
 
       <aside>
-        <figure class="portrait portrait-tall">
-          <img src="assets/photos/kemi-white.jpg"
-               alt="Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait."
-               width="1200" height="1800" loading="lazy">
+        <figure class="portrait portrait-couple">
+          <img src="assets/photos/tayo-kemi-park.jpg"
+               alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+               width="1400" height="1866" loading="lazy">
         </figure>
-        <div class="note" style="margin-top:1.25rem">
-          <p><strong>Prefer to talk?</strong> Schedule a complimentary 20-minute consultation instead. It is a separate booking, not this form.</p>
-          <p class="card-link"><a href="consult.html">Go to the consultation page</a></p>
+        <div class="form-card" style="margin-top:1.25rem">
+          <h3>Stay in Touch</h3>
+          <p>Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.</p>
+
+      <form class="subscribe-form" data-form="subscribe" novalidate>
+        
+        <div class="field">
+          <label for="contact-email">Email address <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+          <input type="email" id="contact-email" name="email" autocomplete="email"
+                 required aria-describedby="contact-email-error">
+          <p class="error" id="contact-email-error" role="alert"></p>
         </div>
-        <div class="note">
-          <p><strong>Privacy.</strong> Messages go to the Zoe Life team privately. Zoe Life does not publish its email addresses on this site.</p>
+        <div class="field">
+          <label class="consent" for="contact-consent">
+            <input type="checkbox" id="contact-consent" name="consent" required
+                   aria-describedby="contact-consent-error">
+            <span class="consent-note">I agree to receive emails and other communications, including marketing, from Zoe Life. We will not share your information with third parties. You can unsubscribe at any time.</span>
+          </label>
+          <p class="error" id="contact-consent-error" role="alert"></p>
         </div>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <div class="form-status" data-status role="status" aria-live="polite"></div>
+      </form>
+        </div>
+        <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.</p>
+        <p class="card-link"><a class="btn btn-secondary" href="consult.html">Schedule a complimentary 20-minute consultation</a></p>
       </aside>
     </div>
   </div>
@@ -150,12 +170,27 @@
 </main>
 <footer class="site-footer">
   <div class="wrap-wide">
+    <div class="footer-top">
+      <img class="footer-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <p class="footer-tagline">Helping people thrive in every season of life.</p>
+    </div>
     <div class="footer-grid">
 
-      <div class="footer-brand">
-        <img src="assets/brand/zoe-life-mark.png" alt="" width="56" height="56">
-        <p class="footer-tagline">Helping people thrive in every season of life.</p>
-        <h2 class="footer-h" style="margin-top:1.75rem">Follow Zoe Life</h2>
+      <nav class="footer-nav" aria-label="Footer">
+        <h2 class="footer-h">Explore</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="books.html">Books &amp; Resources</a></li>
+          <li><a href="connect.html">Connect</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#message">Send a message</a></li>
+          <li><a href="consult.html">Complimentary consultation</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer-social">
+        <h2 class="footer-h">Social</h2>
         <ul class="social-list">
               <li><a class="social-link" href="https://www.facebook.com/zoelifehub" target="_blank" rel="noopener noreferrer">
                 <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 9h2.5V6H14c-2 0-3.5 1.5-3.5 3.5V11H8v3h2.5v7h3v-7H16l.5-3h-3V9.5C13.5 9.2 13.7 9 14 9z"/></svg><span>Facebook</span>
@@ -180,20 +215,8 @@
             </ul>
       </div>
 
-      <nav class="footer-nav" aria-label="Footer">
-        <h2 class="footer-h">Explore</h2>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="books.html">Books &amp; Resources</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="contact.html">Contact</a></li>
-          <li><a href="consult.html">Complimentary consultation</a></li>
-        </ul>
-      </nav>
-
-      <div>
-        <h2 class="footer-h">Stay in touch</h2>
+      <div class="footer-subscribe">
+        <h2 class="footer-h">Stay in Touch</h2>
 
       <form class="subscribe-form" data-form="subscribe" novalidate>
         <p class="hint">Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.</p>
@@ -207,7 +230,7 @@
           <label class="consent" for="footer-consent">
             <input type="checkbox" id="footer-consent" name="consent" required
                    aria-describedby="footer-consent-error">
-            <span>I agree to receive emails and other communications, including marketing, from Zoe Life. We will not share your information with third parties. You can unsubscribe at any time.</span>
+            <span class="consent-note">I agree to receive emails and other communications, including marketing, from Zoe Life. We will not share your information with third parties. You can unsubscribe at any time.</span>
           </label>
           <p class="error" id="footer-consent-error" role="alert"></p>
         </div>
@@ -219,7 +242,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Pastors Tayo and Kemi Akinyemi.</p>
+      <p>Founded by Pastor Kemi and Pastor Tai.</p>
     </div>
   </div>
 </footer>
