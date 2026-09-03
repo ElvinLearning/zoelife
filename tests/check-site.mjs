@@ -431,6 +431,14 @@ check("Home hero puts Send a message before books",
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
 check("About founder line is Tayo and Kemi", /founded by Tayo and Kemi/.test(aboutMain));
+check("About Meet section keeps the Meet Tayo and Kemi eyebrow",
+  /id="meet"[\s\S]*?<p class="eyebrow">Meet Tayo and Kemi<\/p>/.test(aboutMain));
+check("About Meet section has no Tayo and I or Tai and I heading",
+  !/<h2>\s*(?:Tayo|Tai) and I\.?\s*<\/h2>/.test(aboutMain) &&
+  !/(?:Tayo|Tai) and I/.test(aboutMain));
+check("Builder does not emit a Tayo and I or Tai and I heading",
+  !/<h2>\s*(?:Tayo|Tai) and I\.?\s*<\/h2>/.test(builder) &&
+  !/(?:Tayo|Tai) and I/.test(builder));
 const namingCorpus = Object.values(allHtmlPages).join("\n") + builder + read("assets/photos/provenance.json");
 check("His name is spelled Tayo, never Tai", !/\bTai\b/.test(namingCorpus));
 check("Couple names are Tayo then Kemi, never Kemi and Tayo",
