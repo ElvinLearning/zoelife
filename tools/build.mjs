@@ -168,7 +168,7 @@ ${CONFIG.staging
   ? '<meta name="robots" content="noindex, nofollow">'
   : '<meta name="robots" content="index, follow">'}
 <link rel="canonical" href="${canonicalFor(page)}">
-<meta name="theme-color" content="#E6E1DA">
+<meta name="theme-color" content="#F8F4ED">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zoe Life">
 <meta property="og:url" content="${canonicalFor(page)}">
@@ -356,7 +356,7 @@ const home = page(
   </div>
 </section>
 
-<section class="band-grey" id="resources">
+<section id="resources">
   <div class="wrap">
     <p class="eyebrow">Books and resources</p>
     <h2>Resources to help you thrive.</h2>
@@ -390,7 +390,7 @@ const home = page(
   </div>
 </section>
 
-<section class="band-peach" id="connect">
+<section id="connect">
   <div class="wrap">
     <p class="eyebrow">A next step</p>
     <h2>Start with a conversation.</h2>
@@ -455,7 +455,7 @@ const about = page(
   </div>
 </section>
 
-<section class="band-tan">
+<section>
   <div class="wrap">
     <div class="grid grid-2">
       <div>
@@ -490,7 +490,7 @@ const about = page(
   </div>
 </section>
 
-<section class="band-grey" id="meet">
+<section class="band-tan" id="meet">
   <div class="wrap">
     <p class="eyebrow">Meet Tayo and Kemi</p>
     <h2>Tayo and I.</h2>
@@ -540,7 +540,7 @@ const about = page(
   </div>
 </section>
 
-<section class="band-peach">
+<section>
   <div class="wrap">
     <p class="eyebrow">Where next</p>
     <h2>We would be glad to connect.</h2>
@@ -589,7 +589,7 @@ const books = page(
   </div>
 </section>
 
-<section id="journal" class="band-grey">
+<section id="journal">
   <div class="wrap">
     <div class="book">
       <div class="book-cover">
@@ -918,10 +918,10 @@ wrote(
 wrote(
   "favicon.svg",
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#F7F4EE"/>
-  <circle cx="16" cy="16" r="11.5" fill="none" stroke="#C9A44A" stroke-width="1.6"/>
-  <path d="M16 22c-3.2 0-5.6-2.4-5.6-5.6C10.4 12.6 13.6 9.6 16 8c2.4 1.6 5.6 4.6 5.6 8.4 0 3.2-2.4 5.6-5.6 5.6z" fill="#4F6B45"/>
-  <path d="M16 9.5v12" stroke="#F7F4EE" stroke-width="1.1" stroke-linecap="round"/>
+  <rect width="32" height="32" rx="6" fill="#F8F4ED"/>
+  <circle cx="16" cy="16" r="11.5" fill="none" stroke="#C6A15B" stroke-width="1.6"/>
+  <path d="M16 22c-3.2 0-5.6-2.4-5.6-5.6C10.4 12.6 13.6 9.6 16 8c2.4 1.6 5.6 4.6 5.6 8.4 0 3.2-2.4 5.6-5.6 5.6z" fill="#526B58"/>
+  <path d="M16 9.5v12" stroke="#F8F4ED" stroke-width="1.1" stroke-linecap="round"/>
 </svg>\n`
 );
 

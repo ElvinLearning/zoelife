@@ -454,9 +454,21 @@ check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain
 group("Visual direction");
 
 check("No dark page theme", !/--ink:\s*#(?:0|1|2)[0-9a-f]{5}\b/i.test(css) || /--cream:\s*#F/i.test(css));
-check("Background is a light cream", /--cream:\s*#F7F4EE/i.test(css) && /--paper:\s*#F7F4EE/i.test(css));
-check("Palette includes grey, tan, and peach", /--grey:\s*#E6E1DA/i.test(css) && /--tan:\s*#E4D3B8/i.test(css) && /--peach:\s*#F3D5B8/i.test(css));
-check("theme-color is Instagram grey", PAGES.every((p) => /<meta name="theme-color" content="#E6E1DA">/.test(html[p])));
+check("Background is warm cream", /--cream:\s*#F8F4ED/i.test(css) && /--paper:\s*#F8F4ED/i.test(css));
+check("Soft beige is the alternate ground", /--beige:\s*#E8DED2/i.test(css));
+check("Sage is the one brand green", /--sage:\s*#526B58/i.test(css));
+check("Olive is a sage-family neighbor, not a second accent", /--olive:\s*#4A5C3A/i.test(css));
+check("Gold and peach exist as spices", /--gold:\s*#C6A15B/i.test(css) && /--peach:\s*#E0A994/i.test(css));
+check("Charcoal is the type color", /--ink:\s*#343A36/i.test(css));
+check("Primary buttons use sage, hover uses olive",
+  /\.btn-primary \{[^}]*background:\s*var\(--sage\)/.test(css) &&
+  /\.btn-primary:hover \{[^}]*background:\s*var\(--olive\)/.test(css) &&
+  !/\.btn-primary \{[^}]*var\(--gold\)/.test(css) &&
+  !/\.btn-primary \{[^}]*var\(--peach\)/.test(css));
+check("Peach is not a section fill", /\.band-peach[^}]*background:\s*var\(--cream\)/.test(css));
+check("Home does not use peach or grey as competing section fills",
+  !/band-peach/.test(html["index.html"]) && !/band-grey/.test(html["index.html"]));
+check("theme-color is warm cream", PAGES.every((p) => /<meta name="theme-color" content="#F8F4ED">/.test(html[p])));
 check("Reduced motion is respected", /prefers-reduced-motion:\s*reduce/.test(css));
 check("Focus is visible", /:focus-visible/.test(css) && /outline:\s*3px/.test(css));
 check("Type pairing is Fraunces and Outfit", /font-family: Fraunces/.test(css) && /font-family: Outfit/.test(css));
@@ -517,14 +529,11 @@ const token = (name) => {
 
 const T = {
   cream: token("cream"),
-  creamDeep: token("cream-deep"),
-  grey: token("grey"),
-  tan: token("tan"),
-  peach: token("peach"),
-  sun: token("sun"),
+  beige: token("beige"),
   white: token("white"),
   goldDeep: token("gold-deep"),
-  sageDeep: token("sage-deep"),
+  sage: token("sage"),
+  olive: token("olive"),
   terracotta: token("terracotta"),
   ink: token("ink"),
   inkSoft: token("ink-soft"),
@@ -532,34 +541,21 @@ const T = {
 
 const PAIRS = [
   ["body text on cream", T.ink, T.cream, 4.5],
-  ["body text on cream-deep", T.ink, T.creamDeep, 4.5],
-  ["body text on grey", T.ink, T.grey, 4.5],
-  ["body text on tan", T.ink, T.tan, 4.5],
-  ["body text on peach", T.ink, T.peach, 4.5],
-  ["body text on sun", T.ink, T.sun, 4.5],
+  ["body text on beige", T.ink, T.beige, 4.5],
   ["muted text on cream", T.inkSoft, T.cream, 4.5],
-  ["muted text on cream-deep", T.inkSoft, T.creamDeep, 4.5],
-  ["muted text on grey", T.inkSoft, T.grey, 4.5],
-  ["muted text on tan", T.inkSoft, T.tan, 4.5],
-  ["muted text on peach", T.inkSoft, T.peach, 4.5],
-  ["muted text on sun", T.inkSoft, T.sun, 4.5],
+  ["muted text on beige", T.inkSoft, T.beige, 4.5],
   ["muted text on white", T.inkSoft, T.white, 4.5],
-  ["link sage-deep on cream", T.sageDeep, T.cream, 4.5],
-  ["link sage-deep on white", T.sageDeep, T.white, 4.5],
+  ["link sage on cream", T.sage, T.cream, 4.5],
+  ["link sage on white", T.sage, T.white, 4.5],
+  ["olive hover on cream", T.olive, T.cream, 4.5],
+  ["olive hover on beige", T.olive, T.beige, 4.5],
   ["eyebrow gold-deep on cream", T.goldDeep, T.cream, 4.5],
-  ["eyebrow gold-deep on cream-deep", T.goldDeep, T.creamDeep, 4.5],
-  ["eyebrow gold-deep on grey", T.goldDeep, T.grey, 4.5],
-  ["eyebrow gold-deep on tan", T.goldDeep, T.tan, 4.5],
-  ["eyebrow gold-deep on peach", T.goldDeep, T.peach, 4.5],
-  ["eyebrow gold-deep on sun", T.goldDeep, T.sun, 4.5],
-  ["eyebrow gold-deep on white", T.goldDeep, T.white, 4.5],
-  ["tagline terracotta on cream", T.terracotta, T.cream, 4.5],
-  ["tagline terracotta on cream-deep", T.terracotta, T.creamDeep, 4.5],
-  ["pending badge text on peach tint", T.terracotta, "#FBEDE2", 4.5],
+  ["eyebrow gold-deep on beige", T.goldDeep, T.beige, 4.5],
+  ["pending badge text on peach tint", T.terracotta, "#F3E6DF", 4.5],
   ["error text on cream", "#8A3E17", T.cream, 4.5],
-  ["white text on sage-deep band", "#F6F4EE", T.sageDeep, 4.5],
-  ["primary button label", T.white, T.sageDeep, 4.5],
-  ["focus ring on cream", T.sageDeep, T.cream, 3],
+  ["primary button label", T.white, T.sage, 4.5],
+  ["olive deeper fill button label", T.white, T.olive, 4.5],
+  ["focus ring on cream", T.sage, T.cream, 3],
 ];
 
 for (const [name, fg, bg, min] of PAIRS) {
