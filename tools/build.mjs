@@ -493,7 +493,6 @@ const about = page(
 <section class="band-tan" id="meet">
   <div class="wrap">
     <p class="eyebrow">Meet Tayo and Kemi</p>
-    <h2>Tayo and I.</h2>
     <figure class="portrait portrait-couple" style="margin:1.75rem 0 2rem;max-width:34rem">
       <img src="assets/photos/tayo-kemi-park.jpg"
            alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
