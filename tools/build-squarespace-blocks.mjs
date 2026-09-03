@@ -190,12 +190,12 @@ ${banner("About")}
   <p class="eyebrow">Meet the founders</p>
   <div class="split">
     <figure>
-      <img class="founders" src="${IMG.founders}" alt="Pastors Tayo and Kemi Akinyemi smiling together." loading="lazy">
+      <img class="founders" src="${IMG.founders}" alt="Tayo and Kemi Akinyemi smiling together." loading="lazy">
       <figcaption class="meta" style="margin-top:.55rem">Pastors Tayo and Kemi Akinyemi, founders of Zoe Life.</figcaption>
     </figure>
     <div>
       <h2>Tayo and Kemi Akinyemi</h2>
-      <p>Pastors Tayo and Kemi Akinyemi are the founders of Zoe Life and pastors of Life Springs Church.</p>
+      <p>Tayo and Kemi Akinyemi are the founders of Zoe Life and pastors of Life Springs Church.</p>
       <p>They are founders, pastors, coaches, mentors, parents, and professionals. Their work brings together ministry experience, professional leadership, teaching, mentoring, coaching, and lifelong learning.</p>
       <p>Their public focus includes relationships, family life, leadership, education, careers, stewardship, and personal growth through Scripture.</p>
       <p><span class="pending">Biography pending</span></p>
@@ -459,11 +459,11 @@ ${banner("Home")}
 <section class="sage"><div class="w split">
   <div>
     <p class="eyebrow">The founders</p>
-    <h2>Pastors Tayo and Kemi Akinyemi</h2>
+    <h2>Tayo and Kemi Akinyemi</h2>
     <p class="lede">Founders of Zoe Life and pastors of Life Springs Church. They combine ministry experience, professional leadership, teaching, mentoring, coaching, and a habit of lifelong learning.</p>
     <p class="lede">Their focus spans relationships, family life, leadership, education, careers, stewardship, and personal growth through Scripture.</p>
   </div>
-  <figure><img class="founders" src="${IMG.founders}" alt="Pastors Tayo and Kemi Akinyemi smiling together." loading="lazy"></figure>
+  <figure><img class="founders" src="${IMG.founders}" alt="Tayo and Kemi Akinyemi smiling together." loading="lazy"></figure>
 </div></section>
 
 <section><div class="w">

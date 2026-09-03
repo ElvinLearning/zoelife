@@ -275,7 +275,7 @@ ${subscribeForm("footer", true)}
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Pastor Kemi and Pastor Tai.</p>
+      <p>Founded by Tayo and Kemi.</p>
     </div>
   </div>
 </footer>
@@ -321,7 +321,7 @@ const home = page(
     </div>
     <figure class="hero-photo">
       <img src="assets/photos/tayo-kemi-full.jpg"
-           alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
+           alt="Tayo and Kemi Akinyemi standing together outdoors, smiling."
            width="1600" height="2134">
     </figure>
   </div>
@@ -340,17 +340,17 @@ const home = page(
   <div class="wrap">
     <div class="split split-copy-photo">
       <div>
-        <p class="eyebrow">Pastor Tai and Pastor Kemi</p>
-        <h2>Zoe Life was founded by Pastor Kemi and Pastor Tai.</h2>
+        <p class="eyebrow">Tayo and Kemi</p>
+        <h2>Zoe Life was founded by Tayo and Kemi.</h2>
         <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical and practical, in the same breath.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="about.html">Meet Tayo and Kemi</a>
         </div>
       </div>
       <figure class="portrait portrait-couple">
-        <img src="assets/photos/tayo-kemi-about.jpg"
-             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
-             width="1000" height="1250" loading="lazy">
+        <img src="assets/photos/tayo-kemi-studio.jpeg"
+             alt="Tayo and Kemi Akinyemi in a studio portrait, smiling."
+             width="1600" height="2400" loading="lazy">
       </figure>
     </div>
   </div>
@@ -420,9 +420,9 @@ ${subscribeForm("home", false)}
 const about = page(
   {
     page: "about.html",
-    title: "About Zoe Life | Pastor Kemi and Pastor Tai",
+    title: "About Zoe Life | Tayo and Kemi",
     description:
-      "Zoe Life was founded by Pastor Kemi and Pastor Tai. A place to start a conversation, pick up a resource, and keep going.",
+      "Zoe Life was founded by Tayo and Kemi. A place to start a conversation, pick up a resource, and keep going.",
   },
   `
 <section class="page-hero">
@@ -437,7 +437,7 @@ const about = page(
   <div class="wrap">
     <div class="split split-wide-left">
       <div>
-        <p>Zoe Life was founded by Pastor Kemi and Pastor Tai.</p>
+        <p>Zoe Life was founded by Tayo and Kemi.</p>
         <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is the heart of this work, said in ordinary language: helping people thrive in every season of life.</p>
         <p>You don't have to do life by yourself. We care about people, and we want this to be a place where you can start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope.</p>
         <p>We believe biblical truth is not boxed into one corner of life. It gives wisdom for relationships, family, school, work, and the questions that show up on ordinary days.</p>
@@ -446,10 +446,10 @@ const about = page(
         <p>We start with Scripture, then talk about what it means for the life you are actually living. Every person's journey is different. Our desire is to meet people where they are and help them move forward with wisdom, faith, and purpose.</p>
       </div>
       <figure class="portrait portrait-couple">
-        <img src="assets/photos/tayo-kemi-about.jpg"
-             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors."
-             width="1000" height="1250">
-        <figcaption>Pastor Tai and Pastor Kemi, founders of Zoe Life.</figcaption>
+        <img src="assets/photos/tayo-kemi-studio.jpeg"
+             alt="Tayo and Kemi Akinyemi in a studio portrait, smiling."
+             width="1600" height="2400">
+        <figcaption>Tayo and Kemi, founders of Zoe Life.</figcaption>
       </figure>
     </div>
   </div>
@@ -493,27 +493,27 @@ const about = page(
 <section class="band-grey" id="meet">
   <div class="wrap">
     <p class="eyebrow">Meet Tayo and Kemi</p>
-    <h2>Pastor Tai and I.</h2>
+    <h2>Tayo and I.</h2>
     <figure class="portrait portrait-couple" style="margin:1.75rem 0 2rem;max-width:34rem">
       <img src="assets/photos/tayo-kemi-park.jpg"
-           alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+           alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
            width="1400" height="1866" loading="lazy">
-      <figcaption>Pastor Tai and Pastor Kemi Akinyemi.</figcaption>
+      <figcaption>Pastors Tayo and Kemi Akinyemi.</figcaption>
     </figure>
     <p>Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
     <p>They also serve as pastors at Life Springs Church. Through Zoe Life they bring together their faith, their work, years of teaching and mentoring, and lessons learned through marriage, parenting, and everyday life.</p>
     <div class="headshot-pair" style="margin:2rem 0 0">
       <figure class="portrait">
         <img src="assets/photos/tayo-headshot.jpg"
-             alt="Portrait of Pastor Tayo Akinyemi of Zoe Life."
+             alt="Portrait of Tayo Akinyemi of Zoe Life."
              width="900" height="1350" loading="lazy">
-        <figcaption>Pastor Tayo Akinyemi</figcaption>
+        <figcaption>Tayo Akinyemi</figcaption>
       </figure>
       <figure class="portrait">
         <img src="assets/photos/kemi-headshot.jpg"
-             alt="Portrait of Pastor Kemi Akinyemi of Zoe Life."
+             alt="Portrait of Kemi Akinyemi of Zoe Life."
              width="1200" height="1800" loading="lazy">
-        <figcaption>Pastor Kemi Akinyemi</figcaption>
+        <figcaption>Kemi Akinyemi</figcaption>
       </figure>
     </div>
   </div>
@@ -660,7 +660,7 @@ const connect = page(
       </div>
       <figure class="portrait portrait-connect">
         <img src="assets/photos/tayo-kemi-park.jpg"
-             alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+             alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
              width="1400" height="1866" loading="lazy">
       </figure>
     </div>
@@ -792,7 +792,7 @@ const contact = page(
       <aside>
         <figure class="portrait portrait-couple">
           <img src="assets/photos/tayo-kemi-park.jpg"
-               alt="Pastor Tai and Pastor Kemi Akinyemi sitting together outdoors, smiling."
+               alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
                width="1400" height="1866" loading="lazy">
         </figure>
         <div class="form-card" style="margin-top:1.25rem">
@@ -841,7 +841,7 @@ const consult = page(
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
-             alt="Pastor Tai and Pastor Kemi Akinyemi standing together outdoors, smiling."
+             alt="Tayo and Kemi Akinyemi standing together outdoors, smiling."
              width="1240" height="960">
       </figure>
     </div>

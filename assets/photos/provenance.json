@@ -1,5 +1,5 @@
 {
-  "policy": "Every photo on this site is a real photograph of Pastors Tayo and Kemi Akinyemi, taken from the live Zoe Life Squarespace site or provided by Cozy Digital / the client. No Unsplash, Pexels, generated pastor-couple stock, or interchangeable stock people.",
+  "policy": "Every photo on this site is a real photograph of Tayo and Kemi Akinyemi, taken from the live Zoe Life Squarespace site or provided by Cozy Digital / the client. No Unsplash, Pexels, generated pastor-couple stock, or interchangeable stock people.",
   "brand": {
     "zoe-life-wordmark.png": {
       "use": "Header and footer rectangular banner (gold ZOE LIFE with green leaf in the O), transparent background.",
@@ -26,35 +26,39 @@
   },
   "photos": {
     "tayo-kemi-hero.jpg": {
-      "alt": "Pastors Tayo and Kemi Akinyemi standing together outdoors, smiling.",
+      "alt": "Tayo and Kemi Akinyemi standing together outdoors, smiling.",
       "source": "Crop of tayo-kemi-full.jpg, zoomed in on the couple. Used on Consult, not the homepage hero."
     },
     "tayo-kemi-full.jpg": {
-      "alt": "Pastors Tayo and Kemi Akinyemi standing together outdoors, smiling.",
-      "source": "Live Squarespace CDN (tayo-kemi-full.jpeg). Homepage hero: portrait with sky above Tayo's head so a tall right-column crop keeps his hairline in frame."
+      "alt": "Tayo and Kemi Akinyemi standing together outdoors, smiling.",
+      "source": "Live Squarespace CDN (tayo-kemi-full.jpeg). Beach portrait with sky above Tayo's head. Homepage hero until the lake photo is on disk; cover crop pins to the top so the hairline stays in frame."
+    },
+    "tayo-kemi-studio.jpeg": {
+      "alt": "Tayo and Kemi Akinyemi in a studio portrait, smiling.",
+      "source": "Client studio portrait (heads fully in frame). Used on About and the Home founders block so Home does not repeat the beach hug."
     },
     "tayo-kemi-about.jpg": {
-      "alt": "Pastors Tayo and Kemi Akinyemi standing together outdoors.",
-      "source": "Crop of tayo-kemi-full.jpg, zoomed in on the couple for About (less sky)."
+      "alt": "Tayo and Kemi Akinyemi standing together outdoors.",
+      "source": "Crop of tayo-kemi-full.jpg, zoomed in on the couple. Kept as an asset; not used on Home or About after the studio swap."
     },
     "tayo-kemi-park.jpg": {
-      "alt": "Pastors Tayo and Kemi Akinyemi walking together outdoors.",
+      "alt": "Tayo and Kemi Akinyemi walking together outdoors.",
       "source": "Live Squarespace CDN (tayo-kemi-park.jpeg)."
     },
     "tayo-kemi-stage.jpg": {
-      "alt": "Pastors Tayo and Kemi Akinyemi on a ministry stage.",
+      "alt": "Tayo and Kemi Akinyemi on a ministry stage.",
       "source": "Live Squarespace CDN (tayo-kemi-stage.jpg)."
     },
     "kemi-white.jpg": {
-      "alt": "Pastor Kemi Akinyemi of Zoe Life, smiling in a professional portrait.",
+      "alt": "Kemi Akinyemi of Zoe Life, smiling in a professional portrait.",
       "source": "Live Squarespace CDN (kemi-white.jpg)."
     },
     "kemi-headshot.jpg": {
-      "alt": "Pastor Kemi Akinyemi, smiling.",
+      "alt": "Kemi Akinyemi, smiling.",
       "source": "Live Squarespace CDN (kemi-headshot.jpg)."
     },
     "tayo-headshot.jpg": {
-      "alt": "Pastor Tayo Akinyemi, smiling.",
+      "alt": "Tayo Akinyemi, smiling.",
       "source": "Live Squarespace CDN (tayo-headshot.jpeg)."
     }
   },

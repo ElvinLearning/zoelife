@@ -364,9 +364,17 @@ check("Home hero is not the tight crop, park walk, or stage photo",
   !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
 check("Home hero cover crop pins to the top so the hairline stays in frame",
   /\.hero-photo img \{[^}]*object-position:\s*50%\s*0%/.test(css));
-check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
-check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
-check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Home founders block uses the studio couple photo, not the beach hug",
+  /tayo-kemi-studio\.jpeg/.test(html["index.html"]) &&
+  !/<img src="assets\/photos\/tayo-kemi-about\.jpg"/.test(html["index.html"]));
+check("About couple photo is the studio portrait",
+  /tayo-kemi-studio\.jpeg/.test(html["about.html"]) &&
+  !/<img src="assets\/photos\/tayo-kemi-about\.jpg"/.test(html["about.html"]));
+check("Consult shows Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Home does not use the stage photo", !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
+const homePhotoImgs = [...html["index.html"].matchAll(/<img[^>]+src="assets\/photos\/([^"]+)"/g)].map((m) => m[1]);
+check("Home uses at most one beach-hug file",
+  homePhotoImgs.filter((f) => /tayo-kemi-(?:full|hero|about)\.jpg/.test(f)).length <= 1);
 check("Contact shows the couple, not Kemi only", /tayo-kemi-park\.jpg/.test(contact) && !/kemi-white\.jpg/.test(contact));
 check("Home does not use a Kemi-only photo", !/kemi-white\.jpg|kemi-headshot\.jpg/.test(html["index.html"]));
 
@@ -422,7 +430,19 @@ check("Home hero puts Send a message before books",
   homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books and resources"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
-check("About founder line is Pastor Kemi and Pastor Tai", /founded by Pastor Kemi and Pastor Tai/.test(aboutMain));
+check("About founder line is Tayo and Kemi", /founded by Tayo and Kemi/.test(aboutMain));
+const namingCorpus = Object.values(allHtmlPages).join("\n") + builder + read("assets/photos/provenance.json");
+check("His name is spelled Tayo, never Tai", !/\bTai\b/.test(namingCorpus));
+check("Couple names are Tayo then Kemi, never Kemi and Tayo",
+  !/Kemi and Tayo/.test(namingCorpus) && !/Kemi and Pastor/.test(namingCorpus));
+check("Home does not prefix Pastor on every mention",
+  !/Pastor (?:Tayo|Kemi|Tai)/.test(html["index.html"]));
+check("Footer says Founded by Tayo and Kemi",
+  /Founded by Tayo and Kemi/.test(footerOf(html["index.html"])));
+check("Pastor title is used once on About Meet, not on every caption",
+  (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 1 &&
+  !/Pastor Tayo and Pastor Kemi/.test(aboutMain) &&
+  !/<figcaption>Pastor /.test(aboutMain));
 check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(booksDoc));
 check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
