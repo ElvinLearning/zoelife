@@ -217,12 +217,14 @@ section { padding-block: var(--section-y); }
 }
 .hero-split {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
 }
 .hero-copy {
   display: flex; flex-direction: column; justify-content: center;
-  padding: clamp(1.25rem, 2.8vw, 2.25rem) clamp(1.15rem, 3vw, 2.35rem);
+  padding: clamp(1.5rem, 3.2vw, 2.75rem) 0;
   max-width: none;
+  min-width: 0;
 }
 .hero-copy h1,
 .tagline-heading {
@@ -237,6 +239,7 @@ section { padding-block: var(--section-y); }
 .hero-photo {
   margin: 0;
   background: var(--tan);
+  min-width: 0;
   min-height: 16rem;
 }
 .hero-photo img {
@@ -244,10 +247,22 @@ section { padding-block: var(--section-y); }
   object-fit: cover; object-position: 50% 38%;
   min-height: 16rem;
 }
+/* Below the split breakpoint, drop the wrap so the photo can go full-bleed
+   while copy still uses the same gutter as the header. */
+@media (max-width: 55.999rem) {
+  .hero-home .hero-split.wrap-wide {
+    width: 100%;
+    margin-inline: 0;
+  }
+  .hero-copy { padding-inline: var(--gutter); }
+}
 @media (min-width: 56rem) {
   .hero-split {
-    grid-template-columns: minmax(28rem, 1.7fr) minmax(13rem, .5fr);
-    min-height: 0;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .hero-copy {
+    padding-right: clamp(1.35rem, 3vw, 2.5rem);
   }
   .hero-photo { align-self: stretch; }
   .hero-photo, .hero-photo img { min-height: 100%; height: 100%; }

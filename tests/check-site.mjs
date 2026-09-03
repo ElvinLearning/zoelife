@@ -348,6 +348,12 @@ for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Conta
 }
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
+check("Home hero shares the header wrap-wide column", /class="hero-split wrap-wide"/.test(html["index.html"]));
+check("Hero desktop columns can shrink instead of overflowing",
+  /@media \(min-width: 56rem\)\s*\{\s*\.hero-split \{[^}]*minmax\(0,\s*2fr\)\s+minmax\(0,\s*1fr\)/.test(css));
+check("Hero no longer uses a 28rem column floor", !/minmax\(28rem/.test(css));
+check("Hero copy and photo can shrink below their intrinsic size",
+  /\.hero-copy \{[\s\S]*?min-width:\s*0/.test(css) && /\.hero-photo \{[\s\S]*?min-width:\s*0/.test(css));
 check("Home shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(html["index.html"]));
 check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
 check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
@@ -399,6 +405,12 @@ check("Home does not lead with a Greek-word lecture", !/Zoe is the Greek word fo
 check("Home founder line does not mention Life Springs", !/Life Springs/.test(homeMain));
 check("Home consult is not in the hero", !/hero-home[\s\S]{0,1200}consult\.html/.test(html["index.html"]));
 check("Home leads with Send a message", /contact\.html#message/.test(homeMain));
+const homeHero = html["index.html"].match(/<section class="hero-home">[\s\S]*?<\/section>/)[0];
+const homeHeroBtns = [...homeHero.matchAll(/<a class="btn ([^"]+)"/g)].map((m) => m[1]);
+check("Home hero has two equal primary CTAs",
+  homeHeroBtns.length === 2 && homeHeroBtns.every((c) => c === "btn-primary"));
+check("Home hero puts Send a message before books",
+  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books and resources"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
 check("About founder line is Pastor Kemi and Pastor Tai", /founded by Pastor Kemi and Pastor Tai/.test(aboutMain));
