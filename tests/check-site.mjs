@@ -356,10 +356,25 @@ check("Hero desktop columns can shrink instead of overflowing",
 check("Hero no longer uses a 28rem column floor", !/minmax\(28rem/.test(css));
 check("Hero copy and photo can shrink below their intrinsic size",
   /\.hero-copy \{[\s\S]*?min-width:\s*0/.test(css) && /\.hero-photo \{[\s\S]*?min-width:\s*0/.test(css));
-check("Home shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(html["index.html"]));
-check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
-check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
-check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Home hero uses the full beach portrait with sky above Tayo's head",
+  /tayo-kemi-full\.jpg/.test(html["index.html"]) && /tayo-kemi-full\.jpg/.test(builder));
+check("Home hero is not the tight crop, park walk, or stage photo",
+  !/tayo-kemi-hero\.jpg/.test(html["index.html"]) &&
+  !/tayo-kemi-park\.jpg/.test(html["index.html"]) &&
+  !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
+check("Home hero cover crop pins to the top so the hairline stays in frame",
+  /\.hero-photo img \{[^}]*object-position:\s*50%\s*0%/.test(css));
+check("Home founders block uses the studio couple photo, not the beach hug",
+  /tayo-kemi-studio\.jpeg/.test(html["index.html"]) &&
+  !/<img src="assets\/photos\/tayo-kemi-about\.jpg"/.test(html["index.html"]));
+check("About couple photo is the studio portrait",
+  /tayo-kemi-studio\.jpeg/.test(html["about.html"]) &&
+  !/<img src="assets\/photos\/tayo-kemi-about\.jpg"/.test(html["about.html"]));
+check("Consult shows Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Home does not use the stage photo", !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
+const homePhotoImgs = [...html["index.html"].matchAll(/<img[^>]+src="assets\/photos\/([^"]+)"/g)].map((m) => m[1]);
+check("Home uses at most one beach-hug file",
+  homePhotoImgs.filter((f) => /tayo-kemi-(?:full|hero|about)\.jpg/.test(f)).length <= 1);
 check("Contact shows the couple, not Kemi only", /tayo-kemi-park\.jpg/.test(contact) && !/kemi-white\.jpg/.test(contact));
 check("Home does not use a Kemi-only photo", !/kemi-white\.jpg|kemi-headshot\.jpg/.test(html["index.html"]));
 
@@ -415,7 +430,19 @@ check("Home hero puts Send a message before books",
   homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books and resources"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
-check("About founder line is Pastor Kemi and Pastor Tai", /founded by Pastor Kemi and Pastor Tai/.test(aboutMain));
+check("About founder line is Tayo and Kemi", /founded by Tayo and Kemi/.test(aboutMain));
+const namingCorpus = Object.values(allHtmlPages).join("\n") + builder + read("assets/photos/provenance.json");
+check("His name is spelled Tayo, never Tai", !/\bTai\b/.test(namingCorpus));
+check("Couple names are Tayo then Kemi, never Kemi and Tayo",
+  !/Kemi and Tayo/.test(namingCorpus) && !/Kemi and Pastor/.test(namingCorpus));
+check("Home does not prefix Pastor on every mention",
+  !/Pastor (?:Tayo|Kemi|Tai)/.test(html["index.html"]));
+check("Footer says Founded by Tayo and Kemi",
+  /Founded by Tayo and Kemi/.test(footerOf(html["index.html"])));
+check("Pastor title is used once on About Meet, not on every caption",
+  (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 1 &&
+  !/Pastor Tayo and Pastor Kemi/.test(aboutMain) &&
+  !/<figcaption>Pastor /.test(aboutMain));
 check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(booksDoc));
 check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
@@ -427,9 +454,21 @@ check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain
 group("Visual direction");
 
 check("No dark page theme", !/--ink:\s*#(?:0|1|2)[0-9a-f]{5}\b/i.test(css) || /--cream:\s*#F/i.test(css));
-check("Background is a light cream", /--cream:\s*#F7F4EE/i.test(css) && /--paper:\s*#F7F4EE/i.test(css));
-check("Palette includes grey, tan, and peach", /--grey:\s*#E6E1DA/i.test(css) && /--tan:\s*#E4D3B8/i.test(css) && /--peach:\s*#F3D5B8/i.test(css));
-check("theme-color is Instagram grey", PAGES.every((p) => /<meta name="theme-color" content="#E6E1DA">/.test(html[p])));
+check("Background is warm cream", /--cream:\s*#F8F4ED/i.test(css) && /--paper:\s*#F8F4ED/i.test(css));
+check("Soft beige is the alternate ground", /--beige:\s*#E8DED2/i.test(css));
+check("Sage is the one brand green", /--sage:\s*#526B58/i.test(css));
+check("Olive is a sage-family neighbor, not a second accent", /--olive:\s*#4A5C3A/i.test(css));
+check("Gold and peach exist as spices", /--gold:\s*#C6A15B/i.test(css) && /--peach:\s*#E0A994/i.test(css));
+check("Charcoal is the type color", /--ink:\s*#343A36/i.test(css));
+check("Primary buttons use sage, hover uses olive",
+  /\.btn-primary \{[^}]*background:\s*var\(--sage\)/.test(css) &&
+  /\.btn-primary:hover \{[^}]*background:\s*var\(--olive\)/.test(css) &&
+  !/\.btn-primary \{[^}]*var\(--gold\)/.test(css) &&
+  !/\.btn-primary \{[^}]*var\(--peach\)/.test(css));
+check("Peach is not a section fill", /\.band-peach[^}]*background:\s*var\(--cream\)/.test(css));
+check("Home does not use peach or grey as competing section fills",
+  !/band-peach/.test(html["index.html"]) && !/band-grey/.test(html["index.html"]));
+check("theme-color is warm cream", PAGES.every((p) => /<meta name="theme-color" content="#F8F4ED">/.test(html[p])));
 check("Reduced motion is respected", /prefers-reduced-motion:\s*reduce/.test(css));
 check("Focus is visible", /:focus-visible/.test(css) && /outline:\s*3px/.test(css));
 check("Type pairing is Fraunces and Outfit", /font-family: Fraunces/.test(css) && /font-family: Outfit/.test(css));
@@ -490,14 +529,11 @@ const token = (name) => {
 
 const T = {
   cream: token("cream"),
-  creamDeep: token("cream-deep"),
-  grey: token("grey"),
-  tan: token("tan"),
-  peach: token("peach"),
-  sun: token("sun"),
+  beige: token("beige"),
   white: token("white"),
   goldDeep: token("gold-deep"),
-  sageDeep: token("sage-deep"),
+  sage: token("sage"),
+  olive: token("olive"),
   terracotta: token("terracotta"),
   ink: token("ink"),
   inkSoft: token("ink-soft"),
@@ -505,34 +541,21 @@ const T = {
 
 const PAIRS = [
   ["body text on cream", T.ink, T.cream, 4.5],
-  ["body text on cream-deep", T.ink, T.creamDeep, 4.5],
-  ["body text on grey", T.ink, T.grey, 4.5],
-  ["body text on tan", T.ink, T.tan, 4.5],
-  ["body text on peach", T.ink, T.peach, 4.5],
-  ["body text on sun", T.ink, T.sun, 4.5],
+  ["body text on beige", T.ink, T.beige, 4.5],
   ["muted text on cream", T.inkSoft, T.cream, 4.5],
-  ["muted text on cream-deep", T.inkSoft, T.creamDeep, 4.5],
-  ["muted text on grey", T.inkSoft, T.grey, 4.5],
-  ["muted text on tan", T.inkSoft, T.tan, 4.5],
-  ["muted text on peach", T.inkSoft, T.peach, 4.5],
-  ["muted text on sun", T.inkSoft, T.sun, 4.5],
+  ["muted text on beige", T.inkSoft, T.beige, 4.5],
   ["muted text on white", T.inkSoft, T.white, 4.5],
-  ["link sage-deep on cream", T.sageDeep, T.cream, 4.5],
-  ["link sage-deep on white", T.sageDeep, T.white, 4.5],
+  ["link sage on cream", T.sage, T.cream, 4.5],
+  ["link sage on white", T.sage, T.white, 4.5],
+  ["olive hover on cream", T.olive, T.cream, 4.5],
+  ["olive hover on beige", T.olive, T.beige, 4.5],
   ["eyebrow gold-deep on cream", T.goldDeep, T.cream, 4.5],
-  ["eyebrow gold-deep on cream-deep", T.goldDeep, T.creamDeep, 4.5],
-  ["eyebrow gold-deep on grey", T.goldDeep, T.grey, 4.5],
-  ["eyebrow gold-deep on tan", T.goldDeep, T.tan, 4.5],
-  ["eyebrow gold-deep on peach", T.goldDeep, T.peach, 4.5],
-  ["eyebrow gold-deep on sun", T.goldDeep, T.sun, 4.5],
-  ["eyebrow gold-deep on white", T.goldDeep, T.white, 4.5],
-  ["tagline terracotta on cream", T.terracotta, T.cream, 4.5],
-  ["tagline terracotta on cream-deep", T.terracotta, T.creamDeep, 4.5],
-  ["pending badge text on peach tint", T.terracotta, "#FBEDE2", 4.5],
+  ["eyebrow gold-deep on beige", T.goldDeep, T.beige, 4.5],
+  ["pending badge text on peach tint", T.terracotta, "#F3E6DF", 4.5],
   ["error text on cream", "#8A3E17", T.cream, 4.5],
-  ["white text on sage-deep band", "#F6F4EE", T.sageDeep, 4.5],
-  ["primary button label", T.white, T.sageDeep, 4.5],
-  ["focus ring on cream", T.sageDeep, T.cream, 3],
+  ["primary button label", T.white, T.sage, 4.5],
+  ["olive deeper fill button label", T.white, T.olive, 4.5],
+  ["focus ring on cream", T.sage, T.cream, 3],
 ];
 
 for (const [name, fg, bg, min] of PAIRS) {
