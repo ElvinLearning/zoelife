@@ -356,7 +356,14 @@ check("Hero desktop columns can shrink instead of overflowing",
 check("Hero no longer uses a 28rem column floor", !/minmax\(28rem/.test(css));
 check("Hero copy and photo can shrink below their intrinsic size",
   /\.hero-copy \{[\s\S]*?min-width:\s*0/.test(css) && /\.hero-photo \{[\s\S]*?min-width:\s*0/.test(css));
-check("Home shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(html["index.html"]));
+check("Home hero uses the full beach portrait with sky above Tayo's head",
+  /tayo-kemi-full\.jpg/.test(html["index.html"]) && /tayo-kemi-full\.jpg/.test(builder));
+check("Home hero is not the tight crop, park walk, or stage photo",
+  !/tayo-kemi-hero\.jpg/.test(html["index.html"]) &&
+  !/tayo-kemi-park\.jpg/.test(html["index.html"]) &&
+  !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
+check("Home hero cover crop pins to the top so the hairline stays in frame",
+  /\.hero-photo img \{[^}]*object-position:\s*50%\s*0%/.test(css));
 check("Home founders block uses a couple photo", /tayo-kemi-about\.jpg/.test(html["index.html"]));
 check("About shows Pastors Tayo and Kemi", /tayo-kemi-about\.jpg/.test(html["about.html"]));
 check("Consult shows Pastors Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
