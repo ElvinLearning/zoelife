@@ -309,7 +309,7 @@ const home = page(
   },
   `
 <section class="hero-home">
-  <div class="hero-split">
+  <div class="hero-split wrap-wide">
     <div class="hero-copy">
       <p class="eyebrow">Zoe Life</p>
       <h1 class="tagline-heading"><span>Helping people thrive</span> <span>in every season of life.</span></h1>
