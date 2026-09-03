@@ -348,7 +348,9 @@ for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Conta
 }
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
+const builder = read("tools/build.mjs");
 check("Home hero shares the header wrap-wide column", /class="hero-split wrap-wide"/.test(html["index.html"]));
+check("Builder emits the shared wrap-wide hero column", /class="hero-split wrap-wide"/.test(builder));
 check("Hero desktop columns can shrink instead of overflowing",
   /@media \(min-width: 56rem\)\s*\{\s*\.hero-split \{[^}]*minmax\(0,\s*2fr\)\s+minmax\(0,\s*1fr\)/.test(css));
 check("Hero no longer uses a 28rem column floor", !/minmax\(28rem/.test(css));
