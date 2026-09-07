@@ -341,7 +341,7 @@ const home = page(
     <div class="split split-copy-photo">
       <div>
         <p class="eyebrow">Tayo and Kemi</p>
-        <h2>Zoe Life was founded by Tayo and Kemi.</h2>
+        <h2>Zoe Life was founded by Pastors Tayo and Kemi.</h2>
         <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical and practical, in the same breath.</p>
         <div class="btn-row">
           <a class="btn btn-primary" href="about.html">Meet Tayo and Kemi</a>
@@ -422,7 +422,7 @@ const about = page(
     page: "about.html",
     title: "About Zoe Life | Tayo and Kemi",
     description:
-      "Zoe Life was founded by Tayo and Kemi. A place to start a conversation, pick up a resource, and keep going.",
+      "Zoe Life was founded by Pastors Tayo and Kemi. A place to start a conversation, pick up a resource, and keep going.",
   },
   `
 <section class="page-hero">
@@ -437,7 +437,7 @@ const about = page(
   <div class="wrap">
     <div class="split split-wide-left">
       <div>
-        <p>Zoe Life was founded by Tayo and Kemi.</p>
+        <p>Zoe Life was founded by Pastors Tayo and Kemi.</p>
         <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is the heart of this work, said in ordinary language: helping people thrive in every season of life.</p>
         <p>You don't have to do life by yourself. We care about people, and we want this to be a place where you can start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope.</p>
         <p>We believe biblical truth is not boxed into one corner of life. It gives wisdom for relationships, family, school, work, and the questions that show up on ordinary days.</p>
@@ -493,10 +493,10 @@ const about = page(
 <section class="band-tan" id="meet">
   <div class="wrap">
     <p class="eyebrow">Meet Tayo and Kemi</p>
-    <figure class="portrait portrait-couple" style="margin:1.75rem 0 2rem;max-width:34rem">
-      <img src="assets/photos/tayo-kemi-park.jpg"
-           alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
-           width="1400" height="1866" loading="lazy">
+    <figure class="portrait portrait-couple portrait-tree" style="margin:1.75rem 0 2rem;max-width:34rem">
+      <img src="assets/photos/tayo-kemi-tree.jpeg"
+           alt="Pastors Tayo and Kemi smiling and embracing outdoors in front of a large tree with vibrant pink blossoms."
+           width="1024" height="1536" loading="lazy">
       <figcaption>Pastors Tayo and Kemi Akinyemi.</figcaption>
     </figure>
     <p>Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
