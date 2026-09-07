@@ -326,6 +326,7 @@ section { padding-block: var(--section-y); }
 .portrait img { width: 100%; object-fit: cover; }
 .portrait.portrait-tall img { aspect-ratio: 3 / 4; object-position: center 15%; }
 .portrait.portrait-couple img { aspect-ratio: 4 / 5; object-position: center 18%; }
+.portrait.portrait-tree img { aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 8%; }
 .portrait.portrait-stage img { aspect-ratio: 4 / 5; object-position: center 40%; }
 .portrait.portrait-connect img { aspect-ratio: 1 / 1; object-position: center 18%; }
 .book-title {
@@ -353,9 +354,10 @@ figcaption { font-size: .85rem; color: var(--ink-soft); margin-top: .65rem; }
 @media (min-width: 48rem) { .book { grid-template-columns: minmax(0, 16rem) 1fr; } }
 .book-cover {
   border: 1px solid var(--grey-deep); border-radius: var(--radius); overflow: hidden;
-  background: var(--white); box-shadow: 0 14px 36px rgba(44, 40, 36, .08);
+  background: var(--white);
+  box-shadow: 0 12px 28px rgba(44, 40, 36, .18), 0 28px 60px rgba(44, 40, 36, .26);
 }
-.book-cover img { width: 100%; }
+.book-cover img { width: 100%; display: block; }
 .book-tease {
   display: grid; gap: 1.5rem;
   grid-template-columns: 1fr;

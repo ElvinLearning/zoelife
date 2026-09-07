@@ -42,8 +42,12 @@
       "source": "Crop of tayo-kemi-full.jpg, zoomed in on the couple. Kept as an asset; not used on Home or About after the studio swap."
     },
     "tayo-kemi-park.jpg": {
-      "alt": "Tayo and Kemi Akinyemi walking together outdoors.",
-      "source": "Live Squarespace CDN (tayo-kemi-park.jpeg)."
+      "alt": "Tayo and Kemi Akinyemi sitting together outdoors, smiling.",
+      "source": "Live Squarespace CDN (tayo-kemi-park.jpeg). Still used on Contact and Connect; About Meet now uses tayo-kemi-tree.jpeg."
+    },
+    "tayo-kemi-tree.jpeg": {
+      "alt": "Pastors Tayo and Kemi smiling and embracing outdoors in front of a large tree with vibrant pink blossoms.",
+      "source": "Client-provided outdoor portrait with both heads fully visible, standing in front of a flowering tree. Used on the About Meet section in place of the park sitting photo."
     },
     "tayo-kemi-stage.jpg": {
       "alt": "Tayo and Kemi Akinyemi on a ministry stage.",
