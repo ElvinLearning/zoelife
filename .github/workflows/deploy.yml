@@ -39,6 +39,13 @@ jobs:
           ZOE_FORM_ENDPOINT: ${{ vars.ZOE_FORM_ENDPOINT }}
           ZOE_NEWSLETTER_ENDPOINT: ${{ vars.ZOE_NEWSLETTER_ENDPOINT }}
           ZOE_GOOGLE_CALENDAR_BOOKING_URL: ${{ vars.ZOE_GOOGLE_CALENDAR_BOOKING_URL }}
+          ZOE_PAID_BOOKING_URL: ${{ vars.ZOE_PAID_BOOKING_URL }}
+          ZOE_AMAZON_DEVOTIONAL_URL: ${{ vars.ZOE_AMAZON_DEVOTIONAL_URL }}
+          ZOE_AMAZON_JOURNAL_URL: ${{ vars.ZOE_AMAZON_JOURNAL_URL }}
+          ZOE_ETSY_DEVOTIONAL_URL: ${{ vars.ZOE_ETSY_DEVOTIONAL_URL }}
+          ZOE_ETSY_JOURNAL_URL: ${{ vars.ZOE_ETSY_JOURNAL_URL }}
+          ZOE_GUMROAD_DEVOTIONAL_URL: ${{ vars.ZOE_GUMROAD_DEVOTIONAL_URL }}
+          ZOE_GUMROAD_JOURNAL_URL: ${{ vars.ZOE_GUMROAD_JOURNAL_URL }}
           ZOE_BOOKING_URL: ${{ vars.ZOE_BOOKING_URL }}
           ZOE_STRIPE_DEVOTIONAL_URL: ${{ vars.ZOE_STRIPE_DEVOTIONAL_URL }}
           ZOE_PAYPAL_DEVOTIONAL_URL: ${{ vars.ZOE_PAYPAL_DEVOTIONAL_URL }}
@@ -50,7 +57,10 @@ jobs:
         run: node tools/build.mjs
 
       - name: Static checks
-        run: node tests/check-site.mjs
+        run: |
+          node tests/check-site.mjs
+          node tests/workspace-forms.mjs
+          node tests/integration-build.mjs
 
       - name: Assemble site
         run: |

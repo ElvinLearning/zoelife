@@ -1,0 +1,45 @@
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+import assert from 'node:assert/strict';
+import {randomUUID} from 'node:crypto';
+const tables = new Map(), sent = [], props = new Map(Object.entries({SPREADSHEET_ID:'test',CONTACT_EMAIL:'contact@zoelifehub.com',WEB_APP_URL:'https://script.google.com/macros/s/test/exec'}));
+let failMail = false, failWrite = false;
+function sheet() {
+  const rows = [];
+  return {rows, appendRow(r) { if(failWrite) throw Error('write failed'); rows.push([...r]); }, getLastRow:()=>rows.length, setFrozenRows(){}, getDataRange:()=>({getValues:()=>rows.map(r=>[...r])}), getRange(r,c,n=1,m=1) {return {getValues:()=>rows.slice(r-1,r-1+n).map(x=>x.slice(c-1,c-1+m)), setValue(v){rows[r-1][c-1]=v;}, setValues(v){v.forEach((x,i)=>x.forEach((y,j)=>rows[r-1+i][c-1+j]=y));}};}};
+}
+const ctx = vm.createContext({Date, console, PropertiesService:{getScriptProperties:()=>({getProperty:k=>props.get(k),setProperty:(k,v)=>props.set(k,v)})}, SpreadsheetApp:{openById:()=>({getSheetByName:n=>tables.get(n),insertSheet:n=>{const s=sheet();tables.set(n,s);return s;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock:()=>true,releaseLock(){}})},ContentService:{MimeType:{JSON:'json'},createTextOutput:text=>({text,setMimeType(){return this;}})},HtmlService:{createHtmlOutput:text=>({text})},Utilities:{getUuid:randomUUID},MailApp:{getRemainingDailyQuota:()=>100,sendEmail:m=>{if(failMail)throw Error('mail failed');sent.push(m);}}});
+vm.runInContext(readFileSync(new URL('../integrations/google-workspace/Code.gs',import.meta.url),'utf8'),ctx);
+const post=p=>ctx.doPost({parameter:p});
+const json=p=>JSON.parse(post(p).text);
+ctx.setup();
+const contact={form_type:'Contact message',request_id:randomUUID(),firstName:'=danger',lastName:'Test',email:'person@example.com',reason:'General',message:'A test message'};
+assert.equal(json({...contact,_honey:'bot'}).success,false);
+assert.equal(json({...contact,email:'bad'}).success,false);
+assert.equal(json({...contact,message:''}).success,false);
+failWrite=true; assert.equal(json(contact).success,false); failWrite=false;
+failMail=true; assert.equal(json(contact).state,'saved'); failMail=false;
+assert.equal(tables.get('Contact submissions').rows[1][9],'pending');
+assert.equal(tables.get('Contact submissions').rows[1][2],"'=danger");
+assert.equal(json(contact).success,true);
+assert.equal(tables.get('Contact submissions').rows.length,2);
+assert.equal(json({...contact,request_id:randomUUID()}).success,false);
+const sub={form_type:'Mailing list signup',email:'reader@example.com',consent:'on'};
+assert.equal(json({...sub,consent:''}).success,false);
+assert.equal(json(sub).state,'confirmation_required');
+const rows=tables.get('Subscribers').rows;
+assert.equal(rows[1][1],'pending');
+const token=rows[1][6];
+ctx.doGet({parameter:{action:'confirm',token}});
+assert.equal(rows[1][1],'pending'); // Link-scanner GET must be read only.
+post({action:'confirm',token:'x'.repeat(72)});assert.equal(rows[1][1],'pending');
+post({action:'confirm',token});assert.equal(rows[1][1],'subscribed');
+const mailCount=sent.length;json(sub);assert.equal(sent.length,mailCount);
+post({action:'unsubscribe',token});assert.equal(rows[1][1],'unsubscribed');
+post({action:'confirm',token});assert.equal(rows[1][1],'unsubscribed');
+rows[1][2]=new Date(Date.now()-49*3600000).toISOString(); rows[1][1]='pending';
+post({action:'confirm',token});assert.equal(rows[1][1],'pending');
+failMail=true;assert.equal(json({...sub,email:'second@example.com'}).success,false);failMail=false;
+props.set('MAIL_DAY',new Date().toISOString().slice(0,10));props.set('MAIL_COUNT','50');
+assert.equal(json({...sub,email:'third@example.com'}).success,false);
+console.log('Passed: validation, persistence failure, email failure, duplicate retries, rate limits, formula escaping, consent, confirmation, expiry, unsubscribe, read-only GET, daily cap. No real messages sent.');
