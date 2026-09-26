@@ -2,7 +2,7 @@
 
 ## What is implemented, and what is not live
 
-The repository now contains a Google Apps Script backend for contact capture and a confirmed subscriber list, with tests. It is deployed in Zoe Life's Google Workspace as contact@zoelifehub.com (Apps Script version 4). Contact capture, inbox notification, and browser-based subscriber confirmation have been verified with approved test data. The website configuration now uses that deployment. Public-origin verification is recorded below after publishing.
+The repository now contains a Google Apps Script backend for contact capture and a confirmed subscriber list, with tests. It is deployed in Zoe Life's Google Workspace as contact@zoelifehub.com (Apps Script version 4). Contact capture, inbox notification, and browser-based subscriber confirmation have been verified with approved test data. The website configuration now uses that deployment. The GitHub Pages website is published with the verified connection.
 
 `contact@zoelifehub.com` is confirmed by an email sent from that address and the Zoe Life Stripe invitation. Do not change it to `.org`.
 
@@ -58,11 +58,11 @@ Set only approved product-specific links. An existing Stripe account does not es
 - All static checks also pass in a temporary build with Workspace, paid scheduling and marketplace fixtures enabled.
 - Backend mock tests cover validation, persistence failure, notification failure, duplicate retries, formula escaping, consent, confirmation, expiry, unsubscribe, read-only link previews and mail caps.
 - URL validation rejects unsafe integration URLs.
-- Workspace backend version 4: local-browser contact save, inbox receipt, pending signup and confirmation verified with contact@zoelifehub.com. Public-site verification follows deployment. Paid booking, Zoom generation and live book payments/fulfilment remain unverified.
+- Workspace backend version 4: local-browser contact save, inbox receipt, pending signup and confirmation verified with contact@zoelifehub.com. Public GitHub Pages verification passed: desktop contact submission, Sheet notification status sent, inbox receipt, mobile signup, website confirmation and unsubscribe. The approved test address was left unsubscribed. Expiry and failure scenarios are covered by mock tests. Paid booking, Zoom generation and live book payments/fulfilment remain unverified.
 
 ## Remaining launch gates
 
-- Complete public-origin Workspace verification after publishing the generated website.
+- Workspace contact capture and consent-backed subscriber storage are complete. Automatic newsletter campaigns and contact-record retention automation are not configured.
 - Paid session details, scheduling account and Zoom/payment connection.
 - Approved book product links, prices and fulfilment details.
 - Client wording feedback and final review.
