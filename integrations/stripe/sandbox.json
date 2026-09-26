@@ -1,0 +1,21 @@
+{
+  "account": "acct_1UJyf9DMqlCMZsan",
+  "name": "Zoe Life Website Integration",
+  "mode": "sandbox",
+  "currency": "usd",
+  "note": "Test-only $1 prices; no fulfillment. These are public checkout links, not API keys.",
+  "products": {
+    "devotional": {
+      "productId": "prod_VKdxCjy130MjKS",
+      "priceId": "price_1UJyg3DMqlCMZsannH9Q3riv",
+      "unitAmount": 100,
+      "paymentLink": "https://buy.stripe.com/test_9B64gz8Ev8sbd0LfIs9fW00"
+    },
+    "journal": {
+      "productId": "prod_VKdy9v2CZtX78R",
+      "priceId": "price_1UJygUDMqlCMZsan0OEnOFA0",
+      "unitAmount": 100,
+      "paymentLink": "https://buy.stripe.com/test_00wdR9bQH5fZbWH3ZK9fW01"
+    }
+  }
+}

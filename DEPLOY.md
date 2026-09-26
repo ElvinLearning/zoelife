@@ -146,6 +146,10 @@ need the server running. There are no npm dependencies at any point.
 
 ## September 26 integration additions
 
+Stripe sandbox checkout is configured for both books. See
+[sandbox setup and preview](docs/stripe-sandbox.md). Run
+`node tools/stripe-sandbox.mjs` for an isolated test build.
+
 See [integration activation instructions](docs/integrations-setup.md) for the tested
 Google Workspace backend, confirmed subscriber list, paid-booking URL and
 Amazon/Etsy/Gumroad configuration. These integrations are prepared in code;
