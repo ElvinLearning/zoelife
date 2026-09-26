@@ -2,6 +2,7 @@ tools/.chrome-qa/
 tools/.chrome-qa-forms/
 tools/screenshots/
 node_modules/
+.stripe-sandbox/
 tools/zoe-life-demo.html
 tools/.chrome-verify/
 tools/.chrome-artifact/

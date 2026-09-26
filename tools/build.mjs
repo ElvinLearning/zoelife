@@ -5,12 +5,16 @@
  * Staging:  node tools/build.mjs --staging
  */
 
-import { writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
+const STRIPE_SANDBOX = process.argv.includes("--stripe-sandbox");
+if (STRIPE_SANDBOX && !STAGING) throw new Error('Stripe sandbox requires --staging');
+const sandbox = STRIPE_SANDBOX
+  ? JSON.parse(readFileSync(join(ROOT, 'integrations/stripe/sandbox.json'), 'utf8')) : null;
 
 const CONFIG = {
   siteUrl: process.env.ZOE_SITE_URL || "https://www.zoelifehub.com",
@@ -38,6 +42,19 @@ const CONFIG = {
   },
   staging: STAGING,
 };
+
+if (sandbox) {
+  for (const book of ['devotional', 'journal']) {
+    const url = sandbox.products[book].paymentLink;
+    if (!/^https:\/\/buy\.stripe\.com\/test_[a-zA-Z0-9]+$/.test(url)) throw new Error('Sandbox requires Stripe test Payment Links');
+    CONFIG.payments[book] = {amazon:null, etsy:null, gumroad:null, paypal:null, stripe:url};
+  }
+  CONFIG.paidBookingUrl = null;
+}
+const stripeTestLink = url => /^https:\/\/buy\.stripe\.com\/test_/.test(url || '');
+if (!STAGING && Object.values(CONFIG.payments).some(p => stripeTestLink(p.stripe))) {
+  throw new Error('Stripe test Payment Links cannot be used in production');
+}
 
 // Fail the build before interpolating untrusted/invalid URLs into HTML.
 for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpoint,
@@ -148,7 +165,7 @@ const payButtons = (book) => {
   const buttons = [];
   if (p.stripe) {
     buttons.push(
-      `<a class="btn btn-primary" href="${p.stripe}" target="_blank" rel="noopener noreferrer">Pay with Stripe<span class="visually-hidden">, opens in a new tab</span></a>`
+      `<a class="btn btn-primary" href="${p.stripe}" target="_blank" rel="noopener noreferrer">${stripeTestLink(p.stripe) ? 'Test Stripe checkout' : 'Pay with Stripe'}<span class="visually-hidden">, opens in a new tab</span></a>`
     );
   }
   if (p.paypal) {
@@ -163,7 +180,7 @@ const payButtons = (book) => {
     return `<p class="purchase-coming">Purchase options coming. Stripe and PayPal checkout will appear here once Zoe Life publishes live payment links. Printed copies will be fulfilled by a print-on-demand partner. Zoe Life is not packing and shipping orders from home.</p>`;
   }
   return `<div class="pay-row">${buttons.join("")}</div>
-        <p class="format-meta">Printed copies, when offered, will be fulfilled by a print-on-demand partner.</p>`;
+        <p class="format-meta">${stripeTestLink(p.stripe) ? 'Sandbox test only. No real payment or book delivery.' : 'Printed copies, when offered, will be fulfilled by a print-on-demand partner.'}</p>`;
 };
 
 const bookingBlock = () =>
@@ -1002,8 +1019,8 @@ console.log(
     `\nnewsletter endpoint: ${CONFIG.newsletterEndpoint || "not set (signup fails closed)"}` +
     `\nbooking url:         ${CONFIG.bookingUrl || "not set (GOOGLE_CALENDAR_BOOKING_URL placeholder)"}` +
     `\npayments:            ${
-      Object.values(CONFIG.payments).some((p) => p.stripe || p.paypal)
-        ? "at least one live link"
+      Object.values(CONFIG.payments).some((p) => Object.values(p).some(Boolean))
+        ? "checkout links configured"
         : "purchase options coming"
     }`
 );

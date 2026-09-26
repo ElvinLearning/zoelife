@@ -8,6 +8,11 @@ The repository now contains a Google Apps Script backend for contact capture and
 
 Connected Calendar access currently exposes Cozy Digital's calendar, not Zoe Life's. A Stripe invitation dated August 28 exists in Cozy Digital's inbox; this is evidence of an account invitation, not evidence of payment readiness.
 
+Later September 26 update: Zoe Life LLC dashboard access was verified and an
+isolated Stripe sandbox was created with successful test checkouts for both
+books. See [Stripe sandbox setup](stripe-sandbox.md). This does not establish
+live payment or fulfillment readiness.
+
 ## 1. Activate contact capture and the subscriber list
 
 Use the **Zoe Life-owned Workspace account**. Do not store client enquiries in a personal or Cozy Digital-owned spreadsheet.

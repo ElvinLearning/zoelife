@@ -310,7 +310,7 @@ check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
 check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
 check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
 check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
-check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
+check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
 check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
 check("Books page has both Saturday titles",
   /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));
