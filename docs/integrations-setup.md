@@ -2,7 +2,7 @@
 
 ## What is implemented, and what is not live
 
-The repository now contains a Google Apps Script backend for contact capture and a confirmed subscriber list, with tests. It has **not been deployed to Zoe Life's Google Workspace**. The public site continues to use its existing FormSubmit endpoints until the backend is deployed and verified. No real email, booking, charge, or subscriber record was created during development.
+The repository now contains a Google Apps Script backend for contact capture and a confirmed subscriber list, with tests. It is deployed in Zoe Life's Google Workspace as contact@zoelifehub.com (Apps Script version 4). Contact capture, inbox notification, and browser-based subscriber confirmation have been verified with approved test data. The website configuration now uses that deployment. Public-origin verification is recorded below after publishing.
 
 `contact@zoelifehub.com` is confirmed by an email sent from that address and the Zoe Life Stripe invitation. Do not change it to `.org`.
 
@@ -22,6 +22,7 @@ Use the **Zoe Life-owned Workspace account**. Do not store client enquiries in a
 3. In Project Settings → Script Properties, add:
    - `SPREADSHEET_ID`: the new Sheet's ID.
    - `CONTACT_EMAIL`: `contact@zoelifehub.com`.
+   - `SUBSCRIPTION_PAGE_URL`: `https://elvinlearning.github.io/zoelife/subscription.html`. Update this when the website origin changes. This page submits consent changes with anonymous POST requests, avoiding Google's multiple-account web-app navigation issue.
 4. Deploy → New deployment → Web app. Execute as the Zoe Life owner; access must permit anonymous visitors (Anyone). If Workspace policy prevents anonymous deployment, stop: do not change organizational policy or use a personal account as a workaround.
 5. Add the deployment's `/exec` URL as Script Property `WEB_APP_URL`. Run `setup()` from the editor and authorize the declared Sheets and email permissions. It initializes two tabs without sending messages. Update the deployment to the latest version after code changes.
 6. Verify using a clearly labeled test enquiry and an email address controlled by the reviewer. Confirm the Sheet row and inbox receipt. Verify a signup is `pending`, then becomes `subscribed` only after the confirmation button is submitted. Verify unsubscribe and expired-link handling. Opening a link by GET must not change status.
@@ -57,11 +58,11 @@ Set only approved product-specific links. An existing Stripe account does not es
 - All static checks also pass in a temporary build with Workspace, paid scheduling and marketplace fixtures enabled.
 - Backend mock tests cover validation, persistence failure, notification failure, duplicate retries, formula escaping, consent, confirmation, expiry, unsubscribe, read-only link previews and mail caps.
 - URL validation rejects unsafe integration URLs.
-- No live Workspace backend, cross-origin delivery, inbox receipt, booking, Zoom generation, payment or fulfilment has been verified.
+- Workspace backend version 4: local-browser contact save, inbox receipt, pending signup and confirmation verified with contact@zoelifehub.com. Public-site verification follows deployment. Paid booking, Zoom generation and live book payments/fulfilment remain unverified.
 
 ## Remaining launch gates
 
-- Zoe Life Workspace access, deployment and end-to-end verification above.
+- Complete public-origin Workspace verification after publishing the generated website.
 - Paid session details, scheduling account and Zoom/payment connection.
 - Approved book product links, prices and fulfilment details.
 - Client wording feedback and final review.

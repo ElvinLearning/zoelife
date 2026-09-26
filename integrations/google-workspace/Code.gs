@@ -95,7 +95,8 @@ function subscribe_(p, email) {
   if (old && old.values[1] === 'subscribed') return json_({success:true, state:'confirmation_required'});
   if (old && Date.now() - Date.parse(old.values[2]) < 60000) throw new Error('Please wait');
   var token = Utilities.getUuid() + Utilities.getUuid();
-  var url = settings_().url, unsubscribe = url + '?action=unsubscribe&token=' + encodeURIComponent(token);
+  var url = PropertiesService.getScriptProperties().getProperty('SUBSCRIPTION_PAGE_URL') || settings_().url;
+  var unsubscribe = url + '?action=unsubscribe&token=' + encodeURIComponent(token);
   var values = [email, 'pending', now, '', '', '2026-09-26', token, unsubscribe];
   if (old) sheet.getRange(old.index, 1, 1, values.length).setValues([values.map(cell_)]); else sheet.appendRow(values.map(cell_));
   SpreadsheetApp.flush();
@@ -122,10 +123,11 @@ function doGet(e) {
 function changeSubscription_(p) {
   var entry = subscription_(p), values = entry.values;
   if (p.action === 'confirm') {
-    if (values[1] === 'unsubscribed' || Date.now() - Date.parse(values[2]) > 48 * 3600000) return page_('<p>This confirmation has expired. Please sign up again on the website.</p>');
+    if (values[1] === 'unsubscribed' || Date.now() - Date.parse(values[2]) > 48 * 3600000) return p.format === 'json' ? json_({success:false, state:'expired'}) : page_('<p>This confirmation has expired. Please sign up again on the website.</p>');
     values[1] = 'subscribed'; values[3] = values[3] || new Date().toISOString();
   } else { values[1] = 'unsubscribed'; values[4] = new Date().toISOString(); }
   entry.sheet.getRange(entry.index, 1, 1, values.length).setValues([values]);
   SpreadsheetApp.flush();
+  if (p.format === 'json') return json_({success:true, state:values[1]});
   return page_('<p>' + (p.action === 'confirm' ? 'Your subscription is confirmed. Thank you for joining Zoe Life.' : 'You are unsubscribed from Zoe Life updates.') + '</p>');
 }
