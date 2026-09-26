@@ -143,3 +143,11 @@ node tools/qa-forms.mjs
 
 `qa.mjs` and `qa-forms.mjs` drive real Chrome over the DevTools Protocol and
 need the server running. There are no npm dependencies at any point.
+
+## September 26 integration additions
+
+See [integration activation instructions](docs/integrations-setup.md) for the tested
+Google Workspace backend, confirmed subscriber list, paid-booking URL and
+Amazon/Etsy/Gumroad configuration. These integrations are prepared in code;
+Workspace deployment and end-to-end verification are still required. Existing
+FormSubmit routing stays active until the new endpoint is explicitly configured.

@@ -17,12 +17,21 @@ const CONFIG = {
   formEndpoint: process.env.ZOE_FORM_ENDPOINT || null,
   newsletterEndpoint: process.env.ZOE_NEWSLETTER_ENDPOINT || null,
   bookingUrl: process.env.ZOE_GOOGLE_CALENDAR_BOOKING_URL || process.env.ZOE_BOOKING_URL || null,
+  paidBookingUrl: process.env.ZOE_PAID_BOOKING_URL || null,
   payments: {
     devotional: {
+      amazon: process.env.ZOE_AMAZON_DEVOTIONAL_URL || null,
+      etsy: process.env.ZOE_ETSY_DEVOTIONAL_URL || null,
+      gumroad: process.env.ZOE_GUMROAD_DEVOTIONAL_URL || null,
+
       stripe: process.env.ZOE_STRIPE_DEVOTIONAL_URL || null,
       paypal: process.env.ZOE_PAYPAL_DEVOTIONAL_URL || null,
     },
     journal: {
+      amazon: process.env.ZOE_AMAZON_JOURNAL_URL || null,
+      etsy: process.env.ZOE_ETSY_JOURNAL_URL || null,
+      gumroad: process.env.ZOE_GUMROAD_JOURNAL_URL || null,
+
       stripe: process.env.ZOE_STRIPE_JOURNAL_URL || null,
       paypal: process.env.ZOE_PAYPAL_JOURNAL_URL || null,
     },
@@ -30,6 +39,14 @@ const CONFIG = {
   staging: STAGING,
 };
 
+// Fail the build before interpolating untrusted/invalid URLs into HTML.
+for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpoint,
+  CONFIG.bookingUrl, CONFIG.paidBookingUrl, ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
+  if (value && (!/^https:\/\//.test(value) || /[\s<>"']/.test(value) || new URL(value).username || new URL(value).password)) {
+    throw new Error('Integration URLs must be valid HTTPS URLs without credentials or HTML');
+  }
+}
+const workspaceEndpoint = (value) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(value || '');
 const TAGLINE = "Helping people thrive in every season of life.";
 const MISSION =
   "Zoe Life equips individuals, couples, families, churches, and organizations with " +
@@ -41,8 +58,10 @@ const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
 const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
-const CONSENT =
-  "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
+const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
+  ? "I agree to join Zoe Life's mailing list. Zoe Life will store my signup and consent in Google Workspace. " +
+    "I will receive an email to confirm my subscription. Zoe Life will use it for updates, and I can unsubscribe at any time."
+  : "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
   "a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. " +
   "Zoe Life will use it for updates, and I can unsubscribe at any time.";
 
@@ -136,6 +155,9 @@ const payButtons = (book) => {
     buttons.push(
       `<a class="btn btn-secondary" href="${p.paypal}" target="_blank" rel="noopener noreferrer">Pay with PayPal<span class="visually-hidden">, opens in a new tab</span></a>`
     );
+  }
+  for (const [provider, label] of [['amazon', 'Amazon'], ['etsy', 'Etsy'], ['gumroad', 'Gumroad']]) {
+    if (p[provider]) buttons.push(`<a class="btn btn-secondary" href="${p[provider]}" target="_blank" rel="noopener noreferrer">Buy on ${label}<span class="visually-hidden">, opens in a new tab</span></a>`);
   }
   if (!buttons.length) {
     return `<p class="purchase-coming">Purchase options coming. Stripe and PayPal checkout will appear here once Zoe Life publishes live payment links. Printed copies will be fulfilled by a print-on-demand partner. Zoe Life is not packing and shipping orders from home.</p>`;
@@ -781,7 +803,7 @@ const contact = page(
             <button class="btn btn-primary" type="submit">Send message</button>
             <p class="reply-note">Please expect a reply within three business days.</p>
             <div class="note">
-              <p><strong>Message delivery.</strong> Messages are sent through FormSubmit for delivery to the Zoe Life team.</p>
+              <p><strong>Message delivery.</strong> ${workspaceEndpoint(CONFIG.formEndpoint) ? 'Messages are securely saved in Zoe Life’s Google Workspace for the team to review.' : 'Messages are sent through FormSubmit for delivery to the Zoe Life team.'}</p>
             </div>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
@@ -837,6 +859,7 @@ const consult = page(
         </ul>
         <p style="margin-top:1.5rem">This is a first conversation, not a paid session.</p>
         ${bookingBlock()}
+${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row"><a class="btn btn-secondary" href="${CONFIG.paidBookingUrl}" target="_blank" rel="noopener noreferrer">View paid sessions<span class="visually-hidden">, opens in a new tab</span></a></div></div>` : ''}
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
@@ -907,6 +930,7 @@ wrote(
         formEndpoint: CONFIG.formEndpoint,
         newsletterEndpoint: CONFIG.newsletterEndpoint,
         bookingUrl: CONFIG.bookingUrl,
+        paidBookingUrl: CONFIG.paidBookingUrl,
         payments: CONFIG.payments,
       },
       null,

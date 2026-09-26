@@ -168,7 +168,15 @@
       "</div>";
   }
 
-  function renderSent(status, kind) {
+  function renderSent(status, kind, state) {
+    if (state === "confirmation_required") {
+      status.innerHTML = '<div class="status-sent"><strong>Check your email</strong>If you are not already subscribed, we have sent a confirmation link. Check your spam folder too. Your signup is complete after you confirm.</div>';
+      return;
+    }
+    if (state === "saved") {
+      status.innerHTML = '<div class="status-sent"><strong>Message saved</strong>Your message has been saved for the Zoe Life team to review. Please expect a reply within three business days.</div>';
+      return;
+    }
     // Only ever called after the provider explicitly accepted the submission.
     status.innerHTML =
       '<div class="status-sent"><strong>' +
@@ -198,6 +206,15 @@
 
   function submitTo(endpoint, form, status, kind, button) {
     var data = new FormData(form);
+    // Keep the same id after an uncertain network result; changes start a new request.
+    var fingerprint = JSON.stringify(Array.from(data.entries()));
+    if (form._requestFingerprint !== fingerprint) {
+      form._requestFingerprint = fingerprint;
+      form._requestId = window.crypto && window.crypto.randomUUID
+        ? window.crypto.randomUUID()
+        : Date.now().toString(36) + "-" + Math.random().toString(36).slice(2) + "-" + Math.random().toString(36).slice(2);
+    }
+    data.set("request_id", form._requestId);
     var replyTo = form.querySelector('input[name="email"]');
     data.set("form_type", kind === "subscribe" ? "Mailing list signup" : "Contact message");
     data.set(
@@ -219,9 +236,12 @@
       }
     };
 
+    // URL-encoded data uses a simple cross-origin request for Apps Script.
+    var body = /^https:\/\/script\.google\.com\//.test(endpoint)
+      ? new URLSearchParams(data) : data;
     fetch(endpoint, {
       method: "POST",
-      body: data,
+      body: body,
       headers: { Accept: "application/json" },
     })
       .then(function (res) {
@@ -234,7 +254,8 @@
             done();
             // Success is the provider's explicit word, not the HTTP status alone.
             if (res.ok && providerAccepted(payload)) {
-              renderSent(status, kind);
+              renderSent(status, kind, payload.state);
+              form._requestFingerprint = null;
               form.reset();
               if (reason && reveal) {
                 reveal.hidden = true;

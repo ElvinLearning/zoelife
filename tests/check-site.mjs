@@ -280,8 +280,9 @@ for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
 }
 const FORM_ENDPOINT = "https://formsubmit.co/ajax/contact@zoelifehub.com";
 const BOOKING_URL = "https://calendar.app.google/Uj9v44HE72kJrKz8A";
-check("Contact form targets the Zoe Life inbox", cfgObj.formEndpoint === FORM_ENDPOINT);
-check("Mailing list targets the Zoe Life inbox", cfgObj.newsletterEndpoint === FORM_ENDPOINT);
+const isWorkspace = (url) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url || "");
+check("Contact form uses an approved integration type", cfgObj.formEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.formEndpoint));
+check("Mailing list targets the Zoe Life inbox", cfgObj.newsletterEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.newsletterEndpoint));
 check("Consult uses the approved Google Calendar link", cfgObj.bookingUrl === BOOKING_URL);
 check("config.payments is present", cfgObj.payments && typeof cfgObj.payments === "object");
 check(
@@ -295,7 +296,7 @@ check(
   !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(visibleText(publishedHtml)),
   (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
-check("Contact copy names FormSubmit delivery", /Messages are sent through FormSubmit for delivery to the Zoe Life team\./.test(contact));
+check("Contact copy describes the configured provider", isWorkspace(cfgObj.formEndpoint) ? /Google Workspace/.test(contact) : /Messages are sent through FormSubmit for delivery to the Zoe Life team\./.test(contact));
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
@@ -303,12 +304,13 @@ check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.
 check("KingsWord is not listed as a client", !/kingsword/i.test(publishedHtml));
 
 const booksDoc = html["books.html"];
-check("No invented storefront URLs", !/amazon\.com|etsy\.com|gumroad\.com|selar\.co/i.test(booksDoc));
+const storeLinks = [...booksDoc.matchAll(/href="(https:[^"]+)"[^>]*>Buy on /g)].map(m => m[1]);
+check("Storefront URLs come from configuration", storeLinks.every(url => flattenValues(cfgObj.payments).includes(url)));
 check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
 check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
 check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
 check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
-check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe/.test(booksDoc));
+check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
 check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
 check("Books page has both Saturday titles",
   /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));
@@ -403,9 +405,9 @@ check("Subscribe intro copy is present",
   publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
 const subscribeForms = [...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].map((m) => m[0]);
 check("Subscribe consent names FormSubmit as a service provider",
-  subscribeForms.length > 0 && subscribeForms.every((form) => /FormSubmit, a service provider/.test(form)));
+  subscribeForms.length > 0 && subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /Google Workspace/.test(form) : /FormSubmit, a service provider/.test(form)));
 check("Subscribe consent explains FormSubmit retention",
-  subscribeForms.every((form) => /retained by FormSubmit for up to 30 days/.test(form)));
+  subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /email to confirm/.test(form) : /retained by FormSubmit for up to 30 days/.test(form)));
 check("Subscribe consent explains Zoe Life's use and unsubscribe choice",
   subscribeForms.every((form) => /Zoe Life will use it for updates, and I can unsubscribe at any time\./.test(form)));
 check("Subscribe consent makes no absolute third-party-sharing claim",

@@ -3,12 +3,19 @@ window.ZOE_CONFIG = {
   "formEndpoint": "https://formsubmit.co/ajax/contact@zoelifehub.com",
   "newsletterEndpoint": "https://formsubmit.co/ajax/contact@zoelifehub.com",
   "bookingUrl": "https://calendar.app.google/Uj9v44HE72kJrKz8A",
+  "paidBookingUrl": null,
   "payments": {
     "devotional": {
+      "amazon": null,
+      "etsy": null,
+      "gumroad": null,
       "stripe": null,
       "paypal": null
     },
     "journal": {
+      "amazon": null,
+      "etsy": null,
+      "gumroad": null,
       "stripe": null,
       "paypal": null
     }
