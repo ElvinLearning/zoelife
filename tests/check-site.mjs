@@ -296,7 +296,7 @@ check(
   !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(visibleText(publishedHtml)),
   (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
-check("Contact copy describes the configured provider", isWorkspace(cfgObj.formEndpoint) ? /Google Workspace/.test(contact) : /Messages are sent through FormSubmit for delivery to the Zoe Life team\./.test(contact));
+check("Contact message form omits provider details", !/Message delivery\.|Messages are securely saved|Messages are sent through FormSubmit/.test(contact));
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
@@ -482,7 +482,7 @@ check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(book
 check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
 check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
-check("Contact reply copy is spoken English", /Please expect a reply within three business days/.test(contact));
+check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
 check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */

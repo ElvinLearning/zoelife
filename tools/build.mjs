@@ -818,10 +818,6 @@ const contact = page(
             </div>
 
             <button class="btn btn-primary" type="submit">Send message</button>
-            <p class="reply-note">Please expect a reply within three business days.</p>
-            <div class="note">
-              <p><strong>Message delivery.</strong> ${workspaceEndpoint(CONFIG.formEndpoint) ? 'Messages are securely saved in Zoe Life’s Google Workspace for the team to review.' : 'Messages are sent through FormSubmit for delivery to the Zoe Life team.'}</p>
-            </div>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
         </div>

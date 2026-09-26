@@ -173,20 +173,17 @@
       status.innerHTML = '<div class="status-sent"><strong>Check your email</strong>If you are not already subscribed, we have sent a confirmation link. Check your spam folder too. Your signup is complete after you confirm.</div>';
       return;
     }
-    if (state === "saved") {
-      status.innerHTML = '<div class="status-sent"><strong>Message saved</strong>Your message has been saved for the Zoe Life team to review. Please expect a reply within three business days.</div>';
+    if (kind !== "subscribe") {
+      status.innerHTML = '<div class="status-sent"><strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
       return;
     }
     // Only ever called after the provider explicitly accepted the submission.
     status.innerHTML =
       '<div class="status-sent"><strong>' +
-      (kind === "subscribe" ? "Signup received" : "Message received") +
+      "Signup received" +
       "</strong>" +
-      (kind === "subscribe"
-        ? "Thank you. Your signup request has reached the Zoe Life team. You will hear " +
-          "from Zoe Life when there is something worth sharing."
-        : "Thank you. Your message has reached the Zoe Life team. Please expect a reply within " +
-          "three business days.") +
+      "Thank you. Your signup request has reached the Zoe Life team. You will hear " +
+      "from Zoe Life when there is something worth sharing." +
       "</div>";
   }
 
