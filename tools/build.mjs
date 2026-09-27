@@ -8,6 +8,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { escapeAttr, loadExistingConfig, resolveIntegrations } from "./site-config.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
@@ -16,30 +17,14 @@ if (STRIPE_SANDBOX && !STAGING) throw new Error('Stripe sandbox requires --stagi
 const sandbox = STRIPE_SANDBOX
   ? JSON.parse(readFileSync(join(ROOT, 'integrations/stripe/sandbox.json'), 'utf8')) : null;
 
+const resolved = resolveIntegrations({
+  env: process.env,
+  existing: loadExistingConfig(join(ROOT, "js/config.js")),
+  staging: STAGING,
+});
 const CONFIG = {
   siteUrl: process.env.ZOE_SITE_URL || "https://www.zoelifehub.com",
-  formEndpoint: process.env.ZOE_FORM_ENDPOINT || null,
-  newsletterEndpoint: process.env.ZOE_NEWSLETTER_ENDPOINT || null,
-  bookingUrl: process.env.ZOE_GOOGLE_CALENDAR_BOOKING_URL || process.env.ZOE_BOOKING_URL || null,
-  paidBookingUrl: process.env.ZOE_PAID_BOOKING_URL || null,
-  payments: {
-    devotional: {
-      amazon: process.env.ZOE_AMAZON_DEVOTIONAL_URL || null,
-      etsy: process.env.ZOE_ETSY_DEVOTIONAL_URL || null,
-      gumroad: process.env.ZOE_GUMROAD_DEVOTIONAL_URL || null,
-
-      stripe: process.env.ZOE_STRIPE_DEVOTIONAL_URL || null,
-      paypal: process.env.ZOE_PAYPAL_DEVOTIONAL_URL || null,
-    },
-    journal: {
-      amazon: process.env.ZOE_AMAZON_JOURNAL_URL || null,
-      etsy: process.env.ZOE_ETSY_JOURNAL_URL || null,
-      gumroad: process.env.ZOE_GUMROAD_JOURNAL_URL || null,
-
-      stripe: process.env.ZOE_STRIPE_JOURNAL_URL || null,
-      paypal: process.env.ZOE_PAYPAL_JOURNAL_URL || null,
-    },
-  },
+  ...resolved,
   staging: STAGING,
 };
 
@@ -58,7 +43,10 @@ if (!STAGING && Object.values(CONFIG.payments).some(p => stripeTestLink(p.stripe
 
 // Fail the build before interpolating untrusted/invalid URLs into HTML.
 for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpoint,
-  CONFIG.bookingUrl, CONFIG.paidBookingUrl, ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
+  CONFIG.bookingUrl, CONFIG.paidBookingUrl, CONFIG.coursesUrl, CONFIG.resources.channelUrl,
+  ...CONFIG.resources.playlists.map((item) => item.embedUrl),
+  ...Object.values(CONFIG.giving),
+  ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
   if (value && (!/^https:\/\//.test(value) || /[\s<>"']/.test(value) || new URL(value).username || new URL(value).password)) {
     throw new Error('Integration URLs must be valid HTTPS URLs without credentials or HTML');
   }
@@ -75,17 +63,15 @@ const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
 const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
+const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
 const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
-  ? "I agree to join Zoe Life's mailing list. Zoe Life will store my signup and consent in Google Workspace. " +
-    "I will receive an email to confirm my subscription. Zoe Life will use it for updates, and I can unsubscribe at any time."
-  : "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
-  "a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. " +
-  "Zoe Life will use it for updates, and I can unsubscribe at any time.";
+  ? `${CONSENT_JOIN} We will email you a link to confirm.`
+  : CONSENT_JOIN;
 
 const BOOKS_INTRO =
   "At Zoe Life, we create faith-centered, practical resources to encourage growth, " +
   "strengthen your walk with God, and provide support for the different areas and seasons of life. " +
-  "Explore our current books and resources below, with more to come.";
+  "Explore our current books below. Marriage teaching videos live on the Resources page, with more books to come.";
 
 const DEVOTIONAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
 const JOURNAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
@@ -127,8 +113,11 @@ const FAMILY_SOCIALS = [
 const NAV = [
   ["index.html", "Home"],
   ["about.html", "About"],
-  ["books.html", "Books &amp; Resources"],
+  ["books.html", "Books"],
+  ["resources.html", "Resources"],
+  ["courses.html", "Courses"],
   ["connect.html", "Connect"],
+  ["partner.html", "Partner"],
   ["contact.html", "Contact"],
 ];
 
@@ -160,21 +149,22 @@ const socialList = (list, brand) =>
 const canonicalFor = (page) =>
   `${CONFIG.siteUrl.replace(/\/$/, "")}/${page === "index.html" ? "" : page.replace(/\.html$/, "")}`;
 
+const externalLink = (href, className, label, extraHidden = "") =>
+  `<a class="btn ${className}" href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer">${label}<span class="visually-hidden">, opens in a new tab${extraHidden}</span></a>`;
+
 const payButtons = (book) => {
   const p = CONFIG.payments[book];
   const buttons = [];
   if (p.stripe) {
     buttons.push(
-      `<a class="btn btn-primary" href="${p.stripe}" target="_blank" rel="noopener noreferrer">${stripeTestLink(p.stripe) ? 'Test Stripe checkout' : 'Pay with Stripe'}<span class="visually-hidden">, opens in a new tab</span></a>`
+      externalLink(p.stripe, "btn-primary", stripeTestLink(p.stripe) ? "Test Stripe checkout" : "Pay with Stripe")
     );
   }
   if (p.paypal) {
-    buttons.push(
-      `<a class="btn btn-secondary" href="${p.paypal}" target="_blank" rel="noopener noreferrer">Pay with PayPal<span class="visually-hidden">, opens in a new tab</span></a>`
-    );
+    buttons.push(externalLink(p.paypal, "btn-secondary", "Pay with PayPal"));
   }
   for (const [provider, label] of [['amazon', 'Amazon'], ['etsy', 'Etsy'], ['gumroad', 'Gumroad']]) {
-    if (p[provider]) buttons.push(`<a class="btn btn-secondary" href="${p[provider]}" target="_blank" rel="noopener noreferrer">Buy on ${label}<span class="visually-hidden">, opens in a new tab</span></a>`);
+    if (p[provider]) buttons.push(externalLink(p[provider], "btn-secondary", `Buy on ${label}`));
   }
   if (!buttons.length) {
     return `<p class="purchase-coming">Purchase options coming. Stripe and PayPal checkout will appear here once Zoe Life publishes live payment links. Printed copies will be fulfilled by a print-on-demand partner. Zoe Life is not packing and shipping orders from home.</p>`;
@@ -183,10 +173,49 @@ const payButtons = (book) => {
         <p class="format-meta">${stripeTestLink(p.stripe) ? 'Sandbox test only. No real payment or book delivery.' : 'Printed copies, when offered, will be fulfilled by a print-on-demand partner.'}</p>`;
 };
 
+const givingBlock = () => {
+  const buttons = [];
+  if (CONFIG.giving.stripe) buttons.push(externalLink(CONFIG.giving.stripe, "btn-primary", "Partner through Stripe"));
+  if (CONFIG.giving.paypal) buttons.push(externalLink(CONFIG.giving.paypal, "btn-secondary", "Partner through PayPal"));
+  if (!buttons.length) {
+    return `<p>Partnership links are not published yet. Send a message if you would like to talk about partnering with Zoe Life.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+        </div>`;
+  }
+  return `<div class="btn-row">${buttons.join("")}</div>
+        <p class="format-meta">Partnership checkout opens on Stripe or PayPal.</p>`;
+};
+
+const coursesBlock = () =>
+  CONFIG.coursesUrl
+    ? `<h2>Courses are open.</h2>
+        <p>Paid pre-marital courses are hosted on Teachable.</p>
+        <div class="btn-row">
+          ${externalLink(CONFIG.coursesUrl, "btn-primary", "View courses on Teachable")}
+        </div>`
+    : `<div class="coming-panel">
+        <h2>Courses coming soon.</h2>
+        <p>Join the mailing list and we will let you know when pre-marital courses are ready.</p>
+${subscribeForm("courses", true)}
+      </div>`;
+
+const playlistBlocks = () =>
+  CONFIG.resources.playlists
+    .map(
+      (item) => `<article class="video-item" id="${escapeAttr(item.id)}">
+        <h2>${escapeAttr(item.title)}</h2>
+        <div class="video-frame">
+          <iframe src="${escapeAttr(item.embedUrl)}" title="${escapeAttr(item.title)} playlist from Zoe Family Life" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </article>`
+    )
+    .join("\n");
+
 const bookingBlock = () =>
   CONFIG.bookingUrl
     ? `<div class="btn-row">
-          <a class="btn btn-primary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
+          <a class="btn btn-primary" href="${escapeAttr(CONFIG.bookingUrl)}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
         </div>
         <p class="format-meta">Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.</p>`
     : `<div class="booking-placeholder">
@@ -355,7 +384,7 @@ const home = page(
       <p class="lede">${MISSION}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-        <a class="btn btn-primary" href="books.html">Explore books and resources</a>
+        <a class="btn btn-primary" href="books.html">Explore books</a>
       </div>
     </div>
     <figure class="hero-photo">
@@ -397,9 +426,10 @@ const home = page(
 
 <section id="resources">
   <div class="wrap">
-    <p class="eyebrow">Books and resources</p>
-    <h2>Resources to help you thrive.</h2>
+    <p class="eyebrow">Books</p>
+    <h2>Books to help you thrive.</h2>
     <p class="lede">Start with 7 days. Keep going for 100. More to come.</p>
+    <p class="card-link"><a href="resources.html">Watch the marriage series</a></p>
 
     <div class="book-tease" style="margin-top:2.4rem">
       <div class="book-cover">
@@ -595,15 +625,15 @@ const about = page(
 const books = page(
   {
     page: "books.html",
-    title: "Books and Resources | Zoe Life",
+    title: "Books | Zoe Life",
     description:
-      "A 7-Day Gratitude Devotional and A 100-Day Gratitude Journal by Kemi Akinyemi. Biblical, practical gratitude resources from Zoe Life.",
+      "A 7-Day Gratitude Devotional and A 100-Day Gratitude Journal by Kemi Akinyemi. Biblical, practical gratitude books from Zoe Life.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Books and Resources</p>
-    <h1>Resources to help you thrive.</h1>
+    <p class="eyebrow">Books</p>
+    <h1>Books to help you thrive.</h1>
     <p class="lede">${BOOKS_INTRO}</p>
   </div>
 </section>
@@ -710,7 +740,7 @@ const connect = page(
     <article class="family-panel" id="zoe-family-life">
       <p class="eyebrow">A Zoe Life program</p>
       <h2>Zoe Family Life</h2>
-      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow along here.</p>
+      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow along here, or watch the marriage series on the <a href="resources.html">Resources</a> page.</p>
       ${socialVisit(FAMILY_SOCIALS, "Zoe Family Life")}
     </article>
   </div>
@@ -753,7 +783,7 @@ const contact = page(
     <div class="split split-wide-left" style="align-items:start">
       <div>
         <h2>Send a message</h2>
-        <p>Tell us a little about how we can help, and we will get back to you.</p>
+        <p>Tell us a little about how we can help. Please expect a reply within three business days.</p>
 
         <div class="form-card" style="margin-top:1.5rem">
           <form data-form="contact" novalidate>
@@ -872,7 +902,7 @@ const consult = page(
         </ul>
         <p style="margin-top:1.5rem">This is a first conversation, not a paid session.</p>
         ${bookingBlock()}
-${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row"><a class="btn btn-secondary" href="${CONFIG.paidBookingUrl}" target="_blank" rel="noopener noreferrer">View paid sessions<span class="visually-hidden">, opens in a new tab</span></a></div></div>` : ''}
+${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row">${externalLink(CONFIG.paidBookingUrl, "btn-secondary", "View paid sessions")}</div></div>` : ''}
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
@@ -880,6 +910,93 @@ ${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid
              width="1240" height="960">
       </figure>
     </div>
+  </div>
+</section>
+`
+);
+
+const resources = page(
+  {
+    page: "resources.html",
+    title: "Resources | Zoe Life",
+    description:
+      "Marriage teaching from Zoe Family Life, including Conflict Resolution, Marriage 101, and Recognizing the Right One.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Resources</p>
+    <h1>Marriage teaching from Zoe Family Life.</h1>
+    <p class="lede">Conversations for people who want practical, biblical help with marriage and singleness. Press play, or watch the full series on YouTube.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="video-list">
+${playlistBlocks()}
+    </div>
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="wrap">
+    <h2>Watch on YouTube.</h2>
+    <p>These playlists are from the Zoe Family Life channel.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="${escapeAttr(CONFIG.resources.channelUrl)}" target="_blank" rel="noopener noreferrer">Visit the Zoe Family Life YouTube channel<span class="visually-hidden">, opens in a new tab</span></a>
+    </div>
+  </div>
+</section>
+`
+);
+
+const courses = page(
+  {
+    page: "courses.html",
+    title: "Courses | Zoe Life",
+    description: CONFIG.coursesUrl
+      ? "Paid pre-marital courses from Tayo and Kemi, hosted on Teachable for couples preparing for marriage."
+      : "Paid pre-marital courses from Zoe Life. Join the mailing list to hear when courses open on Teachable.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Courses</p>
+    <h1>Pre-marital courses.</h1>
+    <p class="lede">A next step for couples preparing for marriage, taught by Tayo and Kemi.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+${coursesBlock()}
+  </div>
+</section>
+`
+);
+
+const partner = page(
+  {
+    page: "partner.html",
+    title: "Partner with Zoe Life",
+    description:
+      "Partner with Zoe Life. Zoe Life is not a registered nonprofit. Stripe and PayPal partnership links appear here when they are published.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Partner</p>
+    <h1>Partner with Zoe Life.</h1>
+    <p class="lede">Zoe Life is not a registered nonprofit. When partnership checkout is ready, it will open through Stripe or PayPal.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>A way to support the work.</h2>
+    <p>Partnership helps Zoe Life keep creating biblical, practical resources for individuals, couples, and families. Buttons appear here only after Zoe Life publishes live links.</p>
+${givingBlock()}
   </div>
 </section>
 `
@@ -908,7 +1025,10 @@ const PAGES = {
   "index.html": home,
   "about.html": about,
   "books.html": books,
+  "resources.html": resources,
+  "courses.html": courses,
   "connect.html": connect,
+  "partner.html": partner,
   "contact.html": contact,
   "consult.html": consult,
   "family-life.html": moved(
@@ -944,7 +1064,10 @@ wrote(
         newsletterEndpoint: CONFIG.newsletterEndpoint,
         bookingUrl: CONFIG.bookingUrl,
         paidBookingUrl: CONFIG.paidBookingUrl,
+        coursesUrl: CONFIG.coursesUrl,
+        giving: CONFIG.giving,
         payments: CONFIG.payments,
+        resources: CONFIG.resources,
       },
       null,
       2
@@ -963,7 +1086,7 @@ wrote(
 
 const base = CONFIG.siteUrl.replace(/\/$/, "");
 const today = new Date().toISOString().slice(0, 10);
-const sitemapPages = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+const sitemapPages = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "connect.html", "partner.html", "contact.html", "consult.html"];
 wrote(
   "sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -1018,5 +1141,9 @@ console.log(
       Object.values(CONFIG.payments).some((p) => Object.values(p).some(Boolean))
         ? "checkout links configured"
         : "purchase options coming"
+    }` +
+    `\ncourses:             ${CONFIG.coursesUrl || "coming soon (no link)"}` +
+    `\ngiving:              ${
+      CONFIG.giving.stripe || CONFIG.giving.paypal ? "partnership links configured" : "hidden until links are set"
     }`
 );

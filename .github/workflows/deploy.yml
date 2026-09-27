@@ -51,6 +51,9 @@ jobs:
           ZOE_PAYPAL_DEVOTIONAL_URL: ${{ vars.ZOE_PAYPAL_DEVOTIONAL_URL }}
           ZOE_STRIPE_JOURNAL_URL: ${{ vars.ZOE_STRIPE_JOURNAL_URL }}
           ZOE_PAYPAL_JOURNAL_URL: ${{ vars.ZOE_PAYPAL_JOURNAL_URL }}
+          ZOE_GIVING_STRIPE_URL: ${{ vars.ZOE_GIVING_STRIPE_URL }}
+          ZOE_GIVING_PAYPAL_URL: ${{ vars.ZOE_GIVING_PAYPAL_URL }}
+          ZOE_COURSES_URL: ${{ vars.ZOE_COURSES_URL }}
           # Default to staging so a deploy made before the domain is switched
           # cannot compete in search with the live Squarespace site.
           ZOE_STAGING: ${{ (github.event.inputs.mode == 'production' || vars.ZOE_MODE == 'production') && '0' || '1' }}
@@ -59,18 +62,19 @@ jobs:
       - name: Static checks
         run: |
           node tests/check-site.mjs
+          node tests/check-build.mjs
           node tests/workspace-forms.mjs
           node tests/integration-build.mjs
 
       - name: Assemble site
         run: |
           mkdir -p _site
-          cp -r index.html about.html books.html connect.html contact.html consult.html \
+          cp -r index.html about.html books.html resources.html courses.html connect.html partner.html contact.html consult.html \
                 family-life.html appointments.html subscription.html \
                 404.html robots.txt sitemap.xml favicon.svg \
                 css js fonts assets _site/
           # Pretty URLs: /about serves about.html on GitHub Pages.
-          for p in about books connect contact consult family-life appointments; do
+          for p in about books resources courses connect partner contact consult family-life appointments; do
             mkdir -p "_site/$p" && cp "$p.html" "_site/$p/index.html"
           done
           test -f CNAME && cp CNAME _site/ || echo "no CNAME, serving on the Pages domain"

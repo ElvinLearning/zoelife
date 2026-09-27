@@ -29,7 +29,7 @@ const CHROME =
   ].find((p) => existsSync(p)) ||
   "google-chrome";
 
-const PAGES = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+const PAGES = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "connect.html", "partner.html", "contact.html", "consult.html"];
 const WIDTHS = [
   { w: 320, h: 780, label: "320-small-mobile" },
   { w: 375, h: 812, label: "375-mobile" },

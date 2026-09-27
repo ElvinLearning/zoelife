@@ -174,7 +174,7 @@
       return;
     }
     if (kind !== "subscribe") {
-      status.innerHTML = '<div class="status-sent"><strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
+      status.innerHTML = '<div class="status-sent"><strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
       return;
     }
     // Only ever called after the provider explicitly accepted the submission.

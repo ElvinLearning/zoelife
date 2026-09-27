@@ -4,6 +4,11 @@ window.ZOE_CONFIG = {
   "newsletterEndpoint": "https://script.google.com/macros/s/AKfycbytoV9xN3J79pHvXy67VMONMc8MXwC5vf5DuwdrSyxy8ej0BwUGLe92KMmsjZimQNeu/exec",
   "bookingUrl": "https://calendar.app.google/Uj9v44HE72kJrKz8A",
   "paidBookingUrl": null,
+  "coursesUrl": null,
+  "giving": {
+    "stripe": null,
+    "paypal": null
+  },
   "payments": {
     "devotional": {
       "amazon": null,
@@ -19,5 +24,35 @@ window.ZOE_CONFIG = {
       "stripe": null,
       "paypal": null
     }
+  },
+  "resources": {
+    "channelUrl": "https://www.youtube.com/@zoefamilylife",
+    "playlists": [
+      {
+        "id": "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+        "title": "Conflict Resolution",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2"
+      },
+      {
+        "id": "PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
+        "title": "Marriage 101",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z"
+      },
+      {
+        "id": "PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
+        "title": "Recipes for a Blessed Marriage",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze"
+      },
+      {
+        "id": "PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+        "title": "Recognizing the Right One",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP"
+      },
+      {
+        "id": "PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+        "title": "Dangerous Lies Singles Believe and The Truth that Nullifies Them",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"
+      }
+    ]
   }
 };

@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Appointments moved | Zoe Life</title>
-<meta name="description" content="Complimentary consultations are now booked from the consultation page.">
+<title>Courses | Zoe Life</title>
+<meta name="description" content="Paid pre-marital courses from Zoe Life. Join the mailing list to hear when courses open on Teachable.">
 <meta name="robots" content="noindex, nofollow">
-<link rel="canonical" href="https://www.zoelifehub.com/appointments">
+<link rel="canonical" href="https://www.zoelifehub.com/courses">
 <meta name="theme-color" content="#F8F4ED">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Zoe Life">
-<meta property="og:url" content="https://www.zoelifehub.com/appointments">
-<meta property="og:title" content="Appointments moved | Zoe Life">
-<meta property="og:description" content="Complimentary consultations are now booked from the consultation page.">
+<meta property="og:url" content="https://www.zoelifehub.com/courses">
+<meta property="og:title" content="Courses | Zoe Life">
+<meta property="og:description" content="Paid pre-marital courses from Zoe Life. Join the mailing list to hear when courses open on Teachable.">
 <meta property="og:image" content="https://www.zoelifehub.com/assets/photos/tayo-kemi-about.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -31,7 +31,7 @@
 </script>
 <script src="js/config.js"></script>
 </head>
-<body data-page="appointments.html">
+<body data-page="courses.html">
 <a class="skip-link" href="#main">Skip to main content</a>
 <header class="site-header">
   <div class="wrap-wide header-inner">
@@ -47,7 +47,7 @@
         <li><a href="about.html">About</a></li>
         <li><a href="books.html">Books</a></li>
         <li><a href="resources.html">Resources</a></li>
-        <li><a href="courses.html">Courses</a></li>
+        <li><a href="courses.html" aria-current="page">Courses</a></li>
         <li><a href="connect.html">Connect</a></li>
         <li><a href="partner.html">Partner</a></li>
         <li><a href="contact.html">Contact</a></li>
@@ -60,12 +60,42 @@
 <main id="main">
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Updated</p>
-    <h1>This page has a new home.</h1>
-    <p class="lede">What you are looking for now lives at the consultation page.</p>
-    <div class="btn-row">
-      <a class="btn btn-primary" href="consult.html">Go to the consultation page</a>
-    </div>
+    <p class="eyebrow">Courses</p>
+    <h1>Pre-marital courses.</h1>
+    <p class="lede">A next step for couples preparing for marriage, taught by Tayo and Kemi.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+<div class="coming-panel">
+        <h2>Courses coming soon.</h2>
+        <p>Join the mailing list and we will let you know when pre-marital courses are ready.</p>
+
+      <form class="subscribe-form" data-form="subscribe" novalidate>
+        <p class="hint">Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.</p>
+        <div class="field">
+          <label for="courses-email">Email address <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+          <input type="email" id="courses-email" name="email" autocomplete="email"
+                 required aria-describedby="courses-email-error">
+          <p class="error" id="courses-email-error" role="alert"></p>
+        </div>
+        <div class="field">
+          <label class="consent" for="courses-consent">
+            <input type="checkbox" id="courses-consent" name="consent" required
+                   aria-describedby="courses-consent-error">
+            <span class="consent-note">I agree to join Zoe Life's mailing list and can unsubscribe at any time. We will email you a link to confirm.</span>
+          </label>
+          <p class="error" id="courses-consent-error" role="alert"></p>
+        </div>
+        <div class="field" aria-hidden="true" style="position:absolute;left:-9999px">
+          <label for="courses-honey">Leave this field empty</label>
+          <input type="text" id="courses-honey" name="_honey" tabindex="-1" autocomplete="off">
+        </div>
+        <button class="btn btn-primary" type="submit">Subscribe</button>
+        <div class="form-status" data-status role="status" aria-live="polite"></div>
+      </form>
+      </div>
   </div>
 </section>
 

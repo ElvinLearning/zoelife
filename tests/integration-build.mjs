@@ -16,7 +16,8 @@ try {
  assert.match(readFileSync(join(temp,'consult.html'),'utf8'),/href="https:\/\/calendar.google.com\/calendar\/appointments\/schedules\/test"/);
  assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Amazon/);
  assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Gumroad/);
- assert.match(readFileSync(join(temp,'contact.html'),'utf8'),/Google Workspace/);
+ assert.match(readFileSync(join(temp,'contact.html'),'utf8'),/I agree to join Zoe Life's mailing list and can unsubscribe at any time\. We will email you a link to confirm\./);
+ assert.doesNotMatch(readFileSync(join(temp,'contact.html'),'utf8'),/Google Workspace|FormSubmit|store my signup/);
  run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...env,ZOE_PAID_BOOKING_URL:'javascript:alert(1)'},encoding:'utf8'});
  assert.notEqual(run.status,0);
  const sandboxEnv={...env,ZOE_STAGING:'0'};

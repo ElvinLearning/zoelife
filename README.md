@@ -45,8 +45,11 @@ Chrome over the DevTools Protocol. No npm dependencies.
 | --- | --- |
 | Home | `index.html` |
 | About | `about.html` |
-| Books & Resources | `books.html` |
+| Books | `books.html` |
+| Resources | `resources.html` |
+| Courses | `courses.html` |
 | Connect | `connect.html` |
+| Partner | `partner.html` |
 | Contact | `contact.html` |
 | Complimentary consultation | `consult.html` |
 
@@ -79,13 +82,17 @@ The build never invents client facts:
   If `ZOE_GOOGLE_CALENDAR_BOOKING_URL` is unset, `/consult` shows a clearly
   labeled `GOOGLE_CALENDAR_BOOKING_URL` placeholder. Complimentary 20-minute
   consults, Mondays and Wednesdays, 6:00 to 8:00 PM Central.
-- Contact messages and mailing-list signup requests route to
-  `contact@zoelifehub.com` through FormSubmit. The browser reports success only
-  when FormSubmit returns an explicit accepted response; HTTP 2xx alone is not
-  enough. Signup requests reach the inbox for processing and do not pretend to
-  create a subscriber record in a separate email platform.
-- The Zoe Life inbox appears in the public FormSubmit endpoint configuration,
-  not as a direct email link in visible page copy.
+- Contact messages and mailing-list signup requests route to the Zoe Life
+  Google Apps Script web app. The browser reports success only when that
+  endpoint returns an explicit accepted response; HTTP 2xx alone is not enough.
+  Signup is double opt-in. The public consent line does not describe where the
+  signup is stored.
+- Giving uses `giving.stripe` and `giving.paypal` in `js/config.js`. Partner
+  buttons stay hidden until those https URLs exist. Zoe Life is not a
+  registered nonprofit, so the site does not call partnership a donation.
+- Courses use `coursesUrl`. While it is null, the Courses page says courses
+  are coming soon and offers the mailing list, with no outbound link.
+- The Zoe Life inbox is not a direct email link in visible page copy.
 - Google Analytics uses GA4 property `G-R18R3LVBK9` on every generated page.
 - No Unsplash, Pexels, or generated pastor-couple stock. People photos are
   Pastors Tayo and Kemi Akinyemi from the live Zoe Life site.
@@ -110,6 +117,6 @@ and the journal is no longer a “cover pending” box.
 
 ## Out of scope
 
-Client AI self-edit tool, courses / training videos, paid coaching rates, and
-marketplace URLs are not built. Print-on-demand partner onboarding is a
-separate intro.
+Client AI self-edit tool, paid coaching rates, and live marketplace URLs are
+not filled in. Course and partnership slots stay null until Zoe Life supplies
+https links. Print-on-demand partner onboarding is a separate intro.

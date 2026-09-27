@@ -12,7 +12,7 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+const PAGES = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "connect.html", "partner.html", "contact.html", "consult.html"];
 const REDIRECTS = ["family-life.html", "appointments.html"];
 
 let pass = 0;
@@ -278,16 +278,21 @@ const cfgObj = JSON.parse(cfg.slice(cfg.indexOf("{"), cfg.lastIndexOf("}") + 1))
 for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
   check(`config.${k} is present`, k in cfgObj);
 }
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/contact@zoelifehub.com";
 const BOOKING_URL = "https://calendar.app.google/Uj9v44HE72kJrKz8A";
 const isWorkspace = (url) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url || "");
-check("Contact form uses an approved integration type", cfgObj.formEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.formEndpoint));
-check("Mailing list targets the Zoe Life inbox", cfgObj.newsletterEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.newsletterEndpoint));
+check("Contact form uses the Google Apps Script endpoint", isWorkspace(cfgObj.formEndpoint));
+check("Mailing list uses the Google Apps Script endpoint", isWorkspace(cfgObj.newsletterEndpoint));
+check("config.js does not use FormSubmit", !/formsubmit/i.test(cfg));
 check("Consult uses the approved Google Calendar link", cfgObj.bookingUrl === BOOKING_URL);
 check("config.payments is present", cfgObj.payments && typeof cfgObj.payments === "object");
 check(
   "No placeholder endpoint was invented",
-  flattenValues(cfgObj).every((v) => v === null || /^https:\/\//.test(String(v))),
+  flattenValues(cfgObj).every((v) => {
+    if (v === null) return true;
+    const s = String(v);
+    if (/^https:\/\//.test(s) || /^PL[\w-]+$/.test(s)) return true;
+    return !/example\.com|placeholder|todo|fixme|your_|formsubmit/i.test(s);
+  }),
   JSON.stringify(cfgObj)
 );
 
@@ -296,7 +301,7 @@ check(
   !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(visibleText(publishedHtml)),
   (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
-check("Contact message form omits provider details", !/Message delivery\.|Messages are securely saved|Messages are sent through FormSubmit/.test(contact));
+check("Contact message form omits provider details", !/Message delivery\.|Messages are securely saved|messages saved|Messages are sent through FormSubmit|store my signup|Google Workspace/i.test(contact));
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
@@ -345,9 +350,10 @@ check("Primary header CTA is Send a message", /Send a message/.test(indexHeader)
 check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
 
 const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
-for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Contact"]) {
+for (const label of ["Home", "About", "Books", "Resources", "Courses", "Connect", "Partner", "Contact"]) {
   check(`Main nav includes ${label}`, navBlock.includes(`>${label}<`));
 }
+check("Books and Resources is no longer one nav label", !/>Books &amp; Resources</.test(navBlock));
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
 const builder = read("tools/build.mjs");
@@ -404,12 +410,13 @@ check("Connect does not lecture about footer links", !/also linked in the footer
 check("Subscribe intro copy is present",
   publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
 const subscribeForms = [...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].map((m) => m[0]);
-check("Subscribe consent names FormSubmit as a service provider",
-  subscribeForms.length > 0 && subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /Google Workspace/.test(form) : /FormSubmit, a service provider/.test(form)));
-check("Subscribe consent explains FormSubmit retention",
-  subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /email to confirm/.test(form) : /retained by FormSubmit for up to 30 days/.test(form)));
-check("Subscribe consent explains Zoe Life's use and unsubscribe choice",
-  subscribeForms.every((form) => /Zoe Life will use it for updates, and I can unsubscribe at any time\./.test(form)));
+const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
+check("Subscribe consent keeps joining the list and unsubscribing",
+  subscribeForms.length > 0 && subscribeForms.every((form) => form.includes(CONSENT_JOIN)));
+check("Subscribe consent does not disclose where the signup is stored",
+  subscribeForms.every((form) => !/Google Workspace|store my signup|FormSubmit|retained by/i.test(form)));
+check("Workspace signups mention a short confirmation email",
+  !isWorkspace(cfgObj.newsletterEndpoint) || subscribeForms.every((form) => /email you a link to confirm/.test(form)));
 check("Subscribe consent makes no absolute third-party-sharing claim",
   subscribeForms.every((form) => !/will not share (?:your|my) information with third parties/i.test(form)));
 check("Consent is demoted with the consent-note class", /consent-note/.test(publishedHtml));
@@ -429,7 +436,7 @@ const homeHeroBtns = [...homeHero.matchAll(/<a class="btn ([^"]+)"/g)].map((m) =
 check("Home hero has two equal primary CTAs",
   homeHeroBtns.length === 2 && homeHeroBtns.every((c) => c === "btn-primary"));
 check("Home hero puts Send a message before books",
-  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books and resources"));
+  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
 check("About founder line is Pastors Tayo and Kemi", /founded by Pastors Tayo and Kemi/.test(aboutMain));
@@ -482,7 +489,44 @@ check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(book
 check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
 check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
-check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check("No saved-message storage wording remains", !/messages saved|securely saved|store my signup/i.test(publishedHtml + js));
+check("The site does not solicit donations", !/donat|tax-deductible/i.test(visibleText(publishedHtml)));
+const resourcesDoc = html["resources.html"];
+const PLAYLISTS = [
+  "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+  "PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
+  "PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
+  "PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+  "PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+];
+check("Resources keeps playlist ids in config", PLAYLISTS.every((id) => cfg.includes(id)));
+for (const id of PLAYLISTS) {
+  check(`Resources embeds ${id} on youtube-nocookie`, resourcesDoc.includes(`https://www.youtube-nocookie.com/embed/videoseries?list=${id}`));
+  const at = resourcesDoc.indexOf(`list=${id}`);
+  const frame = resourcesDoc.slice(at, at + 500);
+  check(`Resources playlist ${id} lazy-loads with a title`, at > 0 && /loading="lazy"/.test(frame) && /title="/.test(frame));
+}
+check("Resources links to the Zoe Family Life channel",
+  /href="https:\/\/www\.youtube\.com\/@zoefamilylife"/.test(resourcesDoc) &&
+  /Visit the Zoe Family Life YouTube channel/.test(resourcesDoc));
+check("Playlist frames are a 16:9 box", /\.video-frame \{[^}]*aspect-ratio:\s*16\s*\/\s*9/.test(css));
+const coursesDoc = html["courses.html"];
+if (!cfgObj.coursesUrl) {
+  check("Courses coming soon does not publish a dead course link",
+    /Courses coming soon\./.test(coursesDoc) && !/teachable\.com/i.test(coursesDoc) && !/View courses on Teachable/.test(coursesDoc));
+  check("Courses coming soon offers the mailing list", /data-form="subscribe"/.test(coursesDoc));
+} else {
+  check("Courses uses the configured Teachable URL", coursesDoc.includes(cfgObj.coursesUrl));
+}
+const partnerDoc = html["partner.html"];
+check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
+if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {
+  check("Partner buttons stay hidden until giving links exist", !/Partner through Stripe|Partner through PayPal/.test(partnerDoc));
+} else {
+  if (cfgObj.giving.stripe) check("Partner Stripe button uses the configured URL", partnerDoc.includes(cfgObj.giving.stripe));
+  if (cfgObj.giving.paypal) check("Partner PayPal button uses the configured URL", partnerDoc.includes(cfgObj.giving.paypal));
+}
 check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */
