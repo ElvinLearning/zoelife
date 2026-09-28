@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { escapeAttr, loadExistingConfig, resolveIntegrations } from "./site-config.mjs";
+import { CLIPS, COURSE_BUNDLE, COURSE_TRACKS, DANGEROUS_LIES_PLAYLIST_ID } from "./site-content.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
@@ -37,7 +38,10 @@ if (sandbox) {
   CONFIG.paidBookingUrl = null;
 }
 const stripeTestLink = url => /^https:\/\/buy\.stripe\.com\/test_/.test(url || '');
-if (!STAGING && Object.values(CONFIG.payments).some(p => stripeTestLink(p.stripe))) {
+const courseStripeUrls = ["singleDating", "committed", "engagedFirstYear", "couplesBundle"].map(
+  (key) => CONFIG.courses[key]
+);
+if (!STAGING && [...Object.values(CONFIG.payments).map((p) => p.stripe), ...courseStripeUrls].some(stripeTestLink)) {
   throw new Error('Stripe test Payment Links cannot be used in production');
 }
 
@@ -46,6 +50,7 @@ for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpo
   CONFIG.bookingUrl, CONFIG.paidBookingUrl, CONFIG.coursesUrl, CONFIG.resources.channelUrl,
   ...CONFIG.resources.playlists.map((item) => item.embedUrl),
   ...Object.values(CONFIG.giving),
+  ...Object.values(CONFIG.courses),
   ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
   if (value && (!/^https:\/\//.test(value) || /[\s<>"']/.test(value) || new URL(value).username || new URL(value).password)) {
     throw new Error('Integration URLs must be valid HTTPS URLs without credentials or HTML');
@@ -149,6 +154,8 @@ const socialList = (list, brand) =>
 const canonicalFor = (page) =>
   `${CONFIG.siteUrl.replace(/\/$/, "")}/${page === "index.html" ? "" : page.replace(/\.html$/, "")}`;
 
+const prefixOf = (page) => "../".repeat(Math.max(0, String(page).split("/").length - 1));
+
 const externalLink = (href, className, label, extraHidden = "") =>
   `<a class="btn ${className}" href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer">${label}<span class="visually-hidden">, opens in a new tab${extraHidden}</span></a>`;
 
@@ -187,29 +194,59 @@ const givingBlock = () => {
         <p class="format-meta">Partnership checkout opens on Stripe or PayPal.</p>`;
 };
 
-const coursesBlock = () =>
-  CONFIG.coursesUrl
-    ? `<h2>Courses are open.</h2>
-        <p>Paid pre-marital courses are hosted on Teachable.</p>
-        <div class="btn-row">
-          ${externalLink(CONFIG.coursesUrl, "btn-primary", "View courses on Teachable")}
-        </div>`
-    : `<div class="coming-panel">
-        <h2>Courses coming soon.</h2>
-        <p>Join the mailing list and we will let you know when pre-marital courses are ready.</p>
-${subscribeForm("courses", true)}
-      </div>`;
+const clipById = (id) => {
+  const clip = CLIPS.find((item) => item.id === id);
+  if (!clip) throw new Error(`Unknown clip ${id}`);
+  return clip;
+};
+
+const clipPlayer = (clip, heading) => `<figure class="clip">
+          <div class="clip-stage">
+            <video controls playsinline preload="none" poster="assets/clips/${clip.file}.jpg" width="720" height="1280" aria-labelledby="clip-${clip.id}-title">
+              <source src="assets/clips/${clip.file}.mp4" type="video/mp4">
+            </video>
+          </div>
+          <figcaption>
+            <${heading} class="clip-title" id="clip-${clip.id}-title">${escapeAttr(clip.title)}</${heading}>
+            <p class="clip-source"><a href="${escapeAttr(clip.youtube)}" target="_blank" rel="noopener noreferrer">Watch the full video<span class="visually-hidden"> on YouTube, opens in a new tab</span></a></p>
+          </figcaption>
+        </figure>`;
+
+const clipGrid = (clips, heading) =>
+  `<div class="clip-grid">
+${clips.map((clip) => clipPlayer(clip, heading)).join("\n")}
+        </div>`;
+
+const bookClips = (ids) => `<div class="book-clips">
+          <p class="eyebrow">From Dangerous Lies Singles Believe</p>
+          ${clipGrid(ids.map(clipById), "h3")}
+        </div>`;
+
+const enrollOrBuy = (slot, label) => {
+  const url = CONFIG.courses[slot];
+  if (!url) return `<p class="enrollment-note">Enrollment opens soon.</p>`;
+  return `<div class="btn-row">${externalLink(url, "btn-primary", label)}</div>`;
+};
 
 const playlistBlocks = () =>
   CONFIG.resources.playlists
-    .map(
-      (item) => `<article class="video-item" id="${escapeAttr(item.id)}">
+    .map((item) => {
+      const shorts =
+        item.id === DANGEROUS_LIES_PLAYLIST_ID
+          ? `<div class="short-clips" id="short-clips">
+          <h3>Short clips</h3>
+          <p>Eight short clips from this series. Captions are already in the picture. Press play when you are ready.</p>
+          ${clipGrid(CLIPS, "h4")}
+        </div>`
+          : "";
+      return `<article class="video-item" id="${escapeAttr(item.id)}">
         <h2>${escapeAttr(item.title)}</h2>
         <div class="video-frame">
           <iframe src="${escapeAttr(item.embedUrl)}" title="${escapeAttr(item.title)} playlist from Zoe Family Life" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
-      </article>`
-    )
+        ${shorts}
+      </article>`;
+    })
     .join("\n");
 
 const bookingBlock = () =>
@@ -225,14 +262,16 @@ const bookingBlock = () =>
           </div>
         </div>`;
 
-const head = ({ title, description, page }) => `<!doctype html>
+const head = ({ title, description, page, noindex = false }) => {
+  const pre = prefixOf(page);
+  return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">
-${CONFIG.staging
+${CONFIG.staging || noindex
   ? '<meta name="robots" content="noindex, nofollow">'
   : '<meta name="robots" content="index, follow">'}
 <link rel="canonical" href="${canonicalFor(page)}">
@@ -244,11 +283,11 @@ ${CONFIG.staging
 <meta property="og:description" content="${description}">
 <meta property="og:image" content="${CONFIG.siteUrl.replace(/\/$/, "")}/assets/photos/tayo-kemi-about.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/brand/zoe-life-mark.png">
-<link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="${pre}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${pre}assets/brand/zoe-life-mark.png">
+<link rel="preload" href="${pre}fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${pre}fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${pre}css/style.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R18R3LVBK9"></script>
 <script>
@@ -258,33 +297,38 @@ ${CONFIG.staging
 
   gtag('config', 'G-R18R3LVBK9');
 </script>
-<script src="js/config.js"></script>
+<script src="${pre}js/config.js"></script>
 </head>
 <body data-page="${page}">
 <a class="skip-link" href="#main">Skip to main content</a>`;
+};
 
-const header = (current) => `
+const header = (current) => {
+  const pre = prefixOf(current);
+  const messageHref = `${pre}contact.html#message`;
+  return `
 <header class="site-header">
   <div class="wrap-wide header-inner">
-    <a class="brand" href="index.html">
-      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
+    <a class="brand" href="${pre}index.html">
+      <img class="brand-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span aria-hidden="true">&#9776;</span> Menu
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
       <ul>
-${NAV.map(
-  ([href, label]) =>
-    `        <li><a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a></li>`
-).join("\n")}
-        <li class="nav-cta"><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
+${NAV.map(([href, label]) => {
+  const on = href === current || (href === "courses.html" && current.startsWith("courses/"));
+  return `        <li><a href="${pre}${href}"${on ? ' aria-current="page"' : ""}>${label}</a></li>`;
+}).join("\n")}
+        <li class="nav-cta"><a href="${messageHref}">${MESSAGE_CTA}</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary header-cta" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+    <a class="btn btn-primary header-cta" href="${messageHref}">${MESSAGE_CTA}</a>
   </div>
 </header>
 <main id="main">`;
+};
 
 const subscribeForm = (idPrefix, intro) => `
       <form class="subscribe-form" data-form="subscribe" novalidate>
@@ -311,12 +355,14 @@ const subscribeForm = (idPrefix, intro) => `
         <div class="form-status" data-status role="status" aria-live="polite"></div>
       </form>`;
 
-const footer = () => `
+const footer = (current) => {
+  const pre = prefixOf(current);
+  return `
 </main>
 <footer class="site-footer">
   <div class="wrap-wide">
     <div class="footer-top">
-      <img class="footer-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <img class="footer-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
       <p class="footer-tagline">${TAGLINE}</p>
     </div>
     <div class="footer-grid">
@@ -324,9 +370,9 @@ const footer = () => `
       <nav class="footer-nav" aria-label="Footer">
         <h2 class="footer-h">Explore</h2>
         <ul>
-${NAV.map(([href, label]) => `          <li><a href="${href}">${label}</a></li>`).join("\n")}
-          <li><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
-          <li><a href="${CONSULT_HREF}">Complimentary consultation</a></li>
+${NAV.map(([href, label]) => `          <li><a href="${pre}${href}">${label}</a></li>`).join("\n")}
+          <li><a href="${pre}${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
+          <li><a href="${pre}${CONSULT_HREF}">Complimentary consultation</a></li>
         </ul>
       </nav>
 
@@ -347,12 +393,13 @@ ${subscribeForm("footer", true)}
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+<script src="${pre}js/main.js"></script>
 </body>
 </html>
 `;
+};
 
-const page = (meta, body) => head(meta) + header(meta.page) + body + footer();
+const page = (meta, body) => head(meta) + header(meta.page) + body + footer(meta.page);
 
 const socialVisit = (list, brand) =>
   `<ul class="social-list social-visit">${list
@@ -652,6 +699,7 @@ const books = page(
         <p class="lede">${DEVOTIONAL_SUB}. By Kemi Akinyemi.</p>
         ${DEVOTIONAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("devotional")}
+        ${bookClips(["05", "07"])}
       </div>
     </div>
   </div>
@@ -671,6 +719,7 @@ const books = page(
         <p class="lede">${JOURNAL_SUB}. By Kemi Akinyemi.</p>
         ${JOURNAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("journal")}
+        ${bookClips(["04"])}
       </div>
     </div>
   </div>
@@ -822,6 +871,7 @@ const contact = page(
                 <option>Workshop / Group Session</option>
                 <option>Academic or Career Support</option>
                 <option>Books &amp; Resources</option>
+                <option>Course access</option>
                 <option>Collaboration / Partnership</option>
                 <option>General Inquiry</option>
                 <option value="Other">Other</option>
@@ -951,28 +1001,134 @@ ${playlistBlocks()}
 `
 );
 
+const courseCard = (track) => `<article class="course-card">
+        <p class="eyebrow">Draft</p>
+        <h2>${escapeAttr(track.title)}</h2>
+        <p class="course-sub">${escapeAttr(track.subtitle)}</p>
+        <p>${escapeAttr(track.audience)}</p>
+        <ol class="module-names">
+${track.modules.map((mod) => `          <li>${escapeAttr(mod.title)}</li>`).join("\n")}
+        </ol>
+        <p class="draft-note">Outline is a draft. Lessons are coming soon.</p>
+        ${enrollOrBuy(track.slot, "Buy this track")}
+        <p class="card-link"><a href="${track.page}">See the draft outline</a></p>
+      </article>`;
+
 const courses = page(
   {
     page: "courses.html",
     title: "Courses | Zoe Life",
-    description: CONFIG.coursesUrl
-      ? "Paid pre-marital courses from Tayo and Kemi, hosted on Teachable for couples preparing for marriage."
-      : "Paid pre-marital courses from Zoe Life. Join the mailing list to hear when courses open on Teachable.",
+    description:
+      "Self-hosted courses from Tayo and Kemi for singles, committed couples, and the first year of marriage. Outlines are drafts until enrollment opens.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Courses</p>
-    <h1>Pre-marital courses.</h1>
-    <p class="lede">A next step for couples preparing for marriage, taught by Tayo and Kemi.</p>
+    <h1>Courses for the season you are in.</h1>
+    <p class="lede">Three tracks from Tayo and Kemi, hosted on Zoe Life. Outlines below are drafts. Paid lessons are not on this site.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
-${coursesBlock()}
+    <div class="course-grid">
+${COURSE_TRACKS.map(courseCard).join("\n")}
+    </div>
   </div>
 </section>
+
+<section class="band-tan">
+  <div class="wrap">
+    <h2>${escapeAttr(COURSE_BUNDLE.title)}</h2>
+    <p>${escapeAttr(COURSE_BUNDLE.note)}</p>
+    ${enrollOrBuy(COURSE_BUNDLE.slot, "Buy the couples bundle")}
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Hear when enrollment opens.</h2>
+    <p>Join the mailing list if you want a note when a track is ready to buy.</p>
+    <div class="form-card" style="max-width:32rem;margin-top:1.25rem">
+${subscribeForm("courses", true)}
+    </div>
+  </div>
+</section>
+`
+);
+
+const courseTrackPage = (track) => {
+  const pre = prefixOf(track.page);
+  return page(
+    {
+      page: track.page,
+      title: `${track.title} | Zoe Life Courses`,
+      description: track.description,
+    },
+    `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Draft outline</p>
+    <h1>${escapeAttr(track.title)}</h1>
+    <p class="lede">${escapeAttr(track.subtitle)}. ${escapeAttr(track.audience)}</p>
+    <p class="draft-note">This outline is a draft. Lessons are coming soon. Paid lesson videos are not published on this page.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+${track.modules
+  .map(
+    (mod, index) => `<article class="module-block">
+      <h2>Module ${index + 1}: ${escapeAttr(mod.title)}</h2>
+      <ul class="lesson-list">
+${mod.lessons.map((lesson) => `        <li>${escapeAttr(lesson)}</li>`).join("\n")}
+      </ul>
+    </article>`
+  )
+  .join("\n")}
+    ${enrollOrBuy(track.slot, "Buy this track")}
+    <p>Questions about access can wait until enrollment opens. Use the contact form and choose Course access.</p>
+    <p class="card-link"><a href="${pre}contact.html#message">Send a message</a></p>
+    <p class="card-link"><a href="${pre}courses.html">Back to all courses</a></p>
+    <div class="form-card" style="max-width:32rem;margin-top:1.5rem">
+      <h2>Hear when enrollment opens.</h2>
+${subscribeForm(`track-${track.id}`, false)}
+    </div>
+  </div>
+</section>
+`
+  );
+};
+
+const courseWelcome = page(
+  {
+    page: "courses/welcome.html",
+    title: "Course welcome | Zoe Life",
+    description:
+      "Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.",
+    noindex: true,
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Courses</p>
+    <h1>Course welcome.</h1>
+    <p class="lede" id="welcome-note">This is a placeholder. Enrollment is not open yet, and this page does not grant course access.</p>
+    <p>If you finished a checkout, keep the email you used. Access email will start only after enrollment is live.</p>
+    <p class="card-link"><a href="../courses.html">Back to courses</a></p>
+  </div>
+</section>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var sessionId = params.get("session_id");
+  var note = document.getElementById("welcome-note");
+  if (!note || !sessionId) return;
+  note.textContent = "We saw a checkout reference on this page. Course access is not granted from the website yet. Watch your email once enrollment is open.";
+})();
+</script>
 `
 );
 
@@ -1027,6 +1183,8 @@ const PAGES = {
   "books.html": books,
   "resources.html": resources,
   "courses.html": courses,
+  ...Object.fromEntries(COURSE_TRACKS.map((track) => [track.page, courseTrackPage(track)])),
+  "courses/welcome.html": courseWelcome,
   "connect.html": connect,
   "partner.html": partner,
   "contact.html": contact,
@@ -1049,8 +1207,10 @@ const PAGES = {
 
 mkdirSync(ROOT, { recursive: true });
 const wrote = (name, body) => {
-  writeFileSync(join(ROOT, name), body, "utf8");
-  console.log(`wrote ${name.padEnd(22)} ${String(body.length).padStart(6)} bytes`);
+  const dest = join(ROOT, name);
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, body, "utf8");
+  console.log(`wrote ${name.padEnd(28)} ${String(body.length).padStart(6)} bytes`);
 };
 
 for (const [name, html] of Object.entries(PAGES)) wrote(name, html);
@@ -1065,6 +1225,7 @@ wrote(
         bookingUrl: CONFIG.bookingUrl,
         paidBookingUrl: CONFIG.paidBookingUrl,
         coursesUrl: CONFIG.coursesUrl,
+        courses: CONFIG.courses,
         giving: CONFIG.giving,
         payments: CONFIG.payments,
         resources: CONFIG.resources,
@@ -1086,15 +1247,31 @@ wrote(
 
 const base = CONFIG.siteUrl.replace(/\/$/, "");
 const today = new Date().toISOString().slice(0, 10);
-const sitemapPages = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "connect.html", "partner.html", "contact.html", "consult.html"];
+const sitemapPages = [
+  "index.html",
+  "about.html",
+  "books.html",
+  "resources.html",
+  "courses.html",
+  ...COURSE_TRACKS.map((track) => track.page),
+  "connect.html",
+  "partner.html",
+  "contact.html",
+  "consult.html",
+];
+const sitemapAssets = CLIPS.flatMap((clip) => [
+  `assets/clips/${clip.file}.mp4`,
+  `assets/clips/${clip.file}.jpg`,
+]);
 wrote(
   "sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    sitemapPages
+    [...sitemapPages.map((p) => ({ loc: canonicalFor(p), priority: p === "index.html" ? "1.0" : "0.8" })),
+      ...sitemapAssets.map((asset) => ({ loc: `${base}/${asset}`, priority: "0.3" }))]
       .map(
-        (p) =>
-          `  <url>\n    <loc>${canonicalFor(p)}</loc>\n    <lastmod>${today}</lastmod>\n` +
-          `    <priority>${p === "index.html" ? "1.0" : "0.8"}</priority>\n  </url>`
+        (item) =>
+          `  <url>\n    <loc>${item.loc}</loc>\n    <lastmod>${today}</lastmod>\n` +
+          `    <priority>${item.priority}</priority>\n  </url>`
       )
       .join("\n") +
     `\n</urlset>\n`
@@ -1142,7 +1319,9 @@ console.log(
         ? "checkout links configured"
         : "purchase options coming"
     }` +
-    `\ncourses:             ${CONFIG.coursesUrl || "coming soon (no link)"}` +
+    `\ncourses:             ${
+      courseStripeUrls.some(Boolean) ? "payment links configured" : "enrollment opens soon (no buy links)"
+    }` +
     `\ngiving:              ${
       CONFIG.giving.stripe || CONFIG.giving.paypal ? "partnership links configured" : "hidden until links are set"
     }`

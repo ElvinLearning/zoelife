@@ -54,6 +54,11 @@ jobs:
           ZOE_GIVING_STRIPE_URL: ${{ vars.ZOE_GIVING_STRIPE_URL }}
           ZOE_GIVING_PAYPAL_URL: ${{ vars.ZOE_GIVING_PAYPAL_URL }}
           ZOE_COURSES_URL: ${{ vars.ZOE_COURSES_URL }}
+          ZOE_COURSE_SINGLE_DATING_URL: ${{ vars.ZOE_COURSE_SINGLE_DATING_URL }}
+          ZOE_COURSE_COMMITTED_URL: ${{ vars.ZOE_COURSE_COMMITTED_URL }}
+          ZOE_COURSE_ENGAGED_FIRST_YEAR_URL: ${{ vars.ZOE_COURSE_ENGAGED_FIRST_YEAR_URL }}
+          ZOE_COURSE_COUPLES_BUNDLE_URL: ${{ vars.ZOE_COURSE_COUPLES_BUNDLE_URL }}
+          ZOE_COURSE_CLAIM_ENDPOINT: ${{ vars.ZOE_COURSE_CLAIM_ENDPOINT }}
           # Default to staging so a deploy made before the domain is switched
           # cannot compete in search with the live Squarespace site.
           ZOE_STAGING: ${{ (github.event.inputs.mode == 'production' || vars.ZOE_MODE == 'production') && '0' || '1' }}
@@ -76,6 +81,11 @@ jobs:
           # Pretty URLs: /about serves about.html on GitHub Pages.
           for p in about books resources courses connect partner contact consult family-life appointments; do
             mkdir -p "_site/$p" && cp "$p.html" "_site/$p/index.html"
+          done
+          mkdir -p _site/courses
+          cp courses/*.html _site/courses/
+          for p in single-dating committed engaged-first-year welcome; do
+            mkdir -p "_site/courses/$p" && cp "courses/$p.html" "_site/courses/$p/index.html"
           done
           test -f CNAME && cp CNAME _site/ || echo "no CNAME, serving on the Pages domain"
           du -sh _site

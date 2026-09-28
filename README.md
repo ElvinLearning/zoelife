@@ -90,8 +90,11 @@ The build never invents client facts:
 - Giving uses `giving.stripe` and `giving.paypal` in `js/config.js`. Partner
   buttons stay hidden until those https URLs exist. Zoe Life is not a
   registered nonprofit, so the site does not call partnership a donation.
-- Courses use `coursesUrl`. While it is null, the Courses page says courses
-  are coming soon and offers the mailing list, with no outbound link.
+- Courses are self-hosted drafts. Stripe Payment Links live in `courses.singleDating`,
+  `courses.committed`, `courses.engagedFirstYear`, and `courses.couplesBundle`.
+  While those are null, each track says enrollment opens soon and offers the mailing
+  list, with no buy button. `coursesUrl` is not used as an outbound link.
+  Setup steps are in `docs/courses-setup.md`.
 - The Zoe Life inbox is not a direct email link in visible page copy.
 - Google Analytics uses GA4 property `G-R18R3LVBK9` on every generated page.
 - No Unsplash, Pexels, or generated pastor-couple stock. People photos are
@@ -108,6 +111,8 @@ assets/books/gratitude-devotional-cover.jpg 7-Day Gratitude Devotional (Saturday
 assets/books/gratitude-journal-cover.jpg    100-Day Gratitude Journal (Saturday)
 assets/photos/*.jpg                         Tayo and Kemi photographs
 assets/photos/provenance.json               source notes for every image
+assets/clips/*.mp4                          short clips, captions burned in
+assets/clips/*.jpg                          posters for those clips
 ```
 
 The 7-Day cover and people photographs come from the live Squarespace CDN. The

@@ -53,7 +53,12 @@ variables (Settings > Secrets and variables > Actions > Variables):
 | `ZOE_PAYPAL_JOURNAL_URL` | PayPal button for the 100-Day Journal | Purchase options coming |
 | `ZOE_GIVING_STRIPE_URL` | Partner button through Stripe | Button hidden |
 | `ZOE_GIVING_PAYPAL_URL` | Partner button through PayPal | Button hidden |
-| `ZOE_COURSES_URL` | Courses page links out to Teachable | Courses coming soon, no link |
+| `ZOE_COURSE_SINGLE_DATING_URL` | Stripe Payment Link for Single and Dating | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_COMMITTED_URL` | Stripe Payment Link for Committed Relationship | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_ENGAGED_FIRST_YEAR_URL` | Stripe Payment Link for Engaged / First Year of Marriage | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_COUPLES_BUNDLE_URL` | Stripe Payment Link for the couples bundle | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_CLAIM_ENDPOINT` | Reserved for the separate course Apps Script. The welcome page does not call it yet | Null, no request |
+| `ZOE_COURSES_URL` | Kept in config only. The site does not link out with it | Ignored on the page |
 | `ZOE_MODE` | `production` makes the workflow build indexable | staging |
 
 The form posts `multipart/form-data` with `Accept: application/json`. The UI

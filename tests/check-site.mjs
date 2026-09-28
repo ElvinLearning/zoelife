@@ -7,12 +7,25 @@
  * leftover stock, and forms that lie about succeeding.
  */
 
-import { readFileSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { readFileSync, existsSync, statSync } from "node:fs";
+import { join, dirname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "connect.html", "partner.html", "contact.html", "consult.html"];
+const PAGES = [
+  "index.html",
+  "about.html",
+  "books.html",
+  "resources.html",
+  "courses.html",
+  "courses/single-dating.html",
+  "courses/committed.html",
+  "courses/engaged-first-year.html",
+  "connect.html",
+  "partner.html",
+  "contact.html",
+  "consult.html",
+];
 const REDIRECTS = ["family-life.html", "appointments.html"];
 
 let pass = 0;
@@ -163,7 +176,7 @@ for (const p of [...PAGES, ...REDIRECTS]) {
   const doc = html[p];
 
   const internal = [...doc.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
-  const broken = internal.filter((h) => !existsSync(join(ROOT, h.split("#")[0])));
+  const broken = internal.filter((h) => !existsSync(join(ROOT, normalize(join(dirname(p), h.split("#")[0])))));
   check(`${p} internal links all resolve`, broken.length === 0, broken.join(", "));
 
   const anchors = [...doc.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
@@ -198,7 +211,7 @@ for (const p of PAGES) {
 
 const allAssets = new Set();
 for (const p of [...PAGES, ...REDIRECTS]) {
-  for (const m of html[p].matchAll(/(?:src|href)="(assets\/[^"]+)"/g)) allAssets.add(m[1]);
+  for (const m of html[p].matchAll(/(?:src|href|poster)="(?:\.\.\/)*(assets\/[^"]+)"/g)) allAssets.add(m[1]);
 }
 for (const m of css.matchAll(/url\(\.\.\/(assets\/[^)]+)\)/g)) allAssets.add(m[1]);
 const missingAssets = [...allAssets].filter((a) => !existsSync(join(ROOT, a)));
@@ -234,6 +247,7 @@ for (const opt of [
   "Workshop / Group Session",
   "Academic or Career Support",
   "Books &amp; Resources",
+  "Course access",
   "Collaboration / Partnership",
   "General Inquiry",
   "Other",
@@ -512,13 +526,58 @@ check("Resources links to the Zoe Family Life channel",
   /Visit the Zoe Family Life YouTube channel/.test(resourcesDoc));
 check("Playlist frames are a 16:9 box", /\.video-frame \{[^}]*aspect-ratio:\s*16\s*\/\s*9/.test(css));
 const coursesDoc = html["courses.html"];
-if (!cfgObj.coursesUrl) {
-  check("Courses coming soon does not publish a dead course link",
-    /Courses coming soon\./.test(coursesDoc) && !/teachable\.com/i.test(coursesDoc) && !/View courses on Teachable/.test(coursesDoc));
-  check("Courses coming soon offers the mailing list", /data-form="subscribe"/.test(coursesDoc));
+const courseTrackDocs = ["courses/single-dating.html", "courses/committed.html", "courses/engaged-first-year.html"].map((p) => html[p]).join("\n");
+const welcomeDoc = read("courses/welcome.html");
+const courseSlots = cfgObj.courses || {};
+const courseBuySlots = ["singleDating", "committed", "engagedFirstYear", "couplesBundle"];
+check("Courses do not mention Teachable", !/teachable/i.test(coursesDoc + courseTrackDocs + welcomeDoc));
+check("Courses offer the mailing list", /data-form="subscribe"/.test(coursesDoc) && /data-form="subscribe"/.test(courseTrackDocs));
+if (courseBuySlots.every((key) => !courseSlots[key])) {
+  check("Null course slots render no buy links", !/buy\.stripe\.com|Buy this track|Buy the couples bundle/.test(coursesDoc + courseTrackDocs + welcomeDoc));
+  check("Null course slots say enrollment opens soon", /Enrollment opens soon/.test(coursesDoc) && /Enrollment opens soon/.test(courseTrackDocs));
 } else {
-  check("Courses uses the configured Teachable URL", coursesDoc.includes(cfgObj.coursesUrl));
+  for (const key of courseBuySlots) {
+    if (courseSlots[key]) check(`Course slot ${key} renders its payment link`, (coursesDoc + courseTrackDocs).includes(courseSlots[key]));
+  }
 }
+check("Welcome page is noindex", /noindex, nofollow/.test(welcomeDoc));
+check("Welcome page does not call the network", !/fetch\s*\(|script\.google\.com|buy\.stripe\.com/.test(welcomeDoc));
+check("Welcome page is omitted from the sitemap", !sitemap.includes("/courses/welcome"));
+check("Sitemap lists course track pages", ["/courses/single-dating", "/courses/committed", "/courses/engaged-first-year"].every((path) => sitemap.includes(path)));
+const CLIPS = [
+  ["01_everyone_but_me", "wwcWniQFDA4", "t=402s"],
+  ["02_scarcity_not_you", "wwcWniQFDA4", "t=713s"],
+  ["03_marriage_done_right", "ddCC4qvPZgg", "t=330s"],
+  ["04_discontent_every_season", "ddCC4qvPZgg", "t=516s"],
+  ["05_spouse_not_your_source", "ddCC4qvPZgg", "t=745s"],
+  ["06_prepare_before_season", "6WsC_MOO3KI", "t=1017s"],
+  ["07_desires_of_your_heart", "KIxtotAT0vU", "t=360s"],
+  ["08_so_spiritual_story", "KIxtotAT0vU", "t=306s"],
+];
+const clipMarkup = resourcesDoc + booksDoc;
+for (const [file, videoId, stamp] of CLIPS) {
+  const mp4 = join(ROOT, "assets/clips", `${file}.mp4`);
+  const poster = join(ROOT, "assets/clips", `${file}.jpg`);
+  check(`Clip ${file} exists and is under 15 MB`, existsSync(mp4) && existsSync(poster) && statSync(mp4).size < 15 * 1024 * 1024);
+  check(`Sitemap lists ${file}`, sitemap.includes(`assets/clips/${file}.mp4`) && sitemap.includes(`assets/clips/${file}.jpg`));
+  check(`Resources links ${file} at ${stamp}`, resourcesDoc.includes(`assets/clips/${file}.mp4`) && resourcesDoc.includes(videoId) && resourcesDoc.includes(stamp));
+}
+check("Clip 04 does not use the pre-trim timestamp", !/t=508s/.test(clipMarkup));
+check("Resources groups the short clips with Dangerous Lies", /id="short-clips"/.test(resourcesDoc) && resourcesDoc.indexOf('id="short-clips"') > resourcesDoc.indexOf("PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"));
+const devotionalBlock = booksDoc.slice(booksDoc.indexOf('id="devotional"'), booksDoc.indexOf('id="journal"'));
+const journalBlock = booksDoc.slice(booksDoc.indexOf('id="journal"'), booksDoc.indexOf('id="collection"'));
+check("Journal shows clip 04 only", /04_discontent_every_season/.test(journalBlock) && !/05_spouse_not_your_source|07_desires_of_your_heart/.test(journalBlock));
+check("Devotional shows clips 05 and 07", /05_spouse_not_your_source/.test(devotionalBlock) && /07_desires_of_your_heart/.test(devotionalBlock) && !/04_discontent_every_season/.test(devotionalBlock));
+const videos = [...clipMarkup.matchAll(/<video\b[^>]*>/g)].map((m) => m[0]);
+check("Clip players do not autoplay", videos.length >= 11 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag)));
+check("Clip players do not add a second caption track", !/<track\b/.test(clipMarkup));
+check("Playlist embeds do not force autoplay", !/autoplay=1/.test(resourcesDoc));
+const formsScript = read("integrations/google-workspace/Code.gs");
+check("Live forms script has no course claim action", !/claim_course|claimCourse/.test(formsScript));
+const courseScript = read("apps-script/courses/Code.gs");
+check("Course script is separate and has no secret key", /NOT DEPLOYED/.test(courseScript) && !/sk_live_|rk_live_|sk_test_/.test(courseScript + read("apps-script/courses/config.example.json")));
+const workflow = read(".github/workflows/deploy.yml");
+check("Deploy publishes course pages and clip assets", /single-dating/.test(workflow) && /engaged-first-year/.test(workflow) && /welcome/.test(workflow) && /assets/.test(workflow));
 const partnerDoc = html["partner.html"];
 check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
 if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {
@@ -572,7 +631,7 @@ check(
 );
 check(
   "Only local site scripts and the approved Google tag are loaded",
-  scriptSrcs.every((s) => s === "js/main.js" || s === "js/config.js" || s === GTAG_SRC),
+  scriptSrcs.every((s) => s === GTAG_SRC || /^(?:\.\.\/)?js\/(?:main|config)\.js$/.test(s)),
   scriptSrcs.join(", ")
 );
 check("Tap targets are at least 44px", /min-height:\s*4[48]px/.test(css));

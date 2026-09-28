@@ -147,20 +147,29 @@ check("Env override leaves the existing booking URL", overridden.bookingUrl === 
 check("Marketplace links stay null until provided", preserved.payments.devotional.amazon === null);
 check("Giving links stay null until provided", preserved.giving.stripe === null && preserved.giving.paypal === null);
 check("Course URL stays null until provided", preserved.coursesUrl === null);
+check(
+  "Course payment slots stay null until provided",
+  preserved.courses.singleDating === null &&
+    preserved.courses.committed === null &&
+    preserved.courses.engagedFirstYear === null &&
+    preserved.courses.couplesBundle === null &&
+    preserved.courses.claimEndpoint === null
+);
 check("YouTube playlist ids are always configured", preserved.resources.playlists.length === 5);
 
 const marketOk = resolveIntegrations({
   env: {
     ZOE_AMAZON_DEVOTIONAL_URL: "https://example.com/devotional",
     ZOE_GIVING_PAYPAL_URL: "https://www.paypal.com/give/example",
-    ZOE_COURSES_URL: "https://example.teachable.com/p/premarital",
+    ZOE_COURSE_SINGLE_DATING_URL: "https://buy.stripe.com/b/premarital",
   },
   existing: PRESERVED,
   staging: false,
 });
 check("https marketplace env is accepted", marketOk.payments.devotional.amazon === "https://example.com/devotional");
 check("https giving env is accepted", marketOk.giving.paypal === "https://www.paypal.com/give/example");
-check("https course env is accepted", marketOk.coursesUrl === "https://example.teachable.com/p/premarital");
+check("https course payment env is accepted", marketOk.courses.singleDating === "https://buy.stripe.com/b/premarital");
+check("Unset course payment slots stay null", marketOk.courses.committed === null && marketOk.courses.claimEndpoint === null);
 check("Unset giving sibling stays null", marketOk.giving.stripe === null);
 
 let marketThrew = false;
@@ -182,6 +191,7 @@ try {
   mkdirSync(join(temp, "js"), { recursive: true });
   cpSync(join(ROOT, "tools/build.mjs"), join(temp, "tools/build.mjs"));
   cpSync(join(ROOT, "tools/site-config.mjs"), join(temp, "tools/site-config.mjs"));
+  cpSync(join(ROOT, "tools/site-content.mjs"), join(temp, "tools/site-content.mjs"));
   const seeded = {
     ...PRESERVED,
     payments: {
@@ -211,7 +221,11 @@ try {
   const books = readFileSync(join(temp, "books.html"), "utf8");
   check("Preserved Gumroad URL is escaped into the book page", books.includes("https://example.gumroad.com/l/journal"));
   check("Giving buttons stay out of the partner page", !/Partner through Stripe|Partner through PayPal/.test(readFileSync(join(temp, "partner.html"), "utf8")));
-  check("Courses page has no dead Teachable link", !/View courses on Teachable|teachable\.com/i.test(readFileSync(join(temp, "courses.html"), "utf8")));
+  const coursesHtml = readFileSync(join(temp, "courses.html"), "utf8");
+  check("Courses page has no dead Teachable link", !/View courses on Teachable|teachable\.com/i.test(coursesHtml));
+  check("Null course slots do not render buy links", !/buy\.stripe\.com|Buy this track|Buy the couples bundle/.test(coursesHtml));
+  check("Null course slots say enrollment opens soon", /Enrollment opens soon/.test(coursesHtml));
+  check("Rebuilt course slots stay null", built.courses.singleDating === null && built.courses.couplesBundle === null && built.courses.claimEndpoint === null);
 } finally {
   rmSync(temp, { recursive: true, force: true });
 }

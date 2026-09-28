@@ -46,6 +46,14 @@ export const PAYMENT_CHANNELS = [
 
 export const BOOKS = ["devotional", "journal"];
 
+export const COURSE_PAYMENT_SLOTS = [
+  { key: "singleDating", env: "ZOE_COURSE_SINGLE_DATING_URL" },
+  { key: "committed", env: "ZOE_COURSE_COMMITTED_URL" },
+  { key: "engagedFirstYear", env: "ZOE_COURSE_ENGAGED_FIRST_YEAR_URL" },
+  { key: "couplesBundle", env: "ZOE_COURSE_COUPLES_BUNDLE_URL" },
+  { key: "claimEndpoint", env: "ZOE_COURSE_CLAIM_ENDPOINT" },
+];
+
 export function playlistEmbed(id) {
   if (!/^PL[\w-]+$/.test(id)) throw new Error(`Invalid YouTube playlist id: ${id}`);
   return `https://www.youtube-nocookie.com/embed/videoseries?list=${id}`;
@@ -153,6 +161,20 @@ export function resolveBookPayments(book, env, existingBook) {
   return out;
 }
 
+export function resolveCoursePayments(env, existingCourses) {
+  const prior = existingCourses && typeof existingCourses === "object" ? existingCourses : {};
+  const out = {};
+  for (const slot of COURSE_PAYMENT_SLOTS) {
+    out[slot.key] = pickHttps({
+      envValue: env[slot.env],
+      existingValue: prior[slot.key],
+      name: slot.env,
+      failClosed: true,
+    });
+  }
+  return out;
+}
+
 export function resolveIntegrations({ env = {}, existing = {}, staging = false } = {}) {
   const failClosed = Boolean(staging);
   const priorGiving = existing.giving && typeof existing.giving === "object" ? existing.giving : {};
@@ -208,6 +230,7 @@ export function resolveIntegrations({ env = {}, existing = {}, staging = false }
       devotional: resolveBookPayments("devotional", env, existing.payments?.devotional),
       journal: resolveBookPayments("journal", env, existing.payments?.journal),
     },
+    courses: resolveCoursePayments(env, existing.courses),
     resources: resourceConfig(),
   };
 }

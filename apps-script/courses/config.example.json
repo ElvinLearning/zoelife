@@ -1,0 +1,13 @@
+{
+  "note": "Copy these names into Apps Script Project Settings > Script properties. Do not put real values in the repo.",
+  "SPREADSHEET_ID": "",
+  "STRIPE_RESTRICTED_KEY": "",
+  "WELCOME_FROM": "contact@zoelifehub.com",
+  "SUPPORT_CONTACT": "",
+  "COURSE_TRACKS": {
+    "plink_REPLACE_SINGLE": { "trackIds": ["single-dating"], "folderIds": [] },
+    "plink_REPLACE_COMMITTED": { "trackIds": ["committed"], "folderIds": [] },
+    "plink_REPLACE_ENGAGED": { "trackIds": ["engaged-first-year"], "folderIds": [] },
+    "plink_REPLACE_BUNDLE": { "trackIds": ["committed", "engaged-first-year"], "folderIds": [] }
+  }
+}

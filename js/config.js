@@ -5,6 +5,13 @@ window.ZOE_CONFIG = {
   "bookingUrl": "https://calendar.app.google/Uj9v44HE72kJrKz8A",
   "paidBookingUrl": null,
   "coursesUrl": null,
+  "courses": {
+    "singleDating": null,
+    "committed": null,
+    "engagedFirstYear": null,
+    "couplesBundle": null,
+    "claimEndpoint": null
+  },
   "giving": {
     "stripe": null,
     "paypal": null
