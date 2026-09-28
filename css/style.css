@@ -525,6 +525,7 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
 }
 .clip { margin: 0; min-width: 0; }
 .clip-stage {
+  position: relative;
   aspect-ratio: 9 / 16;
   background: #343A36;
   border-radius: var(--radius);
@@ -537,6 +538,27 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
   object-fit: contain;
   background: #343A36;
 }
+.clip-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sage);
+  color: var(--cream);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.clip-play svg { width: .9rem; height: .9rem; margin-left: .12rem; fill: currentColor; }
+.clip-play:hover { background: var(--olive); }
+.clip-stage.is-playing .clip-play { display: none; }
 .clip-title {
   font-family: var(--sans);
   font-size: .95rem;

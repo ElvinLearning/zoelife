@@ -58,6 +58,26 @@
     syncReveal();
   }
 
+  /* ------------------------------------------------------------- clips -- */
+  // Native controls draw a loading ring over an unloaded poster. Keep the idle
+  // state as the poster plus this button, and turn controls on only after play.
+  document.querySelectorAll(".clip-play").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var stage = button.closest(".clip-stage");
+      var video = stage && stage.querySelector("video");
+      if (!video) return;
+      stage.classList.add("is-playing");
+      video.setAttribute("controls", "");
+      var played = video.play();
+      if (played && typeof played.catch === "function") {
+        played.catch(function () {
+          stage.classList.remove("is-playing");
+          video.removeAttribute("controls");
+        });
+      }
+    });
+  });
+
   /* ---------------------------------------------------------- validation -- */
 
   var MESSAGES = {

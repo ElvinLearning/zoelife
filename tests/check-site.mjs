@@ -569,7 +569,8 @@ const journalBlock = booksDoc.slice(booksDoc.indexOf('id="journal"'), booksDoc.i
 check("Journal shows clip 04 only", /04_discontent_every_season/.test(journalBlock) && !/05_spouse_not_your_source|07_desires_of_your_heart/.test(journalBlock));
 check("Devotional shows clips 05 and 07", /05_spouse_not_your_source/.test(devotionalBlock) && /07_desires_of_your_heart/.test(devotionalBlock) && !/04_discontent_every_season/.test(devotionalBlock));
 const videos = [...clipMarkup.matchAll(/<video\b[^>]*>/g)].map((m) => m[0]);
-check("Clip players do not autoplay", videos.length >= 11 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag)));
+check("Clip players do not autoplay", videos.length >= 11 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
+check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 11);
 check("Clip players do not add a second caption track", !/<track\b/.test(clipMarkup));
 check("Playlist embeds do not force autoplay", !/autoplay=1/.test(resourcesDoc));
 const formsScript = read("integrations/google-workspace/Code.gs");

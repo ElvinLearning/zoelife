@@ -202,9 +202,13 @@ const clipById = (id) => {
 
 const clipPlayer = (clip, heading) => `<figure class="clip">
           <div class="clip-stage">
-            <video controls playsinline preload="none" poster="assets/clips/${clip.file}.jpg" width="720" height="1280" aria-labelledby="clip-${clip.id}-title">
+            <video playsinline preload="none" poster="assets/clips/${clip.file}.jpg" width="720" height="1280" aria-labelledby="clip-${clip.id}-title">
               <source src="assets/clips/${clip.file}.mp4" type="video/mp4">
             </video>
+            <button type="button" class="clip-play">
+              <svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M1 1.2v11.6L11 7 1 1.2z"/></svg>
+              <span class="visually-hidden">Play ${escapeAttr(clip.title)}</span>
+            </button>
           </div>
           <figcaption>
             <${heading} class="clip-title" id="clip-${clip.id}-title">${escapeAttr(clip.title)}</${heading}>
