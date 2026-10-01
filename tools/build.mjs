@@ -8,6 +8,8 @@
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { escapeAttr, loadExistingConfig, resolveIntegrations } from "./site-config.mjs";
+import { CLIPS, COURSE_BUNDLE, COURSE_TRACKS, DANGEROUS_LIES_PLAYLIST_ID } from "./site-content.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
@@ -16,30 +18,14 @@ if (STRIPE_SANDBOX && !STAGING) throw new Error('Stripe sandbox requires --stagi
 const sandbox = STRIPE_SANDBOX
   ? JSON.parse(readFileSync(join(ROOT, 'integrations/stripe/sandbox.json'), 'utf8')) : null;
 
+const resolved = resolveIntegrations({
+  env: process.env,
+  existing: loadExistingConfig(join(ROOT, "js/config.js")),
+  staging: STAGING,
+});
 const CONFIG = {
   siteUrl: process.env.ZOE_SITE_URL || "https://www.zoelifehub.com",
-  formEndpoint: process.env.ZOE_FORM_ENDPOINT || null,
-  newsletterEndpoint: process.env.ZOE_NEWSLETTER_ENDPOINT || null,
-  bookingUrl: process.env.ZOE_GOOGLE_CALENDAR_BOOKING_URL || process.env.ZOE_BOOKING_URL || null,
-  paidBookingUrl: process.env.ZOE_PAID_BOOKING_URL || null,
-  payments: {
-    devotional: {
-      amazon: process.env.ZOE_AMAZON_DEVOTIONAL_URL || null,
-      etsy: process.env.ZOE_ETSY_DEVOTIONAL_URL || null,
-      gumroad: process.env.ZOE_GUMROAD_DEVOTIONAL_URL || null,
-
-      stripe: process.env.ZOE_STRIPE_DEVOTIONAL_URL || null,
-      paypal: process.env.ZOE_PAYPAL_DEVOTIONAL_URL || null,
-    },
-    journal: {
-      amazon: process.env.ZOE_AMAZON_JOURNAL_URL || null,
-      etsy: process.env.ZOE_ETSY_JOURNAL_URL || null,
-      gumroad: process.env.ZOE_GUMROAD_JOURNAL_URL || null,
-
-      stripe: process.env.ZOE_STRIPE_JOURNAL_URL || null,
-      paypal: process.env.ZOE_PAYPAL_JOURNAL_URL || null,
-    },
-  },
+  ...resolved,
   staging: STAGING,
 };
 
@@ -52,13 +38,20 @@ if (sandbox) {
   CONFIG.paidBookingUrl = null;
 }
 const stripeTestLink = url => /^https:\/\/buy\.stripe\.com\/test_/.test(url || '');
-if (!STAGING && Object.values(CONFIG.payments).some(p => stripeTestLink(p.stripe))) {
+const courseStripeUrls = ["singleDating", "committed", "engagedFirstYear", "couplesBundle"].map(
+  (key) => CONFIG.courses[key]
+);
+if (!STAGING && [...Object.values(CONFIG.payments).map((p) => p.stripe), ...courseStripeUrls].some(stripeTestLink)) {
   throw new Error('Stripe test Payment Links cannot be used in production');
 }
 
 // Fail the build before interpolating untrusted/invalid URLs into HTML.
 for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpoint,
-  CONFIG.bookingUrl, CONFIG.paidBookingUrl, ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
+  CONFIG.bookingUrl, CONFIG.paidBookingUrl, CONFIG.coursesUrl, CONFIG.resources.channelUrl,
+  ...CONFIG.resources.playlists.map((item) => item.embedUrl),
+  ...Object.values(CONFIG.giving),
+  ...Object.values(CONFIG.courses),
+  ...Object.values(CONFIG.payments).flatMap(Object.values)]) {
   if (value && (!/^https:\/\//.test(value) || /[\s<>"']/.test(value) || new URL(value).username || new URL(value).password)) {
     throw new Error('Integration URLs must be valid HTTPS URLs without credentials or HTML');
   }
@@ -75,17 +68,15 @@ const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
 const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
   "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
+const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
 const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
-  ? "I agree to join Zoe Life's mailing list. Zoe Life will store my signup and consent in Google Workspace. " +
-    "I will receive an email to confirm my subscription. Zoe Life will use it for updates, and I can unsubscribe at any time."
-  : "I agree to join Zoe Life's mailing list. My email address will be sent through FormSubmit, " +
-  "a service provider, for delivery to Zoe Life and may be retained by FormSubmit for up to 30 days. " +
-  "Zoe Life will use it for updates, and I can unsubscribe at any time.";
+  ? `${CONSENT_JOIN} We will email you a link to confirm.`
+  : CONSENT_JOIN;
 
 const BOOKS_INTRO =
   "At Zoe Life, we create faith-centered, practical resources to encourage growth, " +
   "strengthen your walk with God, and provide support for the different areas and seasons of life. " +
-  "Explore our current books and resources below, with more to come.";
+  "Explore our current books below. Marriage teaching videos live on the Resources page, with more books to come.";
 
 const DEVOTIONAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
 const JOURNAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
@@ -127,8 +118,11 @@ const FAMILY_SOCIALS = [
 const NAV = [
   ["index.html", "Home"],
   ["about.html", "About"],
-  ["books.html", "Books &amp; Resources"],
+  ["books.html", "Books"],
+  ["resources.html", "Resources"],
+  ["courses.html", "Courses"],
   ["connect.html", "Connect"],
+  ["partner.html", "Partner"],
   ["contact.html", "Contact"],
 ];
 
@@ -160,21 +154,24 @@ const socialList = (list, brand) =>
 const canonicalFor = (page) =>
   `${CONFIG.siteUrl.replace(/\/$/, "")}/${page === "index.html" ? "" : page.replace(/\.html$/, "")}`;
 
+const prefixOf = (page) => "../".repeat(Math.max(0, String(page).split("/").length - 1));
+
+const externalLink = (href, className, label, extraHidden = "") =>
+  `<a class="btn ${className}" href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer">${label}<span class="visually-hidden">, opens in a new tab${extraHidden}</span></a>`;
+
 const payButtons = (book) => {
   const p = CONFIG.payments[book];
   const buttons = [];
   if (p.stripe) {
     buttons.push(
-      `<a class="btn btn-primary" href="${p.stripe}" target="_blank" rel="noopener noreferrer">${stripeTestLink(p.stripe) ? 'Test Stripe checkout' : 'Pay with Stripe'}<span class="visually-hidden">, opens in a new tab</span></a>`
+      externalLink(p.stripe, "btn-primary", stripeTestLink(p.stripe) ? "Test Stripe checkout" : "Pay with Stripe")
     );
   }
   if (p.paypal) {
-    buttons.push(
-      `<a class="btn btn-secondary" href="${p.paypal}" target="_blank" rel="noopener noreferrer">Pay with PayPal<span class="visually-hidden">, opens in a new tab</span></a>`
-    );
+    buttons.push(externalLink(p.paypal, "btn-secondary", "Pay with PayPal"));
   }
   for (const [provider, label] of [['amazon', 'Amazon'], ['etsy', 'Etsy'], ['gumroad', 'Gumroad']]) {
-    if (p[provider]) buttons.push(`<a class="btn btn-secondary" href="${p[provider]}" target="_blank" rel="noopener noreferrer">Buy on ${label}<span class="visually-hidden">, opens in a new tab</span></a>`);
+    if (p[provider]) buttons.push(externalLink(p[provider], "btn-secondary", `Buy on ${label}`));
   }
   if (!buttons.length) {
     return `<p class="purchase-coming">Purchase options coming. Stripe and PayPal checkout will appear here once Zoe Life publishes live payment links. Printed copies will be fulfilled by a print-on-demand partner. Zoe Life is not packing and shipping orders from home.</p>`;
@@ -183,10 +180,83 @@ const payButtons = (book) => {
         <p class="format-meta">${stripeTestLink(p.stripe) ? 'Sandbox test only. No real payment or book delivery.' : 'Printed copies, when offered, will be fulfilled by a print-on-demand partner.'}</p>`;
 };
 
+const givingBlock = () => {
+  const buttons = [];
+  if (CONFIG.giving.stripe) buttons.push(externalLink(CONFIG.giving.stripe, "btn-primary", "Partner through Stripe"));
+  if (CONFIG.giving.paypal) buttons.push(externalLink(CONFIG.giving.paypal, "btn-secondary", "Partner through PayPal"));
+  if (!buttons.length) {
+    return `<p>Partnership links are not published yet. Send a message if you would like to talk about partnering with Zoe Life.</p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+        </div>`;
+  }
+  return `<div class="btn-row">${buttons.join("")}</div>
+        <p class="format-meta">Partnership checkout opens on Stripe or PayPal.</p>`;
+};
+
+const clipById = (id) => {
+  const clip = CLIPS.find((item) => item.id === id);
+  if (!clip) throw new Error(`Unknown clip ${id}`);
+  return clip;
+};
+
+const clipPlayer = (clip, heading) => `<figure class="clip">
+          <div class="clip-stage">
+            <video playsinline preload="none" poster="assets/clips/${clip.file}.jpg" width="720" height="1280" aria-labelledby="clip-${clip.id}-title">
+              <source src="assets/clips/${clip.file}.mp4" type="video/mp4">
+            </video>
+            <button type="button" class="clip-play">
+              <svg viewBox="0 0 12 14" aria-hidden="true" focusable="false"><path d="M1 1.2v11.6L11 7 1 1.2z"/></svg>
+              <span class="visually-hidden">Play ${escapeAttr(clip.title)}</span>
+            </button>
+          </div>
+          <figcaption>
+            <${heading} class="clip-title" id="clip-${clip.id}-title">${escapeAttr(clip.title)}</${heading}>
+            <p class="clip-source"><a href="${escapeAttr(clip.youtube)}" target="_blank" rel="noopener noreferrer">Watch the full video<span class="visually-hidden"> on YouTube, opens in a new tab</span></a></p>
+          </figcaption>
+        </figure>`;
+
+const clipGrid = (clips, heading) =>
+  `<div class="clip-grid">
+${clips.map((clip) => clipPlayer(clip, heading)).join("\n")}
+        </div>`;
+
+const bookClips = (ids) => `<div class="book-clips">
+          <p class="eyebrow">From Dangerous Lies Singles Believe</p>
+          ${clipGrid(ids.map(clipById), "h3")}
+        </div>`;
+
+const enrollOrBuy = (slot, label) => {
+  const url = CONFIG.courses[slot];
+  if (!url) return `<p class="enrollment-note">Enrollment opens soon.</p>`;
+  return `<div class="btn-row">${externalLink(url, "btn-primary", label)}</div>`;
+};
+
+const playlistBlocks = () =>
+  CONFIG.resources.playlists
+    .map((item) => {
+      const shorts =
+        item.id === DANGEROUS_LIES_PLAYLIST_ID
+          ? `<div class="short-clips" id="short-clips">
+          <h3>Short clips</h3>
+          <p>Eight short clips from this series. Captions are already in the picture. Press play when you are ready.</p>
+          ${clipGrid(CLIPS, "h4")}
+        </div>`
+          : "";
+      return `<article class="video-item" id="${escapeAttr(item.id)}">
+        <h2>${escapeAttr(item.title)}</h2>
+        <div class="video-frame">
+          <iframe src="${escapeAttr(item.embedUrl)}" title="${escapeAttr(item.title)} playlist from Zoe Family Life" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+        ${shorts}
+      </article>`;
+    })
+    .join("\n");
+
 const bookingBlock = () =>
   CONFIG.bookingUrl
     ? `<div class="btn-row">
-          <a class="btn btn-primary" href="${CONFIG.bookingUrl}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
+          <a class="btn btn-primary" href="${escapeAttr(CONFIG.bookingUrl)}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
         </div>
         <p class="format-meta">Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.</p>`
     : `<div class="booking-placeholder">
@@ -196,14 +266,16 @@ const bookingBlock = () =>
           </div>
         </div>`;
 
-const head = ({ title, description, page }) => `<!doctype html>
+const head = ({ title, description, page, noindex = false }) => {
+  const pre = prefixOf(page);
+  return `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${title}</title>
 <meta name="description" content="${description}">
-${CONFIG.staging
+${CONFIG.staging || noindex
   ? '<meta name="robots" content="noindex, nofollow">'
   : '<meta name="robots" content="index, follow">'}
 <link rel="canonical" href="${canonicalFor(page)}">
@@ -215,11 +287,11 @@ ${CONFIG.staging
 <meta property="og:description" content="${description}">
 <meta property="og:image" content="${CONFIG.siteUrl.replace(/\/$/, "")}/assets/photos/tayo-kemi-about.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="assets/brand/zoe-life-mark.png">
-<link rel="preload" href="fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="${pre}favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="${pre}assets/brand/zoe-life-mark.png">
+<link rel="preload" href="${pre}fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="${pre}fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="${pre}css/style.css">
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R18R3LVBK9"></script>
 <script>
@@ -229,33 +301,38 @@ ${CONFIG.staging
 
   gtag('config', 'G-R18R3LVBK9');
 </script>
-<script src="js/config.js"></script>
+<script src="${pre}js/config.js"></script>
 </head>
 <body data-page="${page}">
 <a class="skip-link" href="#main">Skip to main content</a>`;
+};
 
-const header = (current) => `
+const header = (current) => {
+  const pre = prefixOf(current);
+  const messageHref = `${pre}contact.html#message`;
+  return `
 <header class="site-header">
   <div class="wrap-wide header-inner">
-    <a class="brand" href="index.html">
-      <img class="brand-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
+    <a class="brand" href="${pre}index.html">
+      <img class="brand-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="Zoe Life" width="220" height="45">
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
       <span aria-hidden="true">&#9776;</span> Menu
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
       <ul>
-${NAV.map(
-  ([href, label]) =>
-    `        <li><a href="${href}"${href === current ? ' aria-current="page"' : ""}>${label}</a></li>`
-).join("\n")}
-        <li class="nav-cta"><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
+${NAV.map(([href, label]) => {
+  const on = href === current || (href === "courses.html" && current.startsWith("courses/"));
+  return `        <li><a href="${pre}${href}"${on ? ' aria-current="page"' : ""}>${label}</a></li>`;
+}).join("\n")}
+        <li class="nav-cta"><a href="${messageHref}">${MESSAGE_CTA}</a></li>
       </ul>
     </nav>
-    <a class="btn btn-primary header-cta" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+    <a class="btn btn-primary header-cta" href="${messageHref}">${MESSAGE_CTA}</a>
   </div>
 </header>
 <main id="main">`;
+};
 
 const subscribeForm = (idPrefix, intro) => `
       <form class="subscribe-form" data-form="subscribe" novalidate>
@@ -282,12 +359,14 @@ const subscribeForm = (idPrefix, intro) => `
         <div class="form-status" data-status role="status" aria-live="polite"></div>
       </form>`;
 
-const footer = () => `
+const footer = (current) => {
+  const pre = prefixOf(current);
+  return `
 </main>
 <footer class="site-footer">
   <div class="wrap-wide">
     <div class="footer-top">
-      <img class="footer-wordmark" src="assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <img class="footer-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
       <p class="footer-tagline">${TAGLINE}</p>
     </div>
     <div class="footer-grid">
@@ -295,9 +374,9 @@ const footer = () => `
       <nav class="footer-nav" aria-label="Footer">
         <h2 class="footer-h">Explore</h2>
         <ul>
-${NAV.map(([href, label]) => `          <li><a href="${href}">${label}</a></li>`).join("\n")}
-          <li><a href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
-          <li><a href="${CONSULT_HREF}">Complimentary consultation</a></li>
+${NAV.map(([href, label]) => `          <li><a href="${pre}${href}">${label}</a></li>`).join("\n")}
+          <li><a href="${pre}${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
+          <li><a href="${pre}${CONSULT_HREF}">Complimentary consultation</a></li>
         </ul>
       </nav>
 
@@ -318,12 +397,13 @@ ${subscribeForm("footer", true)}
     </div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+<script src="${pre}js/main.js"></script>
 </body>
 </html>
 `;
+};
 
-const page = (meta, body) => head(meta) + header(meta.page) + body + footer();
+const page = (meta, body) => head(meta) + header(meta.page) + body + footer(meta.page);
 
 const socialVisit = (list, brand) =>
   `<ul class="social-list social-visit">${list
@@ -355,7 +435,7 @@ const home = page(
       <p class="lede">${MISSION}</p>
       <div class="btn-row">
         <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-        <a class="btn btn-primary" href="books.html">Explore books and resources</a>
+        <a class="btn btn-primary" href="books.html">Explore books</a>
       </div>
     </div>
     <figure class="hero-photo">
@@ -397,9 +477,10 @@ const home = page(
 
 <section id="resources">
   <div class="wrap">
-    <p class="eyebrow">Books and resources</p>
-    <h2>Resources to help you thrive.</h2>
+    <p class="eyebrow">Books</p>
+    <h2>Books to help you thrive.</h2>
     <p class="lede">Start with 7 days. Keep going for 100. More to come.</p>
+    <p class="card-link"><a href="resources.html">Watch the marriage series</a></p>
 
     <div class="book-tease" style="margin-top:2.4rem">
       <div class="book-cover">
@@ -595,15 +676,15 @@ const about = page(
 const books = page(
   {
     page: "books.html",
-    title: "Books and Resources | Zoe Life",
+    title: "Books | Zoe Life",
     description:
-      "A 7-Day Gratitude Devotional and A 100-Day Gratitude Journal by Kemi Akinyemi. Biblical, practical gratitude resources from Zoe Life.",
+      "A 7-Day Gratitude Devotional and A 100-Day Gratitude Journal by Kemi Akinyemi. Biblical, practical gratitude books from Zoe Life.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Books and Resources</p>
-    <h1>Resources to help you thrive.</h1>
+    <p class="eyebrow">Books</p>
+    <h1>Books to help you thrive.</h1>
     <p class="lede">${BOOKS_INTRO}</p>
   </div>
 </section>
@@ -622,6 +703,7 @@ const books = page(
         <p class="lede">${DEVOTIONAL_SUB}. By Kemi Akinyemi.</p>
         ${DEVOTIONAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("devotional")}
+        ${bookClips(["05", "07"])}
       </div>
     </div>
   </div>
@@ -641,6 +723,7 @@ const books = page(
         <p class="lede">${JOURNAL_SUB}. By Kemi Akinyemi.</p>
         ${JOURNAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
         ${payButtons("journal")}
+        ${bookClips(["04"])}
       </div>
     </div>
   </div>
@@ -710,7 +793,7 @@ const connect = page(
     <article class="family-panel" id="zoe-family-life">
       <p class="eyebrow">A Zoe Life program</p>
       <h2>Zoe Family Life</h2>
-      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow along here.</p>
+      <p>Zoe Family Life is part of Zoe Life, with a particular focus on relationships, marriage, parenting, and family life. Follow along here, or watch the marriage series on the <a href="resources.html">Resources</a> page.</p>
       ${socialVisit(FAMILY_SOCIALS, "Zoe Family Life")}
     </article>
   </div>
@@ -753,7 +836,7 @@ const contact = page(
     <div class="split split-wide-left" style="align-items:start">
       <div>
         <h2>Send a message</h2>
-        <p>Tell us a little about how we can help, and we will get back to you.</p>
+        <p>Tell us a little about how we can help. Please expect a reply within three business days.</p>
 
         <div class="form-card" style="margin-top:1.5rem">
           <form data-form="contact" novalidate>
@@ -792,6 +875,7 @@ const contact = page(
                 <option>Workshop / Group Session</option>
                 <option>Academic or Career Support</option>
                 <option>Books &amp; Resources</option>
+                <option>Course access</option>
                 <option>Collaboration / Partnership</option>
                 <option>General Inquiry</option>
                 <option value="Other">Other</option>
@@ -872,7 +956,7 @@ const consult = page(
         </ul>
         <p style="margin-top:1.5rem">This is a first conversation, not a paid session.</p>
         ${bookingBlock()}
-${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row"><a class="btn btn-secondary" href="${CONFIG.paidBookingUrl}" target="_blank" rel="noopener noreferrer">View paid sessions<span class="visually-hidden">, opens in a new tab</span></a></div></div>` : ''}
+${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row">${externalLink(CONFIG.paidBookingUrl, "btn-secondary", "View paid sessions")}</div></div>` : ''}
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-hero.jpg"
@@ -880,6 +964,199 @@ ${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid
              width="1240" height="960">
       </figure>
     </div>
+  </div>
+</section>
+`
+);
+
+const resources = page(
+  {
+    page: "resources.html",
+    title: "Resources | Zoe Life",
+    description:
+      "Marriage teaching from Zoe Family Life, including Conflict Resolution, Marriage 101, and Recognizing the Right One.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Resources</p>
+    <h1>Marriage teaching from Zoe Family Life.</h1>
+    <p class="lede">Conversations for people who want practical, biblical help with marriage and singleness. Press play, or watch the full series on YouTube.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="video-list">
+${playlistBlocks()}
+    </div>
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="wrap">
+    <h2>Watch on YouTube.</h2>
+    <p>These playlists are from the Zoe Family Life channel.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="${escapeAttr(CONFIG.resources.channelUrl)}" target="_blank" rel="noopener noreferrer">Visit the Zoe Family Life YouTube channel<span class="visually-hidden">, opens in a new tab</span></a>
+    </div>
+  </div>
+</section>
+`
+);
+
+const courseCard = (track) => `<article class="course-card">
+        <p class="eyebrow">Draft</p>
+        <h2>${escapeAttr(track.title)}</h2>
+        <p class="course-sub">${escapeAttr(track.subtitle)}</p>
+        <p>${escapeAttr(track.audience)}</p>
+        <ol class="module-names">
+${track.modules.map((mod) => `          <li>${escapeAttr(mod.title)}</li>`).join("\n")}
+        </ol>
+        <p class="draft-note">Outline is a draft. Lessons are coming soon.</p>
+        ${enrollOrBuy(track.slot, "Buy this track")}
+        <p class="card-link"><a href="${track.page}">See the draft outline</a></p>
+      </article>`;
+
+const courses = page(
+  {
+    page: "courses.html",
+    title: "Courses | Zoe Life",
+    description:
+      "Self-hosted courses from Tayo and Kemi for singles, committed couples, and the first year of marriage. Outlines are drafts until enrollment opens.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Courses</p>
+    <h1>Courses for the season you are in.</h1>
+    <p class="lede">Three tracks from Tayo and Kemi, hosted on Zoe Life. Outlines below are drafts. Paid lessons are not on this site.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="course-grid">
+${COURSE_TRACKS.map(courseCard).join("\n")}
+    </div>
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="wrap">
+    <h2>${escapeAttr(COURSE_BUNDLE.title)}</h2>
+    <p>${escapeAttr(COURSE_BUNDLE.note)}</p>
+    ${enrollOrBuy(COURSE_BUNDLE.slot, "Buy the couples bundle")}
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>Hear when enrollment opens.</h2>
+    <p>Join the mailing list if you want a note when a track is ready to buy.</p>
+    <div class="form-card" style="max-width:32rem;margin-top:1.25rem">
+${subscribeForm("courses", true)}
+    </div>
+  </div>
+</section>
+`
+);
+
+const courseTrackPage = (track) => {
+  const pre = prefixOf(track.page);
+  return page(
+    {
+      page: track.page,
+      title: `${track.title} | Zoe Life Courses`,
+      description: track.description,
+    },
+    `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Draft outline</p>
+    <h1>${escapeAttr(track.title)}</h1>
+    <p class="lede">${escapeAttr(track.subtitle)}. ${escapeAttr(track.audience)}</p>
+    <p class="draft-note">This outline is a draft. Lessons are coming soon. Paid lesson videos are not published on this page.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+${track.modules
+  .map(
+    (mod, index) => `<article class="module-block">
+      <h2>Module ${index + 1}: ${escapeAttr(mod.title)}</h2>
+      <ul class="lesson-list">
+${mod.lessons.map((lesson) => `        <li>${escapeAttr(lesson)}</li>`).join("\n")}
+      </ul>
+    </article>`
+  )
+  .join("\n")}
+    ${enrollOrBuy(track.slot, "Buy this track")}
+    <p>Questions about access can wait until enrollment opens. Use the contact form and choose Course access.</p>
+    <p class="card-link"><a href="${pre}contact.html#message">Send a message</a></p>
+    <p class="card-link"><a href="${pre}courses.html">Back to all courses</a></p>
+    <div class="form-card" style="max-width:32rem;margin-top:1.5rem">
+      <h2>Hear when enrollment opens.</h2>
+${subscribeForm(`track-${track.id}`, false)}
+    </div>
+  </div>
+</section>
+`
+  );
+};
+
+const courseWelcome = page(
+  {
+    page: "courses/welcome.html",
+    title: "Course welcome | Zoe Life",
+    description:
+      "Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.",
+    noindex: true,
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Courses</p>
+    <h1>Course welcome.</h1>
+    <p class="lede" id="welcome-note">This is a placeholder. Enrollment is not open yet, and this page does not grant course access.</p>
+    <p>If you finished a checkout, keep the email you used. Access email will start only after enrollment is live.</p>
+    <p class="card-link"><a href="../courses.html">Back to courses</a></p>
+  </div>
+</section>
+<script>
+(function () {
+  var params = new URLSearchParams(window.location.search);
+  var sessionId = params.get("session_id");
+  var note = document.getElementById("welcome-note");
+  if (!note || !sessionId) return;
+  note.textContent = "We saw a checkout reference on this page. Course access is not granted from the website yet. Watch your email once enrollment is open.";
+})();
+</script>
+`
+);
+
+const partner = page(
+  {
+    page: "partner.html",
+    title: "Partner with Zoe Life",
+    description:
+      "Partner with Zoe Life. Zoe Life is not a registered nonprofit. Stripe and PayPal partnership links appear here when they are published.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Partner</p>
+    <h1>Partner with Zoe Life.</h1>
+    <p class="lede">Zoe Life is not a registered nonprofit. When partnership checkout is ready, it will open through Stripe or PayPal.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>A way to support the work.</h2>
+    <p>Partnership helps Zoe Life keep creating biblical, practical resources for individuals, couples, and families. Buttons appear here only after Zoe Life publishes live links.</p>
+${givingBlock()}
   </div>
 </section>
 `
@@ -908,7 +1185,12 @@ const PAGES = {
   "index.html": home,
   "about.html": about,
   "books.html": books,
+  "resources.html": resources,
+  "courses.html": courses,
+  ...Object.fromEntries(COURSE_TRACKS.map((track) => [track.page, courseTrackPage(track)])),
+  "courses/welcome.html": courseWelcome,
   "connect.html": connect,
+  "partner.html": partner,
   "contact.html": contact,
   "consult.html": consult,
   "family-life.html": moved(
@@ -929,8 +1211,10 @@ const PAGES = {
 
 mkdirSync(ROOT, { recursive: true });
 const wrote = (name, body) => {
-  writeFileSync(join(ROOT, name), body, "utf8");
-  console.log(`wrote ${name.padEnd(22)} ${String(body.length).padStart(6)} bytes`);
+  const dest = join(ROOT, name);
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, body, "utf8");
+  console.log(`wrote ${name.padEnd(28)} ${String(body.length).padStart(6)} bytes`);
 };
 
 for (const [name, html] of Object.entries(PAGES)) wrote(name, html);
@@ -944,7 +1228,11 @@ wrote(
         newsletterEndpoint: CONFIG.newsletterEndpoint,
         bookingUrl: CONFIG.bookingUrl,
         paidBookingUrl: CONFIG.paidBookingUrl,
+        coursesUrl: CONFIG.coursesUrl,
+        courses: CONFIG.courses,
+        giving: CONFIG.giving,
         payments: CONFIG.payments,
+        resources: CONFIG.resources,
       },
       null,
       2
@@ -963,15 +1251,31 @@ wrote(
 
 const base = CONFIG.siteUrl.replace(/\/$/, "");
 const today = new Date().toISOString().slice(0, 10);
-const sitemapPages = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+const sitemapPages = [
+  "index.html",
+  "about.html",
+  "books.html",
+  "resources.html",
+  "courses.html",
+  ...COURSE_TRACKS.map((track) => track.page),
+  "connect.html",
+  "partner.html",
+  "contact.html",
+  "consult.html",
+];
+const sitemapAssets = CLIPS.flatMap((clip) => [
+  `assets/clips/${clip.file}.mp4`,
+  `assets/clips/${clip.file}.jpg`,
+]);
 wrote(
   "sitemap.xml",
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
-    sitemapPages
+    [...sitemapPages.map((p) => ({ loc: canonicalFor(p), priority: p === "index.html" ? "1.0" : "0.8" })),
+      ...sitemapAssets.map((asset) => ({ loc: `${base}/${asset}`, priority: "0.3" }))]
       .map(
-        (p) =>
-          `  <url>\n    <loc>${canonicalFor(p)}</loc>\n    <lastmod>${today}</lastmod>\n` +
-          `    <priority>${p === "index.html" ? "1.0" : "0.8"}</priority>\n  </url>`
+        (item) =>
+          `  <url>\n    <loc>${item.loc}</loc>\n    <lastmod>${today}</lastmod>\n` +
+          `    <priority>${item.priority}</priority>\n  </url>`
       )
       .join("\n") +
     `\n</urlset>\n`
@@ -1018,5 +1322,11 @@ console.log(
       Object.values(CONFIG.payments).some((p) => Object.values(p).some(Boolean))
         ? "checkout links configured"
         : "purchase options coming"
+    }` +
+    `\ncourses:             ${
+      courseStripeUrls.some(Boolean) ? "payment links configured" : "enrollment opens soon (no buy links)"
+    }` +
+    `\ngiving:              ${
+      CONFIG.giving.stripe || CONFIG.giving.paypal ? "partnership links configured" : "hidden until links are set"
     }`
 );

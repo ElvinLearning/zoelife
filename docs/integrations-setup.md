@@ -29,7 +29,7 @@ Use the **Zoe Life-owned Workspace account**. Do not store client enquiries in a
 7. Test from the actual GitHub Pages origin on desktop and mobile, including Google's ContentService redirect. A local test does not establish cross-origin delivery. Never use `no-cors` or opaque responses as proof of success.
 8. Once verified, set GitHub Actions repository variables `ZOE_FORM_ENDPOINT` and `ZOE_NEWSLETTER_ENDPOINT` to the verified `/exec` URL and redeploy. Check again from the public site.
 
-The frontend automatically changes its privacy copy and confirmation message for the Workspace endpoint. Contact success means the message is saved in the Sheet, not a guarantee of inbox delivery. The `Notification` column is `sent` or `pending`; review pending messages directly if mail fails. No automatic notification retry is installed.
+The public consent line says the person is joining the mailing list, can unsubscribe, and will get an email link to confirm. It does not describe where the signup is stored. Contact success on the site says the message was sent and asks for three business days. A saved Sheet row is not a guarantee of inbox delivery. The `Notification` column is `sent` or `pending`; review pending messages directly if mail fails. No automatic notification retry is installed.
 
 The backend validates inputs, guards Sheet formula injection, serializes writes, deduplicates contact request IDs, limits repeat submissions per address, and caps public submissions at 100/day and outbound messages at 50/day. These are conservative starting limits, not a substitute for a dedicated abuse-protection service at larger scale. Google's quotas also apply. Do not raise limits without reviewing expected traffic and spam.
 

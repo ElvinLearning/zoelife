@@ -16,9 +16,15 @@ node tools/build.mjs              # production: indexable, canonical zoelifehub.
 node tools/build.mjs --staging    # staging: noindex + robots Disallow
 ```
 
-The build writes the six public pages plus moved-url stubs
-(`family-life.html`, `appointments.html`), `404.html`, `robots.txt`,
-`sitemap.xml`, `favicon.svg` and `js/config.js`.
+The build writes the public pages (including Resources, Courses, and Partner)
+plus moved-url stubs (`family-life.html`, `appointments.html`), `404.html`,
+`robots.txt`, `sitemap.xml`, `favicon.svg` and `js/config.js`.
+
+An ordinary rebuild keeps existing non-null https values in `js/config.js`
+when the matching environment variable is unset. The preserved contact and
+newsletter endpoints are the Google Apps Script web app, never FormSubmit.
+A FormSubmit URL in the environment fails the build. Staging still fail-closes
+when there is no existing https value to keep.
 
 **Default the deploy to `--staging` until the domain actually switches.** A
 production build published anywhere other than zoelifehub.com creates a second
@@ -45,6 +51,14 @@ variables (Settings > Secrets and variables > Actions > Variables):
 | `ZOE_PAYPAL_DEVOTIONAL_URL` | PayPal button for the 7-Day Devotional | Purchase options coming |
 | `ZOE_STRIPE_JOURNAL_URL` | Stripe button for the 100-Day Journal | Purchase options coming |
 | `ZOE_PAYPAL_JOURNAL_URL` | PayPal button for the 100-Day Journal | Purchase options coming |
+| `ZOE_GIVING_STRIPE_URL` | Partner button through Stripe | Button hidden |
+| `ZOE_GIVING_PAYPAL_URL` | Partner button through PayPal | Button hidden |
+| `ZOE_COURSE_SINGLE_DATING_URL` | Stripe Payment Link for Single and Dating | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_COMMITTED_URL` | Stripe Payment Link for Committed Relationship | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_ENGAGED_FIRST_YEAR_URL` | Stripe Payment Link for Engaged / First Year of Marriage | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_COUPLES_BUNDLE_URL` | Stripe Payment Link for the couples bundle | Enrollment opens soon, no buy button |
+| `ZOE_COURSE_CLAIM_ENDPOINT` | Reserved for the separate course Apps Script. The welcome page does not call it yet | Null, no request |
+| `ZOE_COURSES_URL` | Kept in config only. The site does not link out with it | Ignored on the page |
 | `ZOE_MODE` | `production` makes the workflow build indexable | staging |
 
 The form posts `multipart/form-data` with `Accept: application/json`. The UI
@@ -54,13 +68,11 @@ Field names are `firstName`, `lastName`, `email`, `phone`, `reason`,
 `reasonOther`, `message`, plus `_replyto`, `_subject`, `form_type`, and a
 provider-recognized `_honey` honeypot.
 
-The configured provider is FormSubmit at
-`https://formsubmit.co/ajax/contact@zoelifehub.com` for both contact messages and
-mailing-list signup requests. FormSubmit requires a one-time activation click in
-the `contact@zoelifehub.com` inbox before it will accept messages. Its published
-documentation says it retains submissions for 30 days before deletion. A signup
-request is emailed to Zoe Life for processing; this setup does not claim to add
-the address to a separate email-marketing database.
+The configured provider is the Zoe Life Google Apps Script web app
+(`integrations/google-workspace/Code.gs`), deployed at the `/exec` URL committed
+in `js/config.js`. Contact messages and mailing-list signups both post there.
+Signup is double opt-in: the site asks the person to confirm by email, and it
+does not describe where the signup is stored. See `docs/integrations-setup.md`.
 
 Do not invent prices or storefront URLs. Stripe and PayPal buttons appear only
 when those environment URLs are real `https` links.
@@ -152,6 +164,5 @@ Stripe sandbox checkout is configured for both books. See
 
 See [integration activation instructions](docs/integrations-setup.md) for the tested
 Google Workspace backend, confirmed subscriber list, paid-booking URL and
-Amazon/Etsy/Gumroad configuration. These integrations are prepared in code;
-Workspace deployment and end-to-end verification are still required. Existing
-FormSubmit routing stays active until the new endpoint is explicitly configured.
+Amazon/Etsy/Gumroad configuration. The committed site uses that Apps Script
+endpoint. Do not point the forms back at FormSubmit.

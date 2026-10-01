@@ -3,6 +3,7 @@ import {cpSync, mkdirSync, readdirSync} from 'node:fs';
 import {join, relative, sep} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {spawnSync} from 'node:child_process';
+import {LIVE_BOOKING_URL, LIVE_FORM_ENDPOINT} from './site-config.mjs';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const output = join(root, '.stripe-sandbox');
@@ -16,9 +17,9 @@ for (const entry of readdirSync(root)) {
   });
 }
 const env = {...process.env,
-  ZOE_FORM_ENDPOINT:'https://formsubmit.co/ajax/contact@zoelifehub.com',
-  ZOE_NEWSLETTER_ENDPOINT:'https://formsubmit.co/ajax/contact@zoelifehub.com',
-  ZOE_GOOGLE_CALENDAR_BOOKING_URL:'https://calendar.app.google/Uj9v44HE72kJrKz8A',
+  ZOE_FORM_ENDPOINT:LIVE_FORM_ENDPOINT,
+  ZOE_NEWSLETTER_ENDPOINT:LIVE_FORM_ENDPOINT,
+  ZOE_GOOGLE_CALENDAR_BOOKING_URL:LIVE_BOOKING_URL,
 };
 for (const args of [['tools/build.mjs', '--staging', '--stripe-sandbox'], ['tests/check-site.mjs']]) {
   const run = spawnSync(process.execPath, args, {cwd:output, env, stdio:'inherit'});

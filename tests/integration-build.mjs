@@ -16,7 +16,8 @@ try {
  assert.match(readFileSync(join(temp,'consult.html'),'utf8'),/href="https:\/\/calendar.google.com\/calendar\/appointments\/schedules\/test"/);
  assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Amazon/);
  assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Gumroad/);
- assert.match(readFileSync(join(temp,'contact.html'),'utf8'),/Google Workspace/);
+ assert.match(readFileSync(join(temp,'contact.html'),'utf8'),/I agree to join Zoe Life's mailing list and can unsubscribe at any time\. We will email you a link to confirm\./);
+ assert.doesNotMatch(readFileSync(join(temp,'contact.html'),'utf8'),/Google Workspace|FormSubmit|store my signup/);
  run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...env,ZOE_PAID_BOOKING_URL:'javascript:alert(1)'},encoding:'utf8'});
  assert.notEqual(run.status,0);
  const sandboxEnv={...env,ZOE_STAGING:'0'};
@@ -36,5 +37,14 @@ try {
  run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...sandboxEnv,ZOE_STRIPE_DEVOTIONAL_URL:sandboxConfig.products.devotional.paymentLink},encoding:'utf8'});
  assert.notEqual(run.status,0);
  assert.match(run.stderr,/test Payment Links cannot be used in production/);
+ run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...sandboxEnv,ZOE_COURSE_ENGAGED_FIRST_YEAR_URL:sandboxConfig.products.devotional.paymentLink},encoding:'utf8'});
+ assert.notEqual(run.status,0);
+ assert.match(run.stderr,/test Payment Links cannot be used in production/);
+ run=spawnSync(process.execPath,['tools/build.mjs','--staging'],{cwd:temp,env:{...env,ZOE_COURSE_COMMITTED_URL:'https://buy.stripe.com/b/committedlive'},encoding:'utf8'});
+ assert.equal(run.status,0,run.stderr);
+ const paidCourses=readFileSync(join(temp,'courses.html'),'utf8');
+ assert.match(paidCourses,/https:\/\/buy\.stripe\.com\/b\/committedlive/);
+ assert.match(paidCourses,/Buy this track/);
+ assert.doesNotMatch(readFileSync(join(temp,'courses/welcome.html'),'utf8'),/fetch\s*\(|script\.google\.com/);
  console.log('Passed: Workspace, paid booking, storefronts, Stripe sandbox links and labels, static checks, staging enforcement, production test-link rejection, unsafe URL rejection.');
 } finally {rmSync(temp,{recursive:true,force:true});}
