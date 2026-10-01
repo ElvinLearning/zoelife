@@ -200,7 +200,7 @@ section { padding-block: var(--section-y); }
 .site-nav a[aria-current="page"],
 .site-nav a[aria-current="page"]:visited { color: var(--sage); box-shadow: inset 0 -2px 0 var(--sage); }
 
-@media (max-width: 68rem) {
+@media (max-width: 79.5rem) {
   .nav-toggle { display: inline-flex; }
   .site-nav {
     display: block; position: absolute; left: 0; right: 0; top: 100%;
@@ -217,7 +217,12 @@ section { padding-block: var(--section-y); }
   .site-nav .nav-cta a,
   .site-nav .nav-cta a:visited { background: var(--sage); color: var(--white); text-align: center; border: 0; border-radius: var(--radius); }
 }
-@media (min-width: 68.0625rem) { .site-nav .nav-cta { display: none; } }
+@media (min-width: 79.5625rem) {
+  .site-nav .nav-cta { display: none; }
+  .site-nav a { padding: .62rem .42rem; font-size: .84rem; white-space: nowrap; }
+  .brand-wordmark { width: min(180px, 42vw); }
+  .header-cta { padding: .55rem .85rem; font-size: .84rem; }
+}
 
 /* ---------- heroes ---------- */
 .hero { padding-block: clamp(2.5rem, 6vw, 5rem); }
@@ -487,6 +492,108 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
   border-left: 3px solid var(--grey-deep); background: var(--cream-deep);
   padding: .9rem 1.15rem; font-size: .93rem; color: var(--ink-soft); margin: 0;
 }
+
+.video-list { display: grid; gap: 2.75rem; margin-top: .5rem; }
+.video-item h2 { max-width: 28ch; }
+.video-frame {
+  position: relative;
+  width: min(100%, 52rem);
+  aspect-ratio: 16 / 9;
+  background: var(--beige);
+  border: 1px solid var(--grey-deep);
+}
+.video-frame iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+.coming-panel {
+  max-width: 36rem;
+  background: var(--beige);
+  border-left: 3px solid var(--gold);
+  padding: 1.35rem 1.35rem .4rem;
+}
+
+.short-clips { margin-top: 1.75rem; }
+.short-clips > p { max-width: 62ch; }
+.clip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.1rem;
+}
+.book .clip-grid {
+  grid-template-columns: repeat(auto-fill, minmax(8.5rem, 11rem));
+}
+.clip { margin: 0; min-width: 0; }
+.clip-stage {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  background: #343A36;
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.clip-stage video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #343A36;
+}
+.clip-play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sage);
+  color: var(--cream);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.clip-play svg { width: .9rem; height: .9rem; margin-left: .12rem; fill: currentColor; }
+.clip-play:hover { background: var(--olive); }
+.clip-stage.is-playing .clip-play { display: none; }
+.clip-title {
+  font-family: var(--sans);
+  font-size: .95rem;
+  font-weight: 600;
+  line-height: 1.35;
+  margin: .7rem 0 .3rem;
+}
+.clip-source { margin: 0 0 .2rem; font-size: .9rem; }
+.clip-source a { font-weight: 600; }
+
+.course-grid {
+  display: grid;
+  gap: 1.15rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 52rem) {
+  .course-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.course-card {
+  background: var(--white);
+  border: 1px solid var(--grey-deep);
+  border-top: 3px solid var(--gold);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.15rem 1.15rem;
+  min-width: 0;
+}
+.course-card h2 { font-size: 1.45rem; margin-bottom: .2rem; }
+.course-sub { font-weight: 600; margin-top: 0; }
+.course-card p, .module-block p { max-width: none; }
+.module-names, .lesson-list { margin: .8rem 0 1rem; padding-left: 1.2rem; }
+.module-names li, .lesson-list li { margin: .35rem 0; }
+.draft-note { color: var(--ink-soft); font-size: .92rem; }
+.enrollment-note { font-weight: 600; margin-top: 1rem; }
+.module-block { margin-bottom: 1.6rem; }
+.module-block h2 { font-size: 1.35rem; }
 
 .detail-list { list-style: none; margin: 0; padding: 0; }
 .detail-list li { display: flex; flex-wrap: wrap; gap: .35rem 1rem; padding: .7rem 0; border-bottom: 1px solid var(--grey-deep); margin: 0; font-size: .95rem; }

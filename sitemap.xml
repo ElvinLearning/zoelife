@@ -2,32 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.zoelifehub.com/</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://www.zoelifehub.com/about</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.zoelifehub.com/books</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/resources</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/courses</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/courses/single-dating</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/courses/committed</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/courses/engaged-first-year</loc>
+    <lastmod>2026-09-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.zoelifehub.com/connect</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/partner</loc>
+    <lastmod>2026-09-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.zoelifehub.com/contact</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.zoelifehub.com/consult</loc>
-    <lastmod>2026-09-26</lastmod>
+    <lastmod>2026-09-28</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/01_everyone_but_me.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/01_everyone_but_me.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/02_scarcity_not_you.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/02_scarcity_not_you.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/03_marriage_done_right.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/03_marriage_done_right.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/04_discontent_every_season.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/04_discontent_every_season.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/05_spouse_not_your_source.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/05_spouse_not_your_source.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/06_prepare_before_season.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/06_prepare_before_season.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/07_desires_of_your_heart.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/07_desires_of_your_heart.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/08_so_spiritual_story.mp4</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.zoelifehub.com/assets/clips/08_so_spiritual_story.jpg</loc>
+    <lastmod>2026-09-28</lastmod>
+    <priority>0.3</priority>
   </url>
 </urlset>
