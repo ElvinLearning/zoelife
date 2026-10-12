@@ -508,6 +508,7 @@ check("No saved-message storage wording remains", !/messages saved|securely save
 check("The site does not solicit donations", !/donat|tax-deductible/i.test(visibleText(publishedHtml)));
 const resourcesDoc = html["resources.html"];
 const PLAYLISTS = [
+  "PLTiUnmAGHZkM",
   "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
   "PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
   "PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
@@ -564,13 +565,59 @@ for (const [file, videoId, stamp] of CLIPS) {
 }
 check("Clip 04 does not use the pre-trim timestamp", !/t=508s/.test(clipMarkup));
 check("Resources groups the short clips with Dangerous Lies", /id="short-clips"/.test(resourcesDoc) && resourcesDoc.indexOf('id="short-clips"') > resourcesDoc.indexOf("PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"));
+const categoryHeads = ["Singles &amp; Dating", "Marriage", "Conflict", "Faith / Prayer"];
+const categoryAt = categoryHeads.map((heading) => resourcesDoc.indexOf(`<h2>${heading}</h2>`));
+check(
+  "Resources category headings are exact and in order",
+  categoryAt.every((at, index) => at > 0 && (index === 0 || at > categoryAt[index - 1]))
+);
+const sectionBetween = (startId, endMarker) => {
+  const start = resourcesDoc.indexOf(`id="${startId}"`);
+  const end = resourcesDoc.indexOf(endMarker, start + 1);
+  return resourcesDoc.slice(start, end);
+};
+const singlesSection = sectionBetween("singles-dating", 'id="marriage"');
+const marriageSection = sectionBetween("marriage", 'id="conflict"');
+const conflictSection = sectionBetween("conflict", 'id="faith-prayer"');
+const faithSection = sectionBetween("faith-prayer", "Watch on YouTube");
+const BATCH2 = [
+  ["01_dating_period_3yrs", "PuczNwXtv6c", "t=2s", singlesSection],
+  ["02_dont_raise_hopes", "PuczNwXtv6c", "t=414s", singlesSection],
+  ["03_ask_for_clarity", "PuczNwXtv6c", "t=487s", singlesSection],
+  ["04_purpose_is_marriage", "PuczNwXtv6c", "t=869s", singlesSection],
+  ["05_dont_waste_my_time", "PuczNwXtv6c", "t=1300s", singlesSection],
+  ["06_just_because_god_said", "5JeV1rwc0KU", "t=670s", singlesSection],
+  ["07_take_a_step", "5JeV1rwc0KU", "t=741s", singlesSection],
+  ["08_test_all_things", "5JeV1rwc0KU", "t=838s", faithSection],
+  ["09_thats_your_husband", "5JeV1rwc0KU", "t=902s", singlesSection],
+  ["10_disagreements_normal", "3oeg3VNvr1s", "t=123s", conflictSection],
+  ["11_truth_bad_way", "3oeg3VNvr1s", "t=225s", conflictSection],
+  ["12_apples_of_gold", "3oeg3VNvr1s", "t=325s", conflictSection],
+  ["13_uncommunicated_expectations", "bly45MydPKE", "t=91s", conflictSection],
+  ["14_understand_the_why", "bly45MydPKE", "t=227s", conflictSection],
+  ["15_marriage_designed_by_god", "NfCYH4YSKPU", "t=150s", marriageSection],
+  ["16_deal_while_single", "ryvGSZ2U7ng", "t=130s", singlesSection],
+];
+for (const [file, videoId, stamp, section] of BATCH2) {
+  const mp4 = join(ROOT, "assets/clips", `${file}.mp4`);
+  const poster = join(ROOT, "assets/clips", `${file}.jpg`);
+  check(`Batch 2 clip ${file} exists and is under 15 MB`, existsSync(mp4) && existsSync(poster) && statSync(mp4).size < 15 * 1024 * 1024);
+  check(`Sitemap lists batch 2 ${file}`, sitemap.includes(`assets/clips/${file}.mp4`) && sitemap.includes(`assets/clips/${file}.jpg`));
+  check(
+    `Resources places ${file} at ${stamp}`,
+    section.includes(`assets/clips/${file}.mp4`) && section.includes(videoId) && section.includes(stamp)
+  );
+}
+check("Faith clip is not also filed under Singles", !singlesSection.includes("08_test_all_things"));
+check("Roadmap playlist sits in Singles and Dating", singlesSection.includes("PLTiUnmAGHZkM"));
+check("Dangerous Lies clips stay in Singles and Dating", CLIPS.every(([file]) => singlesSection.includes(file)));
 const devotionalBlock = booksDoc.slice(booksDoc.indexOf('id="devotional"'), booksDoc.indexOf('id="journal"'));
 const journalBlock = booksDoc.slice(booksDoc.indexOf('id="journal"'), booksDoc.indexOf('id="collection"'));
 check("Journal shows clip 04 only", /04_discontent_every_season/.test(journalBlock) && !/05_spouse_not_your_source|07_desires_of_your_heart/.test(journalBlock));
 check("Devotional shows clips 05 and 07", /05_spouse_not_your_source/.test(devotionalBlock) && /07_desires_of_your_heart/.test(devotionalBlock) && !/04_discontent_every_season/.test(devotionalBlock));
 const videos = [...clipMarkup.matchAll(/<video\b[^>]*>/g)].map((m) => m[0]);
-check("Clip players do not autoplay", videos.length >= 11 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
-check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 11);
+check("Clip players do not autoplay", videos.length >= 27 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
+check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 27);
 check("Clip players do not add a second caption track", !/<track\b/.test(clipMarkup));
 check("Playlist embeds do not force autoplay", !/autoplay=1/.test(resourcesDoc));
 const formsScript = read("integrations/google-workspace/Code.gs");

@@ -155,7 +155,11 @@ check(
     preserved.courses.couplesBundle === null &&
     preserved.courses.claimEndpoint === null
 );
-check("YouTube playlist ids are always configured", preserved.resources.playlists.length === 5);
+check("YouTube playlist ids are always configured", preserved.resources.playlists.length === 6);
+check(
+  "Roadmap from Single to Married playlist is configured",
+  preserved.resources.playlists.some((item) => item.id === "PLTiUnmAGHZkM" && item.title === "Roadmap from Single to Married")
+);
 
 const marketOk = resolveIntegrations({
   env: {
