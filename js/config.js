@@ -36,9 +36,19 @@ window.ZOE_CONFIG = {
     "channelUrl": "https://www.youtube.com/@zoefamilylife",
     "playlists": [
       {
-        "id": "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
-        "title": "Conflict Resolution",
-        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2"
+        "id": "PLTiUnmAGHZkM",
+        "title": "Roadmap from Single to Married",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PLTiUnmAGHZkM"
+      },
+      {
+        "id": "PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+        "title": "Recognizing the Right One",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP"
+      },
+      {
+        "id": "PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+        "title": "Dangerous Lies Singles Believe and The Truth that Nullifies Them",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"
       },
       {
         "id": "PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
@@ -51,14 +61,9 @@ window.ZOE_CONFIG = {
         "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze"
       },
       {
-        "id": "PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
-        "title": "Recognizing the Right One",
-        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP"
-      },
-      {
-        "id": "PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
-        "title": "Dangerous Lies Singles Believe and The Truth that Nullifies Them",
-        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"
+        "id": "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+        "title": "Conflict Resolution",
+        "embedUrl": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2"
       }
     ]
   }

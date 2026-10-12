@@ -9,7 +9,13 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { escapeAttr, loadExistingConfig, resolveIntegrations } from "./site-config.mjs";
-import { CLIPS, COURSE_BUNDLE, COURSE_TRACKS, DANGEROUS_LIES_PLAYLIST_ID } from "./site-content.mjs";
+import {
+  ALL_CLIPS,
+  CLIPS,
+  COURSE_BUNDLE,
+  COURSE_TRACKS,
+  RESOURCE_CATEGORIES,
+} from "./site-content.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
@@ -195,7 +201,7 @@ const givingBlock = () => {
 };
 
 const clipById = (id) => {
-  const clip = CLIPS.find((item) => item.id === id);
+  const clip = ALL_CLIPS.find((item) => item.id === id);
   if (!clip) throw new Error(`Unknown clip ${id}`);
   return clip;
 };
@@ -232,26 +238,71 @@ const enrollOrBuy = (slot, label) => {
   return `<div class="btn-row">${externalLink(url, "btn-primary", label)}</div>`;
 };
 
-const playlistBlocks = () =>
-  CONFIG.resources.playlists
-    .map((item) => {
-      const shorts =
-        item.id === DANGEROUS_LIES_PLAYLIST_ID
-          ? `<div class="short-clips" id="short-clips">
-          <h3>Short clips</h3>
+const dangerousLiesShorts = `<div class="short-clips" id="short-clips">
+          <p class="eyebrow">Short clips</p>
           <p>Eight short clips from this series. Captions are already in the picture. Press play when you are ready.</p>
           ${clipGrid(CLIPS, "h4")}
-        </div>`
-          : "";
-      return `<article class="video-item" id="${escapeAttr(item.id)}">
-        <h2>${escapeAttr(item.title)}</h2>
+        </div>`;
+
+const playlistById = (id) => {
+  const item = CONFIG.resources.playlists.find((entry) => entry.id === id);
+  if (!item) throw new Error(`Unknown playlist ${id}`);
+  return item;
+};
+
+const renderResourceBlock = (block) => {
+  if (block.type === "clips") {
+    return `<div class="short-clips">
+          <p>${escapeAttr(block.intro)}</p>
+          ${clipGrid(block.ids.map(clipById), block.heading)}
+        </div>`;
+  }
+  const item = playlistById(block.id);
+  const shorts = block.shorts ? dangerousLiesShorts : "";
+  return `<article class="video-item" id="${escapeAttr(item.id)}">
+        <h3>${escapeAttr(item.title)}</h3>
         <div class="video-frame">
           <iframe src="${escapeAttr(item.embedUrl)}" title="${escapeAttr(item.title)} playlist from Zoe Family Life" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
         ${shorts}
       </article>`;
-    })
-    .join("\n");
+};
+
+const categorySections = () => {
+  const used = new Set();
+  const html = RESOURCE_CATEGORIES.map((category) => {
+    const blocks = category.blocks
+      .map((block) => {
+        if (block.type === "playlist") {
+          if (used.has(block.id)) throw new Error(`Playlist ${block.id} is listed twice`);
+          used.add(block.id);
+        }
+        return renderResourceBlock(block);
+      })
+      .join("\n");
+    const classes = ["resource-category", category.band].filter(Boolean).join(" ");
+    return `<section class="${classes}" id="${escapeAttr(category.id)}">
+  <div class="wrap">
+    <h2>${escapeAttr(category.title)}</h2>
+    <p>${escapeAttr(category.intro)}</p>
+    <div class="video-list">
+${blocks}
+    </div>
+  </div>
+</section>`;
+  }).join("\n");
+  for (const item of CONFIG.resources.playlists) {
+    if (!used.has(item.id)) throw new Error(`Playlist ${item.id} is not in a Resources category`);
+  }
+  return html;
+};
+
+const categoryNav = () =>
+  `<nav class="category-nav" aria-label="Resource categories">
+          ${RESOURCE_CATEGORIES.map(
+            (category) => `<a href="#${escapeAttr(category.id)}">${escapeAttr(category.title)}</a>`
+          ).join("\n          ")}
+        </nav>`;
 
 const bookingBlock = () =>
   CONFIG.bookingUrl
@@ -974,24 +1025,19 @@ const resources = page(
     page: "resources.html",
     title: "Resources | Zoe Life",
     description:
-      "Marriage teaching from Zoe Family Life, including Conflict Resolution, Marriage 101, and Recognizing the Right One.",
+      "Short clips and playlists from Tayo and Kemi on singleness, marriage, conflict, and faith, from the Zoe Family Life channel.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Resources</p>
-    <h1>Marriage teaching from Zoe Family Life.</h1>
-    <p class="lede">Conversations for people who want practical, biblical help with marriage and singleness. Press play, or watch the full series on YouTube.</p>
+    <h1>Teaching from Zoe Family Life.</h1>
+    <p class="lede">Short clips and full series from Tayo and Kemi for singleness, marriage, conflict, and faith. Captions are already in the picture. Press play, or watch the full video on YouTube.</p>
+    ${categoryNav()}
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="video-list">
-${playlistBlocks()}
-    </div>
-  </div>
-</section>
+${categorySections()}
 
 <section class="band-tan">
   <div class="wrap">
@@ -1263,7 +1309,7 @@ const sitemapPages = [
   "contact.html",
   "consult.html",
 ];
-const sitemapAssets = CLIPS.flatMap((clip) => [
+const sitemapAssets = ALL_CLIPS.flatMap((clip) => [
   `assets/clips/${clip.file}.mp4`,
   `assets/clips/${clip.file}.jpg`,
 ]);
