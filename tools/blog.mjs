@@ -68,7 +68,7 @@ const inline = (text, file) =>
 
 const normalizeRef = (ref) => ref.replace(/[–—]/g, "-");
 
-function blockquote(lines, file) {
+function blockquote(lines, file, cites) {
   let body = lines.map((l) => l.trim()).filter(Boolean);
   let cite = null;
   let m;
@@ -81,14 +81,18 @@ function blockquote(lines, file) {
     cite = m[1];
     text = text.slice(0, m.index);
   }
-  text = text.replace(/^["“]\s*/, "").replace(/\s*["”]$/, "");
+  // Drop quote marks only when they wrap the whole quotation, so a verse
+  // with speech inside it ("Then He said, "...") keeps its own marks.
+  const wrapped = text.match(/^["“]\s*([\s\S]*?)\s*["”]$/);
+  if (wrapped && !/["“”]/.test(wrapped[1])) text = wrapped[1];
+  if (cite) cites.push(normalizeRef(cite));
   const cls = cite ? ' class="scripture"' : "";
   return `<blockquote${cls}><p>${inline(text, file)}</p>${cite ? `<cite>${escapeHtml(normalizeRef(cite))}</cite>` : ""}</blockquote>`;
 }
 
 const BLOCK_START = /^(#{1,6}\s|>|\s*[-*]\s+|\s*\d+[.)]\s+|:::|(?:-{3,}|\*{3,})\s*$)/;
 
-export function markdownToHtml(md, { file = "post", toc = [], ids = new Set() } = {}) {
+export function markdownToHtml(md, { file = "post", toc = [], ids = new Set(), cites = [] } = {}) {
   const lines = md.replace(/\r\n?/g, "\n").split("\n");
   const out = [];
   let i = 0;
@@ -122,7 +126,7 @@ export function markdownToHtml(md, { file = "post", toc = [], ids = new Set() } 
         toc.push({ id, text: title });
         heading = `<h2 id="${id}">${inline(title, file)}</h2>\n`;
       }
-      out.push(`<aside class="post-callout post-${m[1]}">\n${heading}${markdownToHtml(body.join("\n"), { file, toc, ids })}\n</aside>`);
+      out.push(`<aside class="post-callout post-${m[1]}">\n${heading}${markdownToHtml(body.join("\n"), { file, toc, ids, cites })}\n</aside>`);
       continue;
     }
 
@@ -140,7 +144,7 @@ export function markdownToHtml(md, { file = "post", toc = [], ids = new Set() } 
     if (/^>\s?/.test(line)) {
       const quote = [];
       while (i < lines.length && /^>\s?/.test(lines[i])) quote.push(lines[i++].replace(/^>\s?/, ""));
-      out.push(blockquote(quote, file));
+      out.push(blockquote(quote, file, cites));
       continue;
     }
 
@@ -221,7 +225,19 @@ export function loadPosts(root) {
     }
 
     const toc = [];
-    const html = markdownToHtml(body, { file, toc });
+    const cites = [];
+    const html = markdownToHtml(body, { file, toc, cites });
+    // A reference may name its own translation, "Psalm 23:1 (NKJV)";
+    // otherwise the front matter translation applies.
+    const translations = new Set();
+    for (const cite of cites) {
+      const named = (cite.match(/\(([A-Z]{2,5})\)$/) || [])[1];
+      const translation = named || (meta.translation || "").toUpperCase();
+      if (!translation) {
+        throw new Error(`${file}: say which Bible translation "${cite}" is from, as "${cite} (NKJV)" or with translation: in the front matter`);
+      }
+      translations.add(translation);
+    }
     const text = visible(html);
     assertNoDashes(text, file, "post body");
     const words = text.split(" ").filter(Boolean).length;
@@ -236,7 +252,7 @@ export function loadPosts(root) {
       category: meta.category,
       series: meta.series || null,
       playlist: meta.playlist || null,
-      translation: (meta.translation || "").toUpperCase() || null,
+      translations: [...translations].sort(),
       date: meta.date,
       dateLabel: dateLabel(meta.date),
       words,

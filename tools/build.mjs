@@ -346,8 +346,8 @@ const categoryNav = () =>
           ).join("\n          ")}
         </nav>`;
 
-const postCard = (post, heading, pre) => `      <article class="card post-card">
-        <p class="eyebrow">${escapeAttr(post.category)}</p>
+const postCard = (post, heading, pre, eyebrow = post.category) => `      <article class="card post-card">
+        <p class="eyebrow">${escapeAttr(eyebrow)}</p>
         <${heading}><a href="${pre}${post.page}">${escapeAttr(post.title)}</a></${heading}>
         <p class="post-meta"><time datetime="${post.date}">${post.dateLabel}</time> <span aria-hidden="true">&middot;</span> ${post.minutes} min read</p>
         <p>${escapeAttr(post.excerpt)}</p>
@@ -1287,6 +1287,16 @@ ${givingBlock()}
 `
 );
 
+// Blog topics follow the order of the video series on the Videos page; any
+// new category is listed after these, alphabetically.
+const TOPIC_ORDER = ["Singles", "Dating", "Marriage", "Conflict", "Faith"];
+const BLOG_TOPICS = [...new Set(POSTS.map((post) => post.category))]
+  .sort((a, b) => {
+    const rank = (name) => (TOPIC_ORDER.includes(name) ? TOPIC_ORDER.indexOf(name) : TOPIC_ORDER.length);
+    return rank(a) - rank(b) || a.localeCompare(b);
+  })
+  .map((name) => ({ name, id: `topic-${slugify(name)}`, posts: POSTS.filter((post) => post.category === name) }));
+
 const blog = page(
   {
     page: "blog.html",
@@ -1300,17 +1310,29 @@ const blog = page(
     <p class="eyebrow">Blog</p>
     <h1>Wisdom for every season of life.</h1>
     <p class="lede">Articles from Tayo and Kemi on marriage, singleness, dating, conflict, and faith. Rooted in Scripture and written for everyday life.</p>
+    ${BLOG_TOPICS.length > 1 ? `<nav class="category-nav" aria-label="Blog topics">
+          ${BLOG_TOPICS.map((topic) => `<a href="#${topic.id}">${escapeAttr(topic.name)}</a>`).join("\n          ")}
+        </nav>` : ""}
   </div>
 </section>
 
-<section>
+${BLOG_TOPICS.length > 1
+  ? BLOG_TOPICS.map((topic) => `<section class="blog-topic" id="${topic.id}">
+  <div class="wrap">
+    <h2>${escapeAttr(topic.name)}</h2>
+    <div class="card-grid">
+${topic.posts.map((post) => postCard(post, "h3", "", post.series || post.category)).join("\n")}
+    </div>
+  </div>
+</section>`).join("\n")
+  : `<section>
   <div class="wrap">
     <div class="card-grid">
 ${POSTS.map((post) => postCard(post, "h2", "")).join("\n")}
     </div>
     ${POSTS.length ? "" : "<p>New articles are on the way. Check back soon.</p>"}
   </div>
-</section>
+</section>`}
 
 <section class="band-tan">
   <div class="wrap">
@@ -1325,10 +1347,18 @@ ${POSTS.map((post) => postCard(post, "h2", "")).join("\n")}
 `
 );
 
+// Publisher-required credit lines, one per translation a post quotes.
 const SCRIPTURE_NOTICES = {
   ESV:
-    "Scripture quotations are from the ESV&reg; Bible (The Holy Bible, English Standard Version&reg;), " +
+    "Scripture quotations marked ESV are from the ESV&reg; Bible (The Holy Bible, English Standard Version&reg;), " +
     "copyright &copy; 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.",
+  NKJV:
+    "Scripture quotations marked NKJV are taken from the New King James Version&reg;. " +
+    "Copyright &copy; 1982 by Thomas Nelson. Used by permission. All rights reserved.",
+  NLT:
+    "Scripture quotations marked NLT are taken from the Holy Bible, New Living Translation, copyright &copy; 1996, 2004, 2015 " +
+    "by Tyndale House Foundation. Used by permission of Tyndale House Publishers, Carol Stream, Illinois 60188. All rights reserved.",
+  KJV: "Scripture quotations marked KJV are from the King James Version, which is in the public domain.",
 };
 
 const jsonLd = (data) =>
@@ -1350,9 +1380,15 @@ const postPage = (post) => {
     ? CONFIG.resources.playlists.find((item) => item.id === post.playlist)
     : null;
   if (post.playlist && !playlist) throw new Error(`${post.page}: playlist ${post.playlist} is not on the Resources page`);
-  const notice = post.translation ? SCRIPTURE_NOTICES[post.translation] : null;
-  if (post.translation && !notice) throw new Error(`${post.page}: no Scripture notice for translation ${post.translation}`);
-  const others = POSTS.filter((other) => other !== post).slice(0, 2);
+  for (const translation of post.translations) {
+    if (!SCRIPTURE_NOTICES[translation]) throw new Error(`${post.page}: add a Scripture notice for ${translation} to tools/build.mjs`);
+  }
+  const notices = post.translations.map((translation) => SCRIPTURE_NOTICES[translation]);
+  // Related reading: same topic first, then the newest of the rest.
+  const others = [
+    ...POSTS.filter((other) => other !== post && other.category === post.category),
+    ...POSTS.filter((other) => other !== post && other.category !== post.category),
+  ].slice(0, 2);
   const watchTitle = playlist ? playlist.title : "the teaching series";
 
   return page(
@@ -1406,7 +1442,7 @@ ${post.toc.map((item) => `        <li><a href="#${item.id}">${escapeAttr(item.te
     </nav>` : ""}
     <div class="prose">
 ${post.html}
-${notice ? `<p class="scripture-notice">${notice}</p>` : ""}
+${notices.map((notice) => `<p class="scripture-notice">${notice}</p>`).join("\n")}
       <p class="card-link post-back"><a href="${pre}blog.html">Back to all articles</a></p>
     </div>
   </div>

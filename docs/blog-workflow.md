@@ -35,7 +35,6 @@ author: Pastors Tayo and Kemi
 category: Marriage
 series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
-translation: ESV
 excerpt: One or two sentences for the blog cards.
 ---
 
@@ -46,7 +45,7 @@ Intro paragraph...
 Body text with **bold** and *italic* and [a link](resources.html).
 
 > Where there is no guidance, a people falls, but in an abundance of counselors there is safety.
-> Proverbs 11:14
+> Proverbs 11:14 (ESV)
 
 ::: takeaways Key Takeaways for Couples
 - **Daily Check-In:** ...
@@ -63,7 +62,7 @@ Body text with **bold** and *italic* and [a link](resources.html).
 | `excerpt` | yes | Card text on the Blog and home pages |
 | `series` | no | Names the closing "Watch the series" band |
 | `playlist` | no | YouTube playlist id from the Resources page. The "Watch the series" button jumps straight to it |
-| `translation` | no | `ESV` adds the required ESV copyright notice under the post |
+| `translation` | no | Default translation for any Bible quote whose reference does not name one |
 | `draft` | no | `true` skips the post |
 
 Playlist ids on the Resources page:
@@ -85,8 +84,10 @@ Playlist ids on the Resources page:
 - `**bold**`, `*italic*`, `[link text](page.html)`. Site links are written as
   the page name (`resources.html`, `contact.html#message`); external links must
   be `https://` and open in a new tab.
-- `>` blockquotes. When the last line is a Bible reference (`Proverbs 11:14`,
-  `1 Corinthians 13:4-7`), it becomes the citation under the quote.
+- `>` blockquotes. When the last line is a Bible reference (`Proverbs 11:14 (NKJV)`,
+  `1 Corinthians 13:4-7 (ESV)`), it becomes the citation under the quote.
+  Quote marks that wrap the whole quote are dropped; speech inside a verse keeps
+  its marks.
 - `::: takeaways Heading` ... `:::` draws the highlighted takeaways box.
 
 ### Rules the build enforces
@@ -97,9 +98,43 @@ The build stops and names the file rather than publish a post that breaks one:
   periods. (Site-wide Zoe Life style.)
 - All required front matter present, a real date, a valid playlist id.
 - Links are `https://` or pages on this site.
+- Every Bible quote names its translation, either in the reference or with
+  `translation:` in the front matter. The post then prints the publisher's
+  credit line for each translation it quotes. ESV, NKJV, NLT, and KJV are set
+  up in `tools/build.mjs` (`SCRIPTURE_NOTICES`); add the credit line there
+  before quoting another translation.
 
 The site tests also check the names: always "Tayo and Kemi" in that order,
 never "Tai". No prices, and no donation language.
+
+## Writing from the video series
+
+The posts so far were written from the auto-captions of the Zoe Family Life
+videos, one or two videos per post, using only what Tayo and Kemi teach in
+them. Their video descriptions list the verses they cite, word for word, with
+the translation (usually NKJV). Quoting those is the safest way to get
+Scripture exactly right. Auto-captions mishear names: always "Tayo and Kemi",
+never "Tai", "Taiwo", or "Toye".
+
+| Post | Source video |
+| --- | --- |
+| Is There Really No Good Spouse Out There? | Dangerous Lies Singles Believe, Lie #1 |
+| Marriage Is Not the Cure for Everything | Dangerous Lies Singles Believe, Lie #2 |
+| Preparing for Marriage While You Are Single | Roadmap from Single to Married, Part 1 |
+| Dating With Purpose | Roadmap from Single to Married, Part 4 |
+| How to Recognize the Right One | Recognizing the Right One: Relationships and Everyday Life |
+| Met the Right One? | What to Do After You Meet the Right One: Divine Confirmation |
+| God's Design for Marriage | Marriage 101, The Basics, and Part 5, Divine Blessings |
+| The Law of Mutual Edification | Recipes for a Blessed Marriage, Ep. 6 |
+| The Power of Praying Together | Recipes for a Blessed Marriage, Ep. 11 |
+| Setting Goals as a Couple | Recipes for a Blessed Marriage, Ep. 9 |
+| Why Conflicts Arise | Conflict Resolution, Introduction and Why Conflicts Arise |
+| Effective Communication | Conflict Resolution, Tool 4, Parts 1 and 2 |
+
+Not yet written up: Roadmap Parts 2, 3, and 5; Recognizing the Right One
+(Purpose, Culture and Divine Providence; After Meeting, Parts 2 and 3);
+Dangerous Lies #3 and #4; Marriage 101 Parts 2 to 4; Recipes Episodes 1 to 5,
+7, 8, 10, and 12 to 16; Conflict Resolution Tools 1 to 3 and 5 to 8.
 
 ## Batch-generation prompt
 
@@ -161,7 +196,6 @@ author: Pastors Tayo and Kemi
 category: <Marriage | Singles | Dating | Conflict | Faith>
 series: <the video series name>
 playlist: <playlist id from the table I give you, or leave this line out>
-translation: ESV
 excerpt: <one or two sentences for the blog card>
 ---
 
@@ -170,8 +204,8 @@ excerpt: <one or two sentences for the blog card>
 ## <subheading>
 <body>
 
-> <verse text, ESV, quoted exactly>
-> <Book Chapter:Verse>
+> <verse text, quoted word for word>
+> <Book Chapter:Verse> (<translation, such as NKJV>)
 
 ::: takeaways <Takeaways heading>
 - **<Bold lead-in>:** <action>
@@ -184,7 +218,9 @@ Rules:
 - Never use em dashes or en dashes. Use commas, colons, or periods. Write
   verse ranges with a hyphen (1 Corinthians 13:4-7).
 - Write the names as "Tayo and Kemi", always in that order.
-- Quote Scripture word for word from the ESV, verse reference on its own line.
+- Quote Scripture word for word. Prefer the verses listed in the video
+  description, in the translation given there. Put the reference and its
+  translation on their own line after the verse.
 - Only use teaching that is in the transcript. Do not invent stories, quotes,
   or claims and attribute them to Tayo and Kemi.
 - No prices, no donation requests.

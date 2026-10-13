@@ -795,7 +795,7 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
 
 .card-grid {
   display: grid; gap: 1.25rem; margin-top: 1.75rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
 }
 .card {
   position: relative; display: flex; flex-direction: column;
@@ -884,6 +884,10 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
 .post-callout a:not(.btn) { color: var(--olive); }
 .scripture-notice { margin-top: 2.5rem; font-size: .8rem; color: var(--ink-soft); }
 .post-back { margin-top: 2rem; }
+.blog-topic { scroll-margin-top: 5.5rem; }
+.blog-topic + .blog-topic { padding-top: 0; }
+.blog-topic h2 { margin-bottom: 0; }
+.blog-topic .card-grid { margin-top: 1.25rem; }
 
 @media (max-width: 40rem) {
   .btn-row .btn { width: 100%; }
