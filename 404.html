@@ -42,15 +42,28 @@
       <span aria-hidden="true">&#9776;</span> Menu
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="books.html">Books</a></li>
-        <li><a href="resources.html">Resources</a></li>
-        <li><a href="courses.html">Courses</a></li>
-        <li><a href="connect.html">Connect</a></li>
-        <li><a href="partner.html">Partner</a></li>
-        <li><a href="contact.html">Contact</a></li>
+      <ul class="nav-list">
+        <li><a class="nav-link" href="index.html">Home</a></li>
+        <li><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-group">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="nav-resources">Resources<svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="nav-group-label" aria-hidden="true">Resources</span>
+          <ul class="nav-sub" id="nav-resources" aria-label="Resources">
+            <li><a href="blog.html"><span class="nav-sub-label">Blog</span><span class="nav-sub-desc">Articles on marriage, dating, and faith</span></a></li>
+            <li><a href="resources.html"><span class="nav-sub-label">Videos</span><span class="nav-sub-desc">Teaching clips and full series</span></a></li>
+            <li><a href="books.html"><span class="nav-sub-label">Books</span><span class="nav-sub-desc">Gratitude devotional and journal</span></a></li>
+            <li><a href="courses.html"><span class="nav-sub-label">Courses</span><span class="nav-sub-desc">Tracks for singles and couples</span></a></li>
+          </ul>
+        </li>
+        <li class="nav-group nav-group-end">
+          <button class="nav-trigger" type="button" aria-expanded="false" aria-controls="nav-connect">Connect<svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="nav-group-label" aria-hidden="true">Connect</span>
+          <ul class="nav-sub" id="nav-connect" aria-label="Connect">
+            <li><a href="connect.html"><span class="nav-sub-label">Follow along</span><span class="nav-sub-desc">Our socials and Zoe Family Life</span></a></li>
+            <li><a href="partner.html"><span class="nav-sub-label">Partner</span><span class="nav-sub-desc">Support the work of Zoe Life</span></a></li>
+            <li><a href="contact.html"><span class="nav-sub-label">Contact</span><span class="nav-sub-desc">Send us a message</span></a></li>
+          </ul>
+        </li>
         <li class="nav-cta"><a href="contact.html#message">Send a message</a></li>
       </ul>
     </nav>
@@ -79,19 +92,25 @@
     </div>
     <div class="footer-grid">
 
-      <nav class="footer-nav" aria-label="Footer">
-        <h2 class="footer-h">Explore</h2>
+      <nav class="footer-nav" aria-labelledby="footer-explore">
+        <h2 class="footer-h" id="footer-explore">Explore</h2>
         <ul>
           <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="resources.html">Videos</a></li>
           <li><a href="books.html">Books</a></li>
-          <li><a href="resources.html">Resources</a></li>
           <li><a href="courses.html">Courses</a></li>
-          <li><a href="connect.html">Connect</a></li>
-          <li><a href="partner.html">Partner</a></li>
-          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <nav class="footer-nav" aria-labelledby="footer-connect">
+        <h2 class="footer-h" id="footer-connect">Connect</h2>
+        <ul>
+          <li><a href="connect.html">Follow along</a></li>
           <li><a href="contact.html#message">Send a message</a></li>
           <li><a href="consult.html">Complimentary consultation</a></li>
+          <li><a href="partner.html">Partner</a></li>
         </ul>
       </nav>
 

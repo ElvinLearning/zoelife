@@ -196,6 +196,8 @@ try {
   cpSync(join(ROOT, "tools/build.mjs"), join(temp, "tools/build.mjs"));
   cpSync(join(ROOT, "tools/site-config.mjs"), join(temp, "tools/site-config.mjs"));
   cpSync(join(ROOT, "tools/site-content.mjs"), join(temp, "tools/site-content.mjs"));
+  cpSync(join(ROOT, "tools/blog.mjs"), join(temp, "tools/blog.mjs"));
+  cpSync(join(ROOT, "content"), join(temp, "content"), { recursive: true });
   const seeded = {
     ...PRESERVED,
     payments: {

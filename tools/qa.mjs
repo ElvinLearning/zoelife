@@ -29,7 +29,7 @@ const CHROME =
   ].find((p) => existsSync(p)) ||
   "google-chrome";
 
-const PAGES = ["index.html", "about.html", "books.html", "resources.html", "courses.html", "courses/single-dating.html", "courses/committed.html", "courses/engaged-first-year.html", "connect.html", "partner.html", "contact.html", "consult.html"];
+const PAGES = ["index.html", "about.html", "books.html", "resources.html", "blog.html", "blog/recipes-for-a-blessed-marriage.html", "courses.html", "courses/single-dating.html", "courses/committed.html", "courses/engaged-first-year.html", "connect.html", "partner.html", "contact.html", "consult.html"];
 const WIDTHS = [
   { w: 320, h: 780, label: "320-small-mobile" },
   { w: 375, h: 812, label: "375-mobile" },
@@ -269,8 +269,9 @@ for (const { w, h, label } of WIDTHS) {
     if (w === 390 || w === 1280) {
       const shot = await cdp(ws, "Page.captureScreenshot",
         { format: "png", captureBeyondViewport: true }, sessionId);
-      writeFileSync(join(SHOTS, `${p.replace(".html", "")}-${w}.png`),
-        Buffer.from(shot.data, "base64"));
+      const file = join(SHOTS, `${p.replace(".html", "")}-${w}.png`);
+      mkdirSync(dirname(file), { recursive: true });
+      writeFileSync(file, Buffer.from(shot.data, "base64"));
     }
   }
 }

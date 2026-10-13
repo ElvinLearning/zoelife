@@ -41,23 +41,32 @@ Chrome over the DevTools Protocol. No npm dependencies.
 
 ## Pages
 
-| Page | File |
-| --- | --- |
-| Home | `index.html` |
-| About | `about.html` |
-| Books | `books.html` |
-| Resources | `resources.html` |
-| Courses | `courses.html` |
-| Connect | `connect.html` |
-| Partner | `partner.html` |
-| Contact | `contact.html` |
-| Complimentary consultation | `consult.html` |
+| Page | File | Header menu |
+| --- | --- | --- |
+| Home | `index.html` | Home |
+| About | `about.html` | About |
+| Blog | `blog.html`, `blog/*.html` | Resources |
+| Videos | `resources.html` | Resources |
+| Books | `books.html` | Resources |
+| Courses | `courses.html` | Resources |
+| Follow along | `connect.html` | Connect |
+| Partner | `partner.html` | Connect |
+| Contact | `contact.html` | Connect |
+| Complimentary consultation | `consult.html` | footer and in-page links |
+
+The header keeps four items (Home, About, and the Resources and Connect menus)
+plus the Send a message button. On phones the menus are listed in full inside
+the Menu panel.
 
 `family-life.html` and `appointments.html` are short “this page has a new home”
 stubs that point at Connect and Consult.
 
 Pages are generated from shared chrome by `node tools/build.mjs`. The output is
 plain static HTML and is committed, so hosting still needs no build step.
+
+Blog posts are Markdown files in `content/blog/`. See
+[docs/blog-workflow.md](docs/blog-workflow.md) for the file format, the rules
+the build enforces, and the batch-generation prompt.
 
 ## Design
 

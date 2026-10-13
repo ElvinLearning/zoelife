@@ -5,7 +5,7 @@
  * Staging:  node tools/build.mjs --staging
  */
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync, mkdirSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { escapeAttr, loadExistingConfig, resolveIntegrations } from "./site-config.mjs";
@@ -16,8 +16,10 @@ import {
   COURSE_TRACKS,
   RESOURCE_CATEGORIES,
 } from "./site-content.mjs";
+import { loadPosts, slugify } from "./blog.mjs";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const POSTS = loadPosts(ROOT);
 const STAGING = process.argv.includes("--staging") || process.env.ZOE_STAGING === "1";
 const STRIPE_SANDBOX = process.argv.includes("--stripe-sandbox");
 if (STRIPE_SANDBOX && !STAGING) throw new Error('Stripe sandbox requires --staging');
@@ -121,16 +123,56 @@ const FAMILY_SOCIALS = [
   ["youtube", "YouTube", "https://www.youtube.com/@zoefamilylife", "@zoefamilylife"],
 ];
 
+// Two plain links and two short menus. Keep the header to four items so it
+// never has to shrink its type to fit.
 const NAV = [
-  ["index.html", "Home"],
-  ["about.html", "About"],
-  ["books.html", "Books"],
-  ["resources.html", "Resources"],
-  ["courses.html", "Courses"],
-  ["connect.html", "Connect"],
-  ["partner.html", "Partner"],
-  ["contact.html", "Contact"],
+  { href: "index.html", label: "Home" },
+  { href: "about.html", label: "About" },
+  {
+    id: "resources",
+    label: "Resources",
+    items: [
+      ["blog.html", "Blog", "Articles on marriage, dating, and faith"],
+      ["resources.html", "Videos", "Teaching clips and full series"],
+      ["books.html", "Books", "Gratitude devotional and journal"],
+      ["courses.html", "Courses", "Tracks for singles and couples"],
+    ],
+  },
+  {
+    id: "connect",
+    label: "Connect",
+    items: [
+      ["connect.html", "Follow along", "Our socials and Zoe Family Life"],
+      ["partner.html", "Partner", "Support the work of Zoe Life"],
+      ["contact.html", "Contact", "Send us a message"],
+    ],
+  },
 ];
+
+const FOOTER_NAV = [
+  ["Explore", [
+    ["index.html", "Home"],
+    ["about.html", "About"],
+    ["blog.html", "Blog"],
+    ["resources.html", "Videos"],
+    ["books.html", "Books"],
+    ["courses.html", "Courses"],
+  ]],
+  ["Connect", [
+    ["connect.html", "Follow along"],
+    [MESSAGE_HREF, MESSAGE_CTA],
+    [CONSULT_HREF, "Complimentary consultation"],
+    ["partner.html", "Partner"],
+  ]],
+];
+
+// Exact page gets aria-current="page"; a page inside a section (a course
+// track, a blog post) marks its section link with aria-current="true".
+const currentState = (href, current) => {
+  if (href === current) return "page";
+  const section = href.replace(/\.html$/, "/");
+  return ["courses/", "blog/"].includes(section) && current.startsWith(section) ? "true" : null;
+};
 
 const SOCIAL_ICONS = {
   facebook:
@@ -304,6 +346,14 @@ const categoryNav = () =>
           ).join("\n          ")}
         </nav>`;
 
+const postCard = (post, heading, pre) => `      <article class="card post-card">
+        <p class="eyebrow">${escapeAttr(post.category)}</p>
+        <${heading}><a href="${pre}${post.page}">${escapeAttr(post.title)}</a></${heading}>
+        <p class="post-meta"><time datetime="${post.date}">${post.dateLabel}</time> <span aria-hidden="true">&middot;</span> ${post.minutes} min read</p>
+        <p>${escapeAttr(post.excerpt)}</p>
+        <p class="read-more" aria-hidden="true">Read the article</p>
+      </article>`;
+
 const bookingBlock = () =>
   CONFIG.bookingUrl
     ? `<div class="btn-row">
@@ -317,7 +367,7 @@ const bookingBlock = () =>
           </div>
         </div>`;
 
-const head = ({ title, description, page, noindex = false }) => {
+const head = ({ title, description, page, noindex = false, ogType = "website", extraHead = "" }) => {
   const pre = prefixOf(page);
   return `<!doctype html>
 <html lang="en">
@@ -331,7 +381,7 @@ ${CONFIG.staging || noindex
   : '<meta name="robots" content="index, follow">'}
 <link rel="canonical" href="${canonicalFor(page)}">
 <meta name="theme-color" content="#F8F4ED">
-<meta property="og:type" content="website">
+<meta property="og:type" content="${ogType}">${extraHead}
 <meta property="og:site_name" content="Zoe Life">
 <meta property="og:url" content="${canonicalFor(page)}">
 <meta property="og:title" content="${title}">
@@ -371,10 +421,24 @@ const header = (current) => {
       <span aria-hidden="true">&#9776;</span> Menu
     </button>
     <nav class="site-nav" id="site-nav" aria-label="Main">
-      <ul>
-${NAV.map(([href, label]) => {
-  const on = href === current || (href === "courses.html" && current.startsWith("courses/"));
-  return `        <li><a href="${pre}${href}"${on ? ' aria-current="page"' : ""}>${label}</a></li>`;
+      <ul class="nav-list">
+${NAV.map((entry, index) => {
+  if (!entry.items) {
+    const state = currentState(entry.href, current);
+    return `        <li><a class="nav-link" href="${pre}${entry.href}"${state ? ` aria-current="${state}"` : ""}>${entry.label}</a></li>`;
+  }
+  const inSection = entry.items.some(([href]) => currentState(href, current));
+  const end = index === NAV.length - 1 ? " nav-group-end" : "";
+  return `        <li class="nav-group${end}">
+          <button class="nav-trigger${inSection ? " is-current" : ""}" type="button" aria-expanded="false" aria-controls="nav-${entry.id}">${entry.label}<svg viewBox="0 0 12 8" aria-hidden="true" focusable="false"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <span class="nav-group-label" aria-hidden="true">${entry.label}</span>
+          <ul class="nav-sub" id="nav-${entry.id}" aria-label="${entry.label}">
+${entry.items.map(([href, label, desc]) => {
+  const state = currentState(href, current);
+  return `            <li><a href="${pre}${href}"${state ? ` aria-current="${state}"` : ""}><span class="nav-sub-label">${label}</span><span class="nav-sub-desc">${desc}</span></a></li>`;
+}).join("\n")}
+          </ul>
+        </li>`;
 }).join("\n")}
         <li class="nav-cta"><a href="${messageHref}">${MESSAGE_CTA}</a></li>
       </ul>
@@ -410,7 +474,9 @@ const subscribeForm = (idPrefix, intro) => `
         <div class="form-status" data-status role="status" aria-live="polite"></div>
       </form>`;
 
-const footer = (current) => {
+// A page that already carries its own Stay in Touch form does not get a
+// second one in the footer.
+const footer = (current, { subscribe = true } = {}) => {
   const pre = prefixOf(current);
   return `
 </main>
@@ -420,27 +486,25 @@ const footer = (current) => {
       <img class="footer-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
       <p class="footer-tagline">${TAGLINE}</p>
     </div>
-    <div class="footer-grid">
-
-      <nav class="footer-nav" aria-label="Footer">
-        <h2 class="footer-h">Explore</h2>
+    <div class="footer-grid${subscribe ? "" : " footer-grid-compact"}">
+${FOOTER_NAV.map(([heading, links]) => `
+      <nav class="footer-nav" aria-labelledby="footer-${slugify(heading)}">
+        <h2 class="footer-h" id="footer-${slugify(heading)}">${heading}</h2>
         <ul>
-${NAV.map(([href, label]) => `          <li><a href="${pre}${href}">${label}</a></li>`).join("\n")}
-          <li><a href="${pre}${MESSAGE_HREF}">${MESSAGE_CTA}</a></li>
-          <li><a href="${pre}${CONSULT_HREF}">Complimentary consultation</a></li>
+${links.map(([href, label]) => `          <li><a href="${pre}${href}">${label}</a></li>`).join("\n")}
         </ul>
-      </nav>
+      </nav>`).join("\n")}
 
       <div class="footer-social">
         <h2 class="footer-h">Social</h2>
         ${socialList(ZOE_LIFE_SOCIALS, "Zoe Life")}
       </div>
-
+${subscribe ? `
       <div class="footer-subscribe">
         <h2 class="footer-h footer-h-lead">Stay in Touch</h2>
 ${subscribeForm("footer", true)}
       </div>
-
+` : ""}
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
@@ -454,7 +518,9 @@ ${subscribeForm("footer", true)}
 `;
 };
 
-const page = (meta, body) => head(meta) + header(meta.page) + body + footer(meta.page);
+const page = (meta, body) =>
+  head(meta) + header(meta.page) + body +
+  footer(meta.page, { subscribe: !/data-form="subscribe"/.test(body) });
 
 const socialVisit = (list, brand) =>
   `<ul class="social-list social-visit">${list
@@ -499,10 +565,16 @@ const home = page(
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">A word from us</p>
-      <h2>You don't have to do life by yourself.</h2>
-    <p>We care about people. This is a place to start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope in an ordinary season. The message stays the same. You don't have to do life alone.</p>
-    <p><a href="about.html">Read more about Zoe Life</a></p>
+    <div class="intro-split">
+      <div>
+        <p class="eyebrow">A word from us</p>
+        <h2>You don't have to do life by yourself.</h2>
+      </div>
+      <div>
+        <p>We care about people. This is a place to start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope in an ordinary season. The message stays the same. You don't have to do life alone.</p>
+        <p class="card-link"><a href="about.html">Read more about Zoe Life</a></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -531,9 +603,9 @@ const home = page(
     <p class="eyebrow">Books</p>
     <h2>Books to help you thrive.</h2>
     <p class="lede">Start with 7 days. Keep going for 100. More to come.</p>
-    <p class="card-link"><a href="resources.html">Watch the marriage series</a></p>
 
-    <div class="book-tease" style="margin-top:2.4rem">
+    <div class="book-pair">
+    <div class="book-tease">
       <div class="book-cover">
         <img src="assets/books/gratitude-devotional-cover.jpg"
              alt="Cover of A 7-Day Gratitude Devotional by Kemi Akinyemi, cream cover with green serif title and botanical accents."
@@ -546,7 +618,7 @@ const home = page(
       </div>
     </div>
 
-    <div class="book-tease" style="margin-top:2.75rem">
+    <div class="book-tease">
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
@@ -558,31 +630,36 @@ const home = page(
         <p class="card-link"><a href="books.html#journal">See the journal</a></p>
       </div>
     </div>
+    </div>
   </div>
 </section>
 
-<section id="connect">
+<section class="band-tan" id="read-and-watch">
+  <div class="wrap">
+    <p class="eyebrow">Read and watch</p>
+    <h2>Keep growing between conversations.</h2>
+    <div class="card-grid">
+${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
+      <article class="card">
+        <p class="eyebrow">Videos</p>
+        <h3>Teaching from Zoe Family Life.</h3>
+        <p>Short clips and full series from Tayo and Kemi on singleness, marriage, conflict, and faith.</p>
+        <p class="card-link"><a href="resources.html">Watch the series</a></p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="connect" class="cta-center">
   <div class="wrap">
     <p class="eyebrow">A next step</p>
     <h2>Start with a conversation.</h2>
     <p class="lede">Send us a message to connect. We would love to hear from you.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-    </div>
-    <hr>
-    <div class="split">
-      <div>
-        <h3>Stay in Touch</h3>
-        <p>${SUBSCRIBE_INTRO}</p>
-      </div>
-      <div class="form-card">
-${subscribeForm("home", false)}
-      </div>
-    </div>
-    <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation. Mondays and Wednesdays, 6:00 to 8:00 PM Central.</p>
-    <div class="btn-row">
       <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
     </div>
+    <p class="consult-aside">Complimentary consultations are 20 minutes, on Mondays and Wednesdays, 6:00 to 8:00 PM Central.</p>
   </div>
 </section>
 `
@@ -663,16 +740,18 @@ const about = page(
 
 <section class="band-tan" id="meet">
   <div class="wrap">
-    <p class="eyebrow">Meet Tayo and Kemi</p>
-    <figure class="portrait portrait-couple portrait-tree" style="margin:1.75rem 0 2rem;max-width:34rem">
+    <div class="split meet-split">
+    <figure class="portrait portrait-couple portrait-tree">
       <img src="assets/photos/tayo-kemi-tree.jpeg"
            alt="Pastors Tayo and Kemi smiling and embracing outdoors in front of a large tree with vibrant pink blossoms."
            width="1024" height="1536" loading="lazy">
       <figcaption>Pastors Tayo and Kemi Akinyemi.</figcaption>
     </figure>
+    <div>
+    <p class="eyebrow">Meet Tayo and Kemi</p>
     <p>Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
     <p>They also serve as pastors at Life Springs Church. Through Zoe Life they bring together their faith, their work, years of teaching and mentoring, and lessons learned through marriage, parenting, and everyday life.</p>
-    <div class="headshot-pair" style="margin:2rem 0 0">
+    <div class="headshot-pair">
       <figure class="portrait">
         <img src="assets/photos/tayo-headshot.jpg"
              alt="Portrait of Tayo Akinyemi of Zoe Life."
@@ -685,6 +764,8 @@ const about = page(
              width="1200" height="1800" loading="lazy">
         <figcaption>Kemi Akinyemi</figcaption>
       </figure>
+    </div>
+    </div>
     </div>
   </div>
 </section>
@@ -958,19 +1039,17 @@ const contact = page(
         </div>
       </div>
 
-      <aside>
+      <aside class="contact-aside">
         <figure class="portrait portrait-couple">
           <img src="assets/photos/tayo-kemi-park.jpg"
                alt="Tayo and Kemi Akinyemi sitting together outdoors, smiling."
                width="1400" height="1866" loading="lazy">
         </figure>
-        <div class="form-card" style="margin-top:1.25rem">
-          <h3>Stay in Touch</h3>
-          <p>${SUBSCRIBE_INTRO}</p>
-${subscribeForm("contact", false)}
+        <div class="card">
+          <h3>Prefer a short call?</h3>
+          <p>You can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.</p>
+          <a class="btn btn-secondary" href="${CONSULT_HREF}">Schedule a consultation</a>
         </div>
-        <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.</p>
-        <p class="card-link"><a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a></p>
       </aside>
     </div>
   </div>
@@ -1208,6 +1287,155 @@ ${givingBlock()}
 `
 );
 
+const blog = page(
+  {
+    page: "blog.html",
+    title: "Blog | Zoe Life",
+    description:
+      "Christian marriage advice, dating guidance, and encouragement for singles from Tayo and Kemi of Zoe Life, rooted in Scripture and practical for everyday life.",
+  },
+  `
+<section class="page-hero">
+  <div class="wrap">
+    <p class="eyebrow">Blog</p>
+    <h1>Wisdom for every season of life.</h1>
+    <p class="lede">Articles from Tayo and Kemi on marriage, singleness, dating, conflict, and faith. Rooted in Scripture and written for everyday life.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="card-grid">
+${POSTS.map((post) => postCard(post, "h2", "")).join("\n")}
+    </div>
+    ${POSTS.length ? "" : "<p>New articles are on the way. Check back soon.</p>"}
+  </div>
+</section>
+
+<section class="band-tan">
+  <div class="wrap">
+    <h2>Watch the teaching.</h2>
+    <p>Many articles grow out of a video series. The full series and short clips are on the Videos page.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="resources.html">Watch the series</a>
+      <a class="btn btn-secondary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+    </div>
+  </div>
+</section>
+`
+);
+
+const SCRIPTURE_NOTICES = {
+  ESV:
+    "Scripture quotations are from the ESV&reg; Bible (The Holy Bible, English Standard Version&reg;), " +
+    "copyright &copy; 2001 by Crossway, a publishing ministry of Good News Publishers. Used by permission. All rights reserved.",
+};
+
+const jsonLd = (data) =>
+  `\n<script type="application/ld+json">${JSON.stringify(data).replace(/</g, "\\u003c")}</script>`;
+
+const postAuthors = (author) =>
+  /Tayo/.test(author) && /Kemi/.test(author)
+    ? ["Tayo Akinyemi", "Kemi Akinyemi"].map((name) => ({
+        "@type": "Person",
+        name,
+        url: `${CONFIG.siteUrl.replace(/\/$/, "")}/about#meet`,
+      }))
+    : { "@type": "Organization", name: "Zoe Life" };
+
+const postPage = (post) => {
+  const pre = prefixOf(post.page);
+  const base = CONFIG.siteUrl.replace(/\/$/, "");
+  const playlist = post.playlist
+    ? CONFIG.resources.playlists.find((item) => item.id === post.playlist)
+    : null;
+  if (post.playlist && !playlist) throw new Error(`${post.page}: playlist ${post.playlist} is not on the Resources page`);
+  const notice = post.translation ? SCRIPTURE_NOTICES[post.translation] : null;
+  if (post.translation && !notice) throw new Error(`${post.page}: no Scripture notice for translation ${post.translation}`);
+  const others = POSTS.filter((other) => other !== post).slice(0, 2);
+  const watchTitle = playlist ? playlist.title : "the teaching series";
+
+  return page(
+    {
+      page: post.page,
+      title: `${escapeAttr(post.title)} | Zoe Life`,
+      description: escapeAttr(post.description),
+      ogType: "article",
+      extraHead:
+        `\n<meta property="article:published_time" content="${post.date}">` +
+        `\n<meta property="article:section" content="${escapeAttr(post.category)}">` +
+        jsonLd({
+          "@context": "https://schema.org",
+          "@type": "BlogPosting",
+          headline: post.title,
+          description: post.description,
+          datePublished: post.date,
+          dateModified: post.date,
+          articleSection: post.category,
+          wordCount: post.words,
+          inLanguage: "en",
+          mainEntityOfPage: canonicalFor(post.page),
+          image: `${base}/assets/photos/tayo-kemi-about.jpg`,
+          author: postAuthors(post.author),
+          publisher: {
+            "@type": "Organization",
+            name: "Zoe Life",
+            url: `${base}/`,
+            logo: { "@type": "ImageObject", url: `${base}/assets/brand/zoe-life-mark.png` },
+          },
+        }),
+    },
+    `
+<article class="post">
+  <div class="page-hero post-hero">
+    <div class="wrap">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="${pre}blog.html">Blog</a> <span aria-hidden="true">/</span> <span>${escapeAttr(post.category)}</span>
+      </nav>
+      <h1>${escapeAttr(post.title)}</h1>
+      <p class="post-meta">By ${escapeAttr(post.author)} <span aria-hidden="true">&middot;</span> <time datetime="${post.date}">${post.dateLabel}</time> <span aria-hidden="true">&middot;</span> ${post.minutes} min read</p>
+    </div>
+  </div>
+
+  <div class="wrap post-layout">
+    ${post.toc.length > 2 ? `<nav class="post-toc" aria-label="In this article">
+      <p class="post-toc-title">In this article</p>
+      <ul>
+${post.toc.map((item) => `        <li><a href="#${item.id}">${escapeAttr(item.text)}</a></li>`).join("\n")}
+      </ul>
+    </nav>` : ""}
+    <div class="prose">
+${post.html}
+${notice ? `<p class="scripture-notice">${notice}</p>` : ""}
+      <p class="card-link post-back"><a href="${pre}blog.html">Back to all articles</a></p>
+    </div>
+  </div>
+</article>
+
+<section class="band-tan">
+  <div class="wrap">
+    <p class="eyebrow">${post.series ? escapeAttr(post.series) : "Keep going"}</p>
+    <h2>Watch ${escapeAttr(watchTitle)} with Tayo and Kemi.</h2>
+    <p>The full series is on the Videos page, alongside short clips on marriage, conflict, and singleness. Questions about your own season? Send us a message.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="${pre}resources.html${playlist ? `#${playlist.id}` : ""}">Watch the series</a>
+      <a class="btn btn-secondary" href="${pre}${MESSAGE_HREF}">${MESSAGE_CTA}</a>
+    </div>
+  </div>
+</section>
+${others.length ? `
+<section>
+  <div class="wrap">
+    <h2>More from the blog</h2>
+    <div class="card-grid">
+${others.map((other) => postCard(other, "h3", pre)).join("\n")}
+    </div>
+  </div>
+</section>` : ""}
+`
+  );
+};
+
 const moved = (fromPage, title, destHref, destLabel, description) =>
   page(
     { page: fromPage, title, description },
@@ -1232,6 +1460,8 @@ const PAGES = {
   "about.html": about,
   "books.html": books,
   "resources.html": resources,
+  "blog.html": blog,
+  ...Object.fromEntries(POSTS.map((post) => [post.page, postPage(post)])),
   "courses.html": courses,
   ...Object.fromEntries(COURSE_TRACKS.map((track) => [track.page, courseTrackPage(track)])),
   "courses/welcome.html": courseWelcome,
@@ -1262,6 +1492,17 @@ const wrote = (name, body) => {
   writeFileSync(dest, body, "utf8");
   console.log(`wrote ${name.padEnd(28)} ${String(body.length).padStart(6)} bytes`);
 };
+
+// A post removed from content/blog must not linger as a published page.
+const blogDir = join(ROOT, "blog");
+if (existsSync(blogDir)) {
+  for (const name of readdirSync(blogDir)) {
+    if (name.endsWith(".html") && !PAGES[`blog/${name}`]) {
+      rmSync(join(blogDir, name));
+      console.log(`removed blog/${name} (no longer in content/blog)`);
+    }
+  }
+}
 
 for (const [name, html] of Object.entries(PAGES)) wrote(name, html);
 
@@ -1302,6 +1543,8 @@ const sitemapPages = [
   "about.html",
   "books.html",
   "resources.html",
+  "blog.html",
+  ...POSTS.map((post) => post.page),
   "courses.html",
   ...COURSE_TRACKS.map((track) => track.page),
   "connect.html",

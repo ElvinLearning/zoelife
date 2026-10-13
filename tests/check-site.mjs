@@ -7,16 +7,22 @@
  * leftover stock, and forms that lie about succeeding.
  */
 
-import { readFileSync, existsSync, statSync } from "node:fs";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
 import { join, dirname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+// One page per Markdown post in content/blog.
+const POST_PAGES = existsSync(join(ROOT, "content/blog"))
+  ? readdirSync(join(ROOT, "content/blog")).filter((f) => f.endsWith(".md")).map((f) => `blog/${f.replace(/\.md$/, ".html")}`)
+  : [];
 const PAGES = [
   "index.html",
   "about.html",
   "books.html",
   "resources.html",
+  "blog.html",
+  ...POST_PAGES,
   "courses.html",
   "courses/single-dating.html",
   "courses/committed.html",
@@ -625,7 +631,27 @@ check("Live forms script has no course claim action", !/claim_course|claimCourse
 const courseScript = read("apps-script/courses/Code.gs");
 check("Course script is separate and has no secret key", /NOT DEPLOYED/.test(courseScript) && !/sk_live_|rk_live_|sk_test_/.test(courseScript + read("apps-script/courses/config.example.json")));
 const workflow = read(".github/workflows/deploy.yml");
+group("Blog");
+const blogIndex = html["blog.html"];
+check("Blog is in the Resources menu", /<ul class="nav-sub" id="nav-resources"[\s\S]*?href="blog\.html"/.test(navBlock));
+check("Home links an article", POST_PAGES.length === 0 || POST_PAGES.some((p) => homeMain.includes(`href="${p}"`)));
+for (const p of POST_PAGES) {
+  const doc = html[p];
+  check(`Blog index lists ${p}`, blogIndex.includes(`href="${p}"`));
+  check(`${p} is in the sitemap`, sitemap.includes(canonicalOf(p)));
+  check(`${p} declares BlogPosting structured data`, /<script type="application\/ld\+json">[^<]*"@type":"BlogPosting"/.test(doc));
+  check(`${p} is an og:article`, /<meta property="og:type" content="article">/.test(doc));
+  check(`${p} has a byline and date`, /class="post-meta">By [^<]+<span[^>]*>&middot;<\/span> <time datetime="\d{4}-\d{2}-\d{2}">/.test(doc));
+  check(`${p} links back to the blog`, doc.includes('href="../blog.html"'));
+  check(`${p} has no leftover citation markers`, !/\[\d+\]\(|drive\.google\.com/.test(doc));
+  const quotes = (doc.match(/<blockquote class="scripture">/g) || []).length;
+  const cited = (doc.match(/<blockquote class="scripture"><p>[^<]+<\/p><cite>/g) || []).length;
+  check(`${p} scripture quotes each cite a reference`, quotes === cited);
+  if (quotes) check(`${p} credits its Bible translation`, /class="scripture-notice"/.test(doc));
+}
+
 check("Deploy publishes course pages and clip assets", /single-dating/.test(workflow) && /engaged-first-year/.test(workflow) && /welcome/.test(workflow) && /assets/.test(workflow));
+check("Deploy publishes the blog", /blog\.html/.test(workflow) && /blog\/\*\.html/.test(workflow));
 const partnerDoc = html["partner.html"];
 check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
 if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {
