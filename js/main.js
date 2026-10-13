@@ -25,13 +25,88 @@
 
     // Close on Escape and return focus to the toggle.
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && nav.classList.contains("is-open")) {
+      if (e.key === "Escape" && !openGroup() && nav.classList.contains("is-open")) {
         nav.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
         toggle.focus();
       }
     });
   }
+
+  /* ------------------------------------------------------- nav menus -- */
+  // Desktop only: on small screens CSS lists every menu item, triggers hidden.
+  // Click toggles; a mouse hover opens and leaving closes after a short delay.
+  // Without JavaScript, CSS opens the menus on hover and focus instead.
+  var groups = [].slice.call(document.querySelectorAll(".nav-group"));
+  var wide = window.matchMedia("(min-width: 64rem)");
+
+  function openGroup() {
+    for (var i = 0; i < groups.length; i++) {
+      if (groups[i].classList.contains("is-open")) return groups[i];
+    }
+    return null;
+  }
+
+  function setGroup(group, open) {
+    group.classList.toggle("is-open", open);
+    var trigger = group.querySelector(".nav-trigger");
+    if (trigger) trigger.setAttribute("aria-expanded", String(open));
+    if (!open) group.removeAttribute("data-hover-open");
+  }
+
+  function closeGroups(except) {
+    groups.forEach(function (g) {
+      if (g !== except) setGroup(g, false);
+    });
+  }
+
+  groups.forEach(function (group) {
+    var trigger = group.querySelector(".nav-trigger");
+    if (!trigger) return;
+    var leaveTimer = null;
+
+    trigger.addEventListener("click", function () {
+      // A click right after hover-opening should keep the menu open.
+      if (group.hasAttribute("data-hover-open")) {
+        group.removeAttribute("data-hover-open");
+        return;
+      }
+      var open = !group.classList.contains("is-open");
+      closeGroups(group);
+      setGroup(group, open);
+    });
+
+    group.addEventListener("pointerenter", function (e) {
+      if (e.pointerType !== "mouse" || !wide.matches) return;
+      clearTimeout(leaveTimer);
+      if (group.classList.contains("is-open")) return;
+      closeGroups(group);
+      setGroup(group, true);
+      group.setAttribute("data-hover-open", "");
+    });
+
+    group.addEventListener("pointerleave", function (e) {
+      if (e.pointerType !== "mouse" || !wide.matches) return;
+      leaveTimer = setTimeout(function () { setGroup(group, false); }, 200);
+    });
+
+    // Tabbing past the last item closes the menu.
+    group.addEventListener("focusout", function (e) {
+      if (e.relatedTarget && !group.contains(e.relatedTarget)) setGroup(group, false);
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!(e.target.closest && e.target.closest(".nav-group"))) closeGroups(null);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    var group = e.key === "Escape" && openGroup();
+    if (!group) return;
+    setGroup(group, false);
+    var trigger = group.querySelector(".nav-trigger");
+    if (trigger) trigger.focus();
+  });
 
   /* --------------------------------------------------------- footer year -- */
   var year = document.querySelector("[data-year]");
@@ -57,6 +132,26 @@
     reason.addEventListener("change", syncReveal);
     syncReveal();
   }
+
+  /* ------------------------------------------------------------- clips -- */
+  // Native controls draw a loading ring over an unloaded poster. Keep the idle
+  // state as the poster plus this button, and turn controls on only after play.
+  document.querySelectorAll(".clip-play").forEach(function (button) {
+    button.addEventListener("click", function () {
+      var stage = button.closest(".clip-stage");
+      var video = stage && stage.querySelector("video");
+      if (!video) return;
+      stage.classList.add("is-playing");
+      video.setAttribute("controls", "");
+      var played = video.play();
+      if (played && typeof played.catch === "function") {
+        played.catch(function () {
+          stage.classList.remove("is-playing");
+          video.removeAttribute("controls");
+        });
+      }
+    });
+  });
 
   /* ---------------------------------------------------------- validation -- */
 
@@ -174,7 +269,7 @@
       return;
     }
     if (kind !== "subscribe") {
-      status.innerHTML = '<div class="status-sent"><strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
+      status.innerHTML = '<div class="status-sent"><strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
       return;
     }
     // Only ever called after the provider explicitly accepted the submission.

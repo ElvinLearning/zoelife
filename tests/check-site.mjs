@@ -7,12 +7,31 @@
  * leftover stock, and forms that lie about succeeding.
  */
 
-import { readFileSync, existsSync } from "node:fs";
-import { join, dirname } from "node:path";
+import { readFileSync, readdirSync, existsSync, statSync } from "node:fs";
+import { join, dirname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "about.html", "books.html", "connect.html", "contact.html", "consult.html"];
+// One page per Markdown post in content/blog.
+const POST_PAGES = existsSync(join(ROOT, "content/blog"))
+  ? readdirSync(join(ROOT, "content/blog")).filter((f) => f.endsWith(".md")).map((f) => `blog/${f.replace(/\.md$/, ".html")}`)
+  : [];
+const PAGES = [
+  "index.html",
+  "about.html",
+  "books.html",
+  "resources.html",
+  "blog.html",
+  ...POST_PAGES,
+  "courses.html",
+  "courses/single-dating.html",
+  "courses/committed.html",
+  "courses/engaged-first-year.html",
+  "connect.html",
+  "partner.html",
+  "contact.html",
+  "consult.html",
+];
 const REDIRECTS = ["family-life.html", "appointments.html"];
 
 let pass = 0;
@@ -163,7 +182,7 @@ for (const p of [...PAGES, ...REDIRECTS]) {
   const doc = html[p];
 
   const internal = [...doc.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
-  const broken = internal.filter((h) => !existsSync(join(ROOT, h.split("#")[0])));
+  const broken = internal.filter((h) => !existsSync(join(ROOT, normalize(join(dirname(p), h.split("#")[0])))));
   check(`${p} internal links all resolve`, broken.length === 0, broken.join(", "));
 
   const anchors = [...doc.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
@@ -198,7 +217,7 @@ for (const p of PAGES) {
 
 const allAssets = new Set();
 for (const p of [...PAGES, ...REDIRECTS]) {
-  for (const m of html[p].matchAll(/(?:src|href)="(assets\/[^"]+)"/g)) allAssets.add(m[1]);
+  for (const m of html[p].matchAll(/(?:src|href|poster)="(?:\.\.\/)*(assets\/[^"]+)"/g)) allAssets.add(m[1]);
 }
 for (const m of css.matchAll(/url\(\.\.\/(assets\/[^)]+)\)/g)) allAssets.add(m[1]);
 const missingAssets = [...allAssets].filter((a) => !existsSync(join(ROOT, a)));
@@ -234,6 +253,7 @@ for (const opt of [
   "Workshop / Group Session",
   "Academic or Career Support",
   "Books &amp; Resources",
+  "Course access",
   "Collaboration / Partnership",
   "General Inquiry",
   "Other",
@@ -278,16 +298,21 @@ const cfgObj = JSON.parse(cfg.slice(cfg.indexOf("{"), cfg.lastIndexOf("}") + 1))
 for (const k of ["formEndpoint", "newsletterEndpoint", "bookingUrl"]) {
   check(`config.${k} is present`, k in cfgObj);
 }
-const FORM_ENDPOINT = "https://formsubmit.co/ajax/contact@zoelifehub.com";
 const BOOKING_URL = "https://calendar.app.google/Uj9v44HE72kJrKz8A";
 const isWorkspace = (url) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(url || "");
-check("Contact form uses an approved integration type", cfgObj.formEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.formEndpoint));
-check("Mailing list targets the Zoe Life inbox", cfgObj.newsletterEndpoint === FORM_ENDPOINT || isWorkspace(cfgObj.newsletterEndpoint));
+check("Contact form uses the Google Apps Script endpoint", isWorkspace(cfgObj.formEndpoint));
+check("Mailing list uses the Google Apps Script endpoint", isWorkspace(cfgObj.newsletterEndpoint));
+check("config.js does not use FormSubmit", !/formsubmit/i.test(cfg));
 check("Consult uses the approved Google Calendar link", cfgObj.bookingUrl === BOOKING_URL);
 check("config.payments is present", cfgObj.payments && typeof cfgObj.payments === "object");
 check(
   "No placeholder endpoint was invented",
-  flattenValues(cfgObj).every((v) => v === null || /^https:\/\//.test(String(v))),
+  flattenValues(cfgObj).every((v) => {
+    if (v === null) return true;
+    const s = String(v);
+    if (/^https:\/\//.test(s) || /^PL[\w-]+$/.test(s)) return true;
+    return !/example\.com|placeholder|todo|fixme|your_|formsubmit/i.test(s);
+  }),
   JSON.stringify(cfgObj)
 );
 
@@ -296,7 +321,7 @@ check(
   !/[a-z0-9._%+-]+@zoelifehub\.com/i.test(visibleText(publishedHtml)),
   (publishedHtml.match(/[a-z0-9._%+-]+@zoelifehub\.com/i) || [])[0]
 );
-check("Contact message form omits provider details", !/Message delivery\.|Messages are securely saved|Messages are sent through FormSubmit/.test(contact));
+check("Contact message form omits provider details", !/Message delivery\.|Messages are securely saved|messages saved|Messages are sent through FormSubmit|store my signup|Google Workspace/i.test(contact));
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
@@ -345,9 +370,10 @@ check("Primary header CTA is Send a message", /Send a message/.test(indexHeader)
 check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
 
 const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
-for (const label of ["Home", "About", "Books &amp; Resources", "Connect", "Contact"]) {
+for (const label of ["Home", "About", "Books", "Resources", "Courses", "Connect", "Partner", "Contact"]) {
   check(`Main nav includes ${label}`, navBlock.includes(`>${label}<`));
 }
+check("Books and Resources is no longer one nav label", !/>Books &amp; Resources</.test(navBlock));
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
 const builder = read("tools/build.mjs");
@@ -404,12 +430,13 @@ check("Connect does not lecture about footer links", !/also linked in the footer
 check("Subscribe intro copy is present",
   publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
 const subscribeForms = [...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].map((m) => m[0]);
-check("Subscribe consent names FormSubmit as a service provider",
-  subscribeForms.length > 0 && subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /Google Workspace/.test(form) : /FormSubmit, a service provider/.test(form)));
-check("Subscribe consent explains FormSubmit retention",
-  subscribeForms.every((form) => isWorkspace(cfgObj.newsletterEndpoint) ? /email to confirm/.test(form) : /retained by FormSubmit for up to 30 days/.test(form)));
-check("Subscribe consent explains Zoe Life's use and unsubscribe choice",
-  subscribeForms.every((form) => /Zoe Life will use it for updates, and I can unsubscribe at any time\./.test(form)));
+const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
+check("Subscribe consent keeps joining the list and unsubscribing",
+  subscribeForms.length > 0 && subscribeForms.every((form) => form.includes(CONSENT_JOIN)));
+check("Subscribe consent does not disclose where the signup is stored",
+  subscribeForms.every((form) => !/Google Workspace|store my signup|FormSubmit|retained by/i.test(form)));
+check("Workspace signups mention a short confirmation email",
+  !isWorkspace(cfgObj.newsletterEndpoint) || subscribeForms.every((form) => /email you a link to confirm/.test(form)));
 check("Subscribe consent makes no absolute third-party-sharing claim",
   subscribeForms.every((form) => !/will not share (?:your|my) information with third parties/i.test(form)));
 check("Consent is demoted with the consent-note class", /consent-note/.test(publishedHtml));
@@ -429,7 +456,7 @@ const homeHeroBtns = [...homeHero.matchAll(/<a class="btn ([^"]+)"/g)].map((m) =
 check("Home hero has two equal primary CTAs",
   homeHeroBtns.length === 2 && homeHeroBtns.every((c) => c === "btn-primary"));
 check("Home hero puts Send a message before books",
-  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books and resources"));
+  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
 check("About founder line is Pastors Tayo and Kemi", /founded by Pastors Tayo and Kemi/.test(aboutMain));
@@ -482,7 +509,157 @@ check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(book
 check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
 check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
-check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check("No saved-message storage wording remains", !/messages saved|securely saved|store my signup/i.test(publishedHtml + js));
+check("The site does not solicit donations", !/donat|tax-deductible/i.test(visibleText(publishedHtml)));
+const resourcesDoc = html["resources.html"];
+const PLAYLISTS = [
+  "PLTiUnmAGHZkM",
+  "PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+  "PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
+  "PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
+  "PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+  "PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+];
+check("Resources keeps playlist ids in config", PLAYLISTS.every((id) => cfg.includes(id)));
+for (const id of PLAYLISTS) {
+  check(`Resources embeds ${id} on youtube-nocookie`, resourcesDoc.includes(`https://www.youtube-nocookie.com/embed/videoseries?list=${id}`));
+  const at = resourcesDoc.indexOf(`list=${id}`);
+  const frame = resourcesDoc.slice(at, at + 500);
+  check(`Resources playlist ${id} lazy-loads with a title`, at > 0 && /loading="lazy"/.test(frame) && /title="/.test(frame));
+}
+check("Resources links to the Zoe Family Life channel",
+  /href="https:\/\/www\.youtube\.com\/@zoefamilylife"/.test(resourcesDoc) &&
+  /Visit the Zoe Family Life YouTube channel/.test(resourcesDoc));
+check("Playlist frames are a 16:9 box", /\.video-frame \{[^}]*aspect-ratio:\s*16\s*\/\s*9/.test(css));
+const coursesDoc = html["courses.html"];
+const courseTrackDocs = ["courses/single-dating.html", "courses/committed.html", "courses/engaged-first-year.html"].map((p) => html[p]).join("\n");
+const welcomeDoc = read("courses/welcome.html");
+const courseSlots = cfgObj.courses || {};
+const courseBuySlots = ["singleDating", "committed", "engagedFirstYear", "couplesBundle"];
+check("Courses do not mention Teachable", !/teachable/i.test(coursesDoc + courseTrackDocs + welcomeDoc));
+check("Courses offer the mailing list", /data-form="subscribe"/.test(coursesDoc) && /data-form="subscribe"/.test(courseTrackDocs));
+if (courseBuySlots.every((key) => !courseSlots[key])) {
+  check("Null course slots render no buy links", !/buy\.stripe\.com|Buy this track|Buy the couples bundle/.test(coursesDoc + courseTrackDocs + welcomeDoc));
+  check("Null course slots say enrollment opens soon", /Enrollment opens soon/.test(coursesDoc) && /Enrollment opens soon/.test(courseTrackDocs));
+} else {
+  for (const key of courseBuySlots) {
+    if (courseSlots[key]) check(`Course slot ${key} renders its payment link`, (coursesDoc + courseTrackDocs).includes(courseSlots[key]));
+  }
+}
+check("Welcome page is noindex", /noindex, nofollow/.test(welcomeDoc));
+check("Welcome page does not call the network", !/fetch\s*\(|script\.google\.com|buy\.stripe\.com/.test(welcomeDoc));
+check("Welcome page is omitted from the sitemap", !sitemap.includes("/courses/welcome"));
+check("Sitemap lists course track pages", ["/courses/single-dating", "/courses/committed", "/courses/engaged-first-year"].every((path) => sitemap.includes(path)));
+const CLIPS = [
+  ["01_everyone_but_me", "wwcWniQFDA4", "t=402s"],
+  ["02_scarcity_not_you", "wwcWniQFDA4", "t=713s"],
+  ["03_marriage_done_right", "ddCC4qvPZgg", "t=330s"],
+  ["04_discontent_every_season", "ddCC4qvPZgg", "t=516s"],
+  ["05_spouse_not_your_source", "ddCC4qvPZgg", "t=745s"],
+  ["06_prepare_before_season", "6WsC_MOO3KI", "t=1017s"],
+  ["07_desires_of_your_heart", "KIxtotAT0vU", "t=360s"],
+  ["08_so_spiritual_story", "KIxtotAT0vU", "t=306s"],
+];
+const clipMarkup = resourcesDoc + booksDoc;
+for (const [file, videoId, stamp] of CLIPS) {
+  const mp4 = join(ROOT, "assets/clips", `${file}.mp4`);
+  const poster = join(ROOT, "assets/clips", `${file}.jpg`);
+  check(`Clip ${file} exists and is under 15 MB`, existsSync(mp4) && existsSync(poster) && statSync(mp4).size < 15 * 1024 * 1024);
+  check(`Sitemap lists ${file}`, sitemap.includes(`assets/clips/${file}.mp4`) && sitemap.includes(`assets/clips/${file}.jpg`));
+  check(`Resources links ${file} at ${stamp}`, resourcesDoc.includes(`assets/clips/${file}.mp4`) && resourcesDoc.includes(videoId) && resourcesDoc.includes(stamp));
+}
+check("Clip 04 does not use the pre-trim timestamp", !/t=508s/.test(clipMarkup));
+check("Resources groups the short clips with Dangerous Lies", /id="short-clips"/.test(resourcesDoc) && resourcesDoc.indexOf('id="short-clips"') > resourcesDoc.indexOf("PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"));
+const categoryHeads = ["Singles &amp; Dating", "Marriage", "Conflict", "Faith / Prayer"];
+const categoryAt = categoryHeads.map((heading) => resourcesDoc.indexOf(`<h2>${heading}</h2>`));
+check(
+  "Resources category headings are exact and in order",
+  categoryAt.every((at, index) => at > 0 && (index === 0 || at > categoryAt[index - 1]))
+);
+const sectionBetween = (startId, endMarker) => {
+  const start = resourcesDoc.indexOf(`id="${startId}"`);
+  const end = resourcesDoc.indexOf(endMarker, start + 1);
+  return resourcesDoc.slice(start, end);
+};
+const singlesSection = sectionBetween("singles-dating", 'id="marriage"');
+const marriageSection = sectionBetween("marriage", 'id="conflict"');
+const conflictSection = sectionBetween("conflict", 'id="faith-prayer"');
+const faithSection = sectionBetween("faith-prayer", "Watch on YouTube");
+const BATCH2 = [
+  ["01_dating_period_3yrs", "PuczNwXtv6c", "t=2s", singlesSection],
+  ["02_dont_raise_hopes", "PuczNwXtv6c", "t=414s", singlesSection],
+  ["03_ask_for_clarity", "PuczNwXtv6c", "t=487s", singlesSection],
+  ["04_purpose_is_marriage", "PuczNwXtv6c", "t=869s", singlesSection],
+  ["05_dont_waste_my_time", "PuczNwXtv6c", "t=1300s", singlesSection],
+  ["06_just_because_god_said", "5JeV1rwc0KU", "t=670s", singlesSection],
+  ["07_take_a_step", "5JeV1rwc0KU", "t=741s", singlesSection],
+  ["08_test_all_things", "5JeV1rwc0KU", "t=838s", faithSection],
+  ["09_thats_your_husband", "5JeV1rwc0KU", "t=902s", singlesSection],
+  ["10_disagreements_normal", "3oeg3VNvr1s", "t=123s", conflictSection],
+  ["11_truth_bad_way", "3oeg3VNvr1s", "t=225s", conflictSection],
+  ["12_apples_of_gold", "3oeg3VNvr1s", "t=325s", conflictSection],
+  ["13_uncommunicated_expectations", "bly45MydPKE", "t=91s", conflictSection],
+  ["14_understand_the_why", "bly45MydPKE", "t=227s", conflictSection],
+  ["15_marriage_designed_by_god", "NfCYH4YSKPU", "t=150s", marriageSection],
+  ["16_deal_while_single", "ryvGSZ2U7ng", "t=130s", singlesSection],
+];
+for (const [file, videoId, stamp, section] of BATCH2) {
+  const mp4 = join(ROOT, "assets/clips", `${file}.mp4`);
+  const poster = join(ROOT, "assets/clips", `${file}.jpg`);
+  check(`Batch 2 clip ${file} exists and is under 15 MB`, existsSync(mp4) && existsSync(poster) && statSync(mp4).size < 15 * 1024 * 1024);
+  check(`Sitemap lists batch 2 ${file}`, sitemap.includes(`assets/clips/${file}.mp4`) && sitemap.includes(`assets/clips/${file}.jpg`));
+  check(
+    `Resources places ${file} at ${stamp}`,
+    section.includes(`assets/clips/${file}.mp4`) && section.includes(videoId) && section.includes(stamp)
+  );
+}
+check("Faith clip is not also filed under Singles", !singlesSection.includes("08_test_all_things"));
+check("Roadmap playlist sits in Singles and Dating", singlesSection.includes("PLTiUnmAGHZkM"));
+check("Dangerous Lies clips stay in Singles and Dating", CLIPS.every(([file]) => singlesSection.includes(file)));
+const devotionalBlock = booksDoc.slice(booksDoc.indexOf('id="devotional"'), booksDoc.indexOf('id="journal"'));
+const journalBlock = booksDoc.slice(booksDoc.indexOf('id="journal"'), booksDoc.indexOf('id="collection"'));
+check("Journal shows clip 04 only", /04_discontent_every_season/.test(journalBlock) && !/05_spouse_not_your_source|07_desires_of_your_heart/.test(journalBlock));
+check("Devotional shows clips 05 and 07", /05_spouse_not_your_source/.test(devotionalBlock) && /07_desires_of_your_heart/.test(devotionalBlock) && !/04_discontent_every_season/.test(devotionalBlock));
+const videos = [...clipMarkup.matchAll(/<video\b[^>]*>/g)].map((m) => m[0]);
+check("Clip players do not autoplay", videos.length >= 27 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
+check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 27);
+check("Clip players do not add a second caption track", !/<track\b/.test(clipMarkup));
+check("Playlist embeds do not force autoplay", !/autoplay=1/.test(resourcesDoc));
+const formsScript = read("integrations/google-workspace/Code.gs");
+check("Live forms script has no course claim action", !/claim_course|claimCourse/.test(formsScript));
+const courseScript = read("apps-script/courses/Code.gs");
+check("Course script is separate and has no secret key", /NOT DEPLOYED/.test(courseScript) && !/sk_live_|rk_live_|sk_test_/.test(courseScript + read("apps-script/courses/config.example.json")));
+const workflow = read(".github/workflows/deploy.yml");
+group("Blog");
+const blogIndex = html["blog.html"];
+check("Blog is in the Resources menu", /<ul class="nav-sub" id="nav-resources"[\s\S]*?href="blog\.html"/.test(navBlock));
+check("Home links an article", POST_PAGES.length === 0 || POST_PAGES.some((p) => homeMain.includes(`href="${p}"`)));
+for (const p of POST_PAGES) {
+  const doc = html[p];
+  check(`Blog index lists ${p}`, blogIndex.includes(`href="${p}"`));
+  check(`${p} is in the sitemap`, sitemap.includes(canonicalOf(p)));
+  check(`${p} declares BlogPosting structured data`, /<script type="application\/ld\+json">[^<]*"@type":"BlogPosting"/.test(doc));
+  check(`${p} is an og:article`, /<meta property="og:type" content="article">/.test(doc));
+  check(`${p} has a byline and date`, /class="post-meta">By [^<]+<span[^>]*>&middot;<\/span> <time datetime="\d{4}-\d{2}-\d{2}">/.test(doc));
+  check(`${p} links back to the blog`, doc.includes('href="../blog.html"'));
+  check(`${p} has no leftover citation markers`, !/\[\d+\]\(|drive\.google\.com/.test(doc));
+  const quotes = (doc.match(/<blockquote class="scripture">/g) || []).length;
+  const cited = (doc.match(/<blockquote class="scripture"><p>[^<]+<\/p><cite>/g) || []).length;
+  check(`${p} scripture quotes each cite a reference`, quotes === cited);
+  if (quotes) check(`${p} credits its Bible translation`, /class="scripture-notice"/.test(doc));
+}
+
+check("Deploy publishes course pages and clip assets", /single-dating/.test(workflow) && /engaged-first-year/.test(workflow) && /welcome/.test(workflow) && /assets/.test(workflow));
+check("Deploy publishes the blog", /blog\.html/.test(workflow) && /blog\/\*\.html/.test(workflow));
+const partnerDoc = html["partner.html"];
+check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
+if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {
+  check("Partner buttons stay hidden until giving links exist", !/Partner through Stripe|Partner through PayPal/.test(partnerDoc));
+} else {
+  if (cfgObj.giving.stripe) check("Partner Stripe button uses the configured URL", partnerDoc.includes(cfgObj.giving.stripe));
+  if (cfgObj.giving.paypal) check("Partner PayPal button uses the configured URL", partnerDoc.includes(cfgObj.giving.paypal));
+}
 check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */
@@ -528,7 +705,7 @@ check(
 );
 check(
   "Only local site scripts and the approved Google tag are loaded",
-  scriptSrcs.every((s) => s === "js/main.js" || s === "js/config.js" || s === GTAG_SRC),
+  scriptSrcs.every((s) => s === GTAG_SRC || /^(?:\.\.\/)?js\/(?:main|config)\.js$/.test(s)),
   scriptSrcs.join(", ")
 );
 check("Tap targets are at least 44px", /min-height:\s*4[48]px/.test(css));
