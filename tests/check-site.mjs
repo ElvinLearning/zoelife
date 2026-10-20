@@ -325,7 +325,7 @@ check("Contact message form omits provider details", !/Message delivery\.|Messag
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
-check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.test(visibleText(publishedHtml)));
+check("Only approved devotional prices are stated", (visibleText(publishedHtml).match(/\$\s?\d+(?:\.\d+)?/g) || []).every(price => ["$9.99", "$12.99"].includes(price)));
 check("KingsWord is not listed as a client", !/kingsword/i.test(publishedHtml));
 
 const booksDoc = html["books.html"];
@@ -335,7 +335,7 @@ check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
 check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
 check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
 check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
-check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
+check("Purchase options are fail-closed when unconfigured", /Coming soon/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
 check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
 check("Books page has both Saturday titles",
   /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));

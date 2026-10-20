@@ -451,6 +451,11 @@ figcaption { font-size: .85rem; color: var(--ink-soft); margin-top: .65rem; }
   max-width: 56ch;
 }
 .pay-row { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: 1rem; }
+.buy-area { margin-block: 1.5rem; padding-block: .25rem 1rem; border-block: 1px solid var(--grey-deep); }
+.pay-row .btn { flex: 1 1 12rem; flex-direction: column; gap: .15rem; text-align: center; }
+.buy-state { font-size: .8rem; font-weight: 400; }
+.book-price { margin-block: .9rem .35rem; font-weight: 600; }
+.buy-area .format-meta { margin-block: .75rem; font-size: .92rem; color: var(--ink-soft); }
 
 /* ---------- connect ---------- */
 .social-board { display: grid; gap: 1.1rem; }

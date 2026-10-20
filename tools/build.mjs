@@ -207,23 +207,19 @@ const externalLink = (href, className, label, extraHidden = "") =>
 
 const payButtons = (book) => {
   const p = CONFIG.payments[book];
-  const buttons = [];
-  if (p.stripe) {
-    buttons.push(
-      externalLink(p.stripe, "btn-primary", stripeTestLink(p.stripe) ? "Test Stripe checkout" : "Pay with Stripe")
-    );
-  }
-  if (p.paypal) {
-    buttons.push(externalLink(p.paypal, "btn-secondary", "Pay with PayPal"));
-  }
-  for (const [provider, label] of [['amazon', 'Amazon'], ['etsy', 'Etsy'], ['gumroad', 'Gumroad']]) {
-    if (p[provider]) buttons.push(externalLink(p[provider], "btn-secondary", `Buy on ${label}`));
-  }
-  if (!buttons.length) {
-    return `<p class="purchase-coming">Purchase options coming. Stripe and PayPal checkout will appear here once Zoe Life publishes live payment links. Printed copies will be fulfilled by a print-on-demand partner. Zoe Life is not packing and shipping orders from home.</p>`;
-  }
-  return `<div class="pay-row">${buttons.join("")}</div>
-        <p class="format-meta">${stripeTestLink(p.stripe) ? 'Sandbox test only. No real payment or book delivery.' : 'Printed copies, when offered, will be fulfilled by a print-on-demand partner.'}</p>`;
+  // Retain the explicit sandbox workflow without exposing test purchases to visitors.
+  if (sandbox) return `<div class="pay-row">${externalLink(p.stripe, "btn-primary", "Test Stripe checkout")}</div><p class="format-meta">Sandbox test only. No real payment or book delivery.</p>`;
+  const option = (key, label) => p[key]
+    ? externalLink(p[key], "btn-primary", label)
+    : `<button class="btn btn-primary" type="button" disabled aria-disabled="true"><span>${label}</span><span class="buy-state">Coming soon</span></button>`;
+  return `<div class="buy-area" aria-label="Purchase options">
+        <!-- TODO(client): Supply the ${book} Amazon and Lulu Direct checkout URLs and confirm its Gumroad/Etsy product URLs in the existing payments config. -->
+        ${book === 'journal' ? '<!-- TODO(client): Confirm journal pricing before publishing a price. -->' : '<!-- Devotional prices approved for this release. -->'}
+        <div class="pay-row">${option('amazon', 'Buy on Amazon')}${option('lulu', 'Order print copy')}</div>
+        ${book === 'devotional' ? '<p class="book-price">Website print: $9.99 <span aria-hidden="true">&middot;</span> Amazon: $12.99</p>' : ''}
+        <p class="format-meta">Website print orders will be fulfilled by Lulu Direct. Shipping is paid at checkout.</p>
+        <div class="pay-row digital-options">${option('gumroad', 'Digital PDF (Gumroad)')}${option('etsy', 'Digital PDF (Etsy)')}</div>
+        </div>`;
 };
 
 const givingBlock = () => {

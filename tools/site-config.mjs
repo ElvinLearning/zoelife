@@ -39,6 +39,7 @@ export const LIVE_DEFAULTS = {
 
 export const PAYMENT_CHANNELS = [
   { key: "amazon", env: (book) => `ZOE_AMAZON_${book.toUpperCase()}_URL` },
+  { key: "lulu", env: (book) => `ZOE_LULU_${book.toUpperCase()}_URL` },
   { key: "etsy", env: (book) => `ZOE_ETSY_${book.toUpperCase()}_URL` },
   { key: "gumroad", env: (book) => `ZOE_GUMROAD_${book.toUpperCase()}_URL` },
   { key: "stripe", env: (book) => `ZOE_STRIPE_${book.toUpperCase()}_URL` },
