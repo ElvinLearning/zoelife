@@ -5,7 +5,7 @@ import { join, extname, normalize } from "node:path";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
-const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
+const ROOT = process.env.QA_ROOT || join(dirname(fileURLToPath(import.meta.url)), "..");
 const PORT = Number(process.argv[2]) || 8765;
 
 const TYPES = {
@@ -25,6 +25,14 @@ createServer(async (req, res) => {
   try {
     let path = decodeURIComponent(new URL(req.url, "http://x").pathname);
     if (path.endsWith("/")) path += "index.html";
+    else if (!extname(path)) {
+      try {
+        if ((await stat(join(ROOT,path))).isDirectory()) {
+          res.writeHead(301,{location:path+"/"});res.end();return;
+        }
+      } catch {}
+      path += ".html";
+    }
     const file = join(ROOT, normalize(path).replace(/^(\.\.[/\\])+/, ""));
     const info = await stat(file);
     if (!info.isFile()) throw new Error("not a file");

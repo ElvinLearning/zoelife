@@ -74,29 +74,7 @@ jobs:
           node tests/integration-build.mjs
 
       - name: Assemble site
-        run: |
-          mkdir -p _site
-          cp -r index.html about.html books.html resources.html blog.html courses.html connect.html partner.html contact.html consult.html \
-                family-life.html appointments.html subscription.html \
-                404.html robots.txt sitemap.xml favicon.svg \
-                css js fonts assets _site/
-          # Pretty URLs: /about serves about.html on GitHub Pages.
-          for p in about books resources blog courses connect partner contact consult family-life appointments; do
-            mkdir -p "_site/$p" && cp "$p.html" "_site/$p/index.html"
-          done
-          mkdir -p _site/blog
-          cp blog/*.html _site/blog/
-          for f in blog/*.html; do
-            p="${f#blog/}"; p="${p%.html}"
-            mkdir -p "_site/blog/$p" && cp "$f" "_site/blog/$p/index.html"
-          done
-          mkdir -p _site/courses
-          cp courses/*.html _site/courses/
-          for p in single-dating committed engaged-first-year welcome; do
-            mkdir -p "_site/courses/$p" && cp "courses/$p.html" "_site/courses/$p/index.html"
-          done
-          test -f CNAME && cp CNAME _site/ || echo "no CNAME, serving on the Pages domain"
-          du -sh _site
+        run: node tools/assemble.mjs
 
       - uses: actions/upload-pages-artifact@v3
         with:

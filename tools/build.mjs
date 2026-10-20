@@ -300,6 +300,7 @@ const renderResourceBlock = (block) => {
         <div class="video-frame">
           <iframe src="${escapeAttr(item.embedUrl)}" title="${escapeAttr(item.title)} playlist from Zoe Family Life" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
         </div>
+        <p class="card-link"><a href="https://www.youtube.com/playlist?list=${escapeAttr(item.id)}" target="_blank" rel="noopener noreferrer">Watch this series on YouTube<span class="visually-hidden">, opens in a new tab</span></a></p>
         ${shorts}
       </article>`;
 };
@@ -477,7 +478,7 @@ const footer = (current, { subscribe = true } = {}) => {
 <footer class="site-footer">
   <div class="wrap-wide">
     <div class="footer-top">
-      <img class="footer-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <img class="footer-wordmark" src="${pre}assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45" loading="lazy">
       <p class="footer-tagline">${TAGLINE}</p>
     </div>
     <div class="footer-grid${subscribe ? "" : " footer-grid-compact"}">
@@ -844,7 +845,7 @@ const books = page(
       <div class="book-cover">
         <img src="assets/books/gratitude-journal-cover.jpg"
              alt="Cover of A 100-Day Gratitude Journal by Kemi Akinyemi, open journal with eucalyptus and a dawn landscape."
-             width="900" height="1350">
+             width="900" height="1350" loading="lazy">
       </div>
       <div>
         <p class="eyebrow">Journal</p>
@@ -1086,9 +1087,9 @@ const consult = page(
 ${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row">${externalLink(CONFIG.paidBookingUrl, "btn-secondary", "View paid sessions")}</div></div>` : ''}
       </div>
       <figure class="portrait portrait-couple">
-        <img src="assets/photos/tayo-kemi-hero.jpg"
+        <img src="assets/photos/tayo-kemi-full.jpg"
              alt="Tayo and Kemi Akinyemi standing together outdoors, smiling."
-             width="1240" height="960">
+             width="1600" height="2134" loading="lazy">
       </figure>
     </div>
   </div>
