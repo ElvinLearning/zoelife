@@ -419,6 +419,9 @@ figcaption { font-size: .85rem; color: var(--ink-soft); margin-top: .65rem; }
 
 .faith-list { max-width: 62ch; }
 .faith-list li { margin-bottom: .7em; }
+.faith-disclosure { border-block: 1px solid var(--grey-deep); padding-block: .5rem; }
+.faith-disclosure summary { min-height: 44px; padding: .75rem 0; font-weight: 600; color: var(--sage); cursor: pointer; }
+.faith-disclosure[open] summary { margin-bottom: 1rem; }
 
 /* ---------- books ---------- */
 .book {

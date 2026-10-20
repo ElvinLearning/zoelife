@@ -771,8 +771,9 @@ const about = page(
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">Statement of faith</p>
-    <h2>Grounded in historic Christian faith.</h2>
+    <!-- TODO(client): Confirm whether to retain the Statement of Faith. Kept here, collapsed, pending Kemi's decision. -->
+    <details class="faith-disclosure">
+    <summary>Our Statement of Faith</summary>
     <p>At Zoe Life, our work is grounded in historic Christian faith and the authority of God's Word. We believe:</p>
     <ul class="faith-list">
       <li>The Bible is the inspired, authoritative, and trustworthy Word of God.</li>
@@ -787,6 +788,7 @@ const about = page(
       <li>Jesus Christ will return, and God's Kingdom will be fully established according to His promises.</li>
     </ul>
     <p>Everything we teach, create, and provide through Zoe Life seeks to be consistent with these biblical convictions.</p>
+    </details>
   </div>
 </section>
 
