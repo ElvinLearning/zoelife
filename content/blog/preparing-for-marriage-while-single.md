@@ -1,8 +1,8 @@
 ---
 title: Preparing for Marriage While You Are Single: A Roadmap for Christian Singles
-description: Christian marriage preparation starts long before the wedding. Tayo and Kemi share a roadmap for singles: believe right, become the right person, and prepare.
+description: We talk about preparing for marriage while single, beginning with your faith, your character, and the relationships around you.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Singles
 series: Roadmap from Single to Married
 playlist: PLTiUnmAGHZkM
@@ -60,7 +60,7 @@ Bible history suggests Mary was probably around fifteen or sixteen when she was 
 
 Genesis 2 is a good place to start. What was God's intention for marriage? As a single adult, it is not too early to ask the Lord to open your eyes to see what He sees about marriage, and about *your* marriage. Whatever He puts on your heart, write it down and pray about it. When a passage of Scripture or a godly couple around you touches your heart, write down what stirred you and ask God for that grace.
 
-You don't need a perfect family background to believe for a blessed marriage. Kemi's background was shaky, but God planted her among godly married couples. She saw things in them she desired and prayed into them. One couple helped other couples build blessed marriages, and she longed for that, with no idea that she and Tayo would be doing it today. Don't limit yourself to past experiences or family history. And when culture presents something contrary to God's design, go back to the Word and align yourself with it.
+You don't need a perfect family background to believe for a blessed marriage. Kemi's background was shaky, but God planted her among godly married couples. She saw things in them she desired and prayed into them. One couple helped other couples build blessed marriages, and she longed for that, with no idea that we would be doing it today. Don't limit yourself to past experiences or family history. And when culture presents something contrary to God's design, go back to the Word and align yourself with it.
 
 ## Practical Steps While You Wait
 
@@ -71,7 +71,7 @@ Even if you are not in a relationship and have no prospects, there is a lot you 
 - **Understand your purpose.** When you know what God has called you to do, some people clearly will not fit, and you save yourself a lot of grief.
 - **Learn to walk in love.** It is the most important skill for a happy marriage.
 - **Build healthy friendships.** You need trusted relationships to help you vet a prospect. Ruth did not realize Boaz's field was a marital opportunity until Naomi pointed it out. Zipporah did not consider Moses until her father asked where the man who had helped them was.
-- **Become the best version of yourself.** Get educated, grow in wisdom, and increase your capacity. Everybody appreciates good things.
+- **Keep learning.** Get educated, grow in wisdom, and increase your capacity. Everybody appreciates good things.
 
 ## Recognize Your Season
 

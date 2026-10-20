@@ -67,9 +67,8 @@ for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpo
 const workspaceEndpoint = (value) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(value || '');
 const TAGLINE = "Helping people thrive in every season of life.";
 const MISSION =
-  "Zoe Life equips individuals, couples, families, churches, and organizations with " +
-  "biblical truth, practical wisdom, and Christ-centered resources to help them thrive " +
-  "in every season of life.";
+  "We share what Scripture teaches about everyday life, from the relationships at home " +
+  "to the decisions we make at work. We want to help you put that teaching into practice.";
 const MESSAGE_CTA = "Send a message";
 const MESSAGE_HREF = "contact.html#message";
 const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
@@ -82,31 +81,30 @@ const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
   : CONSENT_JOIN;
 
 const BOOKS_INTRO =
-  "At Zoe Life, we create faith-centered, practical resources to encourage growth, " +
-  "strengthen your walk with God, and provide support for the different areas and seasons of life. " +
-  "Explore our current books below. Marriage teaching videos live on the Resources page, with more books to come.";
+  "We wrote these books to help you notice God's goodness and make thanksgiving part of your day. " +
+  "You can use them on your own or alongside your Bible reading and prayer.";
 
 const DEVOTIONAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
 const JOURNAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
 
 const DEVOTIONAL_BLURB = [
-  "Gratitude is more than an occasional response to God's blessings. It is a way of life rooted in recognizing who God is, remembering His goodness, and responding to Him with thanksgiving.",
-  "The 7-Day Gratitude Devotional invites you to explore the biblical foundation of gratitude through seven days of Scripture, reflection, prayer, and practical application. Each day provides an opportunity to pause, reflect on God's faithfulness, and intentionally cultivate a heart of thanksgiving.",
-  "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this devotional is designed to help you grow in gratitude and make thanksgiving an intentional part of your walk with God.",
+  "Gratitude begins with remembering who God is and what He has done. We want to help you make that a daily practice.",
+  "Over seven days, this devotional takes you through Scripture with questions to reflect on, prayers, and practical ways to give thanks.",
+  "Read a day at a time, and take a few minutes to remember God's faithfulness in your own life.",
 ];
 
 const JOURNAL_BLURB = [
-  "Gratitude grows when we intentionally pause to recognize and remember God's goodness.",
-  "A 100-Day Gratitude Journal provides a dedicated space to pause, remember God's goodness, record the ways He has been faithful, and respond to Him with heartfelt thanksgiving.",
-  "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this journal encourages you to develop a consistent practice of gratitude. Over the course of 100 days, your entries can become more than individual reflections. Together, they create a meaningful record of blessings, answered prayers, reflections, and reminders of God's faithfulness along the way.",
+  "It is easy to forget the ways God has helped us. Writing them down gives us something to return to.",
+  "This journal gives you 100 days of space to record what you are thankful for and how God has been faithful.",
+  "Use it with your Bible reading or prayer time. As you fill the pages, you will have a record of answered prayers and everyday blessings to look back on.",
 ];
 
 const COLLECTION_COPY = [
-  "The 7-Day Gratitude Devotional and A 100-Day Gratitude Journal were created to complement one another while also being valuable as individual resources. Begin with the 7-Day Gratitude Devotional, then continue with the journal. You can begin with either resource or use them together.",
+  "You can begin with the devotional, then keep writing in the journal. Each book also works on its own, so start with whichever helps you most.",
 ];
 
 const COMING_SOON =
-  "We are continuing to develop faith-centered, practical resources. Check back for new books, workbooks, guides, and other resources from Zoe Life.";
+  "We are working on more books and practical resources to share with you.";
 
 const ZOE_LIFE_SOCIALS = [
   ["facebook", "Facebook", "https://www.facebook.com/zoelifehub", "@zoelifehub"],
@@ -359,7 +357,7 @@ const bookingBlock = () =>
     ? `<div class="btn-row">
           <a class="btn btn-primary" href="${escapeAttr(CONFIG.bookingUrl)}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
         </div>
-        <p class="format-meta">Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.</p>`
+        <p class="format-meta">Choose an available time in Google Calendar. You will receive the call details with your confirmation.</p>`
     : `<div class="booking-placeholder">
           <p>Complimentary 20-minute consultations will open here for Mondays and Wednesdays, 6:00 to 8:00 PM Central. Until booking is live, send us a message and we will arrange a time.</p>
           <div class="btn-row">
@@ -508,7 +506,7 @@ ${subscribeForm("footer", true)}
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Tayo and Kemi.</p>
+      <p>Tayo and Kemi</p>
     </div>
   </div>
 </footer>
@@ -541,9 +539,10 @@ const home = page(
     page: "index.html",
     title: "Zoe Life | Helping people thrive in every season of life",
     description:
-      "Zoe Life equips individuals, couples, families, churches, and organizations with biblical truth, practical wisdom, and Christ-centered resources.",
+      "We share biblical teaching and practical resources for your faith, relationships, and everyday decisions.",
   },
   `
+<!-- TODO(client): Kemi's homepage copy goes here -->
 <section class="hero-home">
   <div class="hero-split wrap-wide">
     <div class="hero-copy">
@@ -571,7 +570,7 @@ const home = page(
         <h2>You don't have to do life by yourself.</h2>
       </div>
       <div>
-        <p>We care about people. This is a place to start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope in an ordinary season. The message stays the same. You don't have to do life alone.</p>
+        <p>We want to see people growing, marriages strengthening, and families finding hope in God's Word. We share teaching and resources you can use in your own life, wherever you are starting from.</p>
         <p class="card-link"><a href="about.html">Read more about Zoe Life</a></p>
       </div>
     </div>
@@ -583,10 +582,10 @@ const home = page(
     <div class="split split-copy-photo">
       <div>
         <p class="eyebrow">Tayo and Kemi</p>
-        <h2>Zoe Life was founded by Pastors Tayo and Kemi.</h2>
-        <p>We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical and practical, in the same breath.</p>
+        <h2>We are glad you are here.</h2>
+        <p>We started Zoe Life to share what we have learned from Scripture and from our own marriage, family, and work. We hope it helps you with the decisions and relationships in your life.</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="about.html">Meet Tayo and Kemi</a>
+          <a class="btn btn-primary" href="about.html">Get to know us</a>
         </div>
       </div>
       <figure class="portrait portrait-couple">
@@ -637,13 +636,13 @@ const home = page(
 <section class="band-tan" id="read-and-watch">
   <div class="wrap">
     <p class="eyebrow">Read and watch</p>
-    <h2>Keep growing between conversations.</h2>
+    <h2>Teaching for everyday life.</h2>
     <div class="card-grid">
 ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
       <article class="card">
         <p class="eyebrow">Videos</p>
         <h3>Teaching from Zoe Family Life.</h3>
-        <p>Short clips and full series from Tayo and Kemi on singleness, marriage, conflict, and faith.</p>
+        <p>Our teaching on singleness, marriage, conflict, and faith, in short clips and full series.</p>
         <p class="card-link"><a href="resources.html">Watch the series</a></p>
       </article>
     </div>
@@ -653,8 +652,8 @@ ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
 <section id="connect" class="cta-center">
   <div class="wrap">
     <p class="eyebrow">A next step</p>
-    <h2>Start with a conversation.</h2>
-    <p class="lede">Send us a message to connect. We would love to hear from you.</p>
+    <h2>We would love to hear from you.</h2>
+    <p class="lede">Send us a message about books, speaking, or a question you have. Please allow three business days for a reply.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
       <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
@@ -670,7 +669,7 @@ const about = page(
     page: "about.html",
     title: "About Zoe Life | Tayo and Kemi",
     description:
-      "Zoe Life was founded by Pastors Tayo and Kemi. A place to start a conversation, pick up a resource, and keep going.",
+      "We are Tayo and Kemi. Learn why we started Zoe Life and how Scripture shapes our teaching and resources.",
   },
   `
 <section class="page-hero">
@@ -685,19 +684,19 @@ const about = page(
   <div class="wrap">
     <div class="split split-wide-left">
       <div>
-        <p>Zoe Life was founded by Pastors Tayo and Kemi.</p>
-        <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is the heart of this work, said in ordinary language: helping people thrive in every season of life.</p>
-        <p>You don't have to do life by yourself. We care about people, and we want this to be a place where you can start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope.</p>
-        <p>We believe biblical truth is not boxed into one corner of life. It gives wisdom for relationships, family, school, work, and the questions that show up on ordinary days.</p>
-        <p>Every season has room to grow. Some seasons also bring questions, transitions, and hard days that are easier to walk through with encouragement and practical support.</p>
-        <p>Through books and resources, speaking, workshops, and personal conversations, Zoe Life seeks to encourage individuals, couples, families, students, and professionals with biblical principles and tools they can use in everyday life.</p>
-        <p>We start with Scripture, then talk about what it means for the life you are actually living. Every person's journey is different. Our desire is to meet people where they are and help them move forward with wisdom, faith, and purpose.</p>
+        <p>We are Tayo and Kemi Akinyemi, and we started Zoe Life to share biblical teaching people can use in everyday life.</p>
+        <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is why we chose the name: we want to help people live in the fullness of what Jesus gives.</p>
+        <p>You don't have to do life by yourself. Whether you have walked with God for years or are still asking questions, we hope you find teaching here that helps you.</p>
+        <p>Scripture speaks to the whole of life. We turn to it for wisdom at home, at work, and when we face difficult decisions.</p>
+        <p>Some changes are exciting. Others are hard. We know how much it helps to have encouragement and practical support through both.</p>
+        <p>We share through books, teaching, workshops, and personal consultations. Our aim is to help you apply what you learn.</p>
+        <p>We know your circumstances may be different from ours. We want to offer biblical guidance that helps you think through what you are facing.</p>
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-studio.jpeg"
              alt="Tayo and Kemi Akinyemi in a studio portrait, smiling."
              width="1600" height="2400">
-        <figcaption>Tayo and Kemi, founders of Zoe Life.</figcaption>
+        <figcaption>Tayo and Kemi Akinyemi.</figcaption>
       </figure>
     </div>
   </div>
@@ -710,7 +709,7 @@ const about = page(
         <p class="eyebrow">Mission</p>
         <h2>What we are here for.</h2>
         <p>${MISSION}</p>
-        <p>We start with what Scripture says, then talk it through in spoken English for real decisions, real relationships, and real seasons.</p>
+        <p>We start with what Scripture says, then talk about it in everyday, practical terms.</p>
       </div>
       <div>
         <p class="eyebrow">Vision</p>
@@ -726,14 +725,14 @@ const about = page(
     <p class="eyebrow">Who we are</p>
     <h2>Core values</h2>
     <div class="values" style="margin-top:1.75rem">
-      <div class="value"><h3>Christ-centered</h3><p>Jesus Christ is the foundation of everything we do. We desire that every resource, conversation, and opportunity to serve points people toward Him.</p></div>
-      <div class="value"><h3>Biblical truth</h3><p>God's Word is our final authority. We seek to faithfully understand, teach, and apply Scripture in ways that are both biblically sound and practically relevant.</p></div>
-      <div class="value"><h3>Practical wisdom</h3><p>Knowledge is most valuable when it is applied. We are committed to guidance that helps people live out biblical principles in everyday life.</p></div>
-      <div class="value"><h3>Excellence</h3><p>We seek to honor God by pursuing excellence in our work, our relationships, our communication, and the resources we create.</p></div>
-      <div class="value"><h3>Integrity</h3><p>We desire to serve with honesty, humility, transparency, and faithfulness, reflecting the character of Christ in all we do.</p></div>
-      <div class="value"><h3>Compassion</h3><p>Every person has a unique story. We strive to serve with grace, patience, understanding, and genuine care.</p></div>
-      <div class="value"><h3>Stewardship</h3><p>We believe every gift, opportunity, and resource entrusted to us should be managed faithfully for God's glory and the benefit of others.</p></div>
-      <div class="value"><h3>Growth</h3><p>Spiritual maturity is a lifelong journey. Our desire is to encourage continual growth in faith, wisdom, character, and service.</p></div>
+      <div class="value"><h3>Christ-centered</h3><p>Jesus Christ is the foundation of our work. We want what we share to point people toward Him.</p></div>
+      <div class="value"><h3>Biblical truth</h3><p>God's Word is our final authority. We take care to teach it faithfully and apply it to everyday life.</p></div>
+      <div class="value"><h3>Practical wisdom</h3><p>We want what you learn to help you with the choices in front of you.</p></div>
+      <div class="value"><h3>Excellence</h3><p>We want to honor God by doing our work well and taking care with what we share.</p></div>
+      <div class="value"><h3>Integrity</h3><p>We want our actions to match what we teach. That means being honest and taking responsibility when we fall short.</p></div>
+      <div class="value"><h3>Compassion</h3><p>We want to listen carefully and treat people with patience and kindness.</p></div>
+      <div class="value"><h3>Stewardship</h3><p>We want to use what God has entrusted to us faithfully and for the good of others.</p></div>
+      <div class="value"><h3>Growth</h3><p>We are still learning, too. We want to keep growing in our faith and in how we serve others.</p></div>
     </div>
   </div>
 </section>
@@ -749,8 +748,8 @@ const about = page(
     </figure>
     <div>
     <p class="eyebrow">Meet Tayo and Kemi</p>
-    <p>Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.</p>
-    <p>They also serve as pastors at Life Springs Church. Through Zoe Life they bring together their faith, their work, years of teaching and mentoring, and lessons learned through marriage, parenting, and everyday life.</p>
+    <p>We are husband and wife, and our teaching draws on our own life together as well as what we have studied. Marriage and parenting have given us plenty to learn and share.</p>
+    <p>We also serve as pastors at Life Springs Church. Through Zoe Life, we share lessons from our faith, our work, and years of teaching and mentoring.</p>
     <div class="headshot-pair">
       <figure class="portrait">
         <img src="assets/photos/tayo-headshot.jpg"
@@ -795,7 +794,7 @@ const about = page(
   <div class="wrap">
     <p class="eyebrow">Where next</p>
     <h2>We would be glad to connect.</h2>
-    <p>Send us a message if you are looking for resources, considering Tayo and Kemi for a speaking engagement or workshop, or simply want to say hello.</p>
+    <p>Send us a message if you are looking for resources, thinking of inviting us to speak or lead a workshop, or simply want to say hello.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
       <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
@@ -864,7 +863,7 @@ const books = page(
 <section class="band-tan" id="collection">
   <div class="wrap">
     <p class="eyebrow">Gratitude Collection</p>
-    <h2>A Gratitude package, made to work together.</h2>
+    <h2>Two ways to practice gratitude.</h2>
     <p>Start with 7 days. Keep going for 100.</p>
     ${COLLECTION_COPY.map((p) => `<p>${p}</p>`).join("\n    ")}
     <p>If you are buying for a group, a church, or a workshop, send a message and we can talk through a group order once purchase options are live.</p>
@@ -959,7 +958,7 @@ const contact = page(
   <div class="wrap">
     <p class="eyebrow">Contact</p>
     <h1>Send us a message to connect.</h1>
-    <p class="lede">Start with a conversation. We would love to hear from you.</p>
+    <p class="lede">Have a question or an invitation for us? Use the form below. Please expect a reply within three business days.</p>
   </div>
 </section>
 
@@ -1047,7 +1046,7 @@ const contact = page(
         </figure>
         <div class="card">
           <h3>Prefer a short call?</h3>
-          <p>You can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.</p>
+          <p>You can book a complimentary 20-minute consultation using the link below.</p>
           <a class="btn btn-secondary" href="${CONSULT_HREF}">Schedule a consultation</a>
         </div>
       </aside>
@@ -1069,7 +1068,7 @@ const consult = page(
   <div class="wrap">
     <p class="eyebrow">Consultation</p>
     <h1>A complimentary 20-minute conversation.</h1>
-    <p class="lede">No cost and no deposit. A short call to understand where you are and whether Zoe Life can help.</p>
+    <p class="lede">No cost and no deposit. A short call to hear what you need and see how we can help.</p>
   </div>
 </section>
 
@@ -1104,14 +1103,14 @@ const resources = page(
     page: "resources.html",
     title: "Resources | Zoe Life",
     description:
-      "Short clips and playlists from Tayo and Kemi on singleness, marriage, conflict, and faith, from the Zoe Family Life channel.",
+      "Watch our Zoe Family Life teaching on singleness, marriage, conflict, and faith, in short clips and full playlists.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Resources</p>
     <h1>Teaching from Zoe Family Life.</h1>
-    <p class="lede">Short clips and full series from Tayo and Kemi for singleness, marriage, conflict, and faith. Captions are already in the picture. Press play, or watch the full video on YouTube.</p>
+    <p class="lede">We talk about singleness, marriage, conflict, and faith in these clips and full series. The short clips have captions. Press play, or follow the link to watch the full video on YouTube.</p>
     ${categoryNav()}
   </div>
 </section>
@@ -1148,14 +1147,14 @@ const courses = page(
     page: "courses.html",
     title: "Courses | Zoe Life",
     description:
-      "Self-hosted courses from Tayo and Kemi for singles, committed couples, and the first year of marriage. Outlines are drafts until enrollment opens.",
+      "See the courses we are preparing for singles, committed couples, and newlyweds. Explore the draft outlines and hear when enrollment opens.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Courses</p>
     <h1>Courses for the season you are in.</h1>
-    <p class="lede">Three tracks from Tayo and Kemi, hosted on Zoe Life. Outlines below are drafts. Paid lessons are not on this site.</p>
+    <p class="lede">We are preparing three courses for singles and couples. You can explore the draft outlines below. Lessons and enrollment are coming soon.</p>
   </div>
 </section>
 
@@ -1201,7 +1200,8 @@ const courseTrackPage = (track) => {
     <p class="eyebrow">Draft outline</p>
     <h1>${escapeAttr(track.title)}</h1>
     <p class="lede">${escapeAttr(track.subtitle)}. ${escapeAttr(track.audience)}</p>
-    <p class="draft-note">This outline is a draft. Lessons are coming soon. Paid lesson videos are not published on this page.</p>
+    <!-- TODO(client): Approve course outline and confirm enrollment availability, including the lesson drawn from our years of marriage. -->
+    <p class="draft-note">We are still preparing this course. The outline below is a draft; lessons and enrollment are coming soon.</p>
   </div>
 </section>
 
@@ -1218,7 +1218,7 @@ ${mod.lessons.map((lesson) => `        <li>${escapeAttr(lesson)}</li>`).join("\n
   )
   .join("\n")}
     ${enrollOrBuy(track.slot, "Buy this track")}
-    <p>Questions about access can wait until enrollment opens. Use the contact form and choose Course access.</p>
+    <p>Have a question about a course? Send us a message and choose Course access on the form.</p>
     <p class="card-link"><a href="${pre}contact.html#message">Send a message</a></p>
     <p class="card-link"><a href="${pre}courses.html">Back to all courses</a></p>
     <div class="form-card" style="max-width:32rem;margin-top:1.5rem">
@@ -1236,7 +1236,7 @@ const courseWelcome = page(
     page: "courses/welcome.html",
     title: "Course welcome | Zoe Life",
     description:
-      "Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.",
+      "Course enrollment is not open yet. Find the latest course information or contact us about access.",
     noindex: true,
   },
   `
@@ -1244,8 +1244,8 @@ const courseWelcome = page(
   <div class="wrap">
     <p class="eyebrow">Courses</p>
     <h1>Course welcome.</h1>
-    <p class="lede" id="welcome-note">This is a placeholder. Enrollment is not open yet, and this page does not grant course access.</p>
-    <p>If you finished a checkout, keep the email you used. Access email will start only after enrollment is live.</p>
+    <p class="lede" id="welcome-note">Enrollment is not open yet. Visit our Courses page for the latest information.</p>
+    <p>If you have a question about a payment or access, <a href="../contact.html#message">send us a message</a>. Keep your receipt so we can help.</p>
     <p class="card-link"><a href="../courses.html">Back to courses</a></p>
   </div>
 </section>
@@ -1255,7 +1255,7 @@ const courseWelcome = page(
   var sessionId = params.get("session_id");
   var note = document.getElementById("welcome-note");
   if (!note || !sessionId) return;
-  note.textContent = "We saw a checkout reference on this page. Course access is not granted from the website yet. Watch your email once enrollment is open.";
+  note.textContent = "This page cannot confirm your payment or give you course access. Please keep your receipt and contact us if you need help.";
 })();
 </script>
 `
@@ -1266,21 +1266,21 @@ const partner = page(
     page: "partner.html",
     title: "Partner with Zoe Life",
     description:
-      "Partner with Zoe Life. Zoe Life is not a registered nonprofit. Stripe and PayPal partnership links appear here when they are published.",
+      "Help us keep sharing biblical teaching and practical resources. Learn about partnership with Zoe Life.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Partner</p>
     <h1>Partner with Zoe Life.</h1>
-    <p class="lede">Zoe Life is not a registered nonprofit. When partnership checkout is ready, it will open through Stripe or PayPal.</p>
+    <p class="lede">Your partnership helps us keep sharing biblical teaching and resources. Zoe Life is not a registered nonprofit.</p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
     <h2>A way to support the work.</h2>
-    <p>Partnership helps Zoe Life keep creating biblical, practical resources for individuals, couples, and families. Buttons appear here only after Zoe Life publishes live links.</p>
+    <p>If you would like to support this work, we would be glad to hear from you.</p>
 ${givingBlock()}
   </div>
 </section>
@@ -1302,14 +1302,14 @@ const blog = page(
     page: "blog.html",
     title: "Blog | Zoe Life",
     description:
-      "Christian marriage advice, dating guidance, and encouragement for singles from Tayo and Kemi of Zoe Life, rooted in Scripture and practical for everyday life.",
+      "We share what Scripture teaches about marriage, dating, and everyday life, with practical guidance for singles and couples.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Blog</p>
     <h1>Wisdom for every season of life.</h1>
-    <p class="lede">Articles from Tayo and Kemi on marriage, singleness, dating, conflict, and faith. Rooted in Scripture and written for everyday life.</p>
+    <p class="lede">We write about marriage, singleness, dating, conflict, and faith. Our aim is to help you put Scripture into practice in your own life.</p>
     ${BLOG_TOPICS.length > 1 ? `<nav class="category-nav" aria-label="Blog topics">
           ${BLOG_TOPICS.map((topic) => `<a href="#${topic.id}">${escapeAttr(topic.name)}</a>`).join("\n          ")}
         </nav>` : ""}
@@ -1373,6 +1373,11 @@ const postAuthors = (author) =>
       }))
     : { "@type": "Organization", name: "Zoe Life" };
 
+const ARTICLE_REVIEW = {
+  "recipes-for-a-blessed-marriage": "Kemi to approve the rewritten Recipes article against the original teaching.",
+  "preparing-for-marriage-while-single": "Confirm the source for Mary's estimated age; Scripture does not state her age.",
+  "after-you-meet-the-right-one": "Confirm the personal anecdote about the woman and the man's death before publication.",
+};
 const postPage = (post) => {
   const pre = prefixOf(post.page);
   const base = CONFIG.siteUrl.replace(/\/$/, "");
@@ -1441,6 +1446,7 @@ ${post.toc.map((item) => `        <li><a href="#${item.id}">${escapeAttr(item.te
       </ul>
     </nav>` : ""}
     <div class="prose">
+${ARTICLE_REVIEW[post.slug] ? `<!-- TODO(client): ${ARTICLE_REVIEW[post.slug]} -->` : ""}
 ${post.html}
 ${notices.map((notice) => `<p class="scripture-notice">${notice}</p>`).join("\n")}
       <p class="card-link post-back"><a href="${pre}blog.html">Back to all articles</a></p>
@@ -1451,7 +1457,7 @@ ${notices.map((notice) => `<p class="scripture-notice">${notice}</p>`).join("\n"
 <section class="band-tan">
   <div class="wrap">
     <p class="eyebrow">${post.series ? escapeAttr(post.series) : "Keep going"}</p>
-    <h2>Watch ${escapeAttr(watchTitle)} with Tayo and Kemi.</h2>
+    <h2>Watch our ${escapeAttr(watchTitle)} series.</h2>
     <p>The full series is on the Videos page, alongside short clips on marriage, conflict, and singleness. Questions about your own season? Send us a message.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${pre}resources.html${playlist ? `#${playlist.id}` : ""}">Watch the series</a>
@@ -1624,7 +1630,7 @@ wrote(
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">404</p>
-    <h1>That page has moved on.</h1>
+    <h1>We could not find that page.</h1>
     <p class="lede">We could not find the page you were looking for. It may have been renamed, or the link may be out of date.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="index.html">Back to the home page</a>

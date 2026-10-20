@@ -1,8 +1,8 @@
 ---
 title: The Power of Praying Together: Prayer and Agreement in Christian Marriage
-description: Prayer in marriage is not optional. Tayo and Kemi share why to pray for yourself, how to start praying together as a couple, and the power of agreement.
+description: We share why personal prayer matters and how to begin praying together as a couple, even if you start with five minutes.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Marriage
 series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
@@ -25,7 +25,7 @@ First Peter 5:6 tells us to humble ourselves under the mighty hand of God so tha
 
 There will always be something to pray for. When we were single, we prayed, often in prayer meetings with friends. When we started dating, we prayed for God's will, for a blessed relationship, for grace to do what we ought to do and avoid what we ought not to do. When we married, we trusted God for grace as a couple. Then came children, and we trusted God for them. Now, as they go to college, we pray about the right friendships, the right career, and one day the right spouse. Add career, business, and everything else, and there is so much to lean on God for.
 
-Tayo also encourages what he calls **pre-praying**: not waiting until something happens before you pray, but praying into the future so that nothing catches you by surprise.
+We also encourage **pre-praying**: not waiting until something happens before you pray, but praying into the future so that nothing catches you by surprise.
 
 Ecclesiastes 4:12 says a threefold cord is not quickly broken. In a marriage, there is the husband, the wife, and the Lord holding them together. One of the main ways we invite Him to be that third strand, the glue in our marriage, is prayer. In prayer we say, "Lord, we honor Your direction and Your leadership. We receive Your correction and Your insight."
 

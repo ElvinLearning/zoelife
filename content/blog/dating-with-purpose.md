@@ -1,8 +1,8 @@
 ---
 title: Dating With Purpose: Clear Signals, Clear Expectations, and the Test of Grace
-description: Christian dating guidance from Tayo and Kemi: send clear signals, define the relationship, set expectations, and test it by God's grace before marriage.
+description: We talk about dating with clear intentions, honest expectations, and room to seek God before committing to marriage.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Dating
 series: Roadmap from Single to Married
 playlist: PLTiUnmAGHZkM
@@ -17,7 +17,7 @@ Sometimes it begins with a knowing in your heart, a word from the Lord, or even 
 
 Pay attention to the people you naturally flow with. Some people have someone right in front of them they flow with and never consider. Sometimes God reveals something first and then you pursue it. Other times you discover the connection first and then take it to God in prayer.
 
-Here is something Tayo often says: **it is easier to fall in love with somebody you flow with than to flow with somebody you are already in love with.** If the flow is there, attraction can grow by the grace of God. There is nothing wrong with starting out attracted to someone, but either way, take it to the Lord. He promises to lead us as our Shepherd, beside still waters and in paths of peace. If God is leading and there is no peace, God is not in it.
+Here is something we often say: **it is easier to fall in love with somebody you flow with than to flow with somebody you are already in love with.** If the flow is there, attraction can grow by the grace of God. There is nothing wrong with starting out attracted to someone, but either way, take it to the Lord. He promises to lead us as our Shepherd, beside still waters and in paths of peace. If God is leading and there is no peace, God is not in it.
 
 ## Send a Clear Signal
 
@@ -38,7 +38,7 @@ If someone has been giving you consistent attention for over a month without bei
 
 People often get hurt when they give someone privileges that person never earned, and then the relationship never materializes. Physical intimacy belongs to your spouse. There is also a level of commitment you shouldn't give to someone who has made no commitment to you. Cooking, cleaning, and ironing for a man who says "we're just friends" is more than friendship, and so is talking every night.
 
-If you aren't bold enough to ask, involve trusted people in your community. Tayo tells the singles in his church that if someone has been marking their territory and they don't know what is going on, he will go and ask. When these situations are handled poorly, people get devastated, and sometimes a whole church community starts picking sides.
+If you aren't bold enough to ask, involve trusted people in your community. We tell singles in our church that if someone has been giving them attention without making their intentions clear, we are willing to help them ask. When these situations are handled poorly, people get devastated, and sometimes a whole church community starts picking sides.
 
 ## Remember Why You Are Dating
 
@@ -60,7 +60,7 @@ Jesus set expectations with the crowds who followed Him. In Luke 14:25 to 33, gr
 
 ### How long should you date?
 
-It depends. But in Tayo's judgment, a relationship generally shouldn't go longer than about three years unless there is a very good reason, such as living in different countries or waiting on paperwork. Jesus spent three years with His disciples! Three years is enough to understand each other, ask your questions, and know whether you will spend your lives together. Then the next phase is planning a wedding.
+It depends. But our advice is that a relationship generally shouldn't go longer than about three years unless there is a very good reason, such as living in different countries or waiting on paperwork. Jesus spent three years with His disciples! Three years is enough to understand each other, ask your questions, and know whether you will spend your lives together. Then the next phase is planning a wedding.
 
 ### A word to the women
 
@@ -77,7 +77,7 @@ If someone loves God, is spiritually mature, has their natural life in order, fl
 > Do not quench the Spirit. Do not despise prophecies. Test all things; hold fast what is good.
 > 1 Thessalonians 5:19-21 (NKJV)
 
-Don't despise what the Lord is telling you, and still test it. The whole dating and courtship period is a testing period. As each thing checks out, you hold fast to it. Keep praying through the entire journey, especially in the early stages.
+Don't despise what the Lord is telling you, and still test it. The whole dating and courtship period is a testing period. As each thing checks out, you hold fast to it. Keep praying throughout the relationship, especially in the early stages.
 
 Kemi was once in a relationship she started out believing was right. She had peace about it. About six months in, as she kept praying, it felt like the Lord was distant, and she realized she had missed God. The other person hadn't done anything wrong. God simply hadn't sent her there. She repented, apologized to him, and yes, she cried. But she stood corrected, and that is the purpose of testing.
 

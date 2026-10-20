@@ -1,8 +1,8 @@
 ---
 title: Why Conflicts Arise: The Differences Behind Most Disagreements
-description: Conflict is part of life, but knowing why it happens helps you resolve it. Tayo and Kemi explain the differences behind most conflict in marriage and family.
+description: We look at the differences and assumptions behind everyday disagreements, and how understanding them can help us resolve conflict.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Conflict
 series: Conflict Resolution
 playlist: PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2
@@ -47,7 +47,7 @@ Sometimes an expectation was never communicated: "I didn't know that's what you 
 
 ### 3. Different desires and passions
 
-When a couple is consistently passionate about different things, conflict can follow. We see it in our home: with children ranging from a teenager to a baby, everyone wants to watch different shows and do different activities. If we only do what the younger ones want, the older ones feel left out. Different preferences at different stages of life need to be welcomed and managed.
+When a couple is consistently passionate about different things, conflict can follow. We see it in our home: our children have wanted different shows and activities at different ages. If we only do what the younger ones want, the older ones feel left out. Different preferences at different stages of life need to be welcomed and managed.
 
 ### 4. Different positions
 
@@ -79,7 +79,7 @@ Things we consider normal, our children look at and say, "Daddy, Mommy, seriousl
 
 ### 11. Assumptions and incomplete information
 
-Some of the most painful conflicts come from false accusations, often based on incomplete information or misreading someone's heart. Kemi is generally louder and an extrovert, so people sometimes assume she isn't listening, when she is actually very detail-oriented and has an introverted side. People sometimes see Tayo as quiet and deep and assume he won't stand up for himself. Assumptions like these can lead to major conflict if they aren't addressed.
+Some of the most painful conflicts come from false accusations, often based on incomplete information or misreading someone's heart. We have both experienced this. People sometimes assume Tayo's quietness means he won't stand up for himself. Others assume Kemi isn't listening because she is more outgoing, even though she pays close attention to detail. Assumptions like these can lead to major conflict if they aren't addressed.
 
 ### 12. Cultural, traditional, and social differences
 

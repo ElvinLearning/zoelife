@@ -1,8 +1,8 @@
 ---
 title: God's Design for Marriage: The Basics and the Blessings Every Couple Can Enjoy
-description: Marriage 101 from Tayo and Kemi: God designed marriage in Genesis 2, and couples who follow His pattern enjoy companionship, multiplication, and power in prayer.
+description: We return to Genesis 2 to look at God's design for marriage and what it means for our life together.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Marriage
 series: Marriage 101
 playlist: PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z
@@ -39,11 +39,11 @@ From this design flow the **responsibilities** of husbands and wives: leaving, j
 > And the Lord God said, "It is not good that man should be alone; I will make him a helper comparable to him."
 > Genesis 2:18 (NKJV)
 
-The Holy Spirit is called the Paraclete, the One who comes alongside and does life with us. As believers, we are never truly alone. But in a spouse, God has also given us a physical companion who makes it easier to go through the highs and the lows. A friend. A confidant. Someone to share life's journey with. Even wealth is better when you have someone to share it with.
+The Holy Spirit is called the Paraclete, the One who comes alongside and does life with us. As believers, we are never truly alone. But in a spouse, God has also given us a physical companion who makes it easier to go through the highs and the lows. Someone you can confide in and share life with. Even wealth is better when you have someone to share it with.
 
 Genesis 2:25 describes real companionship: someone you can be completely transparent with, unfiltered. In a culture where people often say what they don't mean, a true companion is one of the greatest gifts of marriage.
 
-Kemi describes it this way: sometimes a thought is bugging her that she knows she shouldn't be thinking. She can go to her husband and say, "I need God's wisdom and grace to deal with this." They pray together and lay hold of the Word together. She has the Holy Spirit, but it is a blessing to work through things as a threefold cord: God, her husband, and her.
+In our marriage, we can bring a troubling thought to each other and ask for help. We pray and turn to the Word together. Each of us has the Holy Spirit, and it is a blessing to work through things with God and with each other.
 
 When Jesus walked the earth, He had the Holy Spirit, and still He had companions. When He was troubled, He wanted Peter, James, and John to pray with Him. God has provided that kind of companionship for us in marriage.
 
