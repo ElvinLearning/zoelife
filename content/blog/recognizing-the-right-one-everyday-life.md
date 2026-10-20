@@ -1,8 +1,8 @@
 ---
 title: How to Recognize the Right One: Through Your Relationships and Everyday Life
-description: How do you recognize the right one? Tayo and Kemi show how God often uses your friends, your church, and ordinary obedience to lead you to your spouse.
+description: How do you recognize the right person? We look at how God can guide you through trusted relationships and everyday obedience.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Dating
 series: Recognizing the Right One
 playlist: PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP
@@ -17,12 +17,12 @@ excerpt: God does not ask you to find the right one without helping you recogniz
 - **Not the only one.** There can be choices within God's will. Jacob was sent to Laban's house, where he could marry one of Laban's daughters.
 - **Not necessarily the most attractive to you.** This is the one many people miss. Our tastes can be infected by the flesh, and sometimes what we like needs to be detoxed. The person God leads you to may not appeal to you at first, and then God works on you.
 
-The right one is the person God has ordained to walk this walk of destiny with you: someone who complements you, so you can fulfill destiny together.
+By the right one, we mean someone God has called to share life with you, so you can help each other do what He has asked of you.
 
 God never tells us to find the right one without helping us recognize them. Through the Holy Spirit, He helps us in many ways. We have already looked at three:
 
 1. **Divine revelation.** God speaks, and He can reveal who you will marry. In Genesis 2, God brought Eve to Adam.
-2. **Divine and natural authorities.** In Scripture, fathers often played a big part in their children's marriages, as with Abraham and Isaac, and Isaac and Jacob. Tayo once thought this was merely cultural, until he read 1 Corinthians 7. In his pastoral experience, believers who detach themselves from any authority often make this area of life much harder. If you have no natural or spiritual covering, seek one.
+2. **Divine and natural authorities.** In Scripture, fathers often played a big part in their children's marriages, as with Abraham and Isaac, and Isaac and Jacob. Reading 1 Corinthians 7 helped us see this as more than a cultural practice. In our pastoral work, we have seen how much harder this becomes when people cut themselves off from trusted guidance. If you have no natural or spiritual covering, seek one.
 3. **Your place of service.** Rachel was feeding her father's flock when she met Jacob. Zipporah met Moses the same way. Ruth was serving Naomi when she met Boaz.
 
 Now let's look at two more.

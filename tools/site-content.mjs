@@ -236,7 +236,7 @@ export const COURSE_TRACKS = [
     subtitle: "Preparing for the One",
     audience: "For singles who want to date with purpose and prepare for marriage.",
     description:
-      "Draft outline for the Single and Dating track from Tayo and Kemi. Lessons are coming soon, and enrollment opens when the payment link is ready.",
+      "Explore our draft Single and Dating course outline. We are preparing lessons about dating with purpose and getting ready for marriage.",
     modules: [
       {
         title: "Truth over lies",
@@ -276,7 +276,7 @@ export const COURSE_TRACKS = [
     subtitle: "Building a Strong Foundation",
     audience: "For couples in a serious relationship who are discerning marriage.",
     description:
-      "Draft outline for the Committed Relationship track. Module titles are public. Lesson videos stay private until enrollment opens.",
+      "Explore our draft course for committed couples, with teaching on communication, shared values, and preparing for marriage.",
     modules: [
       {
         title: "Knowing each other deeply",
@@ -308,7 +308,7 @@ export const COURSE_TRACKS = [
     subtitle: "Launching Well",
     audience: "For engaged couples and newlyweds in their first year. This is the core pre-marital track.",
     description:
-      "Draft outline for the Engaged and First Year of Marriage track. The lesson list is public. Paid teaching is not on this page.",
+      "Explore our draft course for engaged couples and newlyweds, covering marriage, conflict, and building a home together.",
     modules: [
       {
         title: "God's design for marriage",
@@ -324,7 +324,7 @@ export const COURSE_TRACKS = [
       },
       {
         title: "Money, home, and future",
-        lessons: ["Combining finances", "Building home culture and traditions", "Lessons from 19 years"],
+        lessons: ["Combining finances", "Building home culture and traditions", "Lessons from our marriage"],
       },
     ],
   },

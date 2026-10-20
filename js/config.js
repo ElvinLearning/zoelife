@@ -19,6 +19,7 @@ window.ZOE_CONFIG = {
   "payments": {
     "devotional": {
       "amazon": null,
+      "lulu": null,
       "etsy": null,
       "gumroad": null,
       "stripe": null,
@@ -26,6 +27,7 @@ window.ZOE_CONFIG = {
     },
     "journal": {
       "amazon": null,
+      "lulu": null,
       "etsy": null,
       "gumroad": null,
       "stripe": null,

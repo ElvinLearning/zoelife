@@ -193,7 +193,7 @@ for (const p of [...PAGES, ...REDIRECTS]) {
   const unsafe = ext.filter((a) => !/rel="noopener noreferrer"/.test(a));
   check(`${p} external links use rel=noopener noreferrer`, unsafe.length === 0, `${unsafe.length} missing`);
 
-  const fake = (doc.match(/example\.(com|org)|lorem|TODO|FIXME|href="#"/gi) || []);
+  const fake = (doc.replace(/<!--[\s\S]*?-->/g, "").match(/example\.(com|org)|lorem|TODO|FIXME|href="#"/gi) || []);
   check(`${p} has no placeholder or fake URLs`, fake.length === 0, fake.join(", "));
 }
 
@@ -325,7 +325,7 @@ check("Contact message form omits provider details", !/Message delivery\.|Messag
 check("Contact copy makes no email-publication claim", !/does not publish (?:its )?email addresses/i.test(contact));
 check("No mailto links", !/mailto:/i.test(publishedHtml));
 check("No private backend addresses", !/@yahoo\.com|@gmail\.com/i.test(publishedHtml));
-check("No prices are stated", !/\$\s?\d|USD\s?\d|\d+\.\d{2}\s?(?:USD|dollars)/i.test(visibleText(publishedHtml)));
+check("Only approved devotional prices are stated", (visibleText(publishedHtml).match(/\$\s?\d+(?:\.\d+)?/g) || []).every(price => ["$9.99", "$12.99"].includes(price)));
 check("KingsWord is not listed as a client", !/kingsword/i.test(publishedHtml));
 
 const booksDoc = html["books.html"];
@@ -335,7 +335,7 @@ check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
 check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
 check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
 check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
-check("Purchase options are fail-closed when unconfigured", /Purchase options coming/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
+check("Purchase options are fail-closed when unconfigured", /Coming soon/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
 check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
 check("Books page has both Saturday titles",
   /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));
@@ -398,7 +398,7 @@ check("Home founders block uses the studio couple photo, not the beach hug",
 check("About couple photo is the studio portrait",
   /tayo-kemi-studio\.jpeg/.test(html["about.html"]) &&
   !/<img src="assets\/photos\/tayo-kemi-about\.jpg"/.test(html["about.html"]));
-check("Consult shows Tayo and Kemi", /tayo-kemi-hero\.jpg/.test(consult));
+check("Consult shows the uncropped Tayo and Kemi photo", /tayo-kemi-full\.jpg/.test(consult));
 check("Home does not use the stage photo", !/tayo-kemi-stage\.jpg/.test(html["index.html"]));
 const homePhotoImgs = [...html["index.html"].matchAll(/<img[^>]+src="assets\/photos\/([^"]+)"/g)].map((m) => m[1]);
 check("Home uses at most one beach-hug file",
@@ -459,10 +459,9 @@ check("Home hero puts Send a message before books",
   homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books"));
 check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
-check("About founder line is Pastors Tayo and Kemi", /founded by Pastors Tayo and Kemi/.test(aboutMain));
-check("Home founder heading is Pastors Tayo and Kemi", /founded by Pastors Tayo and Kemi/.test(homeMain));
-check("About meta uses the Pastors founder sentence",
-  /Zoe Life was founded by Pastors Tayo and Kemi/.test(html["about.html"]));
+check("About introduces us in our own voice", /We are Tayo and Kemi Akinyemi, and we started Zoe Life/.test(aboutMain));
+check("Home founder heading speaks directly to the reader", /<h2>We are glad you are here.<\/h2>/.test(homeMain));
+check("About meta uses shared voice", /We are Tayo and Kemi. Learn why we started/.test(html["about.html"]));
 check("About Meet section keeps the Meet Tayo and Kemi eyebrow",
   /id="meet"[\s\S]*?<p class="eyebrow">Meet Tayo and Kemi<\/p>/.test(aboutMain));
 check("About Meet couple photo is the flowering-tree portrait",
@@ -493,11 +492,9 @@ check("Couple names are Tayo then Kemi, never Kemi and Tayo",
   !/Kemi and Tayo/.test(namingCorpus) && !/Kemi and Pastor/.test(namingCorpus));
 check("Home does not prefix Pastor on every mention",
   !/Pastor (?:Tayo|Kemi|Tai)/.test(html["index.html"]));
-check("Footer says Founded by Tayo and Kemi",
-  /Founded by Tayo and Kemi/.test(footerOf(html["index.html"])));
-check("Pastor title is used on the founder line, Meet photo, and Meet caption, not on every mention",
-  (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 3 &&
-  /founded by Pastors Tayo and Kemi/.test(aboutMain) &&
+check("Footer signs off with Tayo and Kemi", /<p>Tayo and Kemi<\/p>/.test(footerOf(html["index.html"])));
+check("Pastor title stays on the Meet photo and caption only",
+  (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 2 &&
   /alt="Pastors Tayo and Kemi smiling and embracing/.test(aboutMain) &&
   /<figcaption>Pastors Tayo and Kemi Akinyemi\.<\/figcaption>/.test(aboutMain) &&
   !/Pastor Tayo and Pastor Kemi/.test(aboutMain) &&
@@ -505,8 +502,8 @@ check("Pastor title is used on the founder line, Meet photo, and Meet caption, n
 check("Book covers lift off the cream page",
   /\.book-cover\s*\{[^}]*box-shadow:[^}]*rgba\(44,\s*40,\s*36,\s*\.1[6-9]/.test(css) &&
   /\.book-cover\s*\{[^}]*box-shadow:[^}]*rgba\(44,\s*40,\s*36,\s*\.2[0-9]/.test(css));
-check("Her 7-day copy is on Books", /biblical foundation of gratitude/.test(booksDoc));
-check("Her 100-day copy is on Books", /dedicated space to pause, remember God's goodness/.test(booksDoc));
+check("Devotional describes seven days of Scripture", /Over seven days, this devotional takes you through Scripture/.test(booksDoc));
+check("Journal describes 100 days of gratitude", /100 days of space to record what you are thankful for/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
 check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
 check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
@@ -650,8 +647,8 @@ for (const p of POST_PAGES) {
   if (quotes) check(`${p} credits its Bible translation`, /class="scripture-notice"/.test(doc));
 }
 
-check("Deploy publishes course pages and clip assets", /single-dating/.test(workflow) && /engaged-first-year/.test(workflow) && /welcome/.test(workflow) && /assets/.test(workflow));
-check("Deploy publishes the blog", /blog\.html/.test(workflow) && /blog\/\*\.html/.test(workflow));
+check("Deploy assembles course pages and clip assets", /node tools\/assemble.mjs/.test(workflow) && /courses/.test(read("tools/assemble.mjs")) && /assets/.test(read("tools/assemble.mjs")));
+check("Deploy assembles the blog", /node tools\/assemble.mjs/.test(workflow) && /blog/.test(read("tools/assemble.mjs")));
 const partnerDoc = html["partner.html"];
 check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
 if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {

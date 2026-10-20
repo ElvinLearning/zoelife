@@ -1,8 +1,8 @@
 ---
 title: Effective Communication in Marriage and Family: A Biblical Tool for Resolving Conflict
-description: Many conflicts start with bad communication. Tayo and Kemi share biblical tools: listen for the why, confirm what you heard, speak life, and speak the truth in love.
+description: We share practical ways to listen carefully, check what you heard, and speak the truth in love when conflict arises.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Conflict
 series: Conflict Resolution
 playlist: PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2
@@ -47,7 +47,7 @@ The habits we build with people often carry over to how we hear God. In John 21,
 
 ## 3. Be Slow to Speak
 
-Kemi describes this as a personal journey: "Some of us are wired as straight shooters. I'm learning that just pausing before I speak makes such a big difference. Sometimes I think, *I'm so glad I didn't say that.*"
+Some of us are quick to say exactly what we think. We are learning how much difference a pause makes. Sometimes we are grateful afterward that we waited before speaking.
 
 Someone once said God gave us two ears and one mouth so we would listen twice as much as we speak. Some people speak to impress. Others start with A, which is a fact, jump to Z, which is their own conclusion, and then state Z with total confidence as if it were a fact.
 
@@ -92,9 +92,9 @@ Hebrews 12 tells us the Lord disciplines those He loves. Love is not always "nic
 
 ### Be ready to receive the truth too
 
-Kemi puts it this way: "I would hate to leave the house with a big stain on my dress because my own child was afraid to tell me, and then have outsiders laugh behind my back." Give the people close to you the freedom to tell you the truth.
+Think of leaving the house with a stain on your clothes because your own child was afraid to tell you. We would rather hear the truth at home than discover it later. Give the people close to you the freedom to tell you the truth.
 
-Here is a secret: **ask for feedback.** "What did you think of how I explained that? Could I have said it better?" Ask often, and people will feel free to share. You will learn things you never considered. As Kemi says, "I'd rather you tell me the truth to my face, even if it's not polished. I may go and cry, but I will receive it." We have trained our children to give honest feedback, and they hear it from us as well. That is the kind of open relationship the Lord wants with us, too.
+Here is a secret: **ask for feedback.** "What did you think of how I explained that? Could I have said it better?" Ask often, and people will feel free to share. You will learn things you never considered. We would rather hear the truth directly, even when it is hard to receive. We have trained our children to give honest feedback, and they hear it from us as well. That is the kind of open relationship the Lord wants with us, too.
 
 ::: takeaways Practice These This Week
 - **Listen for the why.** In your next disagreement, ask what is behind your spouse's words.

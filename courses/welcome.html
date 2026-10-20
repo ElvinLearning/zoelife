@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Course welcome | Zoe Life</title>
-<meta name="description" content="Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.">
+<meta name="description" content="Course enrollment is not open yet. Find the latest course information or contact us about access.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://www.zoelifehub.com/courses/welcome">
 <meta name="theme-color" content="#F8F4ED">
@@ -12,7 +12,7 @@
 <meta property="og:site_name" content="Zoe Life">
 <meta property="og:url" content="https://www.zoelifehub.com/courses/welcome">
 <meta property="og:title" content="Course welcome | Zoe Life">
-<meta property="og:description" content="Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.">
+<meta property="og:description" content="Course enrollment is not open yet. Find the latest course information or contact us about access.">
 <meta property="og:image" content="https://www.zoelifehub.com/assets/photos/tayo-kemi-about.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
@@ -75,8 +75,8 @@
   <div class="wrap">
     <p class="eyebrow">Courses</p>
     <h1>Course welcome.</h1>
-    <p class="lede" id="welcome-note">This is a placeholder. Enrollment is not open yet, and this page does not grant course access.</p>
-    <p>If you finished a checkout, keep the email you used. Access email will start only after enrollment is live.</p>
+    <p class="lede" id="welcome-note">Enrollment is not open yet. Visit our Courses page for the latest information.</p>
+    <p>If you have a question about a payment or access, <a href="../contact.html#message">send us a message</a>. Keep your receipt so we can help.</p>
     <p class="card-link"><a href="../courses.html">Back to courses</a></p>
   </div>
 </section>
@@ -86,7 +86,7 @@
   var sessionId = params.get("session_id");
   var note = document.getElementById("welcome-note");
   if (!note || !sessionId) return;
-  note.textContent = "We saw a checkout reference on this page. Course access is not granted from the website yet. Watch your email once enrollment is open.";
+  note.textContent = "This page cannot confirm your payment or give you course access. Please keep your receipt and contact us if you need help.";
 })();
 </script>
 
@@ -94,7 +94,7 @@
 <footer class="site-footer">
   <div class="wrap-wide">
     <div class="footer-top">
-      <img class="footer-wordmark" src="../assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45">
+      <img class="footer-wordmark" src="../assets/brand/zoe-life-wordmark.png" alt="" width="220" height="45" loading="lazy">
       <p class="footer-tagline">Helping people thrive in every season of life.</p>
     </div>
     <div class="footer-grid">
@@ -178,7 +178,7 @@
     </div>
     <div class="footer-bottom">
       <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Founded by Tayo and Kemi.</p>
+      <p>Tayo and Kemi</p>
     </div>
   </div>
 </footer>

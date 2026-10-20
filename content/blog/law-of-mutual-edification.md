@@ -1,8 +1,8 @@
 ---
 title: The Law of Mutual Edification: How to Make Decisions That Bless You Both
-description: Christian marriage advice from Tayo and Kemi on 1 Corinthians 7: learn to make decisions that please the Lord, bless your spouse, and build your marriage.
+description: How do you make a decision that works for both of you? We look at what Scripture teaches about caring for your spouse as well as yourself.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Marriage
 series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
@@ -17,7 +17,7 @@ But there is something more, something we call **the law of mutual edification.*
 
 ## Why Staying in Your Lane Is Not Enough
 
-The husband has his instructions, and the wife has hers. Yet simply focusing on my lane while my husband focuses on his is not necessarily enough. Here is why.
+The husband has his instructions, and the wife has hers. Yet each of us simply focusing on our own part is not necessarily enough. Here is why.
 
 As believers, we walk inside a large scope called the will of God. Within it, a wife is to submit to her husband, and a husband is to love his wife. But it is possible for both spouses to do those things, both fully within God's will, without their lives really overlapping. They are like two individuals standing in the same field.
 
@@ -63,7 +63,7 @@ Maybe you're thinking, "We aren't unequally yoked. We both love the Lord. But we
 
 That happens when the husband keeps asking, "How can I be a blessing to my wife?" and the wife keeps asking, "How can I be a blessing to my husband?" all on the foundation of a wife submitting and a husband loving.
 
-The more we have lived this way, the more united we have become. Our children sometimes come to Tayo with a question, he says "go ask Mom," and they reply, "We already know what she's going to say. The same thing you just said." That is oneness. Kemi is very different from her husband, yet so much of their thinking is now aligned.
+The more we have lived this way, the more united we have become. Our children sometimes come to Tayo with a question, he says "go ask Mom," and they reply, "We already know what she's going to say. The same thing you just said." That is oneness. We are very different people, yet so much of our thinking is now aligned.
 
 Genesis 2:24 says a man is *joined* to his wife. Imagine two people physically joined together. They would be forced to make decisions that work for both, because neither can move without the other.
 

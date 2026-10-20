@@ -1,15 +1,15 @@
 ---
 title: Met the Right One? Seek Divine Confirmation Before You Move Forward
-description: Think you have met the right one? Tayo and Kemi explain how to seek divine confirmation, consecrate your desires, and pray instead of pressuring the other person.
+description: Think you have met the right person? We talk about seeking confirmation from God, trusting His will, and praying without pressuring someone.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Dating
 series: Recognizing the Right One
 playlist: PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP
 excerpt: Finding the right one is one thing. Connecting with them God's way is another. Three steps for the season after you believe you have met your future spouse.
 ---
 
-It is one thing to find the right one. It is another thing to connect successfully with the right one. In years of pastoring, Tayo has seen relationships he was convinced were of God that never even started, and others that started but never made it to marriage. Just because someone is the right one does not mean the relationship will automatically move forward.
+It is one thing to find the right one. It is another thing to connect successfully with the right one. In our years of pastoring, we have seen relationships we were convinced were of God that never even started, and others that started but never made it to marriage. Just because someone is the right one does not mean the relationship will automatically move forward.
 
 So let's assume you believe you have met the right person. What do you do now? In our *Recognizing the Right One* series, we share three steps: get divine confirmation, consecrate yourself, and pray.
 
@@ -47,9 +47,9 @@ This area of life is too important for God not to confirm it. Who you marry affe
 
 Sometimes you sense in your heart that a person is the one, but your flesh gets in the way. Maybe this is not who you like, or someone else has been giving you attention. When that happens, pray a prayer of consecration: *Lord, I consecrate myself to Your will and Your plan.* Jesus prayed this way in the garden. His flesh wrestled with what was ahead, and still He said, not My will, but Yours be done.
 
-We have to come to the place where we fully trust God, because He sees far ahead. Kemi often says she had no idea how much she would need exactly this kind of husband for the things God would call her to in her career and ministry. We only get glimpses of the future. God sees it all.
+We have to come to the place where we fully trust God, because He sees far ahead. When we look back, we can see how God prepared us for what lay ahead. Kemi had no idea how much she would need Tayo's support in the work and ministry God would call her to. We only get glimpses of the future. God sees it all.
 
-Think of it like present value and future value. God sees where He is taking you and shows you the present value now. It may not look like much yet, but with the growth and the journey you will walk with this person, the future value will be glorious. Other relationships look wonderful in the present, but they are already at their peak, and you don't know it.
+Think of it like present value and future value. God sees where He is taking you and shows you the present value now. It may not look like much yet, but as you grow and share life with this person, the future value will be glorious. Other relationships look wonderful in the present, but they are already at their peak, and you don't know it.
 
 > But the path of the just is as the shining light, that shineth more and more unto the perfect day.
 > Proverbs 4:18 (KJV)

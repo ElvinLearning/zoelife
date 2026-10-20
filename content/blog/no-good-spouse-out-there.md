@@ -1,8 +1,8 @@
 ---
 title: Is There Really No Good Spouse Out There? What God Says to Christian Singles
-description: Christian singles often hear there are no good spouses left. Tayo and Kemi answer that lie with Genesis 1:27, El Shaddai, and Psalm 23.
+description: Worried there is no good spouse out there? We look at what Scripture says about trusting God instead of settling out of fear.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Singles
 series: Dangerous Lies Singles Believe
 playlist: PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-

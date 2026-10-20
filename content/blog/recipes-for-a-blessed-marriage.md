@@ -1,56 +1,56 @@
 ---
-title: Recipes for a Blessed Marriage: 5 Essential Ingredients for Lasting Harmony
-description: Christian marriage advice from Tayo and Kemi: five ingredients for a blessed, lasting marriage, from listening and forgiveness to shared faith, joy, and honor.
+title: Recipes for a Blessed Marriage: Five Everyday Practices
+description: We share five everyday practices for marriage: listening, forgiveness, shared faith, time to enjoy each other, and mutual respect.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Marriage
 series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
 translation: ESV
-excerpt: A strong marriage is crafted through daily practices rooted in biblical truth. Here are five essential ingredients for a blessed and resilient relationship.
+excerpt: What we do for each other day by day matters. Here are five ways to put biblical teaching into practice in your marriage.
 ---
 
-Building a thriving, joyful marriage doesn't happen by accident. It requires intentionality, patience, and the right spiritual foundation. Just as a master chef carefully selects and balances ingredients to create a memorable meal, a strong marriage is crafted through daily practices rooted in biblical truth.
+A good marriage needs daily care. We want to talk about some ordinary things that matter: how we listen, how we forgive, and how we make time for each other.
 
-Whether you are newly engaged or have been walking hand-in-hand for decades, here are five foundational ingredients to cultivate a blessed and resilient relationship.
+Whether you are preparing for marriage or have been married for years, these five practices give you something to work on together.
 
-## 1. Active Listening & Open Communication
+## 1. Listen to Each Other
 
-In the busyness of daily life, it's easy to speak at each other rather than communicate with one another. True communication begins with active listening: hearing not just the words being spoken, but understanding the heart and emotion behind them. Make dedicated, distraction-free time each day to check in with your spouse.
+We can be busy and still assume we know what our spouse is thinking. Take time each day to listen without distractions. Ask what they mean and how they feel before you rush to answer.
 
 > Where there is no guidance, a people falls, but in an abundance of counselors there is safety.
 > Proverbs 11:14 (ESV)
 
-## 2. Radical Forgiveness and Grace
+## 2. Be Ready to Forgive
 
-No two people are perfect, and offense will inevitably arise. The secret to long-term harmony is extending grace swiftly. Holding onto past mistakes creates invisible walls; practicing unconditional forgiveness keeps the atmosphere of your home fresh and peaceful.
+We will let each other down at times. When that happens, we need to be willing to forgive rather than keep bringing up old mistakes. Forgiveness matters to the peace of our home.
 
 > Be kind to one another, tenderhearted, forgiving one another, as God in Christ forgave you.
 > Ephesians 4:32 (ESV)
 
-## 3. A Shared Spiritual Foundation
+## 3. Keep God at the Center
 
-Prioritize praying together, studying God's Word, and aligning your household values around faith. When Christ remains the center of your marriage, challenges become opportunities to grow closer together rather than pull apart.
+Make time to pray together and read God's Word. Talk about how your faith shapes the decisions you make as a family. We need God's help with the difficulties we face together.
 
 > Unless the LORD builds the house, those who build it labor in vain.
 > Psalm 127:1 (ESV)
 
-## 4. Cultivating Joy and Playfulness
+## 4. Enjoy Time Together
 
-Marriage should be fun! Don't let responsibilities overshadow the laughter that brought you together in the first place. Schedule regular date nights, try new activities together, and make space for lighthearted moments.
+Marriage should include things you enjoy together. Responsibilities can fill the calendar, so make time for a date or try something new together. We need room to laugh, too.
 
 > A joyful heart is good medicine, but a crushed spirit dries up the bones.
 > Proverbs 17:22 (ESV)
 
-## 5. Mutual Honor and Respect
+## 5. Treat Each Other With Respect
 
-Honor is treating your spouse as a precious gift. Speak highly of them in public, encourage their personal and spiritual growth in private, and guard their dignity at all times.
+How we speak about our spouse matters, both at home and around other people. Speak well of each other, encourage each other's growth, and protect each other's dignity.
 
 > Love one another with brotherly affection. Outdo one another in showing honor.
 > Romans 12:10 (ESV)
 
 ::: takeaways Key Takeaways for Couples
-- **Daily Check-In:** Dedicate at least 15 minutes every evening to talk without phones or screens.
-- **Quick Reconciliation:** Resolve misunderstandings before going to bed (Ephesians 4:26).
-- **Continuous Growth:** Invest in relationship resources, devotionals, and community support.
+- **Make time to talk:** Set aside 15 minutes in the evening without phones or screens.
+- **Work through misunderstandings:** Make peace before going to bed (Ephesians 4:26).
+- **Keep learning together:** Use teaching and devotionals, and stay connected to people who support your marriage.
 :::

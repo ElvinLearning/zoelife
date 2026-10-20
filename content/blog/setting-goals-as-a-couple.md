@@ -1,8 +1,8 @@
 ---
 title: Setting Goals as a Couple: How to Write a Shared Vision for Your Marriage
-description: Can two walk together unless they agree? Tayo and Kemi share how Christian couples can set goals together, write a shared vision, and stay united all year.
+description: We talk about setting goals together, writing down what you are trusting God for, and returning to those plans as a couple.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Marriage
 series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
@@ -42,7 +42,7 @@ Paul pleaded with the Philippians to fulfill his joy by being like-minded, havin
 
 One reason couples struggle to get into unity is that someone feels taken advantage of. Getting on the same page often involves some negotiation, and when one spouse feels the other is seeking an unfair advantage, the united front breaks. Sometimes you will have to set aside your own preferences for the sake of agreement. It can be work, but it is worth it, because there is a multiplication of grace and fruitfulness that comes only through unity.
 
-Kemi encourages couples not to wait until they reach the negotiating table. If you know something would bless your spouse, put it on the table yourself. You can also be honest: "I would really appreciate this, and I know that would bless you. Let's pray about God's perfect plan." That is a spirit of "I want to be a blessing," instead of "Why aren't we doing everything my way?"
+We encourage you not to wait until you reach the negotiating table. If you know something would bless your spouse, put it on the table yourself. You can also be honest: "I would really appreciate this, and I know that would bless you. Let's pray about God's perfect plan." That is a spirit of "I want to be a blessing," instead of "Why aren't we doing everything my way?"
 
 ### How to work through your lists
 
@@ -54,7 +54,7 @@ Verse 4 says to look out for your own interests *and* the interests of others. S
 
 What each of you wants is not necessarily wrong, and you may not have to pick only one. Maybe one goal is for this season and the other for the next. Maybe you can do both at once. Keep seeking the Lord and stay mindful of being a blessing to your spouse.
 
-This takes work, discipline, and patience. And you may not get everything. As Tayo puts it, **it is better for both of you to agree on 70% of what you want than to force 100% of what you want and lose your agreement.** The secret is getting into one mind and one accord. You can get everything you want and still lose, because the blessing is not in it. Learn to talk until you agree.
+This takes work, discipline, and patience. And you may not get everything. We often say **it is better for both of you to agree on 70% of what you want than to force 100% of what you want and lose your agreement.** The secret is getting into one mind and one accord. You can get everything you want and still lose, because the blessing is not in it. Learn to talk until you agree.
 
 ## Stay in Agreement
 

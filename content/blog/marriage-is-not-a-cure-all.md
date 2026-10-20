@@ -1,8 +1,8 @@
 ---
 title: Marriage Is Not the Cure for Everything: Joy and Contentment While You Are Single
-description: Is marriage the cure for all your problems? Tayo and Kemi unpack a dangerous lie singles believe and show how to keep God first and enjoy every season.
+description: We talk about keeping God first and finding contentment while single, without expecting marriage to solve every problem.
 date: 2026-10-13
-author: Pastors Tayo and Kemi
+author: Tayo and Kemi
 category: Singles
 series: Dangerous Lies Singles Believe
 playlist: PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-
@@ -59,11 +59,11 @@ Don't let marriage define your self-esteem. Your identity is that you are a chil
 
 When you believe marriage will solve everything, you place impossible expectations on a future husband or wife. Marriage is beautiful, but it is not heaven.
 
-God never said your spouse is El Shaddai. He said, *I am your Source.* Your spouse is a major channel of God's blessing, but your spouse is not the source. If marriage becomes an idol, your spouse becomes your source, and when your spouse cannot deliver, which will happen, you end up disappointed, disoriented, and discouraged.
+God never said your spouse is El Shaddai. He said, *I am your Source.* Your spouse is a major channel of God's blessing, but your spouse is not the source. If marriage becomes an idol, your spouse becomes your source, and when your spouse cannot deliver, which will happen, you end up deeply disappointed.
 
 When God remains your Source, you receive what you can from your spouse with gratitude, and you take what your spouse cannot give to God. That is a balanced view of marriage.
 
-Kemi puts it this way: "I love my husband, and he loves his wife, but we both know we are not complete without God. There are needs I have that my husband is working on meeting, and needs he has that I am working on meeting. The part that is missing, we know we can always get in God."
+We love each other, but we both know we are not complete without God. Each of us is still learning how to meet the other's needs. For what we cannot give each other, we know we can turn to God.
 
 Whether you are single or married, you never stop looking to God as your Source. So learn to lean on Him now. Your fellowship with God follows you into marriage and into parenting. If you don't develop it while you are single, you will put that pressure on your spouse instead.
 

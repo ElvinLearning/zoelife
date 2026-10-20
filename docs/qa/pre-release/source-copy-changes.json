@@ -1,0 +1,682 @@
+[
+  {
+    "file": "tools/build.mjs",
+    "before": "\"Zoe Life equips individuals, couples, families, churches, and organizations with \" +\n  \"biblical truth, practical wisdom, and Christ-centered resources to help them thrive \" +\n  \"in every season of life.\"",
+    "after": "\"We share what Scripture teaches about everyday life, from the relationships at home \" +\n  \"to the decisions we make at work. We want to help you put that teaching into practice.\""
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "\"At Zoe Life, we create faith-centered, practical resources to encourage growth, \" +\n  \"strengthen your walk with God, and provide support for the different areas and seasons of life. \" +\n  \"Explore our current books below. Marriage teaching videos live on the Resources page, with more books to come.\"",
+    "after": "\"We wrote these books to help you notice God's goodness and make thanksgiving part of your day. \" +\n  \"You can use them on your own or alongside your Bible reading and prayer.\""
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Gratitude is more than an occasional response to God's blessings. It is a way of life rooted in recognizing who God is, remembering His goodness, and responding to Him with thanksgiving.",
+    "after": "Gratitude begins with remembering who God is and what He has done. We want to help you make that a daily practice."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "The 7-Day Gratitude Devotional invites you to explore the biblical foundation of gratitude through seven days of Scripture, reflection, prayer, and practical application. Each day provides an opportunity to pause, reflect on God's faithfulness, and intentionally cultivate a heart of thanksgiving.",
+    "after": "Over seven days, this devotional takes you through Scripture with questions to reflect on, prayers, and practical ways to give thanks."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this devotional is designed to help you grow in gratitude and make thanksgiving an intentional part of your walk with God.",
+    "after": "Read a day at a time, and take a few minutes to remember God's faithfulness in your own life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Gratitude grows when we intentionally pause to recognize and remember God's goodness.",
+    "after": "It is easy to forget the ways God has helped us. Writing them down gives us something to return to."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "A 100-Day Gratitude Journal provides a dedicated space to pause, remember God's goodness, record the ways He has been faithful, and respond to Him with heartfelt thanksgiving.",
+    "after": "This journal gives you 100 days of space to record what you are thankful for and how God has been faithful."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Whether you use it during your daily Bible reading, prayer time, or personal reflection, this journal encourages you to develop a consistent practice of gratitude. Over the course of 100 days, your entries can become more than individual reflections. Together, they create a meaningful record of blessings, answered prayers, reflections, and reminders of God's faithfulness along the way.",
+    "after": "Use it with your Bible reading or prayer time. As you fill the pages, you will have a record of answered prayers and everyday blessings to look back on."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "The 7-Day Gratitude Devotional and A 100-Day Gratitude Journal were created to complement one another while also being valuable as individual resources. Begin with the 7-Day Gratitude Devotional, then continue with the journal. You can begin with either resource or use them together.",
+    "after": "You can begin with the devotional, then keep writing in the journal. Each book also works on its own, so start with whichever helps you most."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We are continuing to develop faith-centered, practical resources. Check back for new books, workbooks, guides, and other resources from Zoe Life.",
+    "after": "We are working on more books and practical resources to share with you."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Booking uses Google Calendar appointment scheduling on the Zoe Life Workspace calendar.",
+    "after": "Choose an available time in Google Calendar. You will receive the call details with your confirmation."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Founded by Tayo and Kemi.",
+    "after": "Tayo and Kemi"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Zoe Life equips individuals, couples, families, churches, and organizations with biblical truth, practical wisdom, and Christ-centered resources.",
+    "after": "We share biblical teaching and practical resources for your faith, relationships, and everyday decisions."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "<section class=\"hero-home\">",
+    "after": "<!-- TODO(client): Kemi's homepage copy goes here -->\n<section class=\"hero-home\">"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We care about people. This is a place to start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope in an ordinary season. The message stays the same. You don't have to do life alone.",
+    "after": "We want to see people growing, marriages strengthening, and families finding hope in God's Word. We share teaching and resources you can use in your own life, wherever you are starting from."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "<h2>Zoe Life was founded by Pastors Tayo and Kemi.</h2>",
+    "after": "<h2>We are glad you are here.</h2>"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We start with Scripture, then talk about what it means for the decisions, relationships, and seasons you are actually in. Biblical and practical, in the same breath.",
+    "after": "We started Zoe Life to share what we have learned from Scripture and from our own marriage, family, and work. We hope it helps you with the decisions and relationships in your life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Meet Tayo and Kemi</a>",
+    "after": "Get to know us</a>"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Keep growing between conversations.",
+    "after": "Teaching for everyday life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Short clips and full series from Tayo and Kemi on singleness, marriage, conflict, and faith.",
+    "after": "Our teaching on singleness, marriage, conflict, and faith, in short clips and full series."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "<h2>Start with a conversation.</h2>",
+    "after": "<h2>We would love to hear from you.</h2>"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Send us a message to connect. We would love to hear from you.",
+    "after": "Send us a message about books, speaking, or a question you have. Please allow three business days for a reply."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Zoe Life was founded by Pastors Tayo and Kemi. A place to start a conversation, pick up a resource, and keep going.",
+    "after": "We are Tayo and Kemi. Learn why we started Zoe Life and how Scripture shapes our teaching and resources."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "<p>Zoe Life was founded by Pastors Tayo and Kemi.</p>",
+    "after": "<p>We are Tayo and Kemi Akinyemi, and we started Zoe Life to share biblical teaching people can use in everyday life.</p>"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "That is the heart of this work, said in ordinary language: helping people thrive in every season of life.",
+    "after": "That is why we chose the name: we want to help people live in the fullness of what Jesus gives."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "You don't have to do life by yourself. We care about people, and we want this to be a place where you can start a conversation, pick up a resource, and keep going, whether you already walk with God or you are simply looking for a little more hope.",
+    "after": "You don't have to do life by yourself. Whether you have walked with God for years or are still asking questions, we hope you find teaching here that helps you."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We believe biblical truth is not boxed into one corner of life. It gives wisdom for relationships, family, school, work, and the questions that show up on ordinary days.",
+    "after": "Scripture speaks to the whole of life. We turn to it for wisdom at home, at work, and when we face difficult decisions."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Every season has room to grow. Some seasons also bring questions, transitions, and hard days that are easier to walk through with encouragement and practical support.",
+    "after": "Some changes are exciting. Others are hard. We know how much it helps to have encouragement and practical support through both."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Through books and resources, speaking, workshops, and personal conversations, Zoe Life seeks to encourage individuals, couples, families, students, and professionals with biblical principles and tools they can use in everyday life.",
+    "after": "We share through books, teaching, workshops, and personal consultations. Our aim is to help you apply what you learn."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We start with Scripture, then talk about what it means for the life you are actually living. Every person's journey is different. Our desire is to meet people where they are and help them move forward with wisdom, faith, and purpose.",
+    "after": "We know your circumstances may be different from ours. We want to offer biblical guidance that helps you think through what you are facing."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Tayo and Kemi, founders of Zoe Life.",
+    "after": "Tayo and Kemi Akinyemi."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We start with what Scripture says, then talk it through in spoken English for real decisions, real relationships, and real seasons.",
+    "after": "We start with what Scripture says, then talk about it in everyday, practical terms."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Jesus Christ is the foundation of everything we do. We desire that every resource, conversation, and opportunity to serve points people toward Him.",
+    "after": "Jesus Christ is the foundation of our work. We want what we share to point people toward Him."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "God's Word is our final authority. We seek to faithfully understand, teach, and apply Scripture in ways that are both biblically sound and practically relevant.",
+    "after": "God's Word is our final authority. We take care to teach it faithfully and apply it to everyday life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Knowledge is most valuable when it is applied. We are committed to guidance that helps people live out biblical principles in everyday life.",
+    "after": "We want what you learn to help you with the choices in front of you."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We seek to honor God by pursuing excellence in our work, our relationships, our communication, and the resources we create.",
+    "after": "We want to honor God by doing our work well and taking care with what we share."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We desire to serve with honesty, humility, transparency, and faithfulness, reflecting the character of Christ in all we do.",
+    "after": "We want our actions to match what we teach. That means being honest and taking responsibility when we fall short."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Every person has a unique story. We strive to serve with grace, patience, understanding, and genuine care.",
+    "after": "We want to listen carefully and treat people with patience and kindness."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We believe every gift, opportunity, and resource entrusted to us should be managed faithfully for God's glory and the benefit of others.",
+    "after": "We want to use what God has entrusted to us faithfully and for the good of others."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Spiritual maturity is a lifelong journey. Our desire is to encourage continual growth in faith, wisdom, character, and service.",
+    "after": "We are still learning, too. We want to keep growing in our faith and in how we serve others."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Tayo and Kemi Akinyemi are husband and wife, and the founders of Zoe Life. They share a passion for helping people grow and thrive. Their work is shaped not only by what they have studied and taught, but also by what they have lived.",
+    "after": "We are husband and wife, and our teaching draws on our own life together as well as what we have studied. Marriage and parenting have given us plenty to learn and share."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "They also serve as pastors at Life Springs Church. Through Zoe Life they bring together their faith, their work, years of teaching and mentoring, and lessons learned through marriage, parenting, and everyday life.",
+    "after": "We also serve as pastors at Life Springs Church. Through Zoe Life, we share lessons from our faith, our work, and years of teaching and mentoring."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "considering Tayo and Kemi for a speaking engagement or workshop",
+    "after": "thinking of inviting us to speak or lead a workshop"
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Start with a conversation. We would love to hear from you.",
+    "after": "Have a question or an invitation for us? Use the form below. Please expect a reply within three business days."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "You can also schedule a complimentary 20-minute consultation. It is a separate booking, not this form.",
+    "after": "You can book a complimentary 20-minute consultation using the link below."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "A short call to understand where you are and whether Zoe Life can help.",
+    "after": "A short call to hear what you need and see how we can help."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Short clips and playlists from Tayo and Kemi on singleness, marriage, conflict, and faith, from the Zoe Family Life channel.",
+    "after": "Watch our Zoe Family Life teaching on singleness, marriage, conflict, and faith, in short clips and full playlists."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Short clips and full series from Tayo and Kemi for singleness, marriage, conflict, and faith. Captions are already in the picture. Press play, or watch the full video on YouTube.",
+    "after": "We talk about singleness, marriage, conflict, and faith in these clips and full series. The short clips have captions. Press play, or follow the link to watch the full video on YouTube."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Self-hosted courses from Tayo and Kemi for singles, committed couples, and the first year of marriage. Outlines are drafts until enrollment opens.",
+    "after": "See the courses we are preparing for singles, committed couples, and newlyweds. Explore the draft outlines and hear when enrollment opens."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Three tracks from Tayo and Kemi, hosted on Zoe Life. Outlines below are drafts. Paid lessons are not on this site.",
+    "after": "We are preparing three courses for singles and couples. You can explore the draft outlines below. Lessons and enrollment are coming soon."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "This outline is a draft. Lessons are coming soon. Paid lesson videos are not published on this page.",
+    "after": "We are still preparing this course. The outline below is a draft; lessons and enrollment are coming soon."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Questions about access can wait until enrollment opens. Use the contact form and choose Course access.",
+    "after": "Have a question about a course? Send us a message and choose Course access on the form."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Placeholder page for people returning from course checkout. Enrollment is not open, and this page does not grant access.",
+    "after": "Course enrollment is not open yet. Find the latest course information or contact us about access."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "This is a placeholder. Enrollment is not open yet, and this page does not grant course access.",
+    "after": "Enrollment is not open yet. Visit our Courses page for the latest information."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "If you finished a checkout, keep the email you used. Access email will start only after enrollment is live.",
+    "after": "If you have a question about a payment or access, <a href=\"../contact.html#message\">send us a message</a>. Keep your receipt so we can help."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "We saw a checkout reference on this page. Course access is not granted from the website yet. Watch your email once enrollment is open.",
+    "after": "This page cannot confirm your payment or give you course access. Please keep your receipt and contact us if you need help."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Partner with Zoe Life. Zoe Life is not a registered nonprofit. Stripe and PayPal partnership links appear here when they are published.",
+    "after": "Help us keep sharing biblical teaching and practical resources. Learn about partnership with Zoe Life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Zoe Life is not a registered nonprofit. When partnership checkout is ready, it will open through Stripe or PayPal.",
+    "after": "Your partnership helps us keep sharing biblical teaching and resources. Zoe Life is not a registered nonprofit."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Partnership helps Zoe Life keep creating biblical, practical resources for individuals, couples, and families. Buttons appear here only after Zoe Life publishes live links.",
+    "after": "If you would like to support this work, we would be glad to hear from you."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Christian marriage advice, dating guidance, and encouragement for singles from Tayo and Kemi of Zoe Life, rooted in Scripture and practical for everyday life.",
+    "after": "We share what Scripture teaches about marriage, dating, and everyday life, with practical guidance for singles and couples."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Articles from Tayo and Kemi on marriage, singleness, dating, conflict, and faith. Rooted in Scripture and written for everyday life.",
+    "after": "We write about marriage, singleness, dating, conflict, and faith. Our aim is to help you put Scripture into practice in your own life."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "Watch ${escapeAttr(watchTitle)} with Tayo and Kemi.",
+    "after": "Watch our ${escapeAttr(watchTitle)} series."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "A Gratitude package, made to work together.",
+    "after": "Two ways to practice gratitude."
+  },
+  {
+    "file": "tools/build.mjs",
+    "before": "<h1>That page has moved on.</h1>",
+    "after": "<h1>We could not find that page.</h1>"
+  },
+  {
+    "file": "content/blog/after-you-meet-the-right-one.md",
+    "before": "Think you have met the right one? Tayo and Kemi explain how to seek divine confirmation, consecrate your desires, and pray instead of pressuring the other person.",
+    "after": "Think you have met the right person? We talk about seeking confirmation from God, trusting His will, and praying without pressuring someone."
+  },
+  {
+    "file": "content/blog/after-you-meet-the-right-one.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "Christian dating guidance from Tayo and Kemi: send clear signals, define the relationship, set expectations, and test it by God's grace before marriage.",
+    "after": "We talk about dating with clear intentions, honest expectations, and room to seek God before committing to marriage."
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/effective-communication-resolving-conflict.md",
+    "before": "Many conflicts start with bad communication. Tayo and Kemi share biblical tools: listen for the why, confirm what you heard, speak life, and speak the truth in love.",
+    "after": "We share practical ways to listen carefully, check what you heard, and speak the truth in love when conflict arises."
+  },
+  {
+    "file": "content/blog/effective-communication-resolving-conflict.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/gods-design-for-marriage.md",
+    "before": "Marriage 101 from Tayo and Kemi: God designed marriage in Genesis 2, and couples who follow His pattern enjoy companionship, multiplication, and power in prayer.",
+    "after": "We return to Genesis 2 to look at God's design for marriage and what it means for our life together."
+  },
+  {
+    "file": "content/blog/gods-design-for-marriage.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/law-of-mutual-edification.md",
+    "before": "Christian marriage advice from Tayo and Kemi on 1 Corinthians 7: learn to make decisions that please the Lord, bless your spouse, and build your marriage.",
+    "after": "How do you make a decision that works for both of you? We look at what Scripture teaches about caring for your spouse as well as yourself."
+  },
+  {
+    "file": "content/blog/law-of-mutual-edification.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/marriage-is-not-a-cure-all.md",
+    "before": "Is marriage the cure for all your problems? Tayo and Kemi unpack a dangerous lie singles believe and show how to keep God first and enjoy every season.",
+    "after": "We talk about keeping God first and finding contentment while single, without expecting marriage to solve every problem."
+  },
+  {
+    "file": "content/blog/marriage-is-not-a-cure-all.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/no-good-spouse-out-there.md",
+    "before": "Christian singles often hear there are no good spouses left. Tayo and Kemi answer that lie with Genesis 1:27, El Shaddai, and Psalm 23.",
+    "after": "Worried there is no good spouse out there? We look at what Scripture says about trusting God instead of settling out of fear."
+  },
+  {
+    "file": "content/blog/no-good-spouse-out-there.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/praying-together-in-marriage.md",
+    "before": "Prayer in marriage is not optional. Tayo and Kemi share why to pray for yourself, how to start praying together as a couple, and the power of agreement.",
+    "after": "We share why personal prayer matters and how to begin praying together as a couple, even if you start with five minutes."
+  },
+  {
+    "file": "content/blog/praying-together-in-marriage.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/preparing-for-marriage-while-single.md",
+    "before": "Christian marriage preparation starts long before the wedding. Tayo and Kemi share a roadmap for singles: believe right, become the right person, and prepare.",
+    "after": "We talk about preparing for marriage while single, beginning with your faith, your character, and the relationships around you."
+  },
+  {
+    "file": "content/blog/preparing-for-marriage-while-single.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Christian marriage advice from Tayo and Kemi: five ingredients for a blessed, lasting marriage, from listening and forgiveness to shared faith, joy, and honor.",
+    "after": "We share five everyday practices for marriage: listening, forgiveness, shared faith, time to enjoy each other, and mutual respect."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/recognizing-the-right-one-everyday-life.md",
+    "before": "How do you recognize the right one? Tayo and Kemi show how God often uses your friends, your church, and ordinary obedience to lead you to your spouse.",
+    "after": "How do you recognize the right person? We look at how God can guide you through trusted relationships and everyday obedience."
+  },
+  {
+    "file": "content/blog/recognizing-the-right-one-everyday-life.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/setting-goals-as-a-couple.md",
+    "before": "Can two walk together unless they agree? Tayo and Kemi share how Christian couples can set goals together, write a shared vision, and stay united all year.",
+    "after": "We talk about setting goals together, writing down what you are trusting God for, and returning to those plans as a couple."
+  },
+  {
+    "file": "content/blog/setting-goals-as-a-couple.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/why-conflicts-arise.md",
+    "before": "Conflict is part of life, but knowing why it happens helps you resolve it. Tayo and Kemi explain the differences behind most conflict in marriage and family.",
+    "after": "We look at the differences and assumptions behind everyday disagreements, and how understanding them can help us resolve conflict."
+  },
+  {
+    "file": "content/blog/why-conflicts-arise.md",
+    "before": "author: Pastors Tayo and Kemi",
+    "after": "author: Tayo and Kemi"
+  },
+  {
+    "file": "content/blog/after-you-meet-the-right-one.md",
+    "before": "In years of pastoring, Tayo has seen relationships he was convinced were of God",
+    "after": "In our years of pastoring, we have seen relationships we were convinced were of God"
+  },
+  {
+    "file": "content/blog/after-you-meet-the-right-one.md",
+    "before": "Kemi often says she had no idea how much she would need exactly this kind of husband for the things God would call her to in her career and ministry.",
+    "after": "When we look back, we can see how God prepared us for what lay ahead. Kemi had no idea how much she would need Tayo's support in the work and ministry God would call her to."
+  },
+  {
+    "file": "content/blog/after-you-meet-the-right-one.md",
+    "before": "with the growth and the journey you will walk with this person",
+    "after": "as you grow and share life with this person"
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "Here is something Tayo often says:",
+    "after": "Here is something we often say:"
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "Tayo tells the singles in his church that if someone has been marking their territory and they don't know what is going on, he will go and ask.",
+    "after": "We tell singles in our church that if someone has been giving them attention without making their intentions clear, we are willing to help them ask."
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "But in Tayo's judgment, a relationship generally shouldn't",
+    "after": "But our advice is that a relationship generally shouldn't"
+  },
+  {
+    "file": "content/blog/dating-with-purpose.md",
+    "before": "Keep praying through the entire journey",
+    "after": "Keep praying throughout the relationship"
+  },
+  {
+    "file": "content/blog/effective-communication-resolving-conflict.md",
+    "before": "Kemi describes this as a personal journey: \"Some of us are wired as straight shooters. I'm learning that just pausing before I speak makes such a big difference. Sometimes I think, *I'm so glad I didn't say that.*\"",
+    "after": "Some of us are quick to say exactly what we think. We are learning how much difference a pause makes. Sometimes we are grateful afterward that we waited before speaking."
+  },
+  {
+    "file": "content/blog/effective-communication-resolving-conflict.md",
+    "before": "Kemi puts it this way: \"I would hate to leave the house with a big stain on my dress because my own child was afraid to tell me, and then have outsiders laugh behind my back.\"",
+    "after": "Think of leaving the house with a stain on your clothes because your own child was afraid to tell you. We would rather hear the truth at home than discover it later."
+  },
+  {
+    "file": "content/blog/effective-communication-resolving-conflict.md",
+    "before": "As Kemi says, \"I'd rather you tell me the truth to my face, even if it's not polished. I may go and cry, but I will receive it.\"",
+    "after": "We would rather hear the truth directly, even when it is hard to receive."
+  },
+  {
+    "file": "content/blog/gods-design-for-marriage.md",
+    "before": "A friend. A confidant. Someone to share life's journey with.",
+    "after": "Someone you can confide in and share life with."
+  },
+  {
+    "file": "content/blog/gods-design-for-marriage.md",
+    "before": "Kemi describes it this way: sometimes a thought is bugging her that she knows she shouldn't be thinking. She can go to her husband and say, \"I need God's wisdom and grace to deal with this.\" They pray together and lay hold of the Word together. She has the Holy Spirit, but it is a blessing to work through things as a threefold cord: God, her husband, and her.",
+    "after": "In our marriage, we can bring a troubling thought to each other and ask for help. We pray and turn to the Word together. Each of us has the Holy Spirit, and it is a blessing to work through things with God and with each other."
+  },
+  {
+    "file": "content/blog/law-of-mutual-edification.md",
+    "before": "Yet simply focusing on my lane while my husband focuses on his is not necessarily enough.",
+    "after": "Yet each of us simply focusing on our own part is not necessarily enough."
+  },
+  {
+    "file": "content/blog/law-of-mutual-edification.md",
+    "before": "Kemi is very different from her husband, yet so much of their thinking is now aligned.",
+    "after": "We are very different people, yet so much of our thinking is now aligned."
+  },
+  {
+    "file": "content/blog/marriage-is-not-a-cure-all.md",
+    "before": "disappointed, disoriented, and discouraged",
+    "after": "deeply disappointed"
+  },
+  {
+    "file": "content/blog/marriage-is-not-a-cure-all.md",
+    "before": "Kemi puts it this way: \"I love my husband, and he loves his wife, but we both know we are not complete without God. There are needs I have that my husband is working on meeting, and needs he has that I am working on meeting. The part that is missing, we know we can always get in God.\"",
+    "after": "We love each other, but we both know we are not complete without God. Each of us is still learning how to meet the other's needs. For what we cannot give each other, we know we can turn to God."
+  },
+  {
+    "file": "content/blog/praying-together-in-marriage.md",
+    "before": "Tayo also encourages what he calls **pre-praying**",
+    "after": "We also encourage **pre-praying**"
+  },
+  {
+    "file": "content/blog/preparing-for-marriage-while-single.md",
+    "before": "with no idea that she and Tayo would be doing it today",
+    "after": "with no idea that we would be doing it today"
+  },
+  {
+    "file": "content/blog/preparing-for-marriage-while-single.md",
+    "before": "**Become the best version of yourself.**",
+    "after": "**Keep learning.**"
+  },
+  {
+    "file": "content/blog/recognizing-the-right-one-everyday-life.md",
+    "before": "Tayo once thought this was merely cultural, until he read 1 Corinthians 7. In his pastoral experience, believers who detach themselves from any authority often make this area of life much harder.",
+    "after": "Reading 1 Corinthians 7 helped us see this as more than a cultural practice. In our pastoral work, we have seen how much harder this becomes when people cut themselves off from trusted guidance."
+  },
+  {
+    "file": "content/blog/recognizing-the-right-one-everyday-life.md",
+    "before": "The right one is the person God has ordained to walk this walk of destiny with you: someone who complements you, so you can fulfill destiny together.",
+    "after": "By the right one, we mean someone God has called to share life with you, so you can help each other do what He has asked of you."
+  },
+  {
+    "file": "content/blog/setting-goals-as-a-couple.md",
+    "before": "Kemi encourages couples not to wait until they reach the negotiating table.",
+    "after": "We encourage you not to wait until you reach the negotiating table."
+  },
+  {
+    "file": "content/blog/setting-goals-as-a-couple.md",
+    "before": "As Tayo puts it, **it is better",
+    "after": "We often say **it is better"
+  },
+  {
+    "file": "content/blog/why-conflicts-arise.md",
+    "before": "with children ranging from a teenager to a baby, everyone wants to watch different shows and do different activities",
+    "after": "our children have wanted different shows and activities at different ages"
+  },
+  {
+    "file": "content/blog/why-conflicts-arise.md",
+    "before": "Kemi is generally louder and an extrovert, so people sometimes assume she isn't listening, when she is actually very detail-oriented and has an introverted side. People sometimes see Tayo as quiet and deep and assume he won't stand up for himself.",
+    "after": "We have both experienced this. People sometimes assume Tayo's quietness means he won't stand up for himself. Others assume Kemi isn't listening because she is more outgoing, even though she pays close attention to detail."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Recipes for a Blessed Marriage: 5 Essential Ingredients for Lasting Harmony",
+    "after": "Recipes for a Blessed Marriage: Five Everyday Practices"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "A strong marriage is crafted through daily practices rooted in biblical truth. Here are five essential ingredients for a blessed and resilient relationship.",
+    "after": "What we do for each other day by day matters. Here are five ways to put biblical teaching into practice in your marriage."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Building a thriving, joyful marriage doesn't happen by accident. It requires intentionality, patience, and the right spiritual foundation. Just as a master chef carefully selects and balances ingredients to create a memorable meal, a strong marriage is crafted through daily practices rooted in biblical truth.",
+    "after": "A good marriage needs daily care. We want to talk about some ordinary things that matter: how we listen, how we forgive, and how we make time for each other."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Whether you are newly engaged or have been walking hand-in-hand for decades, here are five foundational ingredients to cultivate a blessed and resilient relationship.",
+    "after": "Whether you are preparing for marriage or have been married for years, these five practices give you something to work on together."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Active Listening & Open Communication",
+    "after": "Listen to Each Other"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "In the busyness of daily life, it's easy to speak at each other rather than communicate with one another. True communication begins with active listening: hearing not just the words being spoken, but understanding the heart and emotion behind them. Make dedicated, distraction-free time each day to check in with your spouse.",
+    "after": "We can be busy and still assume we know what our spouse is thinking. Take time each day to listen without distractions. Ask what they mean and how they feel before you rush to answer."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Radical Forgiveness and Grace",
+    "after": "Be Ready to Forgive"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "No two people are perfect, and offense will inevitably arise. The secret to long-term harmony is extending grace swiftly. Holding onto past mistakes creates invisible walls; practicing unconditional forgiveness keeps the atmosphere of your home fresh and peaceful.",
+    "after": "We will let each other down at times. When that happens, we need to be willing to forgive rather than keep bringing up old mistakes. Forgiveness matters to the peace of our home."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "A Shared Spiritual Foundation",
+    "after": "Keep God at the Center"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Prioritize praying together, studying God's Word, and aligning your household values around faith. When Christ remains the center of your marriage, challenges become opportunities to grow closer together rather than pull apart.",
+    "after": "Make time to pray together and read God's Word. Talk about how your faith shapes the decisions you make as a family. We need God's help with the difficulties we face together."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Cultivating Joy and Playfulness",
+    "after": "Enjoy Time Together"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Marriage should be fun! Don't let responsibilities overshadow the laughter that brought you together in the first place. Schedule regular date nights, try new activities together, and make space for lighthearted moments.",
+    "after": "Marriage should include things you enjoy together. Responsibilities can fill the calendar, so make time for a date or try something new together. We need room to laugh, too."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Mutual Honor and Respect",
+    "after": "Treat Each Other With Respect"
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "Honor is treating your spouse as a precious gift. Speak highly of them in public, encourage their personal and spiritual growth in private, and guard their dignity at all times.",
+    "after": "How we speak about our spouse matters, both at home and around other people. Speak well of each other, encourage each other's growth, and protect each other's dignity."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "**Daily Check-In:** Dedicate at least 15 minutes every evening to talk without phones or screens.",
+    "after": "**Make time to talk:** Set aside 15 minutes in the evening without phones or screens."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "**Quick Reconciliation:** Resolve misunderstandings before going to bed (Ephesians 4:26).",
+    "after": "**Work through misunderstandings:** Make peace before going to bed (Ephesians 4:26)."
+  },
+  {
+    "file": "content/blog/recipes-for-a-blessed-marriage.md",
+    "before": "**Continuous Growth:** Invest in relationship resources, devotionals, and community support.",
+    "after": "**Keep learning together:** Use teaching and devotionals, and stay connected to people who support your marriage."
+  },
+  {
+    "file": "tools/site-content.mjs",
+    "before": "Draft outline for the Single and Dating track from Tayo and Kemi. Lessons are coming soon, and enrollment opens when the payment link is ready.",
+    "after": "Explore our draft Single and Dating course outline. We are preparing lessons about dating with purpose and getting ready for marriage."
+  },
+  {
+    "file": "tools/site-content.mjs",
+    "before": "Draft outline for the Committed Relationship track. Module titles are public. Lesson videos stay private until enrollment opens.",
+    "after": "Explore our draft course for committed couples, with teaching on communication, shared values, and preparing for marriage."
+  },
+  {
+    "file": "tools/site-content.mjs",
+    "before": "Draft outline for the Engaged and First Year of Marriage track. The lesson list is public. Paid teaching is not on this page.",
+    "after": "Explore our draft course for engaged couples and newlyweds, covering marriage, conflict, and building a home together."
+  },
+  {
+    "file": "tools/site-content.mjs",
+    "before": "Lessons from 19 years",
+    "after": "Lessons from our marriage"
+  }
+]

@@ -8,14 +8,15 @@ const root=fileURLToPath(new URL('..', import.meta.url));
 const temp=mkdtempSync(join(tmpdir(),'zoe-build-'));
 try {
  cpSync(root,temp,{recursive:true,filter:src=>!relative(root,src).split(sep).some(part=>['.git','node_modules','.stripe-sandbox','screenshots','.chrome-qa','.chrome-qa-forms','.chrome-verify','.chrome-artifact'].includes(part))});
- const env={...process.env,ZOE_FORM_ENDPOINT:'https://script.google.com/macros/s/test/exec',ZOE_NEWSLETTER_ENDPOINT:'https://script.google.com/macros/s/test/exec',ZOE_GOOGLE_CALENDAR_BOOKING_URL:'https://calendar.app.google/Uj9v44HE72kJrKz8A',ZOE_PAID_BOOKING_URL:'https://calendar.google.com/calendar/appointments/schedules/test',ZOE_AMAZON_DEVOTIONAL_URL:'https://www.amazon.com/dp/TEST',ZOE_GUMROAD_JOURNAL_URL:'https://example.gumroad.com/l/test'};
+ const env={...process.env,ZOE_FORM_ENDPOINT:'https://script.google.com/macros/s/test/exec',ZOE_NEWSLETTER_ENDPOINT:'https://script.google.com/macros/s/test/exec',ZOE_GOOGLE_CALENDAR_BOOKING_URL:'https://calendar.app.google/Uj9v44HE72kJrKz8A',ZOE_PAID_BOOKING_URL:'https://calendar.google.com/calendar/appointments/schedules/test',ZOE_AMAZON_DEVOTIONAL_URL:'https://www.amazon.com/dp/TEST',ZOE_LULU_DEVOTIONAL_URL:'https://checkout.lulu.com/test-book',ZOE_GUMROAD_JOURNAL_URL:'https://example.gumroad.com/l/test'};
  let run=spawnSync(process.execPath,['tools/build.mjs','--staging'],{cwd:temp,env,encoding:'utf8'});
  assert.equal(run.status,0,run.stderr);
  run=spawnSync(process.execPath,['tests/check-site.mjs'],{cwd:temp,env,encoding:'utf8'});
  assert.equal(run.status,0,run.stdout+run.stderr);
  assert.match(readFileSync(join(temp,'consult.html'),'utf8'),/href="https:\/\/calendar.google.com\/calendar\/appointments\/schedules\/test"/);
  assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Amazon/);
- assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Buy on Gumroad/);
+ assert.match(readFileSync(join(temp,'books.html'),'utf8'),/href="https:\/\/checkout.lulu.com\/test-book"/);
+ assert.match(readFileSync(join(temp,'books.html'),'utf8'),/Digital PDF \(Gumroad\)/);
  assert.match(readFileSync(join(temp,'contact.html'),'utf8'),/I agree to join Zoe Life's mailing list and can unsubscribe at any time\. We will email you a link to confirm\./);
  assert.doesNotMatch(readFileSync(join(temp,'contact.html'),'utf8'),/Google Workspace|FormSubmit|store my signup/);
  run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...env,ZOE_PAID_BOOKING_URL:'javascript:alert(1)'},encoding:'utf8'});
@@ -31,7 +32,7 @@ try {
  for (const product of Object.values(sandboxConfig.products)) assert.ok(sandboxBooks.includes(product.paymentLink));
  assert.equal((sandboxBooks.match(/Test Stripe checkout/g)||[]).length,2);
  assert.match(sandboxBooks,/No real payment or book delivery/);
- assert.doesNotMatch(sandboxBooks,/Buy on Amazon|Buy on Gumroad/);
+ assert.doesNotMatch(sandboxBooks,/Buy on Amazon|Digital PDF \(Gumroad\)/);
  run=spawnSync(process.execPath,['tests/check-site.mjs'],{cwd:temp,env:sandboxEnv,encoding:'utf8'});
  assert.equal(run.status,0,run.stdout+run.stderr);
  run=spawnSync(process.execPath,['tools/build.mjs'],{cwd:temp,env:{...sandboxEnv,ZOE_STRIPE_DEVOTIONAL_URL:sandboxConfig.products.devotional.paymentLink},encoding:'utf8'});
