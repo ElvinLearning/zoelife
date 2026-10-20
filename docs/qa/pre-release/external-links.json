@@ -1,0 +1,231 @@
+[
+  {
+    "url": "https://calendar.app.google/Uj9v44HE72kJrKz8A",
+    "status": 200,
+    "final": "https://calendar.google.com/calendar/appointments/schedules/AcZssZ2Nl5F_AwIXpHNg8My-rjI1UUQnxMCgOaR7kYvbpra_LtWv3MLUI-Q1s87RK97bGUodt4kzEpX9"
+  },
+  {
+    "url": "https://www.facebook.com/zoefamilylife10",
+    "status": 200,
+    "final": "https://www.facebook.com/zoefamilylife10"
+  },
+  {
+    "url": "https://www.facebook.com/zoelifehub",
+    "status": 200,
+    "final": "https://www.facebook.com/zoelifehub"
+  },
+  {
+    "url": "https://www.instagram.com/zoefamilylife",
+    "status": 200,
+    "final": "https://www.instagram.com/zoefamilylife"
+  },
+  {
+    "url": "https://www.instagram.com/zoelifehub/",
+    "status": 200,
+    "final": "https://www.instagram.com/zoelifehub/"
+  },
+  {
+    "url": "https://www.tiktok.com/@zoefamilylife",
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "url": "https://www.tiktok.com/@zoelifehub1",
+    "status": 200,
+    "final": "https://www.tiktok.com/@zoelifehub1"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2"
+  },
+  {
+    "url": "https://www.youtube-nocookie.com/embed/videoseries?list=PLTiUnmAGHZkM",
+    "status": 200,
+    "final": "https://www.youtube-nocookie.com/embed/videoseries?list=PLTiUnmAGHZkM"
+  },
+  {
+    "url": "https://www.youtube.com/@zoefamilylife",
+    "status": 200,
+    "final": "https://www.youtube.com/@zoefamilylife"
+  },
+  {
+    "url": "https://www.youtube.com/@zoelifehub1",
+    "status": 200,
+    "final": "https://www.youtube.com/@zoelifehub1"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YOC37FdaYA0rCaTSNbyyk-"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2"
+  },
+  {
+    "url": "https://www.youtube.com/playlist?list=PLTiUnmAGHZkM",
+    "status": 200,
+    "final": "https://www.youtube.com/playlist?list=PLTiUnmAGHZkM"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=123s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=123s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=225s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=225s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=325s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=3oeg3VNvr1s&t=325s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=670s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=670s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=741s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=741s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=838s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=838s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=902s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=5JeV1rwc0KU&t=902s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=6WsC_MOO3KI&t=1017s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=6WsC_MOO3KI&t=1017s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=KIxtotAT0vU&t=306s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=KIxtotAT0vU&t=306s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=KIxtotAT0vU&t=360s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=KIxtotAT0vU&t=360s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=NfCYH4YSKPU&t=150s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=NfCYH4YSKPU&t=150s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=1300s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=1300s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=2s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=2s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=414s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=414s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=487s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=487s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=869s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=PuczNwXtv6c&t=869s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=bly45MydPKE&t=227s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=bly45MydPKE&t=227s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=bly45MydPKE&t=91s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=bly45MydPKE&t=91s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=330s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=330s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=516s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=516s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=745s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=ddCC4qvPZgg&t=745s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=ryvGSZ2U7ng&t=130s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=ryvGSZ2U7ng&t=130s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=wwcWniQFDA4&t=402s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=wwcWniQFDA4&t=402s"
+  },
+  {
+    "url": "https://www.youtube.com/watch?v=wwcWniQFDA4&t=713s",
+    "status": 200,
+    "final": "https://www.youtube.com/watch?v=wwcWniQFDA4&t=713s"
+  },
+  {
+    "url": "https://x.com/zoelifehub",
+    "status": 200,
+    "final": "https://x.com/zoelifehub"
+  }
+]
