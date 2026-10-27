@@ -1,99 +1,103 @@
 ---
 title: God's Design for Marriage: The Basics and the Blessings Every Couple Can Enjoy
-description: We return to Genesis 2 to look at God's design for marriage and what it means for our life together.
+description: Marriage was designed by God. We go back to the ABCs of marriage in Genesis 2, and the blessings God built into marriage when we do it His way.
 date: 2026-10-13
 author: Tayo and Kemi
 category: Marriage
 series: Marriage 101
 playlist: PL2QfJI8adA_YXHB-JjLXv7qyP2pbetI0Z
-excerpt: You can be brilliant at work and still need to learn the ABCs of marriage. Start with God's design in Genesis 2, and discover the blessings He built into it.
+excerpt: You can be brilliant at your career and still feel lost in marriage. That's okay. Everybody can learn. Here are the basics of God's design, and the blessings that come with it.
 ---
 
-Over the years of working with couples, we have met very smart husbands and wives: people who excel in their careers and handle their finances well, yet feel almost illiterate when it comes to marriage. That is okay. Everybody can learn, and everybody can grow.
+One thing we have learned working with couples over the years: you can have a very smart husband or a very smart wife. They excel in their careers. They handle finances well. And yet, when it comes to marriage, they feel almost illiterate. But that's okay! Everybody can learn. Everybody can grow. That's nothing to be discouraged about.
 
-Every area of life has its basics. Before you can read, you learn your ABCs. Before you can do complex math, you learn your numbers. Marriage is the same. If the foundational concepts are missing, it is hard to get your mind around doing marriage the way it was created to be. So let's go back to the basics.
+Every area of life has its foundations. If you want to read, first you learn your ABCs. If you want to do math, you learn your numbers, then addition, subtraction, multiplication, and only then more complex math. Marriage is the same. If the foundation isn't there, you may never get your mind around doing marriage the way it was created to be. So let's go back to the basics.
 
 ## Marriage Was Designed by God
 
-Marriage was not designed by individuals, by society, by our intellect, or by our education. It was designed by God. That means if we want to enjoy marriage, we need to go by His design. You can't just do what you want to do. You find out what the design is, and then you commit to living within its framework.
+Marriage was not designed by individuals. It wasn't designed by society, or by our intellectual abilities, or by our education. It was designed by God. So if we want to enjoy marriage, we need to go by His design. That idea needs to sink in: you can't just do what you want to do. You find out what the design is, and then you commit to living within the framework of that design.
 
-God spells out that design in Genesis 2:18 to 25.
+If you read Genesis 2:18-25, you will see God's design and His original intention for marriage.
 
 > Therefore a man shall leave his father and mother and be joined to his wife, and they shall become one flesh. And they were both naked, the man and his wife, and were not ashamed.
 > Genesis 2:24-25 (NKJV)
 
-### What comes before the "therefore"
+### What is the "therefore" there for?
 
-Whenever you see "therefore," ask what it is there for. It is a concluding statement. Just before it, God brought Eve to Adam, and Adam said she was bone of his bones and flesh of his flesh, because she was taken out of man (Genesis 2:23). The woman came out of the man, so the two were originally one. *Therefore*, to get back to that oneness, a man leaves his father and mother, is joined to his wife, and the two become one flesh.
+If it says "therefore," something came before it. "Therefore" is a concluding statement. So what came before? God had just brought Eve to Adam, and Adam said, "This is now bone of my bones and flesh of my flesh; she shall be called Woman, because she was taken out of Man" (Genesis 2:23). She was taken out of him. They were originally one. *Therefore*, to get back to being one, a man leaves his father and his mother, is joined to his wife, and the two become one flesh.
 
 ### Naked and not ashamed
 
-Verse 25 shows us the oneness God intended. The husband and wife were free to be themselves, transparent in spirit, soul, and body. If two people were literally one body, nothing would be hidden between them. Even though a married couple lives in two bodies, God's plan is for such transparency that it is almost as if they were one.
+Verse 25 shows us the oneness God designed. The husband and his wife were free to be themselves. Transparent in spirit, in soul, and in body. Transparent in every dimension.
 
-This is the image God gave us. It is the ideal and the goal. If your marriage is not there yet, don't be discouraged. From where you are, you can get there. But you need to know what the goal is so you can press toward it.
+Think about it. If we were together in one body, nothing would be hidden from each other. Now we live in two bodies, but God's plan is for such transparency that it is almost as if we were still one. Naked, without shame, because there is oneness.
 
-From this design flow the **responsibilities** of husbands and wives: leaving, joining, and becoming one in spirit, soul, and body. And when we walk in those responsibilities, we enjoy the **blessings** God built into marriage, blessings that reach our children and everyone around us. Let's look at some of them.
+This is the image. This is the ideal. This is what God intended. Now, don't be discouraged if your marriage isn't there yet. The good news is that from where you are, you can get there! But you need to know what the goal is, so you can press toward it.
+
+From this design flow the **responsibilities** of husbands and wives: leaving your father and mother, being joined to your spouse, and becoming one in spirit, soul, and body. And when we do it God's way, there are **blessings** we enjoy as a couple, blessings our children enjoy, blessings that touch everyone around us. God has so many blessings in store for married couples. Let's look at some of them.
 
 ## Blessing 1: Companionship
 
 > And the Lord God said, "It is not good that man should be alone; I will make him a helper comparable to him."
 > Genesis 2:18 (NKJV)
 
-The Holy Spirit is called the Paraclete, the One who comes alongside and does life with us. As believers, we are never truly alone. But in a spouse, God has also given us a physical companion who makes it easier to go through the highs and the lows. Someone you can confide in and share life with. Even wealth is better when you have someone to share it with.
+One of the greatest blessings of marriage is a companion. Getting to do life together, obey God together, and honor Him together. The Holy Spirit is called the Paraclete, our companion, the One doing life with us. So as believers we are never really alone. But in a spouse, God has given us a physical companion who makes it easier to go through the highs and the lows.
 
-Genesis 2:25 describes real companionship: someone you can be completely transparent with, unfiltered. In a culture where people often say what they don't mean, a true companion is one of the greatest gifts of marriage.
+It's such a blessing to have a friend, a confidant, someone to walk the journey of life with. You could have all the wealth in the world, but there is a blessing in having someone to share it with.
 
-In our marriage, we can bring a troubling thought to each other and ask for help. We pray and turn to the Word together. Each of us has the Holy Spirit, and it is a blessing to work through things with God and with each other.
+Genesis 2:25 is what real companionship looks like: someone you can be naked with, transparent in spirit, soul, and body. You don't have to pretend. In this age where everybody is so politically correct and saying what they don't mean, having a true companion, unfiltered, is one of the greatest blessings. You can have that in marriage. You *should* have that in marriage. That's what God designed.
 
-When Jesus walked the earth, He had the Holy Spirit, and still He had companions. When He was troubled, He wanted Peter, James, and John to pray with Him. God has provided that kind of companionship for us in marriage.
+**Kemi:** I don't know if you've felt this way, but sometimes there's a thought you probably shouldn't be thinking, and it's there anyway. You need a companion you can go to and say, "Sweetheart, I know I shouldn't be thinking this, but it's been bugging me, and I need God's wisdom and grace to deal with it." And guess what? I can share it with him, because it's a burden I'm carrying, and we can pray about it together and lay hold of the Word on how to get over it. And it works the other way too. Yes, I have the Holy Spirit. But it is such a blessing to have a threefold cord: God, my husband, and me, working through it together.
+
+Even Jesus, who had the Holy Spirit when He walked the earth, had companions. When He was troubled, He wanted Peter, James, and John to pray with Him. God has provided that for us in marriage, and you should experience it in yours.
 
 ## Blessing 2: Multiplication
 
-God blessed humanity and said to be fruitful and multiply. As a single person, you walk in a dimension of that blessing. But marriage multiplies and enhances it. Scripture speaks of one putting a thousand to flight and two putting ten thousand to flight. That is not addition. It is multiplication on another level.
+God blessed man and said, "Be fruitful and multiply, fill the earth, and have dominion." As a single person, you walk in a dimension of that blessing. But there is something about marriage that multiplies and enhances it. Scripture talks about one chasing a thousand and two putting ten thousand to flight. That's not one thousand plus one thousand. That is multiplication on another dimension!
 
 > Two are better than one, Because they have a good reward for their labor.
 > Ecclesiastes 4:9 (NKJV)
 
-You can see this even in practical terms. A job that takes one person an hour might take two people ten minutes. Ecclesiastes 4 goes on to describe more of the multiplied blessing of two:
+Anything that is good with one is better with two. You can see it practically. If a job takes one person an hour, two people might finish it in ten minutes. And Ecclesiastes 4 goes on:
 
-- **Recovery.** If one falls, the other can lift them up. Alone, it is much harder to recover.
-- **Protection.** Two can withstand an attack that would overpower one. You will be attacked in life, because the enemy hates you, but together you are stronger.
+- **It is easier to recover.** If one falls, the other lifts them up. "But woe to him who is alone when he falls," because there is no one to help. Alone, it is much harder to recover.
+- **It is harder to be overpowered.** You will be attacked in life, because the devil hates you. But two can withstand what would overpower one.
 
-Part of the reason is that each spouse carries graces and strengths the other may not have, or may have only a little of. If one of you is weak in an area where the other is strong, the strong one lifts the other up. Your oneness amplifies each other's strengths.
+Part of the reason is that each of you carries graces and strengths the other doesn't have, or has only a little of. If I fall in an area where you are strong, you are right there to lift me up. If I fall alone, I'm going to need a lot more help, or more time, or both, and I might lose a lot. But the graces God deposited in each of us balance each other out. That oneness amplifies your strengths on each other's behalf.
 
-## Blessing 3: Warmth That Keeps the Fire Burning
+## Blessing 3: Warmth That Keeps the Fire Going
 
 > Again, if two lie down together, they will keep warm; But how can one be warm alone?
 > Ecclesiastes 4:11 (NKJV)
 
-That is true in a natural sense, and in a deeper sense too. It is amazing how many people have dreams, visions, and ideas that die because they have no one to share them with. Two keep the fire going.
+That is true in the natural, of course. But there is something about two that keeps the fire going in every sense. It's amazing how many people have dreams, and because they have nobody to share them with, the dreams die. Visions die. Ideas die. Two keep the warmth alive.
 
-## Blessing 4: Creating What Neither Could Create Alone
+## Blessing 4: Creating What Neither of You Could Create Alone
 
-There are two kinds of capacity in marriage. One is the capacity you already have, multiplied by your spouse. The other is capacity you could never have on your own. One person cannot have a baby. It takes a husband and a wife. We believe God gave us physical birth as a picture of the many things couples can create together, spiritually and otherwise.
+There are two kinds of capacity in marriage. One is capacity you already have, multiplied when someone else comes in. The other is capacity you could never have on your own. One person cannot have a baby. It takes a male and a female. When we come together, there are things we create that neither of us could ever have created individually.
 
-Isaiah 51 tells Israel to look to Abraham, and to Sarah who bore them. A nation came out of that marriage. Who knows what companies, ministries, and organizations are meant to come out of yours? Some things can only come from the union God intended. That is why Hagar was never a substitute for Sarah.
+We believe God gave us physical birth as a picture of the many things we can create together spiritually. Isaiah 51 tells Israel to look to Abraham, and to Sarah who bore them. A nation came out of that marriage! Who knows what companies are supposed to come out of your marriage? What ministries? What organizations? Individually, they wouldn't come out, or they wouldn't be exactly what God intended. That is why Hagar was never a substitute for Sarah.
 
 ## Blessing 5: Power in Agreement
 
 > Again I say to you that if two of you agree on earth concerning anything that they ask, it will be done for them by My Father in heaven.
 > Matthew 18:19 (NKJV)
 
-God hears each of our prayers individually. But there is an amplified grace when a husband and wife agree in prayer, a corporate grace for certain things. If that were not true, the Bible would not have said it.
+Each of us can pray, and God hears. But there is an amplified grace when the two of us agree in prayer, an anointing God has placed on a husband and wife standing together. There are certain things you need that corporate grace for. If not, the Bible wouldn't have said it.
 
 ## Worth Fighting For
 
-When we understand these blessings, we respect our marriages more, and we fight for them. It is amazing how hard people will fight for a bonus or a raise at work, while neglecting the divine union that opens realms of blessing.
+When we understand these blessings, we will respect our marriages more, and we will fight for them. It's amazing how hard people fight for a bonus at work or for a raise, and yet they won't fight for the divine union God gave them that opens up realms of blessing.
 
-We share this to challenge your faith and your expectations. Maybe you are not experiencing fruitfulness, or your creativity together has dried up. Maybe you have reached a certain level but know there is more. Lay hold of these scriptures and go to the Lord: *open our eyes to receive the full measure of Your blessing.*
+We are sharing this to challenge your faith and your expectations. Maybe you aren't experiencing fruitfulness. Maybe your creativity together has dried up. Maybe you have reached a certain level but you know you're not where you need to be. Lay hold of these scriptures, go to the Lord, and say, *Lord, open our eyes to receive the full measure of Your blessing.*
 
 ::: takeaways For You and Your Spouse
-- **Study the design together.** Read Genesis 2:18 to 25 and talk about where your marriage reflects it and where you want to grow.
+- **Study the design together.** Read Genesis 2:18-25 and talk about where your marriage already reflects it and where you want to grow.
 - **Practice transparency.** Share one thing you have been carrying alone, and pray about it together.
 - **Dream together.** Ask what God might want to birth through your marriage that neither of you could do alone.
-- **Agree in prayer.** Choose one request and pray in agreement about it every day this week.
+- **Agree in prayer.** Choose one request and pray about it together every day this week.
 :::
 
-## A Prayer for Your Marriage
+## Let's Pray
 
-> Father, I thank you for my spouse and how far you have brought us. I pray you help us honor you in every way. I pray we reflect your design for marriage according to Genesis 2:24-25, we honor the roles and responsibilities you have given to us, and we enjoy the blessings that come with having our marriage patterned after Your design. I ask for the help of the Holy Spirit as we do this. In Jesus mighty name I pray. Amen.
+Heavenly Father, thank You for every marriage represented here. We pray over them the blessing You had in mind when You created marriage. Let them experience the blessing, the empowerment, the fruitfulness, the multiplication, and the ability to fill the space You have given them and have dominion, so that nothing in their lives is contested. We release that over their lives, in the mighty name of Jesus. Amen.

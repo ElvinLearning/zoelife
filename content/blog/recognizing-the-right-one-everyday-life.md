@@ -1,90 +1,111 @@
 ---
 title: How to Recognize the Right One: Through Your Relationships and Everyday Life
-description: How do you recognize the right person? We look at how God can guide you through trusted relationships and everyday obedience.
+description: God doesn't ask you to find the right one without helping you recognize them. We talk about how He uses your friendships, your church, and the everyday course of life.
 date: 2026-10-13
 author: Tayo and Kemi
 category: Dating
 series: Recognizing the Right One
 playlist: PL2QfJI8adA_YfcMZByFKFitwv59m6iDnP
-excerpt: God does not ask you to find the right one without helping you recognize them. Often He does it through the people around you and the ordinary steps of obedience you are already taking.
+excerpt: If you are where you ought to be, you will meet who you ought to meet. Here is how God uses your company and the ordinary course of life to lead you to the right one.
 ---
 
-"How will I know the right one when I meet them?" It is one of the most common questions singles ask. In our series *Recognizing the Right One*, we have been looking at the ways God helps us answer it. Before we add two more, let's be clear about what we mean by "the right one."
+"How will I know the right one when I meet them?" We hear this question all the time. In our series *Recognizing the Right One*, we have been looking at the ways God helps us answer it. Before we add two more, let's remind ourselves what we mean by "the right one."
 
-## What "the Right One" Does and Does Not Mean
+## What We Mean by "the Right One"
 
-- **Not the perfect one.** The only perfect person is Jesus Christ. Everyone else has flaws.
-- **Not the only one.** There can be choices within God's will. Jacob was sent to Laban's house, where he could marry one of Laban's daughters.
-- **Not necessarily the most attractive to you.** This is the one many people miss. Our tastes can be infected by the flesh, and sometimes what we like needs to be detoxed. The person God leads you to may not appeal to you at first, and then God works on you.
+**The right one is not the perfect one.** Once people hear "the right one," they think everything about that person will be perfect. The only perfect person is Jesus Christ. Everyone has a flaw!
 
-By the right one, we mean someone God has called to share life with you, so you can help each other do what He has asked of you.
+**The right one is not the only one.** Sometimes there are choices in God. Jacob was sent to Laban's house, and he could marry one of Laban's daughters.
 
-God never tells us to find the right one without helping us recognize them. Through the Holy Spirit, He helps us in many ways. We have already looked at three:
+**The right one is not necessarily the one you are most attracted to.** A lot of people miss this one. They think, "If this is the right one, I will be attracted to them." Not necessarily. Your flesh can be infected, and sometimes what you like needs to be detoxed. The person God leads you to might not be attractive to you at first, but as God works on you, that will be the right one.
 
-1. **Divine revelation.** God speaks, and He can reveal who you will marry. In Genesis 2, God brought Eve to Adam.
-2. **Divine and natural authorities.** In Scripture, fathers often played a big part in their children's marriages, as with Abraham and Isaac, and Isaac and Jacob. Reading 1 Corinthians 7 helped us see this as more than a cultural practice. In our pastoral work, we have seen how much harder this becomes when people cut themselves off from trusted guidance. If you have no natural or spiritual covering, seek one.
-3. **Your place of service.** Rachel was feeding her father's flock when she met Jacob. Zipporah met Moses the same way. Ruth was serving Naomi when she met Boaz.
+So who is the right one? **The person God has ordained to walk this walk of destiny with you.** Someone who complements you, so the two of you can fulfill destiny together. Amen!
 
-Now let's look at two more.
+And God doesn't say, "Go find the right one," without helping you recognize them. Through the Holy Spirit, He helps us in so many ways, as we stay open. We have already talked about three:
+
+1. **Divine revelation.** In this day and age some people discount it, but we believe God reveals things to us. He can reveal who you will marry. In Genesis 2, God brought Eve to Adam.
+2. **Divine and natural authorities.** Study the Bible and you will see what a big place fathers had in the marriages of their children: Abraham with Isaac, Isaac and Rebekah with Jacob, Jethro with Moses.
+3. **Your place of service.** So many people met their spouse while they were feeding the flock. Rachel was feeding her father's flock when she met Jacob. Zipporah met Moses the same way. Ruth was serving Naomi.
+
+**Tayo:** I used to think this was just a cultural thing, until I read in 1 Corinthians 7 about fathers giving their daughters in marriage, and I said, "No, this is actually scriptural." And this is just Pastor Tayo's opinion, but I believe it's true: one reason some people struggle in this area is that they have no divine authority over them. Christians who detach from authority complicate their lives, especially here. I want to challenge the ladies in particular. Sometimes you go out on your own with no covering from a natural father or a spiritual father, and it makes things a lot harder.
+
+Now let's look at two more ways God helps you recognize the right one.
 
 ## Through Your Relationships and Associations
 
-Ask couples how they met and you will often hear something like, "I went to a friend's birthday party, and so did he." God frequently blesses you through your company: your friends, your family, and your local church. When Abraham sent his servant to find a wife for Isaac in Genesis 24, he looked to his own family and his father's house.
+How many times have you asked a couple, "How did you meet?" and they say, "I went to my friend's birthday party, and he went to the same friend's birthday party, and we just got talking." So often, God blesses you through your company. By company, we mean the people you do life with: your friends, your family, your local church.
 
-We are not islands, and we are not meant to be lone rangers. So develop friendships, not only because you hope to get married, but because relationships are a blessing in life. As you are yourself and others are themselves, your connection may show up in your immediate circle or just outside it. Someone might think, "She would be great with my friend." But how would they think that if they never get to know you?
+> But he said to me, 'The Lord, before whom I walk, will send His angel with you and prosper your way; and you shall take a wife for my son from my family and from my father's house.'
+> Genesis 24:40 (NKJV)
 
-Many of us become guarded in the name of "I don't want to get hurt." We go to church and come home. We go to work and come home. When you don't engage with people, you short-circuit the effect of the relationships around you. **You have to do life with people.** Very few things are revealed to us directly. Most of what you will learn in life, God will teach you through somebody else.
+Abraham looked to his own family and his father's house. And beyond that, God has connected every one of us to people. We are not islands. We are not supposed to be lone rangers.
 
-The same company also helps you stay married. Some couples disconnect from everyone after the wedding. You still need people.
+We want to encourage you singles: develop friendships and relationships, because they are a blessing in life in general, not only because you want to get married. When you are yourself and others are themselves, you will find your connection, either in your immediate company or just outside it. Somebody will say, "Hmm, I feel like she would be great with this other person." But how would they know that if they never get to know you? If they never see how you react to situations, or what presses your buttons?
 
-### Shared values, not identical backgrounds
+A lot of us get very guarded in the name of, "I don't want to get hurt." So you stay in your apartment or your house all by yourself. I go to church, I come back home. I go to work, I come back home. If you don't take time to engage people, you short-circuit the effect of the relationships around you. **You have to do life with people.**
 
-Luke 1:5 tells us Zacharias was a priest, and his wife Elizabeth was also of the daughters of Aaron. She grew up in the same environment and understood his world. We are not saying your spouse must come from the same background as you, but you do need the same values.
+It's so important, because God uses people. There are very few things God reveals to you directly. Most of what you will learn in life, God will teach you through somebody else. When you disconnect from the company God has put you in, you lose so much, and one of those things could be connected to your marriage.
+
+And it's not only about getting married. It's about staying married. We see people get married and completely disconnect from their company. You still need people you do life with.
+
+### Same values, not the same background
+
+Luke 1:5 tells us that Zacharias was a priest, and his wife Elizabeth was of the daughters of Aaron. She wasn't a priest, but she grew up in that environment, so she understood his world. We are not saying your spouse has to come from the same background as you. But you do need the same values.
 
 ### Show up
 
-If you are a young adult with access to a youth group, college group, or young adults ministry, make the most of it. Meet people. See how many different kinds of children God has, with different strengths and different quirks. Sometimes we are so fixed on "this is what I want" that we forget to ask on what basis. Getting out of your comfort zone opens your eyes, and helps you see it is okay to be yourself too.
+To our younger adults: some of you are part of youth groups, college groups, or young adult groups. Leverage that. Meet people. Mingle. See how many different types of children God has! Sometimes you can be so focused on "this is what I want." On what basis? Because that's how your parents were? God created so many different kinds of people, with different strengths and different quirks, and every one of them is valid. Getting out of your comfort zone opens your eyes. And you begin to see that it's okay to be yourself, and okay for others to be themselves.
 
-As pastors, we are sometimes amazed when a church holds a singles meeting and the singles who are believing for a spouse don't come. "There's nobody there I like." The person may not even be in that room, but connecting with the company God has placed you in opens you up.
+One thing that amazes us as pastors: the church holds a singles meeting, and the singles don't come. Some of them are believing God for a spouse, but they won't come to the singles meeting. "There's nobody there I like." Sometimes it's not even about who you like. The person might not even be in that room. But connecting with the company God has placed you in opens you up.
 
 ### Let your company help you filter
 
-When you do get into a relationship, the people around you become your vetting team. Some will say, "I don't know about this." Others will say, "I never thought about it, but this makes a lot of sense." They can help you filter before your emotions get too invested. You have a choice in who you marry, but even with that choice, God has placed people around you to help.
+Here is the good news. Say you do start a relationship with someone from that company. The people you are *not* dating become your vetting team! They are the ones who will say, "Hmm, I don't know about this," or, "Oh my goodness, I never thought about it, but this makes a lot of sense." They help you filter before your emotions get too sucked in.
 
-This matters even among believers, because not every believer around you is headed in the same direction you are. If you have been praying for years about running an orphanage, and the person you are interested in wants nothing to do with children, that is a real conflict. God may have someone for that person, but it may not be you.
+This goes for both men and women. Sometimes a man thinks, "Well, it's my decision," or a lady thinks, "I have a right to say yes to whoever I want." You have a choice, yes. But even with your choice, God has placed people around you to help you ask, "Is this it?"
+
+And we are not just talking about Christian versus non-Christian. Not every believer around you is marriageable *for you*, because not every believer around you is headed in the same direction. Maybe you have been praying for years about running an orphanage, and the other person has said they want nothing to do with children. Well, you have a conflict there. God may have someone for that person, but it may not be you.
 
 ## Through the Everyday Course of Life
 
 > The Lord is my shepherd; I shall not want.
 > Psalm 23:1 (NKJV)
 
-We like to read it: because the Lord is my Shepherd, *therefore* I shall not want. Our provision often lies in following the leading of our Shepherd. When people don't follow Him, they miss what He has already provided.
+We like to say it this way: *because* the Lord is my Shepherd, *therefore* I shall not want. So often our provision lies in following the leading of our Shepherd. When people don't follow Him, they end up starved for provision, and what God already provided, they never get.
 
-There is an ordinary, God-ordained course of life. If you are a young adult, that probably means being in school or building toward a marketable skill. As you do what you ought to be doing, the Shepherd leads you, and you run into the right people. As someone once put it, **if you are where you ought to be, you will meet who you ought to meet.**
+There is what we call the normal course of life, the things God wants you to be doing in this season. If you are a young adult, you should probably be in school, or getting a marketable skill. Some people graduate from high school and they're not working and not in college. What are you doing? When you walk in the normal course of life, the Shepherd leads you, and you run into the right person. We heard someone say it this way: **if you are where you ought to be, you will meet who you ought to meet.**
 
-The reverse is also true. At the time when kings went out to battle, King David stayed home, and that is where he fell into temptation with Bathsheba. In the right place, you meet the right person. In the wrong place, you meet the wrong one.
+The opposite is true too. At the time when kings went out to battle, David stayed home. That's how he fell into temptation with Bathsheba. He wasn't supposed to be there. In the right place, you meet the right person. In the wrong place, you meet the wrong person.
 
-### Following God's specific leading
+### When God leads you somewhere specific
 
-Beyond the ordinary course of life, sometimes God leads you to do something specific, and it may seem counterintuitive.
+Beyond the normal course of life, sometimes God specifically leads you to do something, and it can seem counterintuitive. For example, we pastor a church that is still growing. Someone could visit and think, "Will I find a husband here? Let me go to the church with thousands of people."
 
-When Tayo was in college, he attended a small church of about fifty people. A young man who played keyboard for them was about to graduate and wanted to get married, but there were no prospects in that church. So he started attending one of the biggest churches in town. It was a good church, but while he was there, the Lord told him, "I did not send you to this church. Go back to the church I sent you to help." The little church had no other keyboard player and had been using tapes.
+**Tayo:** I have a story about exactly that. When I was in college, I attended a small church, maybe about fifty people. We had a young man who played the keyboard for us. He was about to graduate and looking for a wife, and there were no prospects in that church. So he started going to one of the biggest churches in town. It was a good church! But while he was there, the Lord spoke to him: "I did not send you to this church. Go back to the church I sent you to help." When he left us, we had no piano. We were using tapes. We did what we had to do!
 
-He went back. A few months later, a guest music minister came to visit. She sang, he played, and they flowed. As it turned out, she had worked with a prominent ministry, and the Lord had put it on her heart to go and hold meetings of her own. "I'm a music minister, not a preacher," she thought, so she decided to simply look for churches that needed help with music. She moved to Nebraska, and the very first church she visited was the one where she met her husband. They are still married today.
+He came back, and thank God he did. A few months later, a guest minister came to visit, a music minister. She sang, he played, and they flowed.
 
-### Small steps of obedience matter
+Her side of the story is just as amazing. She was a music minister with a prominent ministry, and when the team wasn't traveling with the man of God, some of them would go and hold their own meetings. She thought, "I'm a music minister, not a preacher. Why should I hold meetings?" But the Lord put it on her heart to go. So she left her state, went to Nebraska, and said, "All I know to do is music, so I'll look for churches that need help with music." The very first church she came to was the church where she met her husband. And they are still married. I saw a post from her the other day!
 
-David's father sent him to the battlefield with food for his brothers. The Bible says David left early in the morning. That simple obedience brought him to the battlefront, where the purpose of God rose up in him as he heard Goliath's taunts. Part of the reward for defeating the giant was marriage to the king's daughter. What if David had dragged his feet and left in the afternoon?
+There is something about doing what you are supposed to do and following the leading of God.
 
-In one day, David obeyed his earthly father, obeyed his heavenly Father, stepped into his purpose, and found a wife, all because he took the first step of immediate obedience. Don't dismiss the seemingly small steps of doing life.
+### Don't despise the small steps
 
-Use your gifts, too. If you are wonderful with children, serve in children's ministry. You may wonder how that will help you find a husband, but people have brothers and brothers-in-law, and you would be surprised how using your gift causes you to be noticed. (And by the way, we need men in children's ministry too.)
+David's father sent him to take food to his brothers on the battlefield. He followed his father's authority. And when he got to the battlefront, the purpose of God in him rose up: "Is there not a cause? Who is this uncircumcised Philistine embarrassing Israel?" He asked what would be done for the man who defeated Goliath, and part of the reward was the king's daughter. That's how he found his wife: by stepping into the purpose God had called him to.
+
+The Bible says David left *early in the morning*, as his father had sent him. What if he had dragged his feet and left in the afternoon? He might have missed hearing Goliath, and the anointing in him wouldn't have risen up to take on the giant.
+
+Think about it. In that one day, David was obeying his father. He was obeying his heavenly Father. He was fulfilling purpose. He was getting a wife. And people were singing about him killing tens of thousands, all because he took that first step of immediate obedience. His father said, "Take this food," and he went right away. So don't be dismissive of those seemingly small steps of doing life.
+
+And step into your gifts. Some ladies are wonderful with children. Help out in children's ministry! "How would I find a husband in children's ministry?" You don't know. Some people have brothers. Some people have brothers-in-law looking for a spouse. And by the way, we need guys in children's ministry too! You would be surprised how using your gift causes you to be noticed and brings blessing to you.
 
 ::: takeaways Putting This Into Practice
 - **Redefine "the right one."** Not perfect, not the only option, and not always your first attraction, but the person God ordained to walk in destiny with you.
-- **Do life with people.** Build friendships, show up to your church community, and let trusted people help you filter.
-- **Stay on God's path.** Be where you ought to be, doing what you ought to be doing.
-- **Obey promptly.** Small, immediate steps of obedience can open the biggest doors.
+- **Do life with people.** Build friendships, show up to your church community, and let people you trust help you filter.
+- **Be where you ought to be,** doing what you ought to be doing in this season.
+- **Obey quickly.** Small, immediate steps of obedience can open the biggest doors.
 :::
 
-We trust God to give you the grace to see and recognize the right one, in Jesus' name.
+## Let's Pray
+
+Heavenly Father, we pray for everyone reading this. Help them, Lord. You have somebody for them. They don't have to stay in the wilderness, because there is a promised land. We pray for the grace and the anointing to see and to recognize the right one, in Jesus' name. Amen.

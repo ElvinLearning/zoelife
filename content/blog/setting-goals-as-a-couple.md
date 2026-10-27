@@ -8,8 +8,9 @@ series: Recipes for a Blessed Marriage
 playlist: PL2QfJI8adA_Zlr6yymbp_MkVfb0tO9cze
 excerpt: Marriage is not just two people who love each other. It is two people who love each other walking the same path. Here is how to get on the same page and stay there.
 ---
+God has been faithful. God has been gracious. He has kept us and brought us this far, and He has a lot in store for your marriage and your family. (And if you are single, God has a plan for you too. You are special, and He is intentional about connecting you with your spouse-to-be.)
 
-Whether it is a new year or simply a new season in your marriage, one of the best things you can do as a couple is to set your vision together. Agree on what you are trusting God for. Write your goals down together. And don't make it a once-a-year exercise. Come back and review those goals regularly: once a month, once a quarter, or twice a year, whatever rhythm you can keep. What matters is that you stay aligned.
+Whether it is a new year or simply a new season, one of the best things you can do as a couple is to set your vision together. Agree on what you are trusting God for. Write your goals down together. And don't make it a once-a-year exercise. Come back and review those goals: once a month, once a quarter, twice a year, whatever you are able to do. What matters is that you stay aligned.
 
 ## Unity Is Good, and It Is Pleasant
 
@@ -27,7 +28,7 @@ Notice that the psalm calls unity both *good* and *pleasant*. There is a sweetne
 > Can two walk together, unless they are agreed?
 > Amos 3:3 (NKJV)
 
-If we are driving to Chicago, we have to agree that Chicago is where we are going. You can't say "Chicago" while I say "Iowa." The car can only head in one direction. When one spouse is looking one way and the other is looking the opposite way, you end up in a stalemate, and nothing moves.
+Say we are driving to Chicago from where we live. (Walking there is probably not a good idea!) We have to agree that Chicago is where we are going. You can't say "Chicago" while I say "Iowa." The car can only head in one direction. When one spouse is looking one way and the other is looking the opposite way, you end up in a stalemate, and nothing moves.
 
 **Marriage is not just two people who love each other. It is two people who love each other on the same path, with the same vision.** Before you can walk, run, or fly together, you have to get into agreement.
 
@@ -54,7 +55,7 @@ Verse 4 says to look out for your own interests *and* the interests of others. S
 
 What each of you wants is not necessarily wrong, and you may not have to pick only one. Maybe one goal is for this season and the other for the next. Maybe you can do both at once. Keep seeking the Lord and stay mindful of being a blessing to your spouse.
 
-This takes work, discipline, and patience. And you may not get everything. We often say **it is better for both of you to agree on 70% of what you want than to force 100% of what you want and lose your agreement.** The secret is getting into one mind and one accord. You can get everything you want and still lose, because the blessing is not in it. Learn to talk until you agree.
+This takes work, discipline, and patience. And you may not get everything. **It is better for both of you to agree on 70% of what you want than to force 100% of what you want and not be in agreement.** The secret is getting into one mind and one accord. When you are not in one accord, you can get what you want and still lose, because there is no blessing in it. So learn to talk until you are in agreement.
 
 ## Stay in Agreement
 
@@ -96,4 +97,8 @@ And as you review your vision, make sure you are in sync on every major area of 
 - **Put a review on the calendar**, monthly or quarterly, to check that you are still in agreement.
 :::
 
-We pray that God helps you set God-given visions, come into agreement, and walk in the multiplied grace that agreement brings. May you see the same things in every major area of life, run with your vision, and find a rhythm for reviewing it together. And we pray for grace for husbands to love their wives and wives to respect their husbands, so your marriage stays united and focused on Him.
+## Let's Pray
+
+Heavenly Father, thank You for bringing us into this new season. It's going to be a glorious year for Your people. In spite of anything the devil does, You prepare a table before us in the presence of our enemies, so we know we will be fine. We pray You help every couple reading this set God-given visions and come into agreement, and multiply grace through that agreement. Help them see the same things in all the major areas of life, run with the vision, and keep a rhythm of reviewing it so they stay in agreement.
+
+Lord, help husbands love their wives, and help wives respect their husbands. Give us united marriages that love You, put You first, and seek You first. Marriages focused on loving You, pleasing You, and walking together in agreement. We give You praise and glory for it, in Jesus' name. Amen.

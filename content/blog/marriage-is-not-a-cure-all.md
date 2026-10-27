@@ -24,7 +24,7 @@ In Jeremiah 2:13, God says His people committed two evils: they forsook Him, the
 
 Peter preached that there is salvation in no one else. Once you start believing there is salvation in marriage, that becomes a problem. In Luke 14:26, Jesus placed Himself above father, mother, spouse, and even our own lives. The One who created marriage expects us to put Him above marriage.
 
-Here is the encouraging part: when you put God first, you can live a fulfilled life whether or not you ever get married.
+So put God first. Even if you never get married, when you put God first you can still have a fulfilled life.
 
 ## It Pushes People Into the Wrong Relationships
 
@@ -37,15 +37,15 @@ The Bible is clear that it is better to be single than to be miserably married. 
 
 Proverbs 25:24 says something similar about living in a corner of the housetop. Notice the contrast. Scripture does not compare a bad marriage with a single person relaxing on a beach. It says you could be alone in the wilderness, in a hard place, and that would still be better than a contentious marriage.
 
-As good as marriage is, it is **marriage done right** that is good, not marriage at any cost. There may be pressure on you to get married. In the name of fighting that pressure, don't make your life worse.
+As good as marriage is, it is **marriage done right** that is good, not just marriage. Some people think, "I'll just take any marriage. At least it's better than being single." No, that's not true! We think the grass is greener on the other side, but there are many people suffering in marriage. There may be pressure on you to get married. In the name of fighting that pressure, don't go and make it worse for yourself.
 
 ## It Steals the Joy of Your Current Season
 
-Another consequence of this lie is that singles postpone their joy until they get married. But God's best is for us to enjoy every phase of life. Imagine a child in kindergarten worrying about getting into college. College will come. While you are in this phase, enjoy this phase.
+Another consequence of this lie is that singles postpone their joy until they get married. But God's best is for us to enjoy every phase of life. Imagine a child in kindergarten worrying about how they're going to get into college. Yes, college will come! But while you're in this phase, enjoy this phase. And when you're in the next phase, enjoy that one.
 
 Marriage is great, and marriage has its challenges. Being single is great, and being single has its challenges. Some singles only see the blessings of marriage and only the challenges of singleness. Paul wrote in 1 Corinthians 7:33 that the one who is married cares about how to please his wife. Marriage brings extra cares that you do not carry while single.
 
-Paul also said he had learned to be content in whatever state he was in. Human nature finds it easy to be discontent. When you are single, you just want to be married. When you are married, you just want children. When you have children, you want something else. That fleshly nature complains about the current season, and we have to consciously fight it, single or married.
+Paul also said he had learned to be content in whatever state he was in. It's amazing how easy human nature finds it to be discontent. When you're single: "I just want to be married, I just want to be married." When you get married: "I just want kids, I just want kids." When you have kids: "I just want this, I just want that." That fleshly nature complains about the current season, and we have to consciously fight it, single or married.
 
 So decide: I will celebrate where I am right now. I will receive the grace God has for me in this season and walk in the fullness of it. If it feels like the next season is delayed, I will release my faith and ask God for help. And while I am on my way, **I will rejoice today on my way to my tomorrow.**
 
@@ -63,7 +63,7 @@ God never said your spouse is El Shaddai. He said, *I am your Source.* Your spou
 
 When God remains your Source, you receive what you can from your spouse with gratitude, and you take what your spouse cannot give to God. That is a balanced view of marriage.
 
-We love each other, but we both know we are not complete without God. Each of us is still learning how to meet the other's needs. For what we cannot give each other, we know we can turn to God.
+**Kemi:** I love my husband, and he loves his wife. But we both know we are not complete without God. There are needs I have that my husband is working on meeting, and needs he has that I'm working on meeting. But guess what? Whatever is missing, we know we can always get in God. Just because I have a blessed husband doesn't mean I stop my fellowship with God.
 
 Whether you are single or married, you never stop looking to God as your Source. So learn to lean on Him now. Your fellowship with God follows you into marriage and into parenting. If you don't develop it while you are single, you will put that pressure on your spouse instead.
 
@@ -74,6 +74,8 @@ Whether you are single or married, you never stop looking to God as your Source.
 - **Make God your Source now.** Build your fellowship with Him while single, and your future spouse will not have to carry what only God can give.
 :::
 
-## A Prayer for You
+## Let's Pray
 
-Heavenly Father, thank You for creating marriage and making it good. We know it was never meant to take Your place. Help every single person reading this to put You above all and make You their Source. You said to seek first Your kingdom and righteousness, and all these things will be added. Open the right doors in Your perfect time, in Jesus' name. Amen.
+Heavenly Father, thank You for Your people and Your love for them. Thank You that You created marriage, and You declared it good. But we know it was never meant to take Your place. We pray that Your people put marriage in its place and put You above all, because You are meant to be above all. Help them make You their Source. You said to seek first Your kingdom and Your righteousness, and all these things will be added, even marriage. So we pray they put You first and seek You first, and that You open doors for them, in the mighty name of Jesus. Amen.
+
+Don't forget: God has a special spouse for you. He is your Source, and He is your joy.

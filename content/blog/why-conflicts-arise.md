@@ -1,107 +1,119 @@
 ---
 title: Why Conflicts Arise: The Differences Behind Most Disagreements
-description: We look at the differences and assumptions behind everyday disagreements, and how understanding them can help us resolve conflict.
+description: Offenses will come. We talk about the differences and assumptions behind most disagreements, and why understanding them helps you resolve conflict.
 date: 2026-10-13
 author: Tayo and Kemi
 category: Conflict
 series: Conflict Resolution
 playlist: PL2QfJI8adA_b13X9wl5zwxWDyeO5pCkK2
-excerpt: Offenses will come. The skill is not avoiding conflict but resolving it, and that starts with understanding the "why" behind the disagreement.
+excerpt: The skill is not avoiding conflict. It is knowing how to resolve it, and that starts with understanding the "why" behind the disagreement.
 ---
 
-Conflict is a major part of life. The only way to live completely without it is to go to heaven, and we don't want you going there prematurely! As long as we are on this earth, there will be conflict. Jesus said so plainly:
+Dealing with conflict is a major part of life. In fact, the only way to live without conflict is to go to heaven, and we don't want you going there prematurely! As long as we are on this earth, there will be conflict. Jesus said so Himself:
 
 > Then He said to the disciples, "It is impossible that no offenses should come, but woe to him through whom they do come!"
 > Luke 17:1 (NKJV)
 
-You can be sure that offenses will come, in our families, our marriages, our friendships, and our everyday dealings. So the skill to develop is not avoiding conflict. It is **knowing how to resolve it.**
+You can be sure offenses will come: in your family, in your marriage, in your friendships, in your everyday dealings. So the skill is not avoiding conflict. The skill is **knowing how to resolve it.**
 
-That doesn't mean we go looking for trouble. Scripture tells us to seek peace:
+That doesn't mean we go looking for trouble everywhere. Scripture tells us to seek peace:
 
 > If it is possible, as much as depends on you, live peaceably with all men.
 > Romans 12:18 (NKJV)
 
-But even when we do our part, situations will arise that need resolving. In this first part of our *Conflict Resolution* series, we want to look at *why* conflicts happen, because there is almost always a "why" behind a conflict, and understanding it helps a great deal in resolving it.
+But whether we seek peace or not, situations will come up that need resolving. So before we get into the tools in this series, we want to talk about *why* conflicts happen. There is almost always a why behind a conflict, and understanding the why helps so much in resolving it.
 
 ## Why It Hurts More When It Is Someone Close
 
-Someone you hardly know can say something hurtful, and you shrug it off. But when your spouse, your child, your sibling, or your best friend says the same thing, it cuts deep.
+Someone who isn't that close to you can do something hurtful and you go, "It's okay." But when your spouse, your child, your best friend, or your sibling does the very same thing, it's, "They said *that* to me?" And it hurts deep.
 
-Think about Jesus. He was betrayed by Judas, one of the Twelve. Within a day, Peter denied Him. Nearly all the rest abandoned Him. Talk about an opportunity for offense! And notice that when Jesus said offenses would come, He was speaking to the very disciples who would later offend Him. It is not a matter of *if* offense comes, but *when*, and how we deal with it.
+Think about Jesus, our example. He was betrayed by Judas, one of the Twelve. Not even a day later, He was denied by Peter. And all the rest, except John, abandoned Him. Talk about an opportunity for offense! And isn't it interesting that when Jesus said offenses would come, He was saying it to the very disciples who would offend Him? So it is not a matter of *if* offense comes. It is a matter of *when*, and how you deal with it.
 
 ## Two Kinds of Conflict
 
-**The first is malicious.** Sometimes people intentionally set out to harm you. Paul asked for prayer to be delivered from unreasonable and wicked men. If you live long enough, you will run into some.
+**Sometimes it is malicious.** Some people intentionally set out to harm you. Paul asked believers to pray that he would be delivered from unreasonable and wicked men. If you live long enough, you will run into some of them.
 
-**The second, and far more common, comes from differences.** As pastors and counselors, we find that most conflicts fall into this category. Here are the differences we see most often.
+**Most of the time, it comes from differences.** As pastors and as counselors, we find that most conflicts fall into this second category. These are the differences we see over and over.
 
 ## The Differences Behind Most Conflicts
 
-### 1. Different purposes or directions
+### 1. We are headed in different directions
 
-Two people may like each other, but when one heads in one direction and the other heads in another, conflict arises and the relationship can drift apart. This happens in marriage too. A couple may start out wanting the same destination, and then, as they grow, their directions change. If it isn't resolved, it can create major problems.
+Two people can genuinely like each other, but person A starts heading one direction and person B starts heading another. The relationship drifts, and if it isn't managed, conflict comes. We see this in marriage a lot. When a couple first got married, they wanted the same destination. As they grew, the difference crept in. If it isn't resolved, it can create major problems.
 
-### 2. Different expectations
+### 2. We expected different things
 
-Sometimes an expectation was never communicated: "I didn't know that's what you expected of me." Other times it was communicated, but the other person didn't accept it, or understood it differently than you meant it. A common one: "I did this for my friend, and when it was my turn, they didn't do it for me." Recognizing that doing something for someone doesn't obligate them to return it can remove a lot of conflict. At the very least, communicate your expectations.
+This one happens so much. Sometimes it is not even unfair. It's just, "I didn't know that was what you were expecting of me." An expectation that was never communicated. Other times it was communicated, but the other person didn't accept it, or didn't understand it the way you meant it.
 
-### 3. Different desires and passions
+Here is a common one: "I did this for my friend, and when it was my turn, they didn't do it for me." When we realize that just because I did something for you doesn't mean you have to do it for me, a lot of the conflict goes away. At the very least, communicate your expectations.
 
-When a couple is consistently passionate about different things, conflict can follow. We see it in our home: our children have wanted different shows and activities at different ages. If we only do what the younger ones want, the older ones feel left out. Different preferences at different stages of life need to be welcomed and managed.
+### 3. We are passionate about different things
 
-### 4. Different positions
+When a couple is consistently passionate about different things, conflict can follow. We see it in our own home. Our children have ranged from teenagers all the way down to a baby, and everybody wants to watch a different show and do a different activity! If we only do what the younger ones want, the older ones feel left out. Everyone's preferences, at every stage of life, have to be welcomed and managed.
 
-It is easy to be upset with someone in authority when you are not in their position. Many employees get frustrated with their employer, until they are promoted into management and think, "Oh, *that's* why they did it." The same thing happens between pastors and congregations, and between parents and children. Different positions give different perspectives.
+### 4. We sit in different positions
 
-### 5. Different values
+It is so easy to be upset with someone in authority when you are not in their position. Employees get upset with the employer. Then somebody rises into management and says, "Oh, okay. *That's* why they did it." We see it in church between pastors and congregants, and at home between parents and children. Different seats give you different views.
 
-Do we both believe in God? Is going clubbing okay? How should we use money: spend, save, invest, or give? Differences in values, especially around money, can lead to major problems. The more your values are in sync with the people closest to you, the easier life becomes.
+### 5. We value different things
 
-### 6. Different graces and strengths
+It can be as big as, "I believe in God and this person doesn't." Or, "I think it's okay to go clubbing, and I'm really not comfortable with that." Or money: "This is how I want to spend it." "No, I want to save." "I want to invest." "I want to give." These are all sources of conflict, and money especially can lead to major problems. The more your values are in sync with the people around you, the easier life becomes.
 
-We tend to operate out of our own grace and strength, and then expect others to do what we can do. But what comes easily to us comes from our grace. Your grace helps you see things others don't, and theirs helps them see what you miss. Expecting them to function in your grace is unfair.
+### 6. We carry different graces
 
-### 7. Different perspectives that change over time
+We tend to operate out of our own grace and our own strength. And if we are not careful, we start expecting others to do what we can do. But we are doing it by grace! Your grace helps you see things others don't, and their grace helps them see what you miss. Expecting someone to function in *your* grace is just not fair.
 
-People grow and change. Two people may see things the same way at the start, and then life happens. Before Kemi had children, a screaming baby on an airplane was frustrating: *why couldn't I have sat up front?* After becoming a mother, she now feels compassion and wants to help. As we change, the people closest to us need to grow along with us, or conflict follows.
+### 7. We change over time
 
-### 8. Different knowledge and exposure
+People grow and change. Two people can see things exactly the same way at the start, and then life happens.
+
+**Kemi:** When I was single and a baby was screaming on an airplane, I was thinking, "Oh my goodness, why couldn't I have sat up front?" Then I had a baby, and my compassion bucket got very, very big. Now you can put five crying babies around me on a plane and it's compassion that comes out of me, not frustration. I can't say I have always been that way!
+
+As you grow and change, you need the people closest to you growing along with you. Otherwise, conflict.
+
+### 8. We have different knowledge and exposure
 
 When you have been exposed to things others haven't, you see differently, and what moves them may not move you.
 
-### 9. Gender differences
+### 9. God made us male and female
 
-God created them male and female. There are divine differences between men and women, and in marriage counseling we see how important it is for each to understand the other. When you understand these differences, it becomes much easier to bridge them.
+He who created them made them male and female. There are divine differences between men and women, whatever some people try to argue. In marriage counseling, and just in being pastors, we see it: there are some things you need to understand about men and some things you need to understand about women. If you don't, you will have problems. Once you do, it is so much easier to bridge the gap.
 
-### 10. Generational differences
+### 10. We come from different generations
 
-Things we consider normal, our children look at and say, "Daddy, Mommy, seriously?" Even under the same roof, generations see things differently. If you despise a generation that is not yours, you will always be in conflict with it. Previous generations have seen things they can teach us, and younger generations see things we don't. Learn from each other.
+It's amazing. Things we think are perfectly normal, our daughter and our son look at and just say, "Daddy, Mommy... *seriously*?"
 
-### 11. Assumptions and incomplete information
+Same house, different generations, different views. If you despise a generation that is not yours, you will always be in conflict with it. The generations before us have seen things they can teach us, and the generations after us see things we don't. Talk about it, learn from each other, and manage it well.
 
-Some of the most painful conflicts come from false accusations, often based on incomplete information or misreading someone's heart. We have both experienced this. People sometimes assume Tayo's quietness means he won't stand up for himself. Others assume Kemi isn't listening because she is more outgoing, even though she pays close attention to detail. Assumptions like these can lead to major conflict if they aren't addressed.
+### 11. People make assumptions
 
-### 12. Cultural, traditional, and social differences
+One of the most painful sources of conflict is being accused falsely, often because of incomplete information or because someone misread your heart.
 
-Different cultures, races, upbringings, and economic backgrounds can create serious friction, especially when people work closely together and never take the time to understand each other.
+**Kemi:** Take the two of us. I am generally louder, so people assume I'm not listening. But I'm actually very detailed. I'm an extrovert, but there is an introverted side of me that people don't always see. And people spend time with Tayo and say, "Wow, he's very deep," and assume he won't fight for himself.
+
+All those assumptions can lead to major conflict if they are not managed.
+
+### 12. We come from different cultures and backgrounds
+
+This one can be really major. I'm from one culture and you're from another. I'm from one race and you're from another. I was raised this way and you were raised that way. Different socioeconomic backgrounds too. If we don't take the time to understand each other, especially when we are working closely together, it can cause conflict.
 
 ## Differences Can Become Strengths
 
-Here is the encouraging part: the very differences that cause conflict can become sources of strength, opportunity, and growth. Scripture says there are differences of ministries but the same Lord. God Himself created many of these differences for His purposes. When you recognize that something is from the Lord, even if it isn't your style, your tradition, or your experience, you can receive it.
+Here is what is amazing: all of these things that cause conflict can actually become sources of strength, opportunity, and growth. The Bible says there are diversities of gifts, but the same Lord. God Himself created many of these differences, for His own purposes. When you come with that mindset, it is so much easier to receive something. It might not be your style. It might not be your tradition. It might not be your exposure. But if it is the Lord, receive it.
 
-Tayo grew up in a Christian tradition where it was easy to feel superior to believers from other traditions. Yet one of the greatest lessons he ever learned about God and evangelism came from someone of a tradition he thought he knew more than. Yes, there are differences, but we can still learn from each other and communicate, and God can do much more.
+**Tayo:** Let me share a testimony. I grew up in a particular Christian denomination, and it is easy in that setting to develop a superiority mindset toward Christians from other traditions. Yet one of the greatest lessons I ever learned about God and about evangelism came from someone from a tradition I thought I knew more than. Yes, there are differences. But when you approach them with humility, you can still learn and still communicate, and God can do so much more.
 
-Whatever the reason a conflict arises, there is a way to resolve it. The tools of conflict resolution apply in marriage, between parents and children, among siblings, and in friendships. Some things are unique to each relationship, but many principles apply to all of them.
+Whatever the reason a conflict arises, there is a way to resolve it. The same tools help in marriage, between parents and children, between siblings, and in friendships. Some things are unique to each relationship, but many principles apply to all of them. That is what the rest of this series is about.
 
-::: takeaways Reflect on Your Current Conflict
-- **Name the "why."** Which difference is behind the tension: purpose, expectations, values, position, perspective, or something else?
-- **Check your expectations.** Have you clearly communicated what you expected, or assumed it?
+::: takeaways Think About a Conflict You Are Facing
+- **Name the "why."** Which difference is behind it: direction, expectations, values, position, grace, or something else?
+- **Check your expectations.** Did you actually communicate what you expected, or did you assume it?
 - **Question your assumptions.** Could you be reading the other person's heart from incomplete information?
-- **Look for the strength.** How might this difference actually help you both if you learn from it?
+- **Look for the strength.** How could this difference help you both if you learn from it?
 :::
 
-## A Prayer for You
+## Let's Pray
 
-If a past conflict has left you offended or discouraged, we pray that you receive God's mind toward it. Conflict is not the end of the world. Jesus told us that in this world we would have trouble, so we are not caught off guard. We pray that you gain God's perspective on the solution, and wisdom to live at peace with others as much as depends on you.
+Father, thank You that because You love us, You don't leave us in the dark about the issues of this life. You told us that in this world we would have tribulation, so we are not shocked or taken aback when conflict comes. We pray for everyone reading this who has been offended or discouraged by a conflict. Give them Your mind toward it. The world is not coming to an end because there is a conflict. Give them Your perspective on the solution, and wisdom to live at peace with others, as much as depends on them.
 
-And if your heart has been hurt, the Lord heals the brokenhearted and binds up their wounds. The chastisement for our peace was laid on Jesus. We speak healing over every wound, so that what has troubled you will not trouble you again, and you will walk in peace, in Jesus' name.
+Lord, where hearts have been hurt, You heal the brokenhearted and bind up their wounds. The chastisement for our peace was laid on Jesus, so no one has to keep carrying that hurt. We speak healing over every heart and every wound. What has bothered you will not bother you again. You will get God's perspective on it, and you will rejoice and walk in peace again, in the mighty name of Jesus. Amen.

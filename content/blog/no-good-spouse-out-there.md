@@ -44,7 +44,7 @@ From the very beginning, when God created the man, He created the woman for him.
 
 One of God's names is Jehovah Jireh, the Lord who provides. Abraham was the first to understand that name. God already knew Abraham would need a ram, so He had placed one on the mountain before Abraham ever got there. Jehovah Jireh is the God who sees the future and provides ahead of the need.
 
-Think about Adam naming the animals. He would have noticed two of every kind, except for himself. Many singles feel the same way today: God seems to have somebody for everyone but me. What Adam did not yet see was that the God who created every one of those animals had the capacity to create a wife for him. **Just because you cannot see God's provision does not mean there isn't one.** Your faith in His provision is not based on what you can see. It is based on who He is.
+Here is a thought. Think about Adam naming the animals. He would have noticed two of every kind, except for himself. Many singles feel the same way today: God seems to have somebody for everyone but me. What Adam did not yet see was that the God who created every one of those animals had the capacity to create a wife for him. **Just because you cannot see God's provision does not mean there isn't one.** Your faith in His provision is not based on what you can see. It is based on who He is.
 
 ### God is El Shaddai, more than enough
 
@@ -78,6 +78,10 @@ You may be reading this and thinking, "I already believed this lie. I already co
 - **A scarcity is not your story.** You only need one, and God has that one.
 :::
 
-## A Prayer for Singles
+## Let's Pray
 
-> Father, I thank you for the blessing of being single. I consecrate myself to you, your will, and your plans for my life in Jesus name. I thank you that you have a special spouse for me, and I believe that you are preparing us for each other. According to Psalm 23, I trust you as my great shepherd and provider to lead and guide me in every area of my life, including in choosing a spouse. In Jesus mighty name I pray. Amen.
+Heavenly Father, thank You for Your love for us. Thank You for sending Jesus to die on the cross to wash away our sins and redeem us from every plan of the enemy. We pray now for every single person who has been caught in the trap of this lie. Let the light of Your Word, which dispels darkness, shine in their hearts.
+
+Establish them in this truth: You have somebody for them. They don't have to compromise. They don't have to settle. If they will let You be their Shepherd, You will lead them there. Open their eyes, help them follow You, and bring them to green pastures, to the place of more than enough, where they can say, "Truly, the Lord is my El Shaddai. The Lord is my Provider. The Lord is my Jireh. I am not without. I have more than enough." We declare that over you, in the mighty, matchless, glorious name of Jesus. Amen.
+
+We are looking forward to your testimonies of what God is doing in your singleness and in your relationships. God has somebody special for you!

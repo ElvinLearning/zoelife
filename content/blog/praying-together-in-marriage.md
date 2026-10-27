@@ -15,17 +15,19 @@ That is why we want to talk about prayer, for you as an individual and for your 
 
 ## Start by Praying for Yourself
 
-When Tayo was growing up, there was a common idea that the men earned the money and the women did the praying. Many men never learned how to pray or invested in it. Someone else can carry you in prayer for a while, but there will come a time when you have to carry yourself. Galatians 6:5 says each one shall bear his own load. There are burdens you must learn to bear in prayer for yourself.
+**Tayo:** It's very interesting. Growing up, there was this vibe that the men earned the money and the women prayed. There were a lot of men who didn't know how to pray and never invested in prayer. Yes, somebody else can carry you in prayer so far. But there will come a time when you have to carry yourself. Galatians 6:5 says each one shall bear his own load. There are burdens you must learn to bear in prayer for yourself.
 
-Pray for yourself to become a better person and a better spouse. When you engage God personally, you become a better believer, and a better husband or wife.
+So that's the first thing I really want to push: learn to pray for yourself. Pray for yourself to become a better person and a better spouse. When you engage God personally, you become a better believer, and a better husband or wife. Don't overlook that.
 
 First Peter 5:6 tells us to humble ourselves under the mighty hand of God so that He may exalt us in due time. We do everything we know how to do in the natural. Then, after we have done all, we look to God and say, "Without You, we cannot do this. We have given it our best, but we need Your help and Your wisdom," because there are so many things we don't know how to do, and He does.
 
 ## Make Prayer a Lifestyle in Every Season
 
-There will always be something to pray for. When we were single, we prayed, often in prayer meetings with friends. When we started dating, we prayed for God's will, for a blessed relationship, for grace to do what we ought to do and avoid what we ought not to do. When we married, we trusted God for grace as a couple. Then came children, and we trusted God for them. Now, as they go to college, we pray about the right friendships, the right career, and one day the right spouse. Add career, business, and everything else, and there is so much to lean on God for.
+Prayer is something we need through the entire marriage journey, because there is always going to be something to pray for and something to pray about.
 
-We also encourage **pre-praying**: not waiting until something happens before you pray, but praying into the future so that nothing catches you by surprise.
+**Kemi:** For us, when we were single, we were praying. We used to have these prayer meetings, and it wasn't even just the two of us; it was us and some of our friends. Then we started dating, and we were praying for God's will, for a blessed relationship, for grace to do what we ought to do during the relationship and not do what we ought not to do! Then you get married and you are trusting God for grace as a couple. Then you have children and you are trusting God for them. Then they start going to college, and you're praying for the right friendships, the right career, and next thing, oh, the right spouse! Add career and business and all these things, and there is so much to lean on God for.
+
+Something Tayo has been sharing with me is the idea of **pre-praying**: not waiting until something happens before you pray, but praying into the future, so nothing catches you by surprise. Living a lifestyle of prayer is so important, and we really want to encourage you in it.
 
 Ecclesiastes 4:12 says a threefold cord is not quickly broken. In a marriage, there is the husband, the wife, and the Lord holding them together. One of the main ways we invite Him to be that third strand, the glue in our marriage, is prayer. In prayer we say, "Lord, we honor Your direction and Your leadership. We receive Your correction and Your insight."
 
@@ -50,7 +52,7 @@ The stronger one should carry the one who is still growing. If you feel led to p
 
 Don't let prayer become a source of contention: "You never pray with me." "You won't fast with me." If God has put something on your heart, do it. But together, pray, no matter how small the start. Build that altar.
 
-You may have heard that **a family that prays together stays together.** We have also noticed that couples who pray together tend to have fewer communication problems, because when you pray together, God deals with both of your hearts at the same time.
+You may have heard that **a family that prays together stays together.** We have come to observe that couples who pray together tend to have fewer communication problems, because when you pray together, God deals with both of your hearts at the same time.
 
 ### Agreement is the key
 
@@ -81,4 +83,6 @@ Wives, if you feel your husband isn't doing this yet, God still honors your pray
 - **Pre-pray** over your family's week, and husbands, take your place praying over your household.
 :::
 
-We pray that God gives you grace to build your own prayer life, grace and wisdom to build a prayer life as a couple, and, if you are not yet married, grace to begin praying for your future spouse so that praying together comes naturally when that day comes.
+## Let's Pray
+
+Father God, we pray for every marriage reading this, and for those who are single and not yet married. First, we ask You to give everyone grace to develop their own personal prayer life. For every marriage, we pray for grace and wisdom to develop a prayer life as a couple. And for those who are seeking to get married, as they pray for their future spouse, set this in motion now, so that they step into praying together effortlessly and enjoy the rich rewards that come with it. We receive that in Jesus' name. Amen.
