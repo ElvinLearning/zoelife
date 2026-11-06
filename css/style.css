@@ -919,3 +919,9 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
   .site-header, .site-footer, .btn-row { display: none; }
   body { background: #fff; }
 }
+
+.footer-nav .footer-h, .footer-social .footer-h {
+  display: inline-block; background: var(--sage); color: #fff;
+  padding: .35rem .75rem; border-radius: var(--radius);
+}
+.cta-center .lede { max-width: 62ch; margin-inline: auto; }

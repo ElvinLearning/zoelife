@@ -99,7 +99,8 @@ group("Structure and SEO");
 const titles = new Map();
 const descs = new Map();
 
-for (const p of PAGES) {
+const indexedPages=PAGES.filter(p=>!p.startsWith("courses"));
+for (const p of indexedPages) {
   const doc = html[p];
   const title = (doc.match(/<title>([^<]*)<\/title>/) || [])[1] || "";
   const desc = (doc.match(/<meta name="description" content="([^"]*)"/) || [])[1] || "";
@@ -125,8 +126,8 @@ for (const p of PAGES) {
   check(`${p} heading order has no skipped level`, !skipped, skipped || "");
 }
 
-check("All page titles are unique", new Set(titles.values()).size === PAGES.length);
-check("All meta descriptions are unique", new Set(descs.values()).size === PAGES.length);
+check("All page titles are unique", new Set(titles.values()).size === indexedPages.length);
+check("All meta descriptions are unique", new Set(descs.values()).size === indexedPages.length);
 
 /* ------------------------------------------------ deployability -------- */
 group("Deployability");
@@ -154,9 +155,9 @@ if (isStaging) {
 } else {
   check("Production build allows crawlers", /Allow: \//.test(robots));
   check("robots.txt points at the sitemap", robots.includes(`${SITE}/sitemap.xml`));
-  check("Pages are indexable", PAGES.every((p) => /content="index, follow"/.test(html[p])));
+  check("Pages are indexable", indexedPages.every((p) => /content="index, follow"/.test(html[p])));
 }
-check("Sitemap lists every page", PAGES.every((p) => sitemap.includes(canonicalOf(p))));
+check("Sitemap lists every page", PAGES.filter(p => !p.startsWith("courses")).every((p) => sitemap.includes(canonicalOf(p))));
 check("Sitemap omits moved-url stubs", !sitemap.includes("/family-life") && !sitemap.includes("/appointments"));
 check("Sitemap is well formed", /^<\?xml/.test(sitemap) && /<\/urlset>/.test(sitemap));
 
@@ -366,14 +367,14 @@ check("Header does not use the boxed jpg wordmark", !indexHeader.includes("zoe-l
 check("Footer uses the banner wordmark", footerOf(html["index.html"]).includes("assets/brand/zoe-life-wordmark.png"));
 
 check("Header has no cart", !/\(0\)|\bCart\b|\bLogin\b|\bAccount\b/i.test(indexHeader));
-check("Primary header CTA is Send a message", /Send a message/.test(indexHeader) && /contact\.html#message/.test(indexHeader));
+check("Primary header CTA is Send a message", /Send a Message/.test(indexHeader) && /contact\.html#message/.test(indexHeader));
 check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
 
 const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
-for (const label of ["Home", "About", "Books", "Resources", "Courses", "Connect", "Partner", "Contact"]) {
+for (const label of ["Home", "About", "Books &amp; Resources", "Articles", "Resources", "Connect", "Partner", "Contact"]) {
   check(`Main nav includes ${label}`, navBlock.includes(`>${label}<`));
 }
-check("Books and Resources is no longer one nav label", !/>Books &amp; Resources</.test(navBlock));
+check("Course drafts are absent from navigation", !/>Courses</.test(navBlock));
 check("Family Life is not a main nav label", !/>Family Life</.test(navBlock));
 
 const builder = read("tools/build.mjs");
@@ -428,9 +429,9 @@ check("Stay in Touch is more prominent than the mailing disclaimer",
 check("Connect does not lecture about footer links", !/also linked in the footer|Start here if you are new/.test(connectMain));
 
 check("Subscribe intro copy is present",
-  publishedHtml.includes("Subscribe to receive encouragement, updates, and helpful resources from Zoe Life."));
+  publishedHtml.includes("Stay connected with Zoe Life! Subscribe to receive encouragement, helpful resources, and updates on our latest books, articles, videos, and upcoming opportunities."));
 const subscribeForms = [...publishedHtml.matchAll(/data-form="subscribe"[\s\S]*?<\/form>/g)].map((m) => m[0]);
-const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
+const CONSENT_JOIN = "I agree to receive emails from Zoe Life and understand that I can unsubscribe at any time.";
 check("Subscribe consent keeps joining the list and unsubscribing",
   subscribeForms.length > 0 && subscribeForms.every((form) => form.includes(CONSENT_JOIN)));
 check("Subscribe consent does not disclose where the signup is stored",
@@ -453,14 +454,11 @@ check("Home consult is not in the hero", !/hero-home[\s\S]{0,1200}consult\.html/
 check("Home leads with Send a message", /contact\.html#message/.test(homeMain));
 const homeHero = html["index.html"].match(/<section class="hero-home">[\s\S]*?<\/section>/)[0];
 const homeHeroBtns = [...homeHero.matchAll(/<a class="btn ([^"]+)"/g)].map((m) => m[1]);
-check("Home hero has two equal primary CTAs",
-  homeHeroBtns.length === 2 && homeHeroBtns.every((c) => c === "btn-primary"));
-check("Home hero puts Send a message before books",
-  homeHero.indexOf("Send a message") < homeHero.indexOf("Explore books"));
-check("You don't have to do life by yourself appears on Home", /don't have to do life/.test(homeMain));
+check("Home hero leads with Explore Zoe Life and includes resources and contact", homeHeroBtns.length === 3 && homeHeroBtns[0] === "btn-primary" && ["Explore Zoe Life","Explore Resources","Send a Message"].every(label=>homeHero.includes(label)));
+check("Home features Kemi's welcome", homeMain.includes("We’re Here to Walk Alongside You."));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
 check("About introduces us in our own voice", /We are Tayo and Kemi Akinyemi, and we started Zoe Life/.test(aboutMain));
-check("Home founder heading speaks directly to the reader", /<h2>We are glad you are here.<\/h2>/.test(homeMain));
+check("Home founder heading speaks directly to the reader", /<h2>We Are Glad You Are Here.<\/h2>/.test(homeMain));
 check("About meta uses shared voice", /We are Tayo and Kemi. Learn why we started/.test(html["about.html"]));
 check("About Meet section keeps the Meet Tayo and Kemi eyebrow",
   /id="meet"[\s\S]*?<p class="eyebrow">Meet Tayo and Kemi<\/p>/.test(aboutMain));
@@ -492,7 +490,7 @@ check("Couple names are Tayo then Kemi, never Kemi and Tayo",
   !/Kemi and Tayo/.test(namingCorpus) && !/Kemi and Pastor/.test(namingCorpus));
 check("Home does not prefix Pastor on every mention",
   !/Pastor (?:Tayo|Kemi|Tai)/.test(html["index.html"]));
-check("Footer signs off with Tayo and Kemi", /<p>Tayo and Kemi<\/p>/.test(footerOf(html["index.html"])));
+check("Footer uses the LLC copyright and both policy links", ["Zoe Life LLC.","privacy.html","terms.html"].every(t=>footerOf(html["index.html"]).includes(t)));
 check("Pastor title stays on the Meet photo and caption only",
   (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 2 &&
   /alt="Pastors Tayo and Kemi smiling and embracing/.test(aboutMain) &&
@@ -532,22 +530,8 @@ check("Playlist frames are a 16:9 box", /\.video-frame \{[^}]*aspect-ratio:\s*16
 const coursesDoc = html["courses.html"];
 const courseTrackDocs = ["courses/single-dating.html", "courses/committed.html", "courses/engaged-first-year.html"].map((p) => html[p]).join("\n");
 const welcomeDoc = read("courses/welcome.html");
-const courseSlots = cfgObj.courses || {};
-const courseBuySlots = ["singleDating", "committed", "engagedFirstYear", "couplesBundle"];
-check("Courses do not mention Teachable", !/teachable/i.test(coursesDoc + courseTrackDocs + welcomeDoc));
-check("Courses offer the mailing list", /data-form="subscribe"/.test(coursesDoc) && /data-form="subscribe"/.test(courseTrackDocs));
-if (courseBuySlots.every((key) => !courseSlots[key])) {
-  check("Null course slots render no buy links", !/buy\.stripe\.com|Buy this track|Buy the couples bundle/.test(coursesDoc + courseTrackDocs + welcomeDoc));
-  check("Null course slots say enrollment opens soon", /Enrollment opens soon/.test(coursesDoc) && /Enrollment opens soon/.test(courseTrackDocs));
-} else {
-  for (const key of courseBuySlots) {
-    if (courseSlots[key]) check(`Course slot ${key} renders its payment link`, (coursesDoc + courseTrackDocs).includes(courseSlots[key]));
-  }
-}
-check("Welcome page is noindex", /noindex, nofollow/.test(welcomeDoc));
-check("Welcome page does not call the network", !/fetch\s*\(|script\.google\.com|buy\.stripe\.com/.test(welcomeDoc));
-check("Welcome page is omitted from the sitemap", !sitemap.includes("/courses/welcome"));
-check("Sitemap lists course track pages", ["/courses/single-dating", "/courses/committed", "/courses/engaged-first-year"].every((path) => sitemap.includes(path)));
+check("Direct course URLs hide unpublished outlines", [coursesDoc,courseTrackDocs,welcomeDoc].every(doc => doc.includes("Page unavailable") && !/Buy this track|Enrollment opens soon/.test(doc)));
+check("Course routes are omitted from sitemap", !sitemap.includes("/courses"));
 const CLIPS = [
   ["01_everyone_but_me", "wwcWniQFDA4", "t=402s"],
   ["02_scarcity_not_you", "wwcWniQFDA4", "t=713s"],

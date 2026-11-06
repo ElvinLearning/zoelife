@@ -225,12 +225,12 @@ try {
   check("Rebuilt config keeps an existing Gumroad URL", built.payments.journal.gumroad === "https://example.gumroad.com/l/journal");
   check("Rebuilt config does not contain FormSubmit", !/formsubmit/i.test(JSON.stringify(built)));
   const books = readFileSync(join(temp, "books.html"), "utf8");
-  check("Preserved Gumroad URL is escaped into the book page", books.includes("https://example.gumroad.com/l/journal"));
+  check("Unreleased Gumroad URL stays off the book page", !books.includes("https://example.gumroad.com/l/journal"));
   check("Giving buttons stay out of the partner page", !/Partner through Stripe|Partner through PayPal/.test(readFileSync(join(temp, "partner.html"), "utf8")));
   const coursesHtml = readFileSync(join(temp, "courses.html"), "utf8");
   check("Courses page has no dead Teachable link", !/View courses on Teachable|teachable\.com/i.test(coursesHtml));
   check("Null course slots do not render buy links", !/buy\.stripe\.com|Buy this track|Buy the couples bundle/.test(coursesHtml));
-  check("Null course slots say enrollment opens soon", /Enrollment opens soon/.test(coursesHtml));
+  check("Unpublished course page hides its content", /Page unavailable/.test(coursesHtml));
   check("Rebuilt course slots stay null", built.courses.singleDating === null && built.courses.couplesBundle === null && built.courses.claimEndpoint === null);
 } finally {
   rmSync(temp, { recursive: true, force: true });

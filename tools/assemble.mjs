@@ -7,8 +7,8 @@ import {resolve,join,dirname} from 'node:path';
 import {fileURLToPath} from 'node:url';
 const root=fileURLToPath(new URL('..',import.meta.url));
 const out=resolve(process.argv[2] || join(root,'_site'));
-const pages=[...readdirSync(root).filter(f=>f.endsWith('.html')),
- ...['blog','courses'].flatMap(d=>readdirSync(join(root,d)).filter(f=>f.endsWith('.html')).map(f=>`${d}/${f}`))];
+const pages=[...readdirSync(root).filter(f=>f.endsWith('.html') && f !== 'courses.html'),
+ ...['blog'].flatMap(d=>readdirSync(join(root,d)).filter(f=>f.endsWith('.html')).map(f=>`${d}/${f}`))];
 mkdirSync(out,{recursive:true});
 for(const file of [...pages,'robots.txt','sitemap.xml','favicon.svg','css','js','fonts','assets',...(existsSync(join(root,'CNAME'))?['CNAME']:[])]) {
  mkdirSync(dirname(join(out,file)),{recursive:true});

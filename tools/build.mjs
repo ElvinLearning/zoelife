@@ -69,13 +69,13 @@ const TAGLINE = "Helping people thrive in every season of life.";
 const MISSION =
   "We share what Scripture teaches about everyday life, from the relationships at home " +
   "to the decisions we make at work. We want to help you put that teaching into practice.";
-const MESSAGE_CTA = "Send a message";
+const MESSAGE_CTA = "Send a Message";
 const MESSAGE_HREF = "contact.html#message";
-const CONSULT_CTA = "Schedule a complimentary 20-minute consultation";
+const CONSULT_CTA = "Schedule a Complimentary 20-Minute Consultation";
 const CONSULT_HREF = "consult.html";
 const SUBSCRIBE_INTRO =
-  "Subscribe to receive encouragement, updates, and helpful resources from Zoe Life.";
-const CONSENT_JOIN = "I agree to join Zoe Life's mailing list and can unsubscribe at any time.";
+  "Stay connected with Zoe Life! Subscribe to receive encouragement, helpful resources, and updates on our latest books, articles, videos, and upcoming opportunities.";
+const CONSENT_JOIN = "I agree to receive emails from Zoe Life and understand that I can unsubscribe at any time.";
 const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
   ? `${CONSENT_JOIN} We will email you a link to confirm.`
   : CONSENT_JOIN;
@@ -130,17 +130,16 @@ const NAV = [
     id: "resources",
     label: "Resources",
     items: [
-      ["blog.html", "Blog", "Articles on marriage, dating, and faith"],
+      ["blog.html", "Articles", "Articles on marriage, dating, and faith"],
       ["resources.html", "Videos", "Teaching clips and full series"],
-      ["books.html", "Books", "Gratitude devotional and journal"],
-      ["courses.html", "Courses", "Tracks for singles and couples"],
+      ["books.html", "Books &amp; Resources", "Gratitude devotional and journal"],
     ],
   },
   {
     id: "connect",
     label: "Connect",
     items: [
-      ["connect.html", "Follow along", "Our socials and Zoe Family Life"],
+      ["connect.html", "Follow Along", "Our socials and Zoe Family Life"],
       ["partner.html", "Partner", "Support the work of Zoe Life"],
       ["contact.html", "Contact", "Send us a message"],
     ],
@@ -150,17 +149,16 @@ const NAV = [
 const FOOTER_NAV = [
   ["Explore", [
     ["index.html", "Home"],
-    ["about.html", "About"],
-    ["blog.html", "Blog"],
+    ["about.html", "About Zoe Life"],
+    ["blog.html", "Articles"],
     ["resources.html", "Videos"],
-    ["books.html", "Books"],
-    ["courses.html", "Courses"],
+    ["books.html", "Books &amp; Resources"],
   ]],
   ["Connect", [
-    ["connect.html", "Follow along"],
+    ["connect.html", "Follow Along"],
     [MESSAGE_HREF, MESSAGE_CTA],
-    [CONSULT_HREF, "Complimentary consultation"],
-    ["partner.html", "Partner"],
+    [CONSULT_HREF, "Schedule a Complimentary Consultation"],
+    ["partner.html", "Partner With Us"],
   ]],
 ];
 
@@ -213,12 +211,7 @@ const payButtons = (book) => {
     ? externalLink(p[key], "btn-primary", label)
     : `<button class="btn btn-primary" type="button" disabled aria-disabled="true"><span>${label}</span><span class="buy-state">Coming soon</span></button>`;
   return `<div class="buy-area" aria-label="Purchase options">
-        <!-- TODO(client): Supply the ${book} Amazon and Lulu Direct checkout URLs and confirm its Gumroad/Etsy product URLs in the existing payments config. -->
-        ${book === 'journal' ? '<!-- TODO(client): Confirm journal pricing before publishing a price. -->' : '<!-- Devotional prices approved for this release. -->'}
-        <div class="pay-row">${option('amazon', 'Buy on Amazon')}${option('lulu', 'Order print copy')}</div>
-        ${book === 'devotional' ? '<p class="book-price">Website print: $9.99 <span aria-hidden="true">&middot;</span> Amazon: $12.99</p>' : ''}
-        <p class="format-meta">Website print orders will be fulfilled by Lulu Direct. Shipping is paid at checkout.</p>
-        <div class="pay-row digital-options">${option('gumroad', 'Digital PDF (Gumroad)')}${option('etsy', 'Digital PDF (Etsy)')}</div>
+        <div class="pay-row">${option('amazon', 'Buy on Amazon')}</div>
         </div>`;
 };
 
@@ -457,7 +450,7 @@ const subscribeForm = (idPrefix, intro) => `
           <label class="consent" for="${idPrefix}-consent">
             <input type="checkbox" id="${idPrefix}-consent" name="consent" required
                    aria-describedby="${idPrefix}-consent-error">
-            <span class="consent-note">${CONSENT}</span>
+            <span class="consent-note">${CONSENT_JOIN}</span>
           </label>
           <p class="error" id="${idPrefix}-consent-error" role="alert"></p>
         </div>
@@ -465,6 +458,7 @@ const subscribeForm = (idPrefix, intro) => `
           <label for="${idPrefix}-honey">Leave this field empty</label>
           <input type="text" id="${idPrefix}-honey" name="_honey" tabindex="-1" autocomplete="off">
         </div>
+        ${workspaceEndpoint(CONFIG.newsletterEndpoint) ? "<p class=\"hint\">We will email you a link to confirm.</p>" : ""}
         <button class="btn btn-primary" type="submit">Subscribe</button>
         <div class="form-status" data-status role="status" aria-live="polite"></div>
       </form>`;
@@ -502,8 +496,8 @@ ${subscribeForm("footer", true)}
 ` : ""}
     </div>
     <div class="footer-bottom">
-      <p>&copy; <span data-year>2026</span> Zoe Life. All rights reserved.</p>
-      <p>Tayo and Kemi</p>
+      <p>&copy; 2026 Zoe Life LLC. All rights reserved.</p>
+      <p><a href="${pre}privacy.html">Privacy Policy</a> · <a href="${pre}terms.html">Terms &amp; Conditions</a></p>
     </div>
   </div>
 </footer>
@@ -539,16 +533,17 @@ const home = page(
       "We share biblical teaching and practical resources for your faith, relationships, and everyday decisions.",
   },
   `
-<!-- TODO(client): Kemi's homepage copy goes here -->
+
 <section class="hero-home">
   <div class="hero-split wrap-wide">
     <div class="hero-copy">
       <p class="eyebrow">Zoe Life</p>
       <h1 class="tagline-heading"><span>Helping people thrive</span> <span>in every season of life.</span></h1>
-      <p class="lede">${MISSION}</p>
+      <p class="lede">At Zoe Life, we are passionate about helping individuals, couples, and families grow and thrive in every season of life. We believe that every season of life presents opportunities for growth, and our desire is to walk alongside you, providing faith-based and practical guidance, coaching, encouragement, and resources to help you navigate life’s opportunities and challenges, strengthen relationships, and live a purposeful and fulfilling life.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-        <a class="btn btn-primary" href="books.html">Explore books</a>
+        <a class="btn btn-primary" href="about.html">Explore Zoe Life</a>
+        <a class="btn btn-secondary" href="books.html">Explore Resources</a>
+        <a class="btn btn-secondary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
       </div>
     </div>
     <figure class="hero-photo">
@@ -564,11 +559,11 @@ const home = page(
     <div class="intro-split">
       <div>
         <p class="eyebrow">A word from us</p>
-        <h2>You don't have to do life by yourself.</h2>
+        <h2>We’re Here to Walk Alongside You.</h2>
       </div>
       <div>
-        <p>We want to see people growing, marriages strengthening, and families finding hope in God's Word. We share teaching and resources you can use in your own life, wherever you are starting from.</p>
-        <p class="card-link"><a href="about.html">Read more about Zoe Life</a></p>
+        <p>We believe that God’s Word provides the foundation and guidance we need for every area of life. Our heart is to encourage you and walk alongside you, helping you apply biblical principles and practical wisdom as you navigate life’s opportunities, decisions, and challenges. Whether it’s personal growth, relationships, marriage, parenting, education, or career development, we are passionate about providing encouragement, guidance, and resources to help you make wise decisions, grow in faith, and thrive in every season of life.</p>
+        <p class="card-link"><a href="about.html">Get to Know Zoe Life</a></p>
       </div>
     </div>
   </div>
@@ -579,10 +574,10 @@ const home = page(
     <div class="split split-copy-photo">
       <div>
         <p class="eyebrow">Tayo and Kemi</p>
-        <h2>We are glad you are here.</h2>
-        <p>We started Zoe Life to share what we have learned from Scripture and from our own marriage, family, and work. We hope it helps you with the decisions and relationships in your life.</p>
+        <h2>We Are Glad You Are Here.</h2>
+        <p>We are Tayo and Kemi Akinyemi, cofounders of Zoe Life and married for nearly twenty years. Our shared passion for God and people, along with our experiences in marriage, family life, ministry, and our professional careers, inspired us to establish Zoe Life as a platform to encourage, equip, and empower others. We are excited to share this journey with you and look forward to connecting with you!</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="about.html">Get to know us</a>
+          <a class="btn btn-primary" href="about.html">Get to Know Us</a>
         </div>
       </div>
       <figure class="portrait portrait-couple">
@@ -596,9 +591,9 @@ const home = page(
 
 <section id="resources">
   <div class="wrap">
-    <p class="eyebrow">Books</p>
-    <h2>Books to help you thrive.</h2>
-    <p class="lede">Start with 7 days. Keep going for 100. More to come.</p>
+    <p class="eyebrow">Books &amp; Resources</p>
+    <h2>Resources to Encourage and Equip You.</h2>
+    <p class="lede">Explore books and resources created to encourage your faith, support personal growth, and help you apply biblical principles in everyday life.</p><p>We are excited to introduce our first two publications, designed to help you cultivate and maintain a lifestyle of thanksgiving to God.</p>
 
     <div class="book-pair">
     <div class="book-tease">
@@ -609,8 +604,8 @@ const home = page(
       </div>
       <div>
         <h3 class="book-title">A 7-Day Gratitude Devotional</h3>
-        <p>Seven days of Scripture, reflection, prayer, and practical application. By Kemi Akinyemi.</p>
-        <p class="card-link"><a href="books.html#devotional">See the book</a></p>
+        <p>A seven-day journey through Scripture, reflection, and prayer to encourage you to cultivate a heart of gratitude to God and make thanksgiving a part of your daily life.</p>
+        <p class="card-link"><a href="books.html#devotional">Explore the Devotional</a></p>
       </div>
     </div>
 
@@ -622,8 +617,8 @@ const home = page(
       </div>
       <div>
         <h3 class="book-title">A 100-Day Gratitude Journal</h3>
-        <p>A dedicated space to pause, remember God's goodness, and keep a record of His faithfulness. By Kemi Akinyemi.</p>
-        <p class="card-link"><a href="books.html#journal">See the journal</a></p>
+        <p>A guided journal designed to help you reflect on God’s goodness, express your personal thanksgiving, and develop a consistent lifestyle of gratitude to Him.</p>
+        <p class="card-link"><a href="books.html#journal">Explore the Journal</a></p>
       </div>
     </div>
     </div>
@@ -632,8 +627,9 @@ const home = page(
 
 <section class="band-tan" id="read-and-watch">
   <div class="wrap">
-    <p class="eyebrow">Read and watch</p>
-    <h2>Teaching for everyday life.</h2>
+    <p class="eyebrow">Articles &amp; Videos</p>
+    <h2>Insights and Encouragement for Everyday Life</h2>
+    <p>Explore articles, videos, and practical insights to encourage your faith, strengthen relationships, support personal growth, and help you navigate everyday life with biblical wisdom.</p>
     <div class="card-grid">
 ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
       <article class="card">
@@ -643,19 +639,20 @@ ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
         <p class="card-link"><a href="resources.html">Watch the series</a></p>
       </article>
     </div>
+    <p class="card-link"><a href="articles-videos.html">Explore More Articles &amp; Videos</a></p>
   </div>
 </section>
 
 <section id="connect" class="cta-center">
   <div class="wrap">
     <p class="eyebrow">A next step</p>
-    <h2>We would love to hear from you.</h2>
-    <p class="lede">Send us a message about books, speaking, or a question you have. Please allow three business days for a reply.</p>
+    <h2>We Would Love to Hear From You!</h2>
+    <p class="lede">Whether you have a question, would like to learn more about our coaching services, explore our books and resources, or connect with us about speaking engagements and other opportunities, we would love to hear from you. Feel free to send us a message or schedule a complimentary consultation to explore how we can support you.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
       <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
     </div>
-    <p class="consult-aside">Complimentary consultations are 20 minutes, on Mondays and Wednesdays, 6:00 to 8:00 PM Central.</p>
+
   </div>
 </section>
 `
@@ -1498,6 +1495,75 @@ const moved = (fromPage, title, destHref, destLabel, description) =>
 
 const PAGES = {
   "index.html": home,
+  ...Object.fromEntries([["privacy.html","Privacy Policy"],["terms.html","Terms &amp; Conditions"]].map(([file,title]) => [file,page({page:file,title,description:"Zoe Life LLC",noindex:true}, `<section><div class="wrap"><h1>${title}</h1>${file === "privacy.html" ? `<p>Zoe Life LLC</p>
+<p>Effective Date: November 6, 2026</p>
+<p>At Zoe Life LLC, we value your trust and respect your privacy. We are committed to handling the personal information you share with us responsibly and with care.</p>
+<p>This Privacy Policy explains how Zoe Life LLC (“Zoe Life,” “we,” “us,” or “our”) collects, uses, shares, and protects personal information when you visit our website, www.zoelifehub.com, contact us, subscribe to our communications, purchase our products, or engage with our services.</p>
+<h2>1. Information We Collect</h2>
+<p>Depending on how you interact with Zoe Life, we may collect the following information:</p>
+<p>Contact Information: Your name, email address, phone number, and other contact details you voluntarily provide.</p>
+<p>Coaching and Consultation Information: Information you provide when requesting a consultation, completing an inquiry form, scheduling a session, or participating in our coaching services.</p>
+<p>Purchase Information: Information related to purchases of books, digital resources, and other products or services. Payments may be processed through third-party payment providers.</p>
+<p>Newsletter Information: Your email address and subscription preferences when you sign up to receive communications from Zoe Life.</p>
+<p>Website Usage Information: Technical information such as browser type, device information, pages visited, and other usage data that may be collected through cookies or website analytics tools.</p>
+<h2>2. How We Use Your Information</h2>
+<p>We may use the information we collect to:</p>
+<p>Respond to questions, inquiries, and requests.</p>
+<p>Schedule consultations and coaching sessions.</p>
+<p>Provide coaching, educational resources, and other services.</p>
+<p>Process purchases and communicate about orders.</p>
+<p>Send newsletters, encouragement, helpful resources, announcements, and updates when you have subscribed.</p>
+<p>Improve our website, products, resources, and services.</p>
+<p>Maintain appropriate business records and comply with applicable legal obligations.</p>
+<p>We do not sell your personal information to third-party marketers.</p>
+<h2>3. Coaching Information and Confidentiality</h2>
+<p>We recognize that individuals, couples, and families may share personal or sensitive information when seeking coaching, encouragement, or guidance.</p>
+<p>We seek to handle such information with care, discretion, and respect for your privacy.</p>
+<p>Information shared through coaching inquiries and services is handled in accordance with our applicable coaching agreements and privacy practices. Confidentiality may be subject to legal obligations, safety considerations, and other exceptions described in the relevant coaching agreement.</p>
+<p>We encourage visitors not to submit highly sensitive personal information through general website contact forms.</p>
+<h2>4. Third-Party Service Providers</h2>
+<p>We may use third-party service providers to support our website and business operations, including:</p>
+<p>Website hosting and maintenance.</p>
+<p>Appointment scheduling and virtual meetings.</p>
+<p>Payment processing.</p>
+<p>Email communications and newsletter management.</p>
+<p>Product sales and digital resource delivery.</p>
+<p>Website analytics and security.</p>
+<p>These providers may process information as necessary to deliver their services, subject to their own privacy policies and applicable agreements.</p>
+<p>We encourage you to review the privacy policies of third-party platforms when using their services.</p>
+<h2>5. Email Communications</h2>
+<p>If you subscribe to our mailing list, we may send you encouragement, helpful resources, announcements, and updates about Zoe Life’s books, services, events, and other offerings.</p>
+<p>You may unsubscribe from our emails at any time using the unsubscribe link provided in our emails or by contacting us through the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<h2>6. Cookies and Website Analytics</h2>
+<p>Our website may use cookies and similar technologies to support website functionality, understand visitor interactions, and improve the user experience.</p>
+<p>Depending on the technologies used, cookies may help us remember preferences, monitor website performance, or understand how visitors use our website.</p>
+<p>Where applicable, visitors may be able to manage cookie preferences through their browser settings or available website controls.</p>
+<h2>7. Information Security</h2>
+<p>We take reasonable steps to protect personal information against unauthorized access, misuse, loss, or disclosure.</p>
+<p>However, no method of electronic transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
+<h2>8. Data Retention</h2>
+<p>We retain personal information for as long as reasonably necessary to provide our services, maintain appropriate business records, fulfill the purposes described in this policy, and comply with applicable legal obligations.</p>
+<h2>9. Your Privacy Choices</h2>
+<p>You may contact us to request access to, correction of, or deletion of personal information we maintain about you, subject to applicable laws and legitimate business or legal requirements.</p>
+<p>You may also unsubscribe from our emails at any time.</p>
+<p>To make a privacy-related request, please use the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<h2>10. Children’s Privacy</h2>
+<p>Our website is intended primarily for adults, including parents and guardians seeking resources for themselves and their families.</p>
+<p>We do not knowingly collect personal information directly from children under the age of 13 through our website without appropriate parental consent.</p>
+<p>If you believe a child has provided personal information to us without appropriate authorization, please contact us so that we can review the situation and take appropriate action.</p>
+<h2>11. External Websites</h2>
+<p>Our website may contain links to third-party websites, including social media platforms, retailers, and scheduling or payment services.</p>
+<p>We are not responsible for the privacy practices or content of websites that we do not operate.</p>
+<p>We encourage visitors to review the privacy policies of external websites before sharing personal information.</p>
+<h2>12. Changes to This Privacy Policy</h2>
+<p>We may update this Privacy Policy periodically to reflect changes in our services, website practices, or legal requirements.</p>
+<p>Any updates will be posted on this page with a revised effective date.</p>
+<h2>13. Contact Us</h2>
+<p>If you have questions about this Privacy Policy or how we handle personal information, please reach out through the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<p>Zoe Life LLC</p>
+<p>Aurora, Illinois, United States</p>
+<p>Website: www.zoelifehub.com</p>` : `<p>This page is being prepared. For questions, please <a href="contact.html#message">contact Zoe Life</a>.</p>`}</div></section>`)])),
+  "articles-videos.html": page({page:"articles-videos.html",title:"Articles &amp; Videos | Zoe Life",description:"Browse Zoe Life articles and video series."}, `<section><div class="wrap"><h1>Articles &amp; Videos</h1><div class="btn-row"><a class="btn btn-primary" href="blog.html">Browse Articles</a><a class="btn btn-secondary" href="resources.html">Browse Videos</a></div></div></section>`),
   "about.html": about,
   "books.html": books,
   "resources.html": resources,
@@ -1545,7 +1611,14 @@ if (existsSync(blogDir)) {
   }
 }
 
-for (const [name, html] of Object.entries(PAGES)) wrote(name, html);
+// Keep draft course templates in source. Direct URLs on the legacy branch host must
+// not reveal their outlines either. Course previews are for local review only.
+const previewCourses = process.argv.includes("--preview-courses") && STAGING;
+for (const [name, html] of Object.entries(PAGES)) {
+  const draft = name === "courses.html" || name.startsWith("courses/");
+  wrote(name, draft && !previewCourses ? page({page:name,title:"Page unavailable | Zoe Life",description:"Return to Zoe Life.",noindex:true},
+    `<section><div class="wrap"><h1>Page unavailable</h1><a href="${prefixOf(name)}index.html">Return to Zoe Life</a></div></section>`) : html);
+}
 
 wrote(
   "js/config.js",
@@ -1557,7 +1630,7 @@ wrote(
         bookingUrl: CONFIG.bookingUrl,
         paidBookingUrl: CONFIG.paidBookingUrl,
         coursesUrl: CONFIG.coursesUrl,
-        courses: CONFIG.courses,
+        courses: previewCourses ? CONFIG.courses : Object.fromEntries(Object.keys(CONFIG.courses).map(key => [key,null])),
         giving: CONFIG.giving,
         payments: CONFIG.payments,
         resources: CONFIG.resources,
@@ -1586,8 +1659,7 @@ const sitemapPages = [
   "resources.html",
   "blog.html",
   ...POSTS.map((post) => post.page),
-  "courses.html",
-  ...COURSE_TRACKS.map((track) => track.page),
+  "articles-videos.html",
   "connect.html",
   "partner.html",
   "contact.html",
