@@ -925,3 +925,22 @@ fieldset { border: 0; margin: 0 0 1.35rem; padding: 0; }
   padding: .35rem .75rem; border-radius: var(--radius);
 }
 .cta-center .lede { max-width: 62ch; margin-inline: auto; }
+
+/* Keep long policy text readable and direct links clear of the sticky header. */
+.legal-copy { max-width: 48rem; }
+.legal-copy h2 { margin-top: 2rem; font-size: clamp(1.25rem, 3vw, 1.65rem); }
+.legal-copy a { text-decoration: underline; }
+#about-zoe-life, #meet, #message { scroll-margin-top: 6rem; }
+
+.partnership-grid { margin-top: 1.5rem; }
+.support-disclosure {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-inline-start: .25rem solid var(--sage);
+  background: var(--paper);
+}
+.support-disclosure h4 { margin: 0 0 .5rem; }
+.support-disclosure p { margin-bottom: 0; }
+.consult-expectations { display: grid; gap: 1rem; margin: 1.25rem 0 2rem; }
+.consult-expectation { border-inline-start: .2rem solid var(--sage); padding-inline-start: 1rem; }
+.consult-expectation p { margin-bottom: 0; }

@@ -20,6 +20,7 @@ const PAGES = [
   "index.html",
   "about.html",
   "books.html",
+  "resources-overview.html",
   "resources.html",
   "blog.html",
   ...POST_PAGES,
@@ -183,7 +184,7 @@ for (const p of [...PAGES, ...REDIRECTS]) {
   const doc = html[p];
 
   const internal = [...doc.matchAll(/href="(?!https?:|mailto:|#)([^"]+)"/g)].map((m) => m[1]);
-  const broken = internal.filter((h) => !existsSync(join(ROOT, normalize(join(dirname(p), h.split("#")[0])))));
+  const broken = internal.filter((h) => !existsSync(join(ROOT, normalize(join(dirname(p), h.split(/[?#]/)[0])))));
   check(`${p} internal links all resolve`, broken.length === 0, broken.join(", "));
 
   const anchors = [...doc.matchAll(/href="#([^"]+)"/g)].map((m) => m[1]);
@@ -249,18 +250,21 @@ for (const p of PAGES) {
 
 const contact = html["contact.html"];
 for (const opt of [
-  "Coaching",
+  "Coaching Services",
   "Speaking Engagement",
   "Workshop / Group Session",
   "Academic or Career Support",
   "Books &amp; Resources",
-  "Course access",
+  "Group &amp; Bulk Book Orders",
+  "Privacy or Website Inquiry",
   "Collaboration / Partnership",
   "General Inquiry",
   "Other",
 ]) {
   check(`Contact reason option present: ${opt}`, contact.includes(`>${opt}<`) || contact.includes(`value="${opt}"`));
 }
+check("Contact phone is optional", /<input[^>]*id="c-phone"[^>]*>/.test(contact) && !/<input[^>]*id="c-phone"[^>]*\srequired/.test(contact));
+check("Contact no longer offers course access", !/<option[^>]*>Course access/i.test(contact));
 check("Contact form has a conditional Other field", /data-reveal="Other"/.test(contact));
 check("Contact form has a provider-recognized honeypot", /name="_honey"/.test(contact));
 check("Contact form includes first, last, email, phone, message",
@@ -336,7 +340,9 @@ check("No leftover Link pending chips", !/Link pending/.test(booksDoc));
 check("No Cover pending placeholder", !/Cover pending/.test(booksDoc));
 check("Devotional cover is present", /assets\/books\/gratitude-devotional-cover\.jpg/.test(booksDoc));
 check("Journal cover is present", /assets\/books\/gratitude-journal-cover\.jpg/.test(booksDoc));
-check("Purchase options are fail-closed when unconfigured", /Coming soon/.test(booksDoc) || /Pay with Stripe|Test Stripe checkout|Pay with PayPal|Buy on (?:Amazon|Etsy|Gumroad)/.test(booksDoc));
+check("Books only show purchase buttons for configured Amazon listings",
+  !/Coming soon|Digital PDF|Order print copy/.test(mainOf(booksDoc)) &&
+  (storeLinks.length === 2 * Object.values(cfgObj.payments).filter(book=>book.amazon).length));
 check("No couple workbook", !/Questions Every Christian Couple|questions-before-marriage/i.test(publishedHtml));
 check("Books page has both Saturday titles",
   /A 7-Day Gratitude Devotional/.test(booksDoc) && /A 100-Day Gratitude Journal/.test(booksDoc));
@@ -368,10 +374,10 @@ check("Footer uses the banner wordmark", footerOf(html["index.html"]).includes("
 
 check("Header has no cart", !/\(0\)|\bCart\b|\bLogin\b|\bAccount\b/i.test(indexHeader));
 check("Primary header CTA is Send a message", /Send a Message/.test(indexHeader) && /contact\.html#message/.test(indexHeader));
-check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader));
+check("Header CTA is not the consultation", !/consult\.html/.test(indexHeader.match(/<a class="btn btn-primary header-cta"[^>]*>/)?.[0] || ""));
 
 const navBlock = html["index.html"].match(/<nav class="site-nav"[\s\S]*?<\/nav>/)[0];
-for (const label of ["Home", "About", "Books &amp; Resources", "Articles", "Resources", "Connect", "Partner", "Contact"]) {
+for (const label of ["Home", "About", "Books", "Articles", "Resources", "Connect", "Partner With Us", "Contact"]) {
   check(`Main nav includes ${label}`, navBlock.includes(`>${label}<`));
 }
 check("Course drafts are absent from navigation", !/>Courses</.test(navBlock));
@@ -457,11 +463,11 @@ const homeHeroBtns = [...homeHero.matchAll(/<a class="btn ([^"]+)"/g)].map((m) =
 check("Home hero leads with Explore Zoe Life and includes resources and contact", homeHeroBtns.length === 3 && homeHeroBtns[0] === "btn-primary" && ["Explore Zoe Life","Explore Resources","Send a Message"].every(label=>homeHero.includes(label)));
 check("Home features Kemi's welcome", homeMain.includes("We’re Here to Walk Alongside You."));
 check("About cites John 10:10 without making Greek the point", /John 10:10/.test(aboutMain) && /<em>Zoe<\/em>/.test(aboutMain));
-check("About introduces us in our own voice", /We are Tayo and Kemi Akinyemi, and we started Zoe Life/.test(aboutMain));
+check("About introduces the mission behind Zoe Life", /Zoe Life was established out of our shared passion for God and people/.test(aboutMain));
 check("Home founder heading speaks directly to the reader", /<h2>We Are Glad You Are Here.<\/h2>/.test(homeMain));
 check("About meta uses shared voice", /We are Tayo and Kemi. Learn why we started/.test(html["about.html"]));
-check("About Meet section keeps the Meet Tayo and Kemi eyebrow",
-  /id="meet"[\s\S]*?<p class="eyebrow">Meet Tayo and Kemi<\/p>/.test(aboutMain));
+check("About Meet section contains the combined biography heading",
+  /id="meet"[\s\S]*?<h2>Meet Tayo and Kemi Akinyemi<\/h2>/.test(aboutMain));
 check("About Meet couple photo is the flowering-tree portrait",
   /id="meet"[\s\S]*?src="assets\/photos\/tayo-kemi-tree\.jpeg"/.test(aboutMain) &&
   existsSync(join(ROOT, "assets/photos/tayo-kemi-tree.jpeg")));
@@ -491,22 +497,21 @@ check("Couple names are Tayo then Kemi, never Kemi and Tayo",
 check("Home does not prefix Pastor on every mention",
   !/Pastor (?:Tayo|Kemi|Tai)/.test(html["index.html"]));
 check("Footer uses the LLC copyright and both policy links", ["Zoe Life LLC.","privacy.html","terms.html"].every(t=>footerOf(html["index.html"]).includes(t)));
-check("Pastor title stays on the Meet photo and caption only",
-  (aboutMain.match(/Pastors Tayo and Kemi/g) || []).length === 2 &&
-  /alt="Pastors Tayo and Kemi smiling and embracing/.test(aboutMain) &&
-  /<figcaption>Pastors Tayo and Kemi Akinyemi\.<\/figcaption>/.test(aboutMain) &&
-  !/Pastor Tayo and Pastor Kemi/.test(aboutMain) &&
-  !/<figcaption>Pastor /.test(aboutMain));
+check("The Meet caption uses the couple’s names without titles",
+  /<figcaption>Tayo and Kemi Akinyemi<\/figcaption>/.test(aboutMain) && !/<figcaption>Pastors? /.test(aboutMain));
+check("Homepage About links target the organization and biography",
+  /href="about.html#about-zoe-life"/.test(homeMain) && /href="about.html#meet"/.test(homeMain) &&
+  /id="about-zoe-life"/.test(aboutMain) && /id="meet"/.test(aboutMain));
 check("Book covers lift off the cream page",
   /\.book-cover\s*\{[^}]*box-shadow:[^}]*rgba\(44,\s*40,\s*36,\s*\.1[6-9]/.test(css) &&
   /\.book-cover\s*\{[^}]*box-shadow:[^}]*rgba\(44,\s*40,\s*36,\s*\.2[0-9]/.test(css));
-check("Devotional describes seven days of Scripture", /Over seven days, this devotional takes you through Scripture/.test(booksDoc));
-check("Journal describes 100 days of gratitude", /100 days of space to record what you are thankful for/.test(booksDoc));
+check("Devotional describes seven days of Scripture", /This seven-day devotional invites you to spend time in God’s Word/.test(booksDoc));
+check("Journal describes 100 days of gratitude", /100-day guided journal provides an opportunity/.test(booksDoc));
 check("Books page is expandable, not a closed catalog", /more to come|coming soon/i.test(booksDoc));
-check("Group orders jump to the message form", /href="contact.html#message"/.test(booksDoc));
-check("Contact success copy matches approved wording", read("js/main.js").includes('<strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check("Group orders jump to the message form", /href="contact.html\?reason=Group%20%26%20Bulk%20Book%20Orders#message"/.test(booksDoc));
+check("Contact success copy matches approved wording", read("js/main.js").includes('Thank you for reaching out to Zoe Life! We’ve received your message and look forward to connecting with you. We’ll get back to you within three business days.'));
 check("No saved-message storage wording remains", !/messages saved|securely saved|store my signup/i.test(publishedHtml + js));
-check("The site does not solicit donations", !/donat|tax-deductible/i.test(visibleText(publishedHtml)));
+check("The site does not solicit donations", !/\b(?:Donate now|Make a donation|Tax-deductible gift)\b/i.test(visibleText(publishedHtml)));
 const resourcesDoc = html["resources.html"];
 const PLAYLISTS = [
   "PLTiUnmAGHZkM",
@@ -598,13 +603,11 @@ for (const [file, videoId, stamp, section] of BATCH2) {
 check("Faith clip is not also filed under Singles", !singlesSection.includes("08_test_all_things"));
 check("Roadmap playlist sits in Singles and Dating", singlesSection.includes("PLTiUnmAGHZkM"));
 check("Dangerous Lies clips stay in Singles and Dating", CLIPS.every(([file]) => singlesSection.includes(file)));
-const devotionalBlock = booksDoc.slice(booksDoc.indexOf('id="devotional"'), booksDoc.indexOf('id="journal"'));
-const journalBlock = booksDoc.slice(booksDoc.indexOf('id="journal"'), booksDoc.indexOf('id="collection"'));
-check("Journal shows clip 04 only", /04_discontent_every_season/.test(journalBlock) && !/05_spouse_not_your_source|07_desires_of_your_heart/.test(journalBlock));
-check("Devotional shows clips 05 and 07", /05_spouse_not_your_source/.test(devotionalBlock) && /07_desires_of_your_heart/.test(devotionalBlock) && !/04_discontent_every_season/.test(devotionalBlock));
+check("Book pages do not contain unrelated clips", !/<video|<iframe/.test(mainOf(booksDoc)));
+check("Former book clips remain available under Videos", ["04_discontent_every_season", "05_spouse_not_your_source", "07_desires_of_your_heart"].every(file=>resourcesDoc.includes(file)));
 const videos = [...clipMarkup.matchAll(/<video\b[^>]*>/g)].map((m) => m[0]);
-check("Clip players do not autoplay", videos.length >= 27 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
-check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 27);
+check("Clip players do not autoplay", videos.length >= 24 && videos.every((tag) => /preload="none"/.test(tag) && /poster=/.test(tag) && !/\sautoplay\b/.test(tag) && !/\scontrols\b/.test(tag)));
+check("Clip idle state is a poster with a play button", (clipMarkup.match(/class="clip-play"/g) || []).length >= 24);
 check("Clip players do not add a second caption track", !/<track\b/.test(clipMarkup));
 check("Playlist embeds do not force autoplay", !/autoplay=1/.test(resourcesDoc));
 const formsScript = read("integrations/google-workspace/Code.gs");
@@ -634,13 +637,13 @@ for (const p of POST_PAGES) {
 check("Deploy assembles course pages and clip assets", /node tools\/assemble.mjs/.test(workflow) && /courses/.test(read("tools/assemble.mjs")) && /assets/.test(read("tools/assemble.mjs")));
 check("Deploy assembles the blog", /node tools\/assemble.mjs/.test(workflow) && /blog/.test(read("tools/assemble.mjs")));
 const partnerDoc = html["partner.html"];
-check("Partner page avoids donation language", !/donat|tax-deductible/i.test(partnerDoc));
-if (!cfgObj.giving?.stripe && !cfgObj.giving?.paypal) {
-  check("Partner buttons stay hidden until giving links exist", !/Partner through Stripe|Partner through PayPal/.test(partnerDoc));
-} else {
-  if (cfgObj.giving.stripe) check("Partner Stripe button uses the configured URL", partnerDoc.includes(cfgObj.giving.stripe));
-  if (cfgObj.giving.paypal) check("Partner PayPal button uses the configured URL", partnerDoc.includes(cfgObj.giving.paypal));
-}
+check("Partner page explains financial support without offering checkout",
+  /not tax-deductible charitable donations/.test(partnerDoc) &&
+  !/Partner through Stripe|Partner through PayPal/.test(partnerDoc));
+check("Partnership inquiry targets the contact form with its reason preselected",
+  /contact.html\?reason=Collaboration%20%2F%20Partnership#message/.test(partnerDoc));
+check("Terms contains the supplied effective date, privacy link and contact link",
+  ["Effective Date: November 6, 2026", "14. Contact Us", 'href="privacy.html"', 'href="contact.html#message"'].every(text=>mainOf(read("terms.html")).includes(text)));
 check("No Life Springs branding on Home or Books", !/Life Springs/.test(homeMain + mainOf(html["books.html"])));
 
 /* ------------------------------------------------------------ styling -- */

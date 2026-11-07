@@ -129,6 +129,12 @@
         clearError(revealInput);
       }
     };
+    var requestedReason = new URLSearchParams(window.location.search).get("reason");
+    if (requestedReason && Array.from(reason.options).some(function (option) {
+      return option.value === requestedReason;
+    })) {
+      reason.value = requestedReason;
+    }
     reason.addEventListener("change", syncReveal);
     syncReveal();
   }
@@ -269,7 +275,7 @@
       return;
     }
     if (kind !== "subscribe") {
-      status.innerHTML = '<div class="status-sent"><strong>Message sent.</strong>Thank you for contacting Zoe Life. Please expect a reply within three business days.</div>';
+      status.innerHTML = '<div class="status-sent">Thank you for reaching out to Zoe Life! We’ve received your message and look forward to connecting with you. We’ll get back to you within three business days.</div>';
       return;
     }
     // Only ever called after the provider explicitly accepted the submission.

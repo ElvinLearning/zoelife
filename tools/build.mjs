@@ -66,9 +66,6 @@ for (const value of [CONFIG.siteUrl, CONFIG.formEndpoint, CONFIG.newsletterEndpo
 }
 const workspaceEndpoint = (value) => /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(value || '');
 const TAGLINE = "Helping people thrive in every season of life.";
-const MISSION =
-  "We share what Scripture teaches about everyday life, from the relationships at home " +
-  "to the decisions we make at work. We want to help you put that teaching into practice.";
 const MESSAGE_CTA = "Send a Message";
 const MESSAGE_HREF = "contact.html#message";
 const CONSULT_CTA = "Schedule a Complimentary 20-Minute Consultation";
@@ -79,32 +76,6 @@ const CONSENT_JOIN = "I agree to receive emails from Zoe Life and understand tha
 const CONSENT = workspaceEndpoint(CONFIG.newsletterEndpoint)
   ? `${CONSENT_JOIN} We will email you a link to confirm.`
   : CONSENT_JOIN;
-
-const BOOKS_INTRO =
-  "We wrote these books to help you notice God's goodness and make thanksgiving part of your day. " +
-  "You can use them on your own or alongside your Bible reading and prayer.";
-
-const DEVOTIONAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
-const JOURNAL_SUB = "Cultivating a Lifestyle of Thanksgiving to God";
-
-const DEVOTIONAL_BLURB = [
-  "Gratitude begins with remembering who God is and what He has done. We want to help you make that a daily practice.",
-  "Over seven days, this devotional takes you through Scripture with questions to reflect on, prayers, and practical ways to give thanks.",
-  "Read a day at a time, and take a few minutes to remember God's faithfulness in your own life.",
-];
-
-const JOURNAL_BLURB = [
-  "It is easy to forget the ways God has helped us. Writing them down gives us something to return to.",
-  "This journal gives you 100 days of space to record what you are thankful for and how God has been faithful.",
-  "Use it with your Bible reading or prayer time. As you fill the pages, you will have a record of answered prayers and everyday blessings to look back on.",
-];
-
-const COLLECTION_COPY = [
-  "You can begin with the devotional, then keep writing in the journal. Each book also works on its own, so start with whichever helps you most.",
-];
-
-const COMING_SOON =
-  "We are working on more books and practical resources to share with you.";
 
 const ZOE_LIFE_SOCIALS = [
   ["facebook", "Facebook", "https://www.facebook.com/zoelifehub", "@zoelifehub"],
@@ -132,7 +103,7 @@ const NAV = [
     items: [
       ["blog.html", "Articles", "Articles on marriage, dating, and faith"],
       ["resources.html", "Videos", "Teaching clips and full series"],
-      ["books.html", "Books &amp; Resources", "Gratitude devotional and journal"],
+      ["books.html", "Books", "Gratitude devotional and journal"],
     ],
   },
   {
@@ -140,7 +111,8 @@ const NAV = [
     label: "Connect",
     items: [
       ["connect.html", "Follow Along", "Our socials and Zoe Family Life"],
-      ["partner.html", "Partner", "Support the work of Zoe Life"],
+      ["consult.html", "Consultation", "What to expect from a complimentary consultation"],
+      ["partner.html", "Partner With Us", "Explore partnerships and collaborations"],
       ["contact.html", "Contact", "Send us a message"],
     ],
   },
@@ -152,7 +124,7 @@ const FOOTER_NAV = [
     ["about.html", "About Zoe Life"],
     ["blog.html", "Articles"],
     ["resources.html", "Videos"],
-    ["books.html", "Books &amp; Resources"],
+    ["resources-overview.html", "Books &amp; Resources"],
   ]],
   ["Connect", [
     ["connect.html", "Follow Along"],
@@ -203,30 +175,15 @@ const prefixOf = (page) => "../".repeat(Math.max(0, String(page).split("/").leng
 const externalLink = (href, className, label, extraHidden = "") =>
   `<a class="btn ${className}" href="${escapeAttr(href)}" target="_blank" rel="noopener noreferrer">${label}<span class="visually-hidden">, opens in a new tab${extraHidden}</span></a>`;
 
+const consultationLink = (label) => CONFIG.bookingUrl
+  ? externalLink(CONFIG.bookingUrl, "btn-secondary", label)
+  : `<a class="btn btn-secondary" href="${CONSULT_HREF}">${label}</a>`;
+
 const payButtons = (book) => {
   const p = CONFIG.payments[book];
   // Retain the explicit sandbox workflow without exposing test purchases to visitors.
   if (sandbox) return `<div class="pay-row">${externalLink(p.stripe, "btn-primary", "Test Stripe checkout")}</div><p class="format-meta">Sandbox test only. No real payment or book delivery.</p>`;
-  const option = (key, label) => p[key]
-    ? externalLink(p[key], "btn-primary", label)
-    : `<button class="btn btn-primary" type="button" disabled aria-disabled="true"><span>${label}</span><span class="buy-state">Coming soon</span></button>`;
-  return `<div class="buy-area" aria-label="Purchase options">
-        <div class="pay-row">${option('amazon', 'Buy on Amazon')}</div>
-        </div>`;
-};
-
-const givingBlock = () => {
-  const buttons = [];
-  if (CONFIG.giving.stripe) buttons.push(externalLink(CONFIG.giving.stripe, "btn-primary", "Partner through Stripe"));
-  if (CONFIG.giving.paypal) buttons.push(externalLink(CONFIG.giving.paypal, "btn-secondary", "Partner through PayPal"));
-  if (!buttons.length) {
-    return `<p>Partnership links are not published yet. Send a message if you would like to talk about partnering with Zoe Life.</p>
-        <div class="btn-row">
-          <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-        </div>`;
-  }
-  return `<div class="btn-row">${buttons.join("")}</div>
-        <p class="format-meta">Partnership checkout opens on Stripe or PayPal.</p>`;
+  return p.amazon ? `<div class="pay-row">${externalLink(p.amazon, "btn-primary", "Buy on Amazon")}</div>` : "";
 };
 
 const clipById = (id) => {
@@ -254,11 +211,6 @@ const clipPlayer = (clip, heading) => `<figure class="clip">
 const clipGrid = (clips, heading) =>
   `<div class="clip-grid">
 ${clips.map((clip) => clipPlayer(clip, heading)).join("\n")}
-        </div>`;
-
-const bookClips = (ids) => `<div class="book-clips">
-          <p class="eyebrow">From Dangerous Lies Singles Believe</p>
-          ${clipGrid(ids.map(clipById), "h3")}
         </div>`;
 
 const enrollOrBuy = (slot, label) => {
@@ -344,16 +296,11 @@ const postCard = (post, heading, pre, eyebrow = post.category) => `      <articl
 
 const bookingBlock = () =>
   CONFIG.bookingUrl
-    ? `<div class="btn-row">
-          <a class="btn btn-primary" href="${escapeAttr(CONFIG.bookingUrl)}" target="_blank" rel="noopener noreferrer">${CONSULT_CTA}<span class="visually-hidden">, Google Calendar, opens in a new tab</span></a>
-        </div>
-        <p class="format-meta">Choose an available time in Google Calendar. You will receive the call details with your confirmation.</p>`
-    : `<div class="booking-placeholder">
-          <p>Complimentary 20-minute consultations will open here for Mondays and Wednesdays, 6:00 to 8:00 PM Central. Until booking is live, send us a message and we will arrange a time.</p>
-          <div class="btn-row">
-            <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-          </div>
-        </div>`;
+    ? `<p>Choose a convenient time using our online scheduling calendar.</p><div class="btn-row">
+          ${externalLink(CONFIG.bookingUrl, "btn-primary", "Schedule Your Complimentary Consultation")}
+        </div>`
+    : `<p>Send us a message and we’ll help you arrange a time.</p>
+        <div class="btn-row"><a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a></div>`;
 
 const head = ({ title, description, page, noindex = false, ogType = "website", extraHead = "" }) => {
   const pre = prefixOf(page);
@@ -541,8 +488,8 @@ const home = page(
       <h1 class="tagline-heading"><span>Helping people thrive</span> <span>in every season of life.</span></h1>
       <p class="lede">At Zoe Life, we are passionate about helping individuals, couples, and families grow and thrive in every season of life. We believe that every season of life presents opportunities for growth, and our desire is to walk alongside you, providing faith-based and practical guidance, coaching, encouragement, and resources to help you navigate life’s opportunities and challenges, strengthen relationships, and live a purposeful and fulfilling life.</p>
       <div class="btn-row">
-        <a class="btn btn-primary" href="about.html">Explore Zoe Life</a>
-        <a class="btn btn-secondary" href="books.html">Explore Resources</a>
+        <a class="btn btn-primary" href="about.html#about-zoe-life">Explore Zoe Life</a>
+        <a class="btn btn-secondary" href="resources-overview.html">Explore Resources</a>
         <a class="btn btn-secondary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
       </div>
     </div>
@@ -563,7 +510,7 @@ const home = page(
       </div>
       <div>
         <p>We believe that God’s Word provides the foundation and guidance we need for every area of life. Our heart is to encourage you and walk alongside you, helping you apply biblical principles and practical wisdom as you navigate life’s opportunities, decisions, and challenges. Whether it’s personal growth, relationships, marriage, parenting, education, or career development, we are passionate about providing encouragement, guidance, and resources to help you make wise decisions, grow in faith, and thrive in every season of life.</p>
-        <p class="card-link"><a href="about.html">Get to Know Zoe Life</a></p>
+        <p class="card-link"><a href="about.html#about-zoe-life">Get to Know Zoe Life</a></p>
       </div>
     </div>
   </div>
@@ -577,7 +524,7 @@ const home = page(
         <h2>We Are Glad You Are Here.</h2>
         <p>We are Tayo and Kemi Akinyemi, cofounders of Zoe Life and married for nearly twenty years. Our shared passion for God and people, along with our experiences in marriage, family life, ministry, and our professional careers, inspired us to establish Zoe Life as a platform to encourage, equip, and empower others. We are excited to share this journey with you and look forward to connecting with you!</p>
         <div class="btn-row">
-          <a class="btn btn-primary" href="about.html">Get to Know Us</a>
+          <a class="btn btn-primary" href="about.html#meet">Get to Know Us</a>
         </div>
       </div>
       <figure class="portrait portrait-couple">
@@ -650,7 +597,7 @@ ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
     <p class="lede">Whether you have a question, would like to learn more about our coaching services, explore our books and resources, or connect with us about speaking engagements and other opportunities, we would love to hear from you. Feel free to send us a message or schedule a complimentary consultation to explore how we can support you.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
+      ${consultationLink(CONSULT_CTA)}
     </div>
 
   </div>
@@ -666,7 +613,7 @@ const about = page(
       "We are Tayo and Kemi. Learn why we started Zoe Life and how Scripture shapes our teaching and resources.",
   },
   `
-<section class="page-hero">
+<section class="page-hero" id="about-zoe-life">
   <div class="wrap">
     <p class="eyebrow">About</p>
     <h1>About Zoe Life</h1>
@@ -678,13 +625,10 @@ const about = page(
   <div class="wrap">
     <div class="split split-wide-left">
       <div>
-        <p>We are Tayo and Kemi Akinyemi, and we started Zoe Life to share biblical teaching people can use in everyday life.</p>
-        <p>The name <em>Zoe</em> comes from the Greek word used in John 10:10 for the abundant life Jesus came to give. That is why we chose the name: we want to help people live in the fullness of what Jesus gives.</p>
-        <p>You don't have to do life by yourself. Whether you have walked with God for years or are still asking questions, we hope you find teaching here that helps you.</p>
-        <p>Scripture speaks to the whole of life. We turn to it for wisdom at home, at work, and when we face difficult decisions.</p>
-        <p>Some changes are exciting. Others are hard. We know how much it helps to have encouragement and practical support through both.</p>
-        <p>We share through books, teaching, workshops, and personal consultations. Our aim is to help you apply what you learn.</p>
-        <p>We know your circumstances may be different from ours. We want to offer biblical guidance that helps you think through what you are facing.</p>
+        <p>Zoe Life was established out of our shared passion for God and people, and our desire to encourage, equip, and empower individuals, couples, and families to thrive in every season of life.</p>
+        <p>We believe that God’s Word provides the foundation for living a purposeful and fulfilling life. Through faith-based and practical coaching, teaching, books, and other resources, our desire is to help people grow in their relationship with God, develop personally, strengthen relationships, and navigate life’s opportunities and challenges with wisdom and confidence.</p>
+        <p>The name <em>Zoe</em> comes from the Greek word for life, used in John 10:10, where Jesus speaks of the abundant life He came to give. This Scripture reflects the heart behind Zoe Life. We desire to help people discover, experience, and walk in the fullness of life that God has made available through Jesus Christ.</p>
+        <p>Whether you’re seeking personal growth, guidance in relationships or marriage, support in parenting, or direction in education or career development, our heart is to provide encouragement, biblical wisdom, and practical resources that support you along the way.</p>
       </div>
       <figure class="portrait portrait-couple">
         <img src="assets/photos/tayo-kemi-studio.jpeg"
@@ -701,14 +645,13 @@ const about = page(
     <div class="grid grid-2">
       <div>
         <p class="eyebrow">Mission</p>
-        <h2>What we are here for.</h2>
-        <p>${MISSION}</p>
-        <p>We start with what Scripture says, then talk about it in everyday, practical terms.</p>
+        <h2>Encouraging, Equipping, and Empowering People to Thrive</h2>
+        <p>Our mission is to provide faith-based and practical coaching, teaching, encouragement, and resources that help individuals, couples, and families grow in faith, develop personally, strengthen relationships, make wise decisions, and thrive in every season of life.</p>
       </div>
       <div>
         <p class="eyebrow">Vision</p>
-        <h2>Lives changed by the truth of God's Word.</h2>
-        <p>We want to see people growing, marriages strengthened, families flourishing, leaders serving with wisdom, churches equipped, and communities blessed by people who live what they believe.</p>
+        <h2>Lives Transformed, Families Strengthened, and Communities Impacted</h2>
+        <p>Our vision is to see individuals experiencing the abundant life that Jesus Christ came to give, growing in their relationship with God, and fulfilling His purpose for their lives. We desire to see marriages and families strengthened, individuals thriving in every season of life, and people making a positive difference in their homes, workplaces, churches, and communities.</p>
       </div>
     </div>
   </div>
@@ -719,14 +662,14 @@ const about = page(
     <p class="eyebrow">Who we are</p>
     <h2>Core values</h2>
     <div class="values" style="margin-top:1.75rem">
-      <div class="value"><h3>Christ-centered</h3><p>Jesus Christ is the foundation of our work. We want what we share to point people toward Him.</p></div>
-      <div class="value"><h3>Biblical truth</h3><p>God's Word is our final authority. We take care to teach it faithfully and apply it to everyday life.</p></div>
-      <div class="value"><h3>Practical wisdom</h3><p>We want what you learn to help you with the choices in front of you.</p></div>
-      <div class="value"><h3>Excellence</h3><p>We want to honor God by doing our work well and taking care with what we share.</p></div>
-      <div class="value"><h3>Integrity</h3><p>We want our actions to match what we teach. That means being honest and taking responsibility when we fall short.</p></div>
-      <div class="value"><h3>Compassion</h3><p>We want to listen carefully and treat people with patience and kindness.</p></div>
-      <div class="value"><h3>Stewardship</h3><p>We want to use what God has entrusted to us faithfully and for the good of others.</p></div>
-      <div class="value"><h3>Growth</h3><p>We are still learning, too. We want to keep growing in our faith and in how we serve others.</p></div>
+      <div class="value"><h3>Christ-Centered</h3><p>Jesus Christ is the foundation of all we do. We desire to honor Him and point others toward Him through our work.</p></div>
+      <div class="value"><h3>Biblical Truth</h3><p>God’s Word is our foundation and final authority. We are committed to sharing biblical truth faithfully and encouraging its application in everyday life.</p></div>
+      <div class="value"><h3>Practical Wisdom</h3><p>We believe biblical principles should be lived out. Our desire is to help people apply God’s Word and practical wisdom to everyday decisions and experiences.</p></div>
+      <div class="value"><h3>Excellence</h3><p>We are committed to honoring God through excellence, diligence, and faithful service in all we do.</p></div>
+      <div class="value"><h3>Integrity</h3><p>We value honesty, accountability, and consistency between what we believe, teach, and practice.</p></div>
+      <div class="value"><h3>Compassion</h3><p>We desire to serve others with genuine love, kindness, patience, and understanding.</p></div>
+      <div class="value"><h3>Stewardship</h3><p>We seek to faithfully manage the time, opportunities, gifts, and resources God has entrusted to us.</p></div>
+      <div class="value"><h3>Growth</h3><p>We believe in continually growing in our relationship with God, developing personally, and becoming more effective in serving others.</p></div>
     </div>
   </div>
 </section>
@@ -736,14 +679,15 @@ const about = page(
     <div class="split meet-split">
     <figure class="portrait portrait-couple portrait-tree">
       <img src="assets/photos/tayo-kemi-tree.jpeg"
-           alt="Pastors Tayo and Kemi smiling and embracing outdoors in front of a large tree with vibrant pink blossoms."
+           alt="Tayo and Kemi smiling and embracing outdoors in front of a large tree with vibrant pink blossoms."
            width="1024" height="1536" loading="lazy">
-      <figcaption>Pastors Tayo and Kemi Akinyemi.</figcaption>
+      <figcaption>Tayo and Kemi Akinyemi</figcaption>
     </figure>
     <div>
-    <p class="eyebrow">Meet Tayo and Kemi</p>
-    <p>We are husband and wife, and our teaching draws on our own life together as well as what we have studied. Marriage and parenting have given us plenty to learn and share.</p>
-    <p>We also serve as pastors at Life Springs Church. Through Zoe Life, we share lessons from our faith, our work, and years of teaching and mentoring.</p>
+    <h2>Meet Tayo and Kemi Akinyemi</h2>
+    <p>Tayo and Kemi Akinyemi are beloved children of God, husband and wife, parents of six children, pastors, and cofounders of Zoe Life LLC. Married for nearly twenty years, they serve together in pastoral leadership at Life Springs Church in Naperville, Illinois.</p>
+        <p>Their shared passion for God and people, together with their experiences in marriage, parenting, ministry, education, leadership, and their professional careers, inspired them to establish Zoe Life as a platform to encourage, equip, and empower others.</p>
+        <p>Through Zoe Life, they bring together biblical wisdom, practical insights, and personal and professional experiences to support individuals, couples, and families as they grow in faith, strengthen relationships, pursue their goals, and thrive in every season of life.</p>
     <div class="headshot-pair">
       <figure class="portrait">
         <img src="assets/photos/tayo-headshot.jpg"
@@ -765,7 +709,6 @@ const about = page(
 
 <section>
   <div class="wrap">
-    <!-- TODO(client): Confirm whether to retain the Statement of Faith. Kept here, collapsed, pending Kemi's decision. -->
     <details class="faith-disclosure">
     <summary>Our Statement of Faith</summary>
     <p>At Zoe Life, our work is grounded in historic Christian faith and the authority of God's Word. We believe:</p>
@@ -788,12 +731,12 @@ const about = page(
 
 <section>
   <div class="wrap">
-    <p class="eyebrow">Where next</p>
-    <h2>We would be glad to connect.</h2>
-    <p>Send us a message if you are looking for resources, thinking of inviting us to speak or lead a workshop, or simply want to say hello.</p>
+    <p class="eyebrow">Let’s Connect</p>
+    <h2>We Would Love to Hear From You!</h2>
+    <p>Whether you have a question, would like to learn more about our coaching services, explore our books and resources, or connect with us about speaking engagements and other opportunities, we would love to hear from you. Feel free to send us a message or schedule a complimentary consultation to explore how we can support you.</p>
     <div class="btn-row">
       <a class="btn btn-primary" href="${MESSAGE_HREF}">${MESSAGE_CTA}</a>
-      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
+      ${consultationLink(CONSULT_CTA)}
     </div>
   </div>
 </section>
@@ -810,9 +753,10 @@ const books = page(
   `
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Books</p>
-    <h1>Books to help you thrive.</h1>
-    <p class="lede">${BOOKS_INTRO}</p>
+    <p class="eyebrow">BOOKS &amp; PUBLICATIONS</p>
+<h1>Resources to Encourage and Equip You.</h1>
+    <p>We are excited to share books and resources created to encourage you in your walk with God, support your personal growth, and help you apply biblical principles in everyday life.</p>
+        <p>Our first two publications focus on something very close to our hearts: cultivating and maintaining a lifestyle of thanksgiving to God. We pray that these resources will encourage you to intentionally recognize God’s goodness and make gratitude a part of your daily life.</p>
   </div>
 </section>
 
@@ -827,11 +771,11 @@ const books = page(
       <div>
         <p class="eyebrow">Devotional</p>
         <h2 class="book-title">A 7-Day Gratitude Devotional</h2>
-        <p class="lede">${DEVOTIONAL_SUB}. By Kemi Akinyemi.</p>
-        ${DEVOTIONAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
-        ${payButtons("devotional")}
-        ${bookClips(["05", "07"])}
-      </div>
+        <p class="lede">Cultivating a Heart of Thanksgiving to God</p><p>By Kemi Akinyemi</p>
+        <p>There is so much to be thankful to God for, and sometimes we simply need to be more intentional about recognizing and expressing our gratitude to Him.</p>
+        <p>This seven-day devotional invites you to spend time in God’s Word, reflect on His goodness, and express your thanksgiving through prayer. Each day provides Scripture, encouragement, reflection, and prayer to help you cultivate a heart of gratitude to God.</p>
+        <p>Whether you are beginning this journey or looking to strengthen your existing practice of thanksgiving, we pray that this devotional will encourage you to make gratitude to God a part of your everyday life.</p>
+${payButtons("devotional") ? "        " + payButtons("devotional") + "\n" : ""}      </div>
     </div>
   </div>
 </section>
@@ -847,35 +791,45 @@ const books = page(
       <div>
         <p class="eyebrow">Journal</p>
         <h2 class="book-title">A 100-Day Gratitude Journal</h2>
-        <p class="lede">${JOURNAL_SUB}. By Kemi Akinyemi.</p>
-        ${JOURNAL_BLURB.map((p) => `<p>${p}</p>`).join("\n        ")}
-        ${payButtons("journal")}
-        ${bookClips(["04"])}
-      </div>
+        <p class="lede">Cultivating a Lifestyle of Thanksgiving to God</p><p>By Kemi Akinyemi</p>
+        <p>God’s goodness and faithfulness give us countless reasons to be thankful, and we believe that taking time to intentionally reflect on them can help us develop a more consistent lifestyle of gratitude.</p>
+        <p>This 100-day guided journal provides an opportunity to pause each day, reflect on Scripture, consider God’s goodness in your own life, and express your personal thanksgiving to Him.</p>
+        <p>With daily Scriptures, gratitude reflections, and space to write your own thoughts and prayers, the journal encourages you to develop a habit of thanksgiving while creating a personal record of God’s faithfulness in your life.</p>
+${payButtons("journal") ? "        " + payButtons("journal") + "\n" : ""}      </div>
     </div>
   </div>
 </section>
 
-<section class="band-tan" id="collection">
-  <div class="wrap">
-    <p class="eyebrow">Gratitude Collection</p>
-    <h2>Two ways to practice gratitude.</h2>
-    <p>Start with 7 days. Keep going for 100.</p>
-    ${COLLECTION_COPY.map((p) => `<p>${p}</p>`).join("\n    ")}
-    <p>If you are buying for a group, a church, or a workshop, send a message and we can talk through a group order once purchase options are live.</p>
-    <div class="btn-row">
-      <a class="btn btn-primary" href="${MESSAGE_HREF}">Ask about group orders</a>
-    </div>
-  </div>
-</section>
+<section class="band-tan" id="collection"><div class="wrap">
+<p class="eyebrow">COMPANION RESOURCES</p>
+<h2>Two Resources, One Journey of Thanksgiving</h2>
+<p>We are excited to share A 7-Day Gratitude Devotional and A 100-Day Gratitude Journal as two complementary resources to help you cultivate and maintain a lifestyle of thanksgiving to God.</p>
+        <p>The devotional provides seven days of Scripture, reflection, and prayer to encourage you to cultivate a heart of gratitude, while the journal provides an opportunity to continue reflecting on God’s goodness and expressing your personal thanksgiving to Him over 100 days.</p>
+        <p>You are welcome to purchase either book individually or get both to use together. They also make thoughtful gifts for friends, family, and others you would like to encourage.</p>
+<div class="book-pair"><article class="book-tease">
+        <div class="book-cover"><img src="assets/books/gratitude-devotional-cover.jpg" alt="Cover of A 7-Day Gratitude Devotional" width="888" height="1292" loading="lazy"></div>
+        <div><h3>A 7-Day Gratitude Devotional</h3>${!sandbox ? payButtons("devotional") : ""}</div>
+      </article>
+<article class="book-tease">
+        <div class="book-cover"><img src="assets/books/gratitude-journal-cover.jpg" alt="Cover of A 100-Day Gratitude Journal" width="900" height="1350" loading="lazy"></div>
+        <div><h3>A 100-Day Gratitude Journal</h3>${!sandbox ? payButtons("journal") : ""}</div>
+      </article></div>
+</div></section>
 
-<section>
-  <div class="wrap">
-    <p class="eyebrow">More to come</p>
-    <h2>More books and resources coming soon.</h2>
-    <p>${COMING_SOON}</p>
-  </div>
-</section>
+<section id="group-orders"><div class="wrap">
+<p class="eyebrow">GROUP &amp; BULK ORDERS</p>
+<h2>Interested in Ordering Multiple Copies?</h2>
+<p>Planning to share our books with your church, ministry, small group, organization, friends, or family? We’d love to hear from you!</p>
+        <p>Whether you’re purchasing books for a group study, an event, or as gifts, feel free to reach out to discuss your needs and available ordering options.</p>
+<div class="btn-row"><a class="btn btn-primary" href="contact.html?reason=Group%20%26%20Bulk%20Book%20Orders#message">Inquire About Group Orders</a></div>
+</div></section>
+
+<section><div class="wrap">
+<p class="eyebrow">MORE TO COME</p>
+<h2>More Books and Resources Are on the Way!</h2>
+<p>We are excited about the additional books and resources we’re working on! Our heart is to continue sharing biblical encouragement and practical guidance to support you in your faith, personal growth, relationships, marriage, family life, and other areas of life.</p>
+        <p>We look forward to sharing more with you!</p>
+</div></section>
 `
 );
 
@@ -935,7 +889,7 @@ ${subscribeForm("connect", false)}
     </div>
     <p class="consult-aside">If you would like a short call, you can also schedule a complimentary 20-minute consultation.</p>
     <div class="btn-row">
-      <a class="btn btn-secondary" href="${CONSULT_HREF}">${CONSULT_CTA}</a>
+      ${consultationLink(CONSULT_CTA)}
     </div>
   </div>
 </section>
@@ -953,8 +907,8 @@ const contact = page(
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Contact</p>
-    <h1>Send us a message to connect.</h1>
-    <p class="lede">Have a question or an invitation for us? Use the form below. Please expect a reply within three business days.</p>
+    <h1>We’d Love to Hear From You!</h1>
+    <p class="lede">Whether you have a question, would like to learn more about our coaching services, explore our books and resources, or connect with us about speaking engagements and other opportunities, we’d love to hear from you.</p>
   </div>
 </section>
 
@@ -962,8 +916,8 @@ const contact = page(
   <div class="wrap">
     <div class="split split-wide-left" style="align-items:start">
       <div>
-        <h2>Send a message</h2>
-        <p>Tell us a little about how we can help. Please expect a reply within three business days.</p>
+        <h2>Send a Message</h2>
+        <p>Please complete the form below, and we’ll get back to you within three business days.</p>
 
         <div class="form-card" style="margin-top:1.5rem">
           <form data-form="contact" novalidate>
@@ -987,8 +941,8 @@ const contact = page(
                 <p class="error" id="c-email-error" role="alert"></p>
               </div>
               <div class="field">
-                <label for="c-phone">Phone number <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
-                <input type="tel" id="c-phone" name="phone" autocomplete="tel" required aria-describedby="c-phone-error">
+                <label for="c-phone">Phone Number (optional)</label>
+                <input type="tel" id="c-phone" name="phone" autocomplete="tel" aria-describedby="c-phone-error">
                 <p class="error" id="c-phone-error" role="alert"></p>
               </div>
             </div>
@@ -997,15 +951,16 @@ const contact = page(
               <label for="c-reason">Reason for contacting <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
               <select id="c-reason" name="reason" required aria-describedby="c-reason-error">
                 <option value="">Please choose</option>
-                <option>Coaching</option>
+                <option>General Inquiry</option>
+                <option>Coaching Services</option>
                 <option>Speaking Engagement</option>
                 <option>Workshop / Group Session</option>
                 <option>Academic or Career Support</option>
                 <option>Books &amp; Resources</option>
-                <option>Course access</option>
+                <option>Group &amp; Bulk Book Orders</option>
                 <option>Collaboration / Partnership</option>
-                <option>General Inquiry</option>
-                <option value="Other">Other</option>
+                <option>Privacy or Website Inquiry</option>
+                <option>Other</option>
               </select>
               <p class="error" id="c-reason-error" role="alert"></p>
             </div>
@@ -1028,7 +983,7 @@ const contact = page(
               <input type="text" id="c-honey" name="_honey" tabindex="-1" autocomplete="off">
             </div>
 
-            <button class="btn btn-primary" type="submit">Send message</button>
+            <button class="btn btn-primary" type="submit">Send Message</button>
             <div class="form-status" data-status role="status" aria-live="polite"></div>
           </form>
         </div>
@@ -1041,9 +996,9 @@ const contact = page(
                width="1400" height="1866" loading="lazy">
         </figure>
         <div class="card">
-          <h3>Prefer a short call?</h3>
-          <p>You can book a complimentary 20-minute consultation using the link below.</p>
-          <a class="btn btn-secondary" href="${CONSULT_HREF}">Schedule a consultation</a>
+          <h3>Prefer to Have a Conversation?</h3>
+          <p>We’d love to connect with you! If you’d like to explore how our coaching services can support you, feel free to schedule a complimentary 20-minute consultation.</p>
+          ${consultationLink("Schedule a Complimentary Consultation")}
         </div>
       </aside>
     </div>
@@ -1057,14 +1012,14 @@ const consult = page(
     page: "consult.html",
     title: "Complimentary 20-minute consultation | Zoe Life",
     description:
-      "Schedule a complimentary 20-minute consultation with Zoe Life. Mondays and Wednesdays, 6:00 to 8:00 PM Central, via Google Calendar appointment scheduling.",
+      "Schedule a complimentary 20-minute consultation with Zoe Life. Explore your coaching needs in a virtual conversation.",
   },
   `
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Consultation</p>
-    <h1>A complimentary 20-minute conversation.</h1>
-    <p class="lede">No cost and no deposit. A short call to hear what you need and see how we can help.</p>
+    <p class="eyebrow">Let’s Connect!</p>
+    <h1>A Complimentary 20-Minute Consultation</h1>
+    <p class="lede">We’d love to hear from you and learn more about what you’re looking for. This complimentary consultation is an opportunity for us to connect, discuss your coaching needs and interests, and explore how Zoe Life may be able to support you.</p>
   </div>
 </section>
 
@@ -1072,14 +1027,13 @@ const consult = page(
   <div class="wrap">
     <div class="split split-copy-photo" style="align-items:start">
       <div>
-        <h2>How it works</h2>
-        <ul class="detail-list">
-          <li><span class="k">Length</span> <span class="v">20 minutes</span></li>
-          <li><span class="k">Cost</span> <span class="v">Free, no deposit</span></li>
-          <li><span class="k">When</span> <span class="v">Mondays and Wednesdays, 6:00 to 8:00 PM Central</span></li>
-          <li><span class="k">Where</span> <span class="v">Video call, details sent on confirmation</span></li>
-        </ul>
-        <p style="margin-top:1.5rem">This is a first conversation, not a paid session.</p>
+        <h2>What to Expect</h2>
+        <div class="consult-expectations">
+          <div class="consult-expectation"><h3>A Personal Conversation</h3><p>Share a little about yourself, what you’re looking for, and how we may be able to help.</p></div>
+          <div class="consult-expectation"><h3>20 Minutes, Complimentary</h3><p>There is no charge for this initial consultation.</p></div>
+          <div class="consult-expectation"><h3>Convenient Virtual Meeting</h3><p>We’ll meet online, and you’ll receive the meeting details with your booking confirmation.</p></div>
+        </div>
+        <h2>Ready to Connect?</h2>
         ${bookingBlock()}
 ${CONFIG.paidBookingUrl ? `<div style="margin-top:2rem"><h3>Continue with a paid session</h3><p>View available sessions, pricing, and appointment details before booking.</p><div class="btn-row">${externalLink(CONFIG.paidBookingUrl, "btn-secondary", "View paid sessions")}</div></div>` : ''}
       </div>
@@ -1265,26 +1219,26 @@ const partner = page(
       "Help us keep sharing biblical teaching and practical resources. Learn about partnership with Zoe Life.",
   },
   `
-<section class="page-hero">
-  <div class="wrap">
-    <p class="eyebrow">Partner</p>
-    <h1>Partner with Zoe Life.</h1>
-    <p class="lede">Your partnership helps us keep sharing biblical teaching and resources. Zoe Life is not a registered nonprofit.</p>
-  </div>
-</section>
+<section class="page-hero"><div class="wrap">
+<p class="eyebrow">Partnership &amp; Collaboration</p>
+<h1>Partner with Zoe Life</h1>
+<p>We believe that meaningful partnerships create opportunities to encourage, equip, and positively impact more lives.</p>
+        <p>At Zoe Life, we welcome opportunities to connect and collaborate with individuals, churches, ministries, organizations, and others who share our passion for helping people grow in faith, strengthen relationships, develop personally, and thrive in every season of life.</p>
+        <p>Whether you’re interested in working together on an initiative, inviting us to contribute to an event, sharing our resources with others, or exploring another opportunity for collaboration, we’d love to hear from you.</p>
+</div></section>
 
-<section>
-  <div class="wrap">
-    <h2>A way to support the work.</h2>
-    <p>If you would like to support this work, we would be glad to hear from you.</p>
-${givingBlock()}
-  </div>
-</section>
+<section><div class="wrap">
+<h2>Ways We Can Partner</h2><div class="grid grid-2 partnership-grid"><article class="card"><h3>Collaborations &amp; Joint Initiatives</h3><p>Explore opportunities to work together on projects, programs, and initiatives that encourage personal growth, strengthen relationships, and support individuals and families.</p></article><article class="card"><h3>Speaking Engagements &amp; Workshops</h3><p>Invite us to contribute to conferences, workshops, group sessions, or other events focused on faith, marriage, family life, personal development, education, and related topics.</p></article><article class="card"><h3>Books &amp; Resource Partnerships</h3><p>Explore opportunities to share our books, devotionals, journals, and other resources with churches, groups, organizations, and communities.</p></article><article class="card"><h3>Supporting Zoe Life Initiatives</h3><p>We welcome opportunities to connect with individuals and organizations interested in sponsoring, contributing resources to, or otherwise supporting initiatives that align with Zoe Life’s mission.</p><div class="support-disclosure"><h4>Important Information About Financial Support</h4><p>Zoe Life LLC is not a 501(c)(3) tax-exempt nonprofit organization. Financial contributions or sponsorships made to Zoe Life are not tax-deductible charitable donations.</p></div></article></div>
+</div></section>
+
+<section class="band-tan"><div class="wrap">
+<p class="eyebrow">LET’S CONNECT</p>
+<h2>Let’s Explore Opportunities Together!</h2><p>We’d love to hear your ideas and explore how we might work together. If you’re interested in partnering or collaborating with Zoe Life, please send us a message and tell us a little about what you have in mind.</p><div class="btn-row"><a class="btn btn-primary" href="contact.html?reason=Collaboration%20%2F%20Partnership#message">Send a Partnership Inquiry</a></div>
+</div></section>
 `
 );
 
-// Blog topics follow the order of the video series on the Videos page; any
-// new category is listed after these, alphabetically.
+// Blog topics follow the order of the video series on the Videos page.
 const TOPIC_ORDER = ["Singles", "Dating", "Marriage", "Conflict", "Faith"];
 const BLOG_TOPICS = [...new Set(POSTS.map((post) => post.category))]
   .sort((a, b) => {
@@ -1493,9 +1447,20 @@ const moved = (fromPage, title, destHref, destLabel, description) =>
 
 /* ------------------------------------------------------------------ emit -- */
 
+const resourcesOverview = page(
+  {page:"resources-overview.html",title:"Explore Resources | Zoe Life",description:"Find Zoe Life books, biblical articles, and video teachings for everyday life."},
+  `<section class="page-hero"><div class="wrap">
+<p class="eyebrow">Zoe Life</p>
+<h1>Explore Resources</h1>
+</div></section>
+<section><div class="wrap">
+<div class="card-grid"><article class="card"><h2>Books</h2><p>Devotionals, journals, and other publications.</p><p class="card-link"><a href="books.html">Explore Books</a></p></article><article class="card"><h2>Articles</h2><p>Biblical insights, encouragement, and practical guidance for everyday life.</p><p class="card-link"><a href="blog.html">Explore Articles</a></p></article><article class="card"><h2>Videos</h2><p>Teachings, conversations, and video series.</p><p class="card-link"><a href="resources.html">Explore Videos</a></p></article></div>
+</div></section>`
+);
+
 const PAGES = {
   "index.html": home,
-  ...Object.fromEntries([["privacy.html","Privacy Policy"],["terms.html","Terms &amp; Conditions"]].map(([file,title]) => [file,page({page:file,title,description:"Zoe Life LLC",noindex:true}, `<section><div class="wrap"><h1>${title}</h1>${file === "privacy.html" ? `<p>Zoe Life LLC</p>
+  ...Object.fromEntries([["privacy.html","Privacy Policy"],["terms.html","Terms &amp; Conditions"]].map(([file,title]) => [file,page({page:file,title,description:"Zoe Life LLC",noindex:true}, `<section><div class="wrap legal-copy"><h1>${title}</h1>${file === "privacy.html" ? `<p>Zoe Life LLC</p>
 <p>Effective Date: November 6, 2026</p>
 <p>At Zoe Life LLC, we value your trust and respect your privacy. We are committed to handling the personal information you share with us responsibly and with care.</p>
 <p>This Privacy Policy explains how Zoe Life LLC (“Zoe Life,” “we,” “us,” or “our”) collects, uses, shares, and protects personal information when you visit our website, www.zoelifehub.com, contact us, subscribe to our communications, purchase our products, or engage with our services.</p>
@@ -1533,7 +1498,7 @@ const PAGES = {
 <p>We encourage you to review the privacy policies of third-party platforms when using their services.</p>
 <h2>5. Email Communications</h2>
 <p>If you subscribe to our mailing list, we may send you encouragement, helpful resources, announcements, and updates about Zoe Life’s books, services, events, and other offerings.</p>
-<p>You may unsubscribe from our emails at any time using the unsubscribe link provided in our emails or by contacting us through the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<p>You may unsubscribe from our emails at any time using the unsubscribe link provided in our emails or by contacting us through the <a href="contact.html?reason=Privacy%20or%20Website%20Inquiry#message">Contact Us form</a> on our website.</p>
 <h2>6. Cookies and Website Analytics</h2>
 <p>Our website may use cookies and similar technologies to support website functionality, understand visitor interactions, and improve the user experience.</p>
 <p>Depending on the technologies used, cookies may help us remember preferences, monitor website performance, or understand how visitors use our website.</p>
@@ -1546,7 +1511,7 @@ const PAGES = {
 <h2>9. Your Privacy Choices</h2>
 <p>You may contact us to request access to, correction of, or deletion of personal information we maintain about you, subject to applicable laws and legitimate business or legal requirements.</p>
 <p>You may also unsubscribe from our emails at any time.</p>
-<p>To make a privacy-related request, please use the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<p>To make a privacy-related request, please use the <a href="contact.html?reason=Privacy%20or%20Website%20Inquiry#message">Contact Us form</a> on our website.</p>
 <h2>10. Children’s Privacy</h2>
 <p>Our website is intended primarily for adults, including parents and guardians seeking resources for themselves and their families.</p>
 <p>We do not knowingly collect personal information directly from children under the age of 13 through our website without appropriate parental consent.</p>
@@ -1562,11 +1527,81 @@ const PAGES = {
 <p>If you have questions about this Privacy Policy or how we handle personal information, please reach out through the <a href="contact.html#message">Contact Us form</a> on our website.</p>
 <p>Zoe Life LLC</p>
 <p>Aurora, Illinois, United States</p>
-<p>Website: www.zoelifehub.com</p>` : `<p>This page is being prepared. For questions, please <a href="contact.html#message">contact Zoe Life</a>.</p>`}</div></section>`)])),
+<p>Website: www.zoelifehub.com</p>` : `<p>Zoe Life LLC</p>
+<p>Effective Date: November 6, 2026</p>
+<p>Welcome to Zoe Life!</p>
+<p>We are glad you are here. Zoe Life LLC provides faith-based and practical coaching, educational materials, books, digital resources, and other services designed to encourage, equip, and empower individuals, couples, and families.</p>
+<p>These Terms &amp; Conditions explain the general terms governing your use of our website, www.zoelifehub.com, and the content and services available through it.</p>
+<p>By accessing or using our website, you agree to these Terms &amp; Conditions. If you do not agree, please discontinue use of the website.</p>
+<h2>1. About Zoe Life</h2>
+<p>Zoe Life LLC is an Illinois-based organization offering faith-based and practical guidance, coaching, educational resources, publishing, and related services.</p>
+<p>Our goal is to support personal growth, strengthen relationships, encourage faith, and help individuals and families navigate life’s opportunities and challenges.</p>
+<p>Our offerings may include coaching sessions, consultations, books, journals, devotionals, workbooks, digital resources, speaking engagements, and educational programs.</p>
+<h2>2. Faith-Based Content and Guidance</h2>
+<p>Our content and services are informed by biblical principles and practical wisdom.</p>
+<p>We seek to provide encouragement, guidance, and resources that individuals and families can thoughtfully apply to their lives.</p>
+<p>Visitors and clients are responsible for their own decisions, actions, and circumstances. Our content is provided for educational, informational, and personal development purposes.</p>
+<h2>3. Coaching Services</h2>
+<p>Zoe Life offers coaching and guidance in areas that may include personal growth, relationships, marriage, parenting, family life, education, and career development.</p>
+<p>Coaching is intended to provide encouragement, perspective, practical guidance, and support for personal growth and decision-making.</p>
+<p>Coaching is not a substitute for licensed mental health treatment, psychotherapy, medical care, legal advice, or regulated financial services.</p>
+<p>Our coaching services do not establish a therapist-patient, attorney-client, or other licensed professional relationship.</p>
+<p>Clients engaging in coaching services may be required to review and accept a separate coaching agreement addressing the specific terms of their engagement.</p>
+<p>Where a separate signed coaching agreement applies, its provisions will govern the coaching engagement in the event of a conflict with these general website terms.</p>
+<h2>4. Consultations, Appointments, and Payments</h2>
+<p>Certain consultations may be offered on a complimentary basis, while other coaching sessions and services require payment.</p>
+<p>Information regarding appointment availability, session duration, fees, and booking procedures will be provided through our scheduling platform or directly by Zoe Life.</p>
+<p>Payment, cancellation, rescheduling, and refund arrangements for coaching services will be governed by the terms communicated at booking and any applicable coaching agreement.</p>
+<p>We reserve the right to decline or discontinue services when appropriate, subject to applicable agreements and legal obligations.</p>
+<h2>5. Books, Digital Products, and Educational Resources</h2>
+<p>Zoe Life may offer printed books, devotionals, journals, workbooks, downloadable resources, and other educational materials.</p>
+<p>Products may be available through our website or third-party marketplaces and retailers.</p>
+<p>Prices, availability, delivery methods, and applicable purchase terms may vary by product or sales platform.</p>
+<p>Refunds, returns, cancellations, and digital product access are governed by the policies disclosed at the point of purchase and any applicable consumer protection laws.</p>
+<p>Purchases made through third-party platforms may also be subject to those platforms’ terms and policies.</p>
+<h2>6. Intellectual Property</h2>
+<p>Unless otherwise stated, the original content published by Zoe Life, including written materials, books, workbooks, graphics, branding, videos, and digital resources, is owned by Zoe Life LLC or used with appropriate authorization.</p>
+<p>Content is protected by applicable intellectual property laws.</p>
+<p>You may access and use website content for lawful personal, noncommercial purposes.</p>
+<p>You may not reproduce, redistribute, resell, republish, or commercially exploit our original materials without prior written permission, except as permitted by law or by the specific license accompanying a purchased product.</p>
+<p>Purchasing a resource does not transfer ownership of its intellectual property rights.</p>
+<h2>7. Appropriate Website Use</h2>
+<p>You agree to use our website lawfully and respectfully.</p>
+<p>You may not:</p>
+<ul><li>Use the website for fraudulent, unlawful, or harmful purposes.</li><li>Attempt to gain unauthorized access to our website or systems.</li><li>Interfere with the operation or security of the website.</li><li>Misuse our content, intellectual property, or services.</li><li>Submit intentionally false, misleading, or abusive communications.</li><li>We reserve the right to restrict access where reasonably necessary to protect our website, services, or users.</li></ul>
+<h2>8. No Guarantee of Specific Results</h2>
+<p>We are committed to providing thoughtful, valuable, and practical resources and services.</p>
+<p>However, personal growth, relationships, marriage, family life, education, career development, and other areas of life involve individual circumstances and decisions.</p>
+<p>We do not guarantee specific outcomes from using our website, resources, coaching services, or educational materials.</p>
+<p>Testimonials and personal experiences shared through Zoe Life reflect individual experiences and should not be interpreted as guarantees of similar results.</p>
+<h2>9. External Links and Third-Party Services</h2>
+<p>Our website may include links to third-party websites, retailers, payment processors, social media platforms, and scheduling services.</p>
+<p>These services are operated independently and may have their own terms, privacy policies, and procedures.</p>
+<p>We are not responsible for third-party content, policies, or services outside our control.</p>
+<h2>10. Privacy</h2>
+<p>Your use of our website is also subject to our <a href="privacy.html">Privacy Policy</a>, which explains how we collect, use, and protect personal information.</p>
+<p>Please review the <a href="privacy.html">Privacy Policy</a> for additional information.</p>
+<h2>11. Disclaimer and Limitation of Liability</h2>
+<p>Our website content and general educational resources are provided for informational and educational purposes.</p>
+<p>We make reasonable efforts to keep website information accurate and current, but we do not guarantee that all content will always be complete, error-free, or uninterrupted.</p>
+<p>To the extent permitted by applicable law, Zoe Life LLC is not liable for losses or damages arising solely from reliance on general website information or from circumstances beyond our reasonable control.</p>
+<p>Nothing in these Terms &amp; Conditions excludes or limits liability that cannot legally be excluded or limited.</p>
+<h2>12. Changes to These Terms</h2>
+<p>We may update these Terms &amp; Conditions periodically to reflect changes in our website, offerings, or applicable legal requirements.</p>
+<p>The updated terms will be posted on this page with a revised effective date.</p>
+<p>Changes to existing paid coaching engagements will remain subject to applicable agreements and legal requirements.</p>
+<h2>13. Governing Law</h2>
+<p>These Terms &amp; Conditions are governed by the laws of the State of Illinois, United States, except where applicable law requires otherwise.</p>
+<h2>14. Contact Us</h2>
+<p>If you have questions about these Terms &amp; Conditions, please reach out through the <a href="contact.html#message">Contact Us form</a> on our website.</p>
+<p>Zoe Life LLC<br>
+Aurora, Illinois, United States<br>
+Website: www.zoelifehub.com</p>`}</div></section>`)])),
   "articles-videos.html": page({page:"articles-videos.html",title:"Articles &amp; Videos | Zoe Life",description:"Browse Zoe Life articles and video series."}, `<section><div class="wrap"><h1>Articles &amp; Videos</h1><div class="btn-row"><a class="btn btn-primary" href="blog.html">Browse Articles</a><a class="btn btn-secondary" href="resources.html">Browse Videos</a></div></div></section>`),
   "about.html": about,
   "books.html": books,
   "resources.html": resources,
+  "resources-overview.html": resourcesOverview,
   "blog.html": blog,
   ...Object.fromEntries(POSTS.map((post) => [post.page, postPage(post)])),
   "courses.html": courses,
@@ -1657,6 +1692,7 @@ const sitemapPages = [
   "about.html",
   "books.html",
   "resources.html",
+  "resources-overview.html",
   "blog.html",
   ...POSTS.map((post) => post.page),
   "articles-videos.html",
