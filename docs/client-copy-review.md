@@ -52,9 +52,12 @@ release requirement while legacy Pages publishing remains configured.
   confirmation, time zone and Meet delivery. Public start times already match.
 - A labelled public contact submission on November 10 returned the approved success
   message. Independently checking its row and inbox delivery still needs the client
-  Workspace account. Mailing-list and paid scheduling status must remain separate.
+  Workspace account. A controlled newsletter signup received its confirmation email
+  from the client Workspace address; confirmation and subsequent unsubscribe both
+  succeeded on November 10. Outbound newsletter campaigns and paid scheduling are
+  separate tasks and are not configured.
 - Human review and final client approval. Automated checks are supplementary.
-- Individual completion replies for each client email have not been verified.
+- Send item-specific completion replies; keep provider-side tasks marked open until verified.
 
 
 ## Intensive release verification

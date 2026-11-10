@@ -1671,7 +1671,7 @@ const previewCourses = process.argv.includes("--preview-courses") && STAGING;
 for (const [name, html] of Object.entries(PAGES)) {
   const draft = name === "courses.html" || name.startsWith("courses/");
   wrote(name, draft && !previewCourses ? page({page:name,title:"Page unavailable | Zoe Life",description:"Return to Zoe Life.",noindex:true},
-    `<section><div class="wrap"><h1>Page unavailable</h1><a href="${prefixOf(name)}index.html">Return to Zoe Life</a></div></section>`) : html);
+    `<section><div class="wrap"><h1>Page unavailable</h1><a class="btn btn-secondary" href="${prefixOf(name)}index.html">Return to Zoe Life</a></div></section>`) : html);
 }
 
 wrote(
