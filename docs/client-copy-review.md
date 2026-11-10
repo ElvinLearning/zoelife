@@ -54,11 +54,17 @@ release requirement while legacy Pages publishing remains configured.
   message. Independently checking its row and inbox delivery still needs the client
   Workspace account. A controlled newsletter signup received its confirmation email
   from the client Workspace address; confirmation and subsequent unsubscribe both
-  succeeded on November 10. Outbound newsletter campaigns and paid scheduling are
-  separate tasks and are not configured.
+  succeeded on November 10. Outbound newsletter campaigns are a
+  separate task and are not configured.
 - Human review and final client approval. Automated checks are supplementary.
 - Send item-specific completion replies; keep provider-side tasks marked open until verified.
 
+
+## Deferred by owner — November 10, 2026
+
+Paid scheduling is removed from the current scope and launch checklist. Keep its
+URL unset and offer only the complimentary consultation unless the owner asks to
+resume paid scheduling.
 
 ## Intensive release verification
 

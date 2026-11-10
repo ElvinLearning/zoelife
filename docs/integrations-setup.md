@@ -35,9 +35,11 @@ The backend validates inputs, guards Sheet formula injection, serializes writes,
 
 The `Subscribers` tab is the actual consent-backed list. Only rows with status `subscribed` may be used for updates. Keep unsubscribe links on any future campaign, honor status changes, and never import pending/unsubscribed addresses as active. **A campaign platform or automatic newsletter campaign is not configured by this implementation.** Agree on retention for contact records and unconfirmed signups before launch; deletion is not automated.
 
-## 2. Paid scheduling and Zoom
+## 2. Paid scheduling and Zoom — deferred
 
 The site now accepts `ZOE_PAID_BOOKING_URL`. Its CTA stays hidden until a real booking URL exists. The free 20-minute consultation remains separate and unchanged.
+
+Owner decision, November 10, 2026: remove paid scheduling from the current scope. Keep the paid URL unset; retain the complimentary consultation. The following notes apply only if the owner explicitly resumes this work.
 
 Before enabling the paid link, confirm the session duration, price, availability, cancellation/refund terms and approved booking provider with Pastor Kemi. In her account, connect payments and Zoom, ensure each appointment receives its own meeting link, and verify booking, payment confirmation, calendar entry and cancellation. Then set the variable to the public paid scheduling URL and redeploy. Do not publish a recurring private Zoom room URL or invent rates.
 
@@ -63,7 +65,7 @@ Set only approved product-specific links. An existing Stripe account does not es
 ## Remaining launch gates
 
 - Workspace contact capture and consent-backed subscriber storage are complete. Automatic newsletter campaigns and contact-record retention automation are not configured.
-- Paid session details, scheduling account and Zoom/payment connection.
+- Paid sessions are deferred by the owner and are not a current launch requirement.
 - Approved book product links, prices and fulfilment details.
 - Client wording feedback and final review.
 
