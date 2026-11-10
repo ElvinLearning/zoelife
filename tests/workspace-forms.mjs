@@ -13,6 +13,10 @@ vm.runInContext(readFileSync(new URL('../integrations/google-workspace/Code.gs',
 const post=p=>ctx.doPost({parameter:p});
 const json=p=>JSON.parse(post(p).text);
 ctx.setup();
+// Existing installations have eight subscriber columns; retain their contents.
+tables.get('Subscribers').rows[0].pop();
+ctx.setup();
+assert.equal(tables.get('Subscribers').rows[0][8], 'Owner notification');
 const contact={form_type:'Contact message',request_id:randomUUID(),firstName:'=danger',lastName:'Test',email:'person@example.com',reason:'General',message:'A test message'};
 assert.equal(json({...contact,_honey:'bot'}).success,false);
 assert.equal(json({...contact,email:'bad'}).success,false);
@@ -36,6 +40,12 @@ ctx.doGet({parameter:{action:'confirm',token}});
 assert.equal(rows[1][1],'pending'); // Link-scanner GET must be read only.
 post({action:'confirm',token:'x'.repeat(72)});assert.equal(rows[1][1],'pending');
 assert.equal(json({action:'confirm',token,format:'json'}).state,'subscribed');assert.equal(rows[1][1],'subscribed');
+assert.equal(sent.at(-1).to,'contact@zoelifehub.com');
+assert.equal(sent.at(-1).subject,'New confirmed Zoe Life subscriber');
+assert.equal(rows[1][8],'sent');
+const confirmedMailCount=sent.length;
+json({action:'confirm',token,format:'json'});
+assert.equal(sent.length,confirmedMailCount);
 const mailCount=sent.length;json(sub);assert.equal(sent.length,mailCount);
 assert.equal(json({action:'unsubscribe',token,format:'json'}).state,'unsubscribed');assert.equal(rows[1][1],'unsubscribed');
 post({action:'confirm',token});assert.equal(rows[1][1],'unsubscribed');
@@ -43,6 +53,13 @@ rows[1][2]=new Date(Date.now()-49*3600000).toISOString(); rows[1][1]='pending';
 post({action:'confirm',token});assert.equal(rows[1][1],'pending');
 assert.equal(json({action:'confirm',token,format:'json'}).state,'expired');
 failMail=true;assert.equal(json({...sub,email:'second@example.com'}).success,false);failMail=false;
+const second=rows[2];
+failMail=true;
+assert.equal(json({action:'confirm',token:second[6],format:'json'}).state,'subscribed');
+assert.equal(rows[2][8],'pending');
+failMail=false;
+assert.equal(json({action:'confirm',token:second[6],format:'json'}).state,'subscribed');
+assert.equal(rows[2][8],'sent');
 props.set('MAIL_DAY',new Date().toISOString().slice(0,10));props.set('MAIL_COUNT','50');
 assert.equal(json({...sub,email:'third@example.com'}).success,false);
 console.log('Passed: validation, persistence failure, email failure, duplicate retries, rate limits, formula escaping, consent, confirmation, expiry, unsubscribe, read-only GET, daily cap. No real messages sent.');

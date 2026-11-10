@@ -2,7 +2,7 @@
  * See docs/integrations-setup.md. Secrets belong in Script Properties only.
  */
 var CONTACT_HEADERS = ['Request ID', 'Received UTC', 'First name', 'Last name', 'Email', 'Phone', 'Reason', 'Other reason', 'Message', 'Notification'];
-var SUB_HEADERS = ['Email', 'Status', 'Requested UTC', 'Confirmed UTC', 'Unsubscribed UTC', 'Consent version', 'Token', 'Unsubscribe URL'];
+var SUB_HEADERS = ['Email', 'Status', 'Requested UTC', 'Confirmed UTC', 'Unsubscribed UTC', 'Consent version', 'Token', 'Unsubscribe URL', 'Owner notification'];
 
 function settings_() {
   var p = PropertiesService.getScriptProperties();
@@ -15,6 +15,11 @@ function sheet_(name, headers) {
   var sheet = book.getSheetByName(name) || book.insertSheet(name);
   if (!sheet.getLastRow()) { sheet.appendRow(headers); sheet.setFrozenRows(1); }
   var actual = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
+  // Upgrade the existing eight-column subscriber sheet without changing its data.
+  if (name === 'Subscribers' && actual.slice(0, 8).join('|') === headers.slice(0, 8).join('|') && !actual[8]) {
+    sheet.getRange(1, 9).setValue(headers[8]);
+    actual = sheet.getRange(1, 1, 1, headers.length).getValues()[0];
+  }
   if (actual.join('|') !== headers.join('|')) throw new Error('Unexpected sheet headers');
   return sheet;
 }
@@ -97,7 +102,7 @@ function subscribe_(p, email) {
   var token = Utilities.getUuid() + Utilities.getUuid();
   var url = PropertiesService.getScriptProperties().getProperty('SUBSCRIPTION_PAGE_URL') || settings_().url;
   var unsubscribe = url + '?action=unsubscribe&token=' + encodeURIComponent(token);
-  var values = [email, 'pending', now, '', '', '2026-09-26', token, unsubscribe];
+  var values = [email, 'pending', now, '', '', '2026-09-26', token, unsubscribe, ''];
   if (old) sheet.getRange(old.index, 1, 1, values.length).setValues([values.map(cell_)]); else sheet.appendRow(values.map(cell_));
   SpreadsheetApp.flush();
   // A failed send returns failure. A retry issues a new token after one minute.
@@ -124,10 +129,19 @@ function changeSubscription_(p) {
   var entry = subscription_(p), values = entry.values;
   if (p.action === 'confirm') {
     if (values[1] === 'unsubscribed' || Date.now() - Date.parse(values[2]) > 48 * 3600000) return p.format === 'json' ? json_({success:false, state:'expired'}) : page_('<p>This confirmation has expired. Please sign up again on the website.</p>');
+    if (values[1] !== 'subscribed') values[8] = 'pending';
     values[1] = 'subscribed'; values[3] = values[3] || new Date().toISOString();
   } else { values[1] = 'unsubscribed'; values[4] = new Date().toISOString(); }
   entry.sheet.getRange(entry.index, 1, 1, values.length).setValues([values]);
   SpreadsheetApp.flush();
+  // Notify only after explicit confirmation. Repeat confirmations do not resend
+  // successful alerts. Mail failure must not undo the subscriber's consent.
+  if (p.action === 'confirm' && values[8] === 'pending') {
+    try {
+      send_({to:settings_().inbox, subject:'New confirmed Zoe Life subscriber', name:'Zoe Life', body:'A visitor has confirmed their Zoe Life mailing-list subscription.\n\nEmail: ' + values[0] + '\nConfirmed: ' + values[3] + '\n\nThe subscriber is recorded in the Subscribers tab of your website spreadsheet.'});
+      entry.sheet.getRange(entry.index, 9).setValue('sent');
+    } catch (error) { /* Pending alerts remain visible in the owner's Sheet. */ }
+  }
   if (p.format === 'json') return json_({success:true, state:values[1]});
   return page_('<p>' + (p.action === 'confirm' ? 'Your subscription is confirmed. Thank you for joining Zoe Life.' : 'You are unsubscribed from Zoe Life updates.') + '</p>');
 }

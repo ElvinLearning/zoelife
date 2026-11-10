@@ -77,3 +77,7 @@ https://developers.google.com/apps-script/reference/mail/mail-app
 ## Publishing note
 
 The repository currently documents legacy Pages publishing from `claude/zoe-life-website-boiqf0`. Repository variables only affect Actions builds; they do not rewrite committed files served from that branch. While legacy publishing is in use, build with the verified environment variables, run the checks, and commit the generated HTML/config to the Pages source branch as well as main. Alternatively, an administrator can enable Actions as the Pages source and permit main in the github-pages environment before using the manual deployment workflow. Do not assume a green main build alone published the site.
+
+## November 10: owner alerts prepared, deployment pending
+
+The backend now notifies `contact@zoelifehub.com` after a subscriber explicitly confirms. Pending signups do not alert the owner. Successful repeat confirmations do not duplicate alerts; mail failure leaves the subscription active and the Owner notification cell pending. Repeating the confirmation can retry a failed alert. Existing eight-column subscriber sheets are upgraded by appending the notification column without replacing data. This code has passed isolated tests but has NOT been deployed to the client-owned Apps Script project. After signing in as Zoe Life, update the existing deployment and verify an actual owner alert. Do not describe it as live before that check. This does not configure outbound newsletter campaigns.
