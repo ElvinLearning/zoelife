@@ -9,7 +9,7 @@ const require = createRequire(import.meta.url);
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE || 'playwright');
 const sharp = require(process.env.SHARP_MODULE || 'sharp');
 const root = resolve(new URL('..', import.meta.url).pathname);
-const out = resolve(root, 'docs/qa/pre-release');
+const out = resolve(process.env.QA_OUTPUT_DIR || resolve(root, 'docs/qa/pre-release'));
 mkdirSync(`${out}/screenshots`, {recursive:true});
 const pages = [...readdirSync(root).filter(f=>f.endsWith('.html')),
   ...['blog','courses'].flatMap(dir=>readdirSync(`${root}/${dir}`).filter(f=>f.endsWith('.html')).map(f=>`${dir}/${f}`))];
@@ -30,7 +30,7 @@ let current='';
 page.on('pageerror', e=>results.errors.push({page:current,error:e.message}));
 page.on('requestfailed', r=>results.network.push({page:current,url:r.url(),error:r.failure()?.errorText}));
 const urls = new Set();
-for (const width of [375,414,1280]) {
+for (const width of [375,768,1440]) {
   await page.setViewportSize({width,height:900});
   for (const file of pages) {
     current=`${file}@${width}`;
@@ -92,8 +92,8 @@ for (const width of [375,414,1280]) {
       check(`${current}: all ten faith statements readable`,await disclosure.locator('li').count()===10 && await disclosure.locator('li').first().isVisible());
     }
     if(file==='books.html') {
-      const pending=await page.evaluate(()=>Object.values(window.ZOE_CONFIG.payments).reduce((n,p)=>n+['amazon','lulu','gumroad','etsy'].filter(k=>!p[k]).length,0));
-      check(`${current}: unconfigured purchase controls are disabled`,await page.locator('.buy-area button:disabled').count()===pending);
+      check(`${current}: no placeholder purchase buttons`,await page.locator('.buy-area button:disabled').count()===0);
+      check(`${current}: no unapproved storefronts`,!await page.locator('main a[href*="gumroad"], main a[href*="etsy"], main a[href*="lulu"], main a[href*="stripe"], main a[href*="paypal"]').count());
     }
     // Exercise every newsletter form, in its own page context.
     const signup=page.locator('[data-form="subscribe"]');
@@ -131,7 +131,7 @@ if(process.env.QA_ROOT) for(const file of pages.filter(f=>!['index.html','404.ht
 await page.goto(`${base}/contact.html`);
 const contact=page.locator('[data-form=contact]');
 await contact.locator('button').click();
-check('contact: six empty required fields rejected',await contact.locator('[aria-invalid=true]').count()===6);
+check('contact: five empty required fields rejected; phone optional',await contact.locator('[aria-invalid=true]').count()===5 && await contact.locator('[name=phone]').getAttribute('required')===null);
 await contact.locator('[name=firstName]').fill('Release');await contact.locator('[name=lastName]').fill('QA');
 await contact.locator('[name=email]').fill('release-qa@example.org');await contact.locator('[name=phone]').fill('5551234567');
 await contact.locator('select').selectOption('Other');
@@ -141,7 +141,11 @@ await contact.locator('textarea').fill('This test never leaves the local browser
 mock={success:'false'};await contact.locator('button').click();await contact.locator('.status-blocked').waitFor();
 check('contact: HTTP 200 rejection is not success',!(await contact.locator('.status-sent').count()) && await contact.locator('textarea').inputValue()!=='');
 mock={success:true};await contact.locator('button').click();await contact.locator('.status-sent').waitFor();
-check('contact: approved success message', (await contact.locator('.status-sent').textContent()).includes('Thank you for contacting Zoe Life. Please expect a reply within three business days.'));
+check('contact: approved success message', (await contact.locator('.status-sent').textContent())==='Thank you for reaching out to Zoe Life! We’ve received your message and look forward to connecting with you. We’ll get back to you within three business days.');
+for (const reason of ['Group & Bulk Book Orders','Collaboration / Partnership']) {
+  await page.goto(`${base}/contact.html?reason=${encodeURIComponent(reason)}#message`);
+  check(`contact: ${reason} selected from link`,await page.locator('[name=reason]').inputValue()===reason);
+}
 // Confirmation/unsubscribe are POST-only and need an explicit action.
 for(const action of ['confirm','unsubscribe']) {
   const before=sends;

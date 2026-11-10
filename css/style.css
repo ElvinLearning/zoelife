@@ -416,6 +416,7 @@ figcaption { font-size: .85rem; color: var(--ink-soft); margin-top: .65rem; }
 @media (min-width: 44rem) { .values { grid-template-columns: 1fr 1fr; } }
 .value h3 { font-size: 1.12rem; margin-bottom: .25em; }
 .value p { margin-bottom: 0; color: var(--ink-soft); font-size: .97rem; }
+.section-icon { display: block; width: 1.75rem; height: 1.75rem; color: var(--sage); margin-bottom: .65rem; flex: none; }
 
 .faith-list { max-width: 62ch; }
 .faith-list li { margin-bottom: .7em; }

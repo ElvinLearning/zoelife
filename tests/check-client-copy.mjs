@@ -11,7 +11,7 @@ const normalize = value => value.replace(/\s+/g, ' ').trim();
 const text = html => normalize(html
   .replace(/<!--[^]*?-->/g, '')
   .replace(/<(script|style)\b[^>]*>[^]*?<\/\1>/gi, '')
-  .replace(/<\/(?:p|h[1-6]|li|a|span|div|section|label)>/gi, '$& ')
+  .replace(/<\/(?:p|h[1-6]|li|div|section|label)>/gi, '$& ')
   .replace(/<[^>]*>/g, '')
   .replace(/&(amp|lt|gt|quot|apos|nbsp|copy);/g, (_, name) => ({amp:'&',lt:'<',gt:'>',quot:'"',apos:"'",nbsp:' ',copy:'©'}[name]))
   .replace(/&#(x[\da-f]+|\d+);/gi, (_, n) => String.fromCodePoint(n[0].toLowerCase() === 'x' ? parseInt(n.slice(1),16) : Number(n))));

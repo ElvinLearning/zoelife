@@ -1,23 +1,15 @@
-# Pending client decisions
+# Current client and owner follow-up
 
-These comments are in the HTML/source so they stay visible during review without appearing as unfinished visitor-facing text.
+Updated November 10, 2026. Replaces the October checklist.
 
-- `about.html:173`: Confirm whether to retain the Statement of Faith. Kept here, collapsed, pending Kemi's decision.
-- `blog/after-you-meet-the-right-one.html:99`: Confirm the personal anecdote about the woman and the man's death before publication.
-- `blog/preparing-for-marriage-while-single.html:101`: Confirm the source for Mary's estimated age; Scripture does not state her age.
-- `blog/recipes-for-a-blessed-marriage.html:101`: Kemi to approve the rewritten Recipes article against the original teaching.
-- `books.html:98`: Supply the devotional Amazon and Lulu Direct checkout URLs and confirm its Gumroad/Etsy product URLs in the existing payments config.
-- `books.html:161`: Supply the journal Amazon and Lulu Direct checkout URLs and confirm its Gumroad/Etsy product URLs in the existing payments config.
-- `books.html:162`: Confirm journal pricing before publishing a price.
-- `courses/committed.html:79`: Approve course outline and confirm enrollment availability, including the lesson drawn from our years of marriage.
-- `courses/engaged-first-year.html:79`: Approve course outline and confirm enrollment availability, including the lesson drawn from our years of marriage.
-- `courses/single-dating.html:79`: Approve course outline and confirm enrollment availability, including the lesson drawn from our years of marriage.
-- `index.html:74`: Kemi's homepage copy goes here
-
-## Owner-side release checks
-
-- Verify one contact reaches the intended Sheet tab and inbox, and one newsletter signup confirms and unsubscribes against the deployed Apps Script service. The tests here use mocks and cannot certify live delivery.
-- Confirm all six YouTube playlists play in a normal browser, especially the existing short ID `PLTiUnmAGHZkM`. URL identity was preserved; an HTTP 200 is not proof a playlist is playable.
-- Confirm `https://www.tiktok.com/@zoefamilylife`; the reachability check returned 403, so its validity is unverified.
-- Supply checkout/product URLs: the current Pages snapshot has **null Amazon, Lulu, Gumroad and Etsy values for both books**. Reports that shops are ready do not provide product URLs in this branch.
-- Keep staging/noindex until the domain cutover is approved. This PR does not change Pages settings, DNS, CNAME, billing, or merge/deploy the branch.
+- Homepage copy and the November 9 Statement of Faith have been supplied and applied verbatim. They are not awaiting replacement text.
+- Final Amazon purchase URLs for both books are still needed. Only Amazon is approved for this release; no prices or other storefront controls are shown.
+- Individual article and video revisions remain deferred by the client. Existing article anecdotes and factual claims still need her review.
+- The custom domain printed in the books still serves the older Squarespace website. Complete the hosting/domain cutover and verify the updated homepage at that address before calling the launch complete.
+- Update the client-owned Google appointment schedule to 20 minutes, a 10-minute buffer, the supplied full title and description. Retain Monday/Wednesday 6:00, 6:30, 7:00 and 7:30 PM Central starts. Verify confirmation and Google Meet delivery. The connected Cozy Digital calendar is not the client calendar.
+- Independently confirm the labelled November 10 contact test in the client Sheet and inbox. The public form displayed the correct success message.
+- Verify the live mailing-list confirmation and unsubscribe flow; distinguish this consent list from an outbound newsletter campaign setup.
+- Paid scheduling needs agreed rates, session details and payment/booking configuration before it can be enabled.
+- Courses remain off public navigation. No paid course enrollment is being announced.
+- Toluwani or Quincy must perform the human final review Kemi requested. Automated checks do not satisfy that request.
+- Obtain final client approval and report each email item with its actual completion status.

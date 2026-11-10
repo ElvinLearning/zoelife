@@ -157,6 +157,24 @@ const SOCIAL_ICONS = {
 const icon = (key) =>
   `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${SOCIAL_ICONS[key]}</svg>`;
 
+// Decorative section icons keep the client's labels and descriptions untouched.
+const SECTION_ICONS = {
+  cross: '<path d="M9 3h6v6h5v5h-5v7H9v-7H4V9h5z"/>',
+  book: '<path d="M12 6v15M3 3h5a4 4 0 0 1 4 3 4 4 0 0 1 4-3h5v16h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3z"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="m16 8-2 6-6 2 2-6z"/>',
+  star: '<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2L3 9.6l6.2-.9z"/>',
+  shield: '<path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6zM8.5 12l2.5 2.5 4.5-5"/>',
+  heart: '<path d="M20.2 5.8a5 5 0 0 0-7.1 0L12 6.9l-1.1-1.1a5 5 0 0 0-7.1 7.1L12 21l8.2-8.1a5 5 0 0 0 0-7.1z"/>',
+  hands: '<path d="M3 15h3l3-3h5a2 2 0 0 1 0 4h-3M3 15v6h4l11-4 3-5a2 2 0 0 0-3-1l-2 3M8 7h8M12 3v8"/>',
+  growth: '<path d="M12 21V10M12 14C5 14 3 10 3 5c6 0 9 3 9 9ZM12 10c0-5 3-7 9-7 0 5-3 8-9 8"/>',
+  conversation: '<path d="M21 11a8 8 0 0 1-8 8H8l-5 3V7a4 4 0 0 1 4-4h6a8 8 0 0 1 8 8Z"/><path d="M7 8h9M7 12h6"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  video: '<rect x="2" y="5" width="14" height="14" rx="2"/><path d="m16 9 6-3v12l-6-3"/>',
+  collaboration: '<path d="m9 15 6-6M8 16l-1 1a4 4 0 0 1-6-6l4-4a4 4 0 0 1 6 0M16 8l1-1a4 4 0 0 1 6 6l-4 4a4 4 0 0 1-6 0" transform="translate(0 -1) scale(.95)"/>',
+  microphone: '<rect x="9" y="2" width="6" height="13" rx="3"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>',
+};
+const sectionIcon = (key) => `<svg class="section-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${SECTION_ICONS[key]}</svg>`;
+
 const socialLink = ([key, label, href], brand) => `
               <li><a class="social-link" href="${href}" target="_blank" rel="noopener noreferrer">
                 ${icon(key)}<span>${label}</span>
@@ -662,14 +680,14 @@ const about = page(
     <p class="eyebrow">Who we are</p>
     <h2>Core values</h2>
     <div class="values" style="margin-top:1.75rem">
-      <div class="value"><h3>Christ-Centered</h3><p>Jesus Christ is the foundation of all we do. We desire to honor Him and point others toward Him through our work.</p></div>
-      <div class="value"><h3>Biblical Truth</h3><p>God’s Word is our foundation and final authority. We are committed to sharing biblical truth faithfully and encouraging its application in everyday life.</p></div>
-      <div class="value"><h3>Practical Wisdom</h3><p>We believe biblical principles should be lived out. Our desire is to help people apply God’s Word and practical wisdom to everyday decisions and experiences.</p></div>
-      <div class="value"><h3>Excellence</h3><p>We are committed to honoring God through excellence, diligence, and faithful service in all we do.</p></div>
-      <div class="value"><h3>Integrity</h3><p>We value honesty, accountability, and consistency between what we believe, teach, and practice.</p></div>
-      <div class="value"><h3>Compassion</h3><p>We desire to serve others with genuine love, kindness, patience, and understanding.</p></div>
-      <div class="value"><h3>Stewardship</h3><p>We seek to faithfully manage the time, opportunities, gifts, and resources God has entrusted to us.</p></div>
-      <div class="value"><h3>Growth</h3><p>We believe in continually growing in our relationship with God, developing personally, and becoming more effective in serving others.</p></div>
+      <div class="value">${sectionIcon("cross")}<h3>Christ-Centered</h3><p>Jesus Christ is the foundation of all we do. We desire to honor Him and point others toward Him through our work.</p></div>
+      <div class="value">${sectionIcon("book")}<h3>Biblical Truth</h3><p>God’s Word is our foundation and final authority. We are committed to sharing biblical truth faithfully and encouraging its application in everyday life.</p></div>
+      <div class="value">${sectionIcon("compass")}<h3>Practical Wisdom</h3><p>We believe biblical principles should be lived out. Our desire is to help people apply God’s Word and practical wisdom to everyday decisions and experiences.</p></div>
+      <div class="value">${sectionIcon("star")}<h3>Excellence</h3><p>We are committed to honoring God through excellence, diligence, and faithful service in all we do.</p></div>
+      <div class="value">${sectionIcon("shield")}<h3>Integrity</h3><p>We value honesty, accountability, and consistency between what we believe, teach, and practice.</p></div>
+      <div class="value">${sectionIcon("heart")}<h3>Compassion</h3><p>We desire to serve others with genuine love, kindness, patience, and understanding.</p></div>
+      <div class="value">${sectionIcon("hands")}<h3>Stewardship</h3><p>We seek to faithfully manage the time, opportunities, gifts, and resources God has entrusted to us.</p></div>
+      <div class="value">${sectionIcon("growth")}<h3>Growth</h3><p>We believe in continually growing in our relationship with God, developing personally, and becoming more effective in serving others.</p></div>
     </div>
   </div>
 </section>
@@ -1030,9 +1048,9 @@ const consult = page(
       <div>
         <h2>What to Expect</h2>
         <div class="consult-expectations">
-          <div class="consult-expectation"><h3>A Personal Conversation</h3><p>Share a little about yourself, what you’re looking for, and how we may be able to help.</p></div>
-          <div class="consult-expectation"><h3>20 Minutes, Complimentary</h3><p>There is no charge for this initial consultation.</p></div>
-          <div class="consult-expectation"><h3>Convenient Virtual Meeting</h3><p>We’ll meet online, and you’ll receive the meeting details with your booking confirmation.</p></div>
+          <div class="consult-expectation">${sectionIcon("conversation")}<h3>A Personal Conversation</h3><p>Share a little about yourself, what you’re looking for, and how we may be able to help.</p></div>
+          <div class="consult-expectation">${sectionIcon("clock")}<h3>20 Minutes, Complimentary</h3><p>There is no charge for this initial consultation.</p></div>
+          <div class="consult-expectation">${sectionIcon("video")}<h3>Convenient Virtual Meeting</h3><p>We’ll meet online, and you’ll receive the meeting details with your booking confirmation.</p></div>
         </div>
         <h2>Ready to Connect?</h2>
         ${bookingBlock()}
@@ -1229,7 +1247,7 @@ const partner = page(
 </div></section>
 
 <section><div class="wrap">
-<h2>Ways We Can Partner</h2><div class="grid grid-2 partnership-grid"><article class="card"><h3>Collaborations &amp; Joint Initiatives</h3><p>Explore opportunities to work together on projects, programs, and initiatives that encourage personal growth, strengthen relationships, and support individuals and families.</p></article><article class="card"><h3>Speaking Engagements &amp; Workshops</h3><p>Invite us to contribute to conferences, workshops, group sessions, or other events focused on faith, marriage, family life, personal development, education, and related topics.</p></article><article class="card"><h3>Books &amp; Resource Partnerships</h3><p>Explore opportunities to share our books, devotionals, journals, and other resources with churches, groups, organizations, and communities.</p></article><article class="card"><h3>Supporting Zoe Life Initiatives</h3><p>We welcome opportunities to connect with individuals and organizations interested in sponsoring, contributing resources to, or otherwise supporting initiatives that align with Zoe Life’s mission.</p><div class="support-disclosure"><h4>Important Information About Financial Support</h4><p>Zoe Life LLC is not a 501(c)(3) tax-exempt nonprofit organization. Financial contributions or sponsorships made to Zoe Life are not tax-deductible charitable donations.</p></div></article></div>
+<h2>Ways We Can Partner</h2><div class="grid grid-2 partnership-grid"><article class="card">${sectionIcon("collaboration")}<h3>Collaborations &amp; Joint Initiatives</h3><p>Explore opportunities to work together on projects, programs, and initiatives that encourage personal growth, strengthen relationships, and support individuals and families.</p></article><article class="card">${sectionIcon("microphone")}<h3>Speaking Engagements &amp; Workshops</h3><p>Invite us to contribute to conferences, workshops, group sessions, or other events focused on faith, marriage, family life, personal development, education, and related topics.</p></article><article class="card">${sectionIcon("book")}<h3>Books &amp; Resource Partnerships</h3><p>Explore opportunities to share our books, devotionals, journals, and other resources with churches, groups, organizations, and communities.</p></article><article class="card">${sectionIcon("hands")}<h3>Supporting Zoe Life Initiatives</h3><p>We welcome opportunities to connect with individuals and organizations interested in sponsoring, contributing resources to, or otherwise supporting initiatives that align with Zoe Life’s mission.</p><div class="support-disclosure"><h4>Important Information About Financial Support</h4><p>Zoe Life LLC is not a 501(c)(3) tax-exempt nonprofit organization. Financial contributions or sponsorships made to Zoe Life are not tax-deductible charitable donations.</p></div></article></div>
 </div></section>
 
 <section class="band-tan"><div class="wrap">

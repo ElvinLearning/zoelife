@@ -1,4 +1,6 @@
-# Zoe Life pre-release review
+# Zoe Life pre-release review (historical October snapshot)
+
+**Superseded for current copy and launch status:** see [client copy review](../../client-copy-review.md). The results, screenshots and storefront notes below describe the October build, before the client’s November changes.
 
 Review date: 2026-10-20 UTC. Base: `ElvinLearning/zoelife:claude/zoe-life-website-boiqf0`, commit `7591a0cf2e058ef13b03c57fabfcefcd3f376f33`. Work is proposed from `kaysongt/zoelife:cozy/pre-release-copy-shop-qa`. This is a review branch, not a release approval.
 

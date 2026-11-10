@@ -77,6 +77,25 @@ jobs:
       - name: Assemble site
         run: node tools/assemble.mjs
 
+      - name: Browser review at phone, tablet and desktop widths
+        timeout-minutes: 20
+        env:
+          PLAYWRIGHT_MODULE: ${{ runner.temp }}/zoelife-qa/node_modules/playwright
+          SHARP_MODULE: ${{ runner.temp }}/zoelife-qa/node_modules/sharp
+          QA_OUTPUT_DIR: ${{ runner.temp }}/zoelife-review
+        run: |
+          npm install --prefix "$RUNNER_TEMP/zoelife-qa" --no-package-lock playwright@1.62.1 sharp@0.35.5
+          "$RUNNER_TEMP/zoelife-qa/node_modules/.bin/playwright" install --with-deps chromium
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/zoelife-http.log" 2>&1 &
+          node tools/qa-release.mjs
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: browser-review
+          path: ${{ runner.temp }}/zoelife-review
+          retention-days: 14
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

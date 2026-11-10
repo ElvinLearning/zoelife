@@ -23,16 +23,16 @@ November changes already on `main` had not reached that public preview.
 | Resources navigation | Books, Articles, Videos in that order; overview page; courses absent from public navigation. |
 | Books | Supplied descriptions, companion section, group-order section and more-to-come copy; Amazon-only buttons remain hidden until final URLs arrive. |
 | Contact | Supplied text; phone optional; requested reasons; group/partnership preselection and submitted-message text. |
-| Consultation page | Supplied invitation, What to Expect, Ready to Connect and booking button. |
+| Consultation page | Supplied invitation, What to Expect, Ready to Connect and booking button; simple icons added to the three expectations. |
 | Booking calendar | Public provider page checked November 10: still titled “20-minute booking” and still displays “30 min appointments.” Monday/Wednesday 6:00, 6:30, 7:00 and 7:30 PM Central start times are present. Duration/title/description remain unfinished; confirmation/Meet delivery is unverified. |
-| About | Supplied organization, mission, vision, eight values and combined biography; correct section links. Core-value icons requested in the email are not present in this implementation; current layout is retained. |
+| About | Supplied organization, mission, vision, eight values and combined biography; correct section links. Eight decorative core-value icons restored; supplied words and existing layout retained. |
 | Statement of Faith (November 9) | Exact new heading, introduction, ten beliefs and closing paragraph; expandable format retained. |
-| Partnership | Supplied four categories, disclosure and closing invitation; preselected partnership inquiry. |
+| Partnership | Supplied four categories, disclosure and closing invitation; simple category icons and preselected partnership inquiry. |
 
 ## Release checks
 
-`node tests/check-client-copy.mjs` compares 130 public passages from the original
-client copy with six generated pages, plus exact hero text and button routing.
+`node tests/check-client-copy.mjs` compares 278 public passages from the original
+client copy with nine generated pages, plus exact hero text and button routing.
 The fixture contains only public website copy, not private email threads. Do not
 regenerate it from implementation output or rewrite it without client edits.
 
@@ -50,8 +50,19 @@ release requirement while legacy Pages publishing remains configured.
 - Calendar duration must change from 30 to 20 minutes, with a 10-minute buffer.
   Replace the title and add the supplied description; then verify booking
   confirmation, time zone and Meet delivery. Public start times already match.
-- Live contact delivery, Sheets capture, mailing-list confirmation/unsubscribe,
-  and paid scheduling setup.
+- A labelled public contact submission on November 10 returned the approved success
+  message. Independently checking its row and inbox delivery still needs the client
+  Workspace account. Mailing-list and paid scheduling status must remain separate.
 - Human review and final client approval. Automated checks are supplementary.
 - Individual completion replies for each client email have not been verified.
-- About-page core-value icons are absent; the client requested retaining them.
+
+
+## Intensive release verification
+
+The release workflow runs the exact-copy, static, build and Workspace unit checks,
+then a browser review at 375, 768 and 1440 pixels. Browser forms are intercepted
+to avoid sending bulk tests to the client. Current run results and screenshots
+are saved in the `browser-review` Actions artifact; a green run is required before
+advancing the Pages branch. Local Chromium could not launch in this workspace,
+so browser execution is performed in GitHub Actions rather than reported as a
+local pass. The October report in `docs/qa/pre-release` is historical.
