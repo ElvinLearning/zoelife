@@ -101,9 +101,9 @@ const NAV = [
     id: "resources",
     label: "Resources",
     items: [
+      ["books.html", "Books", "Gratitude devotional and journal"],
       ["blog.html", "Articles", "Articles on marriage, dating, and faith"],
       ["resources.html", "Videos", "Teaching clips and full series"],
-      ["books.html", "Books", "Gratitude devotional and journal"],
     ],
   },
   {
@@ -122,9 +122,9 @@ const FOOTER_NAV = [
   ["Explore", [
     ["index.html", "Home"],
     ["about.html", "About Zoe Life"],
+    ["resources-overview.html", "Books &amp; Resources"],
     ["blog.html", "Articles"],
     ["resources.html", "Videos"],
-    ["resources-overview.html", "Books &amp; Resources"],
   ]],
   ["Connect", [
     ["connect.html", "Follow Along"],
@@ -291,7 +291,7 @@ const postCard = (post, heading, pre, eyebrow = post.category) => `      <articl
         <${heading}><a href="${pre}${post.page}">${escapeAttr(post.title)}</a></${heading}>
         <p class="post-meta"><time datetime="${post.date}">${post.dateLabel}</time> <span aria-hidden="true">&middot;</span> ${post.minutes} min read</p>
         <p>${escapeAttr(post.excerpt)}</p>
-        <p class="read-more" aria-hidden="true">Read the article</p>
+        <p class="read-more" aria-hidden="true">Read the Article</p>
       </article>`;
 
 const bookingBlock = () =>
@@ -477,7 +477,7 @@ const home = page(
     page: "index.html",
     title: "Zoe Life | Helping people thrive in every season of life",
     description:
-      "We share biblical teaching and practical resources for your faith, relationships, and everyday decisions.",
+      "At Zoe Life, we are passionate about helping individuals, couples, and families grow and thrive in every season of life.",
   },
   `
 
@@ -583,7 +583,7 @@ ${POSTS.slice(0, 2).map((post) => postCard(post, "h3", "")).join("\n")}
         <p class="eyebrow">Videos</p>
         <h3>Teaching from Zoe Family Life.</h3>
         <p>Our teaching on singleness, marriage, conflict, and faith, in short clips and full series.</p>
-        <p class="card-link"><a href="resources.html">Watch the series</a></p>
+        <p class="card-link"><a href="resources.html">Watch the Series</a></p>
       </article>
     </div>
     <p class="card-link"><a href="articles-videos.html">Explore More Articles &amp; Videos</a></p>
@@ -634,7 +634,7 @@ const about = page(
         <img src="assets/photos/tayo-kemi-studio.jpeg"
              alt="Tayo and Kemi Akinyemi in a studio portrait, smiling."
              width="1600" height="2400">
-        <figcaption>Tayo and Kemi Akinyemi.</figcaption>
+        <figcaption>Tayo and Kemi Akinyemi</figcaption>
       </figure>
     </div>
   </div>
@@ -923,12 +923,12 @@ const contact = page(
           <form data-form="contact" novalidate>
             <div class="field-row">
               <div class="field">
-                <label for="c-first">First name <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+                <label for="c-first">First Name <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
                 <input type="text" id="c-first" name="firstName" autocomplete="given-name" required aria-describedby="c-first-error">
                 <p class="error" id="c-first-error" role="alert"></p>
               </div>
               <div class="field">
-                <label for="c-last">Last name <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+                <label for="c-last">Last Name <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
                 <input type="text" id="c-last" name="lastName" autocomplete="family-name" required aria-describedby="c-last-error">
                 <p class="error" id="c-last-error" role="alert"></p>
               </div>
@@ -936,7 +936,7 @@ const contact = page(
 
             <div class="field-row">
               <div class="field">
-                <label for="c-email">Email address <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+                <label for="c-email">Email Address <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
                 <input type="email" id="c-email" name="email" autocomplete="email" required aria-describedby="c-email-error">
                 <p class="error" id="c-email-error" role="alert"></p>
               </div>
@@ -948,7 +948,7 @@ const contact = page(
             </div>
 
             <div class="field">
-              <label for="c-reason">Reason for contacting <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
+              <label for="c-reason">Reason for Contacting <span class="req" aria-hidden="true">*</span><span class="visually-hidden">(required)</span></label>
               <select id="c-reason" name="reason" required aria-describedby="c-reason-error">
                 <option value="">Please choose</option>
                 <option>General Inquiry</option>

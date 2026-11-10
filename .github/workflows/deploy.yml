@@ -69,6 +69,7 @@ jobs:
       - name: Static checks
         run: |
           node tests/check-site.mjs
+          node tests/check-client-copy.mjs
           node tests/check-build.mjs
           node tests/workspace-forms.mjs
           node tests/integration-build.mjs

@@ -89,10 +89,31 @@ PM Central). It is not Acuity / Squarespace Scheduling.
 
 ### GitHub Pages (already wired)
 
-`.github/workflows/deploy.yml` builds, runs the checks, and can publish from
-**Run workflow**. It refuses to deploy if the static checks fail.
+As verified during the November 2026 client-copy review, Pages serves
+`claude/zoe-life-website-boiqf0` at `/ (root)`. A push to `main` runs the build
+and tests but **does not publish the preview**. Do not report a change as live
+merely because the `main` workflow is green.
 
-One-time setup: **Settings > Pages > Source: GitHub Actions**.
+Until the Pages source is changed, publish a tested `main` revision by
+fast-forwarding the Pages source branch to that same commit. Fetch first and
+check that its head is an ancestor of the release; do not force-push over any
+independent changes. Wait for the Pages deployment to succeed, then verify the
+actual public pages:
+
+```bash
+SITE_BASE_URL=https://elvinlearning.github.io/zoelife/ node tests/check-client-copy.mjs
+```
+
+Also compare the published HTML with the release files. The copy check protects
+the client-supplied wording; the file comparison identifies which build is live.
+The custom domain `www.zoelifehub.com` remains a separate Squarespace site until
+the domain cutover below is completed.
+
+`.github/workflows/deploy.yml` can alternatively publish through **Run workflow**
+after the following administrator setup. It refuses to deploy if checks fail.
+
+One-time setup: **Settings > Pages > Source: GitHub Actions**, and permit `main`
+in **Settings > Environments > github-pages** deployment branch rules.
 
 Run it manually from the Actions tab with **Run workflow**, choosing `staging`
 or `production`.
