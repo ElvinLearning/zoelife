@@ -1,5 +1,5 @@
 {
-  "note": "Client-supplied public website copy from November 6, 2026. Preserve wording and punctuation; only whitespace and HTML encoding may differ. Do not regenerate this fixture from site output.",
+  "note": "Client-supplied public website copy from November 6 and November 9, 2026. Preserve wording and punctuation; only whitespace and HTML encoding may differ. Do not regenerate this fixture from site output.",
   "sections": [
     {
       "page": "index.html",
@@ -187,6 +187,26 @@
         "Let’s Explore Opportunities Together!",
         "We’d love to hear your ideas and explore how we might work together. If you’re interested in partnering or collaborating with Zoe Life, please send us a message and tell us a little about what you have in mind.",
         "Send a Partnership Inquiry"
+      ]
+    },
+    {
+      "page": "about.html",
+      "source": "Statement of Faith - Edits (November 9, 2026)",
+      "copy": [
+        "Our Statement of Faith",
+        "At Zoe Life, our faith in God and our commitment to His Word are at the heart of everything we do. We believe that God’s Word is the foundation for living a purposeful, fulfilling, and abundant life through Jesus Christ. Our beliefs guide what we teach, the resources we create, and how we serve others.",
+        "We believe:",
+        "The Word of God: The Bible is the inspired, authoritative, and trustworthy Word of God. It is our foundation for faith, teaching, and everyday living.",
+        "The One True God: There is one God, eternally existing in three persons: God the Father, God the Son, and God the Holy Spirit.",
+        "Jesus Christ: Jesus Christ is the Son of God, fully God and fully man. Through His life, sacrificial death, and resurrection, He has made salvation available to all who believe in Him.",
+        "Salvation by Grace Through Faith: Salvation is a gift from God, received by grace through faith in Jesus Christ. It cannot be earned through human effort or good works.",
+        "The Holy Spirit: The Holy Spirit dwells in every believer, empowering us to live godly lives, grow spiritually, understand and apply God’s Word, and fulfill God’s purpose for our lives.",
+        "The Value of Every Person: Every person is created in the image of God and is worthy of love, dignity, and respect.",
+        "The Church: The Church is the body of Christ, called to worship God, grow in faith, make disciples, and demonstrate His love and power to the world.",
+        "Marriage and Family: Marriage is a covenant established by God between one man and one woman, designed to reflect Christ’s relationship with His Church. We believe that God’s Word provides the foundation for building strong marriages and families.",
+        "Christian Living: God calls us to live lives of holiness, love, integrity, compassion, stewardship, and obedience to His Word, reflecting the character of Christ in our everyday lives.",
+        "The Return of Jesus Christ: We believe in the return of our Lord Jesus Christ and the fulfillment of God’s eternal promises and Kingdom.",
+        "These beliefs are foundational to Zoe Life. Through our coaching, teaching, books, and other resources, our desire is to remain faithful to God’s Word, encourage others to grow in their relationship with Him, and help individuals and families experience the abundant life Jesus Christ came to give."
       ]
     }
   ]

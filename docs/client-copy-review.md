@@ -1,7 +1,7 @@
 # Client copy and publishing review
 
-Source: the client's November 6 website edit emails, checked again after the
-November 9 screenshots and follow-up. Public replacement copy is preserved
+Source: the client's November 6 website edit emails, checked again on November 10
+against the November 9 screenshots, follow-up and Statement of Faith email. Public replacement copy is preserved
 verbatim. Article/video-specific revisions are still to be supplied.
 
 The screenshots showed the October homepage. The public GitHub Pages HTML was
@@ -24,13 +24,14 @@ November changes already on `main` had not reached that public preview.
 | Books | Supplied descriptions, companion section, group-order section and more-to-come copy; Amazon-only buttons remain hidden until final URLs arrive. |
 | Contact | Supplied text; phone optional; requested reasons; group/partnership preselection and submitted-message text. |
 | Consultation page | Supplied invitation, What to Expect, Ready to Connect and booking button. |
-| Booking calendar | External schedule duration/start times and confirmation still require provider-side verification. Website copy alone cannot complete this. |
-| About | Supplied organization, mission, vision, eight values and combined biography; correct section links; retained Statement of Faith. |
+| Booking calendar | Public provider page checked November 10: still titled “20-minute booking” and still displays “30 min appointments.” Monday/Wednesday 6:00, 6:30, 7:00 and 7:30 PM Central start times are present. Duration/title/description remain unfinished; confirmation/Meet delivery is unverified. |
+| About | Supplied organization, mission, vision, eight values and combined biography; correct section links. Core-value icons requested in the email are not present in this implementation; current layout is retained. |
+| Statement of Faith (November 9) | Exact new heading, introduction, ten beliefs and closing paragraph; expandable format retained. |
 | Partnership | Supplied four categories, disclosure and closing invitation; preselected partnership inquiry. |
 
 ## Release checks
 
-`node tests/check-client-copy.mjs` compares 116 public passages from the original
+`node tests/check-client-copy.mjs` compares 130 public passages from the original
 client copy with six generated pages, plus exact hero text and button routing.
 The fixture contains only public website copy, not private email threads. Do not
 regenerate it from implementation output or rewrite it without client edits.
@@ -41,10 +42,16 @@ release requirement while legacy Pages publishing remains configured.
 
 ## Still open
 
-- The custom domain remains on Squarespace; GitHub Pages is the review site.
+- The custom domain was checked November 10 and remains on Squarespace; GitHub
+  Pages is the review site. The launch request for the address printed in the
+  books is therefore not complete.
 - Final Amazon URLs for both books.
 - Client-supplied article and video wording.
-- Calendar duration, four start times and booking confirmation/Meet verification.
+- Calendar duration must change from 30 to 20 minutes, with a 10-minute buffer.
+  Replace the title and add the supplied description; then verify booking
+  confirmation, time zone and Meet delivery. Public start times already match.
 - Live contact delivery, Sheets capture, mailing-list confirmation/unsubscribe,
   and paid scheduling setup.
 - Human review and final client approval. Automated checks are supplementary.
+- Individual completion replies for each client email have not been verified.
+- About-page core-value icons are absent; the client requested retaining them.

@@ -51,4 +51,9 @@ for (const [label,href] of [['Get to Know Zoe Life','about.html#about-zoe-life']
   assert.ok(home.includes(`href="${href}">${label}</a>`), `${label}: correct About section`);
 }
 assert.ok(!home.includes('We share what Scripture teaches about everyday life'), 'Do not publish the superseded homepage');
+const faith = fixture.sections.find(section => section.source === 'Statement of Faith - Edits (November 9, 2026)');
+const about = await read(faith.page);
+const faithHtml = about.match(/<details class="faith-disclosure">([^]*?)<\/details>/)?.[1];
+assert.ok(faithHtml, 'Retain the expandable Statement of Faith');
+assert.equal(text(faithHtml), normalize(faith.copy.join(' ')), 'Statement of Faith must use the complete exact client replacement');
 console.log(`PASS: ${count} client-supplied passages across ${cache.size} pages; exact hero and button destinations verified${process.env.SITE_BASE_URL ? ' on '+process.env.SITE_BASE_URL : ''}.`);
