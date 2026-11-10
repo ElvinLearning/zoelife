@@ -3,7 +3,7 @@
 Updated November 10, 2026. Replaces the October checklist.
 
 - Homepage copy and the November 9 Statement of Faith have been supplied and applied verbatim. They are not awaiting replacement text.
-- Final Amazon purchase URLs for both books are still needed. Only Amazon is approved for this release; no prices or other storefront controls are shown.
+- Amazon URLs supplied November 10 are configured: devotional https://a.co/d/07IT1nUY and journal https://a.co/d/065epJ50. Both book sections and both companion cards have Buy on Amazon buttons. Amazon product pages returned HTTP 503 to the automated check, so retail-page contents were not independently verified.
 - Individual article and video revisions remain deferred by the client. Existing article anecdotes and factual claims still need her review.
 - The custom domain printed in the books still serves the older Squarespace website. Complete the hosting/domain cutover and verify the updated homepage at that address before calling the launch complete.
 - Update the client-owned Google appointment schedule to 20 minutes, a 10-minute buffer, the supplied full title and description. Retain Monday/Wednesday 6:00, 6:30, 7:00 and 7:30 PM Central starts. Verify confirmation and Google Meet delivery. The connected Cozy Digital calendar is not the client calendar.
