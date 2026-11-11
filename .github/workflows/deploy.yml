@@ -9,7 +9,7 @@ on:
         description: "Build mode"
         type: choice
         options: [staging, production]
-        default: staging
+        default: production
 
 permissions:
   contents: read
@@ -61,9 +61,9 @@ jobs:
           ZOE_COURSE_ENGAGED_FIRST_YEAR_URL: ${{ vars.ZOE_COURSE_ENGAGED_FIRST_YEAR_URL }}
           ZOE_COURSE_COUPLES_BUNDLE_URL: ${{ vars.ZOE_COURSE_COUPLES_BUNDLE_URL }}
           ZOE_COURSE_CLAIM_ENDPOINT: ${{ vars.ZOE_COURSE_CLAIM_ENDPOINT }}
-          # Default to staging so a deploy made before the domain is switched
-          # cannot compete in search with the live Squarespace site.
-          ZOE_STAGING: ${{ (github.event.inputs.mode == 'production' || vars.ZOE_MODE == 'production') && '0' || '1' }}
+          # Production is the default after the custom-domain launch.
+          # Explicit staging builds remain available for previews.
+          ZOE_STAGING: ${{ (github.event.inputs.mode == 'staging' || vars.ZOE_MODE == 'staging') && '1' || '0' }}
         run: node tools/build.mjs
 
       - name: Static checks

@@ -1,3 +1,4 @@
-# Staging build. Not the canonical site.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://www.zoelifehub.com/sitemap.xml
