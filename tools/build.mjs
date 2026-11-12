@@ -341,8 +341,10 @@ ${CONFIG.staging || noindex
 <meta property="og:description" content="${description}">
 <meta property="og:image" content="${CONFIG.siteUrl.replace(/\/$/, "")}/assets/photos/tayo-kemi-about.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="${pre}favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="${pre}assets/brand/zoe-life-mark.png">
+<link rel="icon" href="${pre}favicon.ico?v=zoe-logo-1" sizes="any">
+<link rel="icon" href="${pre}favicon.svg?v=zoe-logo-1" type="image/svg+xml">
+<link rel="icon" href="${pre}favicon-32.png?v=zoe-logo-1" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="${pre}apple-touch-icon.png?v=zoe-logo-1" sizes="180x180">
 <link rel="preload" href="${pre}fonts/fraunces-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${pre}fonts/outfit-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${pre}css/style.css">
@@ -1697,11 +1699,9 @@ wrote(
 
 wrote(
   "favicon.svg",
-  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="6" fill="#F8F4ED"/>
-  <circle cx="16" cy="16" r="11.5" fill="none" stroke="#C6A15B" stroke-width="1.6"/>
-  <path d="M16 22c-3.2 0-5.6-2.4-5.6-5.6C10.4 12.6 13.6 9.6 16 8c2.4 1.6 5.6 4.6 5.6 8.4 0 3.2-2.4 5.6-5.6 5.6z" fill="#526B58"/>
-  <path d="M16 9.5v12" stroke="#F8F4ED" stroke-width="1.1" stroke-linecap="round"/>
+  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="24" fill="#343A36"/>
+  <image x="8" y="8" width="240" height="240" href="data:image/png;base64,${readFileSync(join(ROOT, 'assets/brand/zoe-life-mark.png')).toString('base64')}"/>
 </svg>\n`
 );
 
