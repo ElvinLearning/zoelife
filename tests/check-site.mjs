@@ -163,8 +163,12 @@ check("Sitemap omits moved-url stubs", !sitemap.includes("/family-life") && !sit
 check("Sitemap is well formed", /^<\?xml/.test(sitemap) && /<\/urlset>/.test(sitemap));
 
 const notFound = read("404.html");
-check("404 page links home", /href="index\.html"/.test(notFound));
+check("404 page links home", /href="\/index\.html"/.test(notFound));
 check("404 page has one h1", (notFound.match(/<h1[\s>]/g) || []).length === 1);
+// Served at nested missing addresses (e.g. /blog/old-post), so nothing local may be relative.
+check("404 page anchors local links and assets to the site root",
+  !/\s(?:href|src)="(?!https?:|mailto:|tel:|#|\/|data:)[^"]+"/.test(notFound) && /href="\/css\/style\.css"/.test(notFound));
+check("404 page is not indexed", /<meta name="robots" content="noindex/.test(notFound));
 
 function canonicalOf(p) {
   return SITE + "/" + (p === "index.html" ? "" : p.replace(/\.html$/, ""));
@@ -757,6 +761,14 @@ const PAIRS = [
 for (const [name, fg, bg, min] of PAIRS) {
   const r = ratio(fg, bg);
   check(`${name} (${r.toFixed(2)}:1, needs ${min}:1)`, r >= min);
+}
+
+// The legal links sit on the beige footer, where the default sage link colour is only 4.39:1.
+{
+  const m = css.match(/\.footer-bottom a\s*\{[^}]*color:\s*var\(--([a-z-]+)\)/);
+  const fg = m ? token(m[1]) : T.sage;
+  const r = ratio(fg, T.beige);
+  check(`footer legal links on beige (${r.toFixed(2)}:1, needs 4.5:1)`, r >= 4.5);
 }
 
 /* ---------------------------------------------------------------- done -- */

@@ -120,7 +120,7 @@ r = await evalJs(`(() => {
   const set = (id, v) => { const el = document.getElementById(id); el.value = v; el.dispatchEvent(new Event('input', {bubbles:true})); };
   set('c-first', 'Ada'); set('c-last', 'Nwosu');
   set('c-email', 'not-an-email'); set('c-phone', '5551234567');
-  document.getElementById('c-reason').value = 'Coaching';
+  document.getElementById('c-reason').value = 'Coaching Services';
   set('c-message', 'I would like to ask about premarital coaching for us.');
   form.querySelector('button[type=submit]').click();
   return {
@@ -158,7 +158,7 @@ r = await evalJs(`(() => {
   const before = wrap.hidden;
   sel.value = 'Other'; sel.dispatchEvent(new Event('change', {bubbles:true}));
   const afterHidden = wrap.hidden, afterRequired = input.required;
-  sel.value = 'Coaching'; sel.dispatchEvent(new Event('change', {bubbles:true}));
+  sel.value = 'Coaching Services'; sel.dispatchEvent(new Event('change', {bubbles:true}));
   return { before, afterHidden, afterRequired, revertHidden: wrap.hidden, revertRequired: input.required };
 })()`);
 check("Other field is hidden by default", r.before === true);
@@ -175,7 +175,7 @@ r = await evalJs(`(async () => {
   set('c-first','Ada'); set('c-last','Nwosu'); set('c-email','ada@example.org');
   set('c-phone','5551234567');
   const sel = document.getElementById('c-reason');
-  sel.value = 'Coaching'; sel.dispatchEvent(new Event('change', {bubbles:true}));
+  sel.value = 'Coaching Services'; sel.dispatchEvent(new Event('change', {bubbles:true}));
   set('c-message','I would like to ask about premarital coaching for us.');
   form.querySelector('button[type=submit]').click();
   await new Promise(resolve => setTimeout(resolve, 50));

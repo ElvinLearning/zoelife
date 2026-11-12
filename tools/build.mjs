@@ -1745,13 +1745,22 @@ wrote(
     : `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`
 );
 
+// GitHub Pages serves 404.html at whatever address was missing, including
+// nested ones such as /blog/old-post. Relative links would then resolve under
+// /blog/ and load without styles, logo or working navigation, so every local
+// link and asset on this page is anchored to the site root.
+const siteRoot = new URL(CONFIG.siteUrl.replace(/\/?$/, "/")).pathname;
+const fromSiteRoot = (html) =>
+  html.replace(/(\s(?:href|src)=")(?!https?:|mailto:|tel:|#|\/|data:)([^"]+)"/g, `$1${siteRoot}$2"`);
+
 wrote(
   "404.html",
-  page(
+  fromSiteRoot(page(
     {
       page: "404.html",
       title: "Page not found | Zoe Life",
       description: "That page could not be found. Find Zoe Life resources, about, and contact here.",
+      noindex: true,
     },
     `
 <section class="page-hero">
@@ -1766,7 +1775,7 @@ wrote(
   </div>
 </section>
 `
-  )
+  ))
 );
 
 console.log(
